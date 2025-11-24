@@ -1118,6 +1118,9 @@ if(this.widthPantalla>=900){ this.botonesPlayer.ataque.setAlpha(0)}
       radius: 100,
       base: this.add.circle(0, 0, sizeBotones, 0x888888,0.5),
       thumb: this.add.circle(0, 0, sizeBotones/2, 0xcccccc,0.5),
+      forceSingleTouch:false,
+      enable:true,
+      input:'drag'
 
 
 });
