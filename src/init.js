@@ -9,7 +9,7 @@ const config={ //configuracion del escenario
     parent: "container", //tipo contenedor
     pixelArt:false,
     type: Phaser.CANVAS,  
-
+    
     physics: {
     default: 'arcade',
     arcade: {
@@ -20,7 +20,11 @@ const config={ //configuracion del escenario
 
  /*   //EL APARTADO DE ARRIBA ES EL CORRECTO CORRERE ESTA SCENE PORQUE TRABAJARE CON StartGame*/
    
- scene:[MenuPrincipal,StartGame,FinPartida,ScenePotenciador]
+ scene:[MenuPrincipal,StartGame,FinPartida,ScenePotenciador],
+ input: {
+    activePointers: 3 // permite hasta 3 dedos simultáneos
+  }
+
     
 
 }

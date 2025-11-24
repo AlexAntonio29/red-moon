@@ -1090,14 +1090,17 @@ finalizarPartida(n=""){
     
 
 
-     this.botonesPlayer.ataque.on('pointerdown', () => this.controles.ataque= true);
+     this.botonesPlayer.ataque.on('pointerdown', (pointer) => {
+        console.log("Botón tocado por puntero:", pointer.id);
+        this.controles.ataque= true
+      });
      this.botonesPlayer.ataque.on('pointerup',   () => this.controles.ataque = false);
 
 
       this.input.on('pointerup', () => {
   // Al soltar el dedo en cualquier parte de la pantalla
  
-  this.controles.ataque = false;
+  //this.controles.ataque = false;
   
 });
 
