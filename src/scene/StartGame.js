@@ -1097,6 +1097,13 @@ finalizarPartida(n=""){
      this.botonesPlayer.ataque.on('pointerup',   () => this.controles.ataque = false);
      this.botonesPlayer.ataque.on('pointerout',  () => this.controles.ataque = false);
 
+     this.input.on('pointermove', (pointer) => {
+  if (!this.botonesPlayer.ataque.getBounds().contains(pointer.x, pointer.y)) {
+    this.controles.ataque = false;
+  }
+});
+
+
 
       this.input.on('pointerup', () => {
   // Al soltar el dedo en cualquier parte de la pantalla
