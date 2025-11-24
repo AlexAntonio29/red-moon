@@ -1095,6 +1095,7 @@ finalizarPartida(n=""){
         this.controles.ataque= true
       });
      this.botonesPlayer.ataque.on('pointerup',   () => this.controles.ataque = false);
+     this.botonesPlayer.ataque.on('pointerout',  () => this.controles.ataque = false);
 
 
       this.input.on('pointerup', () => {
