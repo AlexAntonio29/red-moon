@@ -55,7 +55,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
     this.estaAtacando=false;//esto me sirve para generar una condicional de tiempo de ataque asi no genera errores
 
-     this.cantidadRelojes=0;
+     this.cantidadRelojes=20;
      //relojes
 
      this.listaRelojes=this.physics.add.group();
@@ -1246,10 +1246,10 @@ movimientoItemToPlayer(){
 
   this.items_basura.children.iterate(item=>{
     if(item.moveToPlayer){
-      //let velocidad=Math.floor(Math.random() * (200 - 100 + 1)) + 100;
+      let velocidad=Math.floor(Math.random() * (500 - 300 + 1)) + 300;
    // scene.time.delayedCall(1000, () => {
-    console.log("moviendo item"+item);
-    this.physics.moveToObject(item, this.player, 100);
+    
+    this.physics.moveToObject(item, this.player.getContainer(), velocidad);
     //});
     }
 
@@ -1268,7 +1268,7 @@ update(time, delta){
     this.movimientosEnemigo();
    //this.physics.moveToObject(this.enemie.getContainer(), this.player.getContainer(),200);
 
-    //this.movimientoItemToPlayer();
+    this.movimientoItemToPlayer();
 
 
   
