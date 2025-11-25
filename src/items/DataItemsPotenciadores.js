@@ -93,7 +93,7 @@ export const armas=[
         'id':'7',
         'nombre':'Disparador de agua',
         'ataque':5,
-        'puntos':300, 
+        'puntos':100, 
         'tiempoDisparo':450,
         'velocidad':250, 
         'nivel':2, 

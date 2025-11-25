@@ -481,6 +481,8 @@ if (caminar) {
         //this.spriteAtaque.body.setCollideWorldBounds(true);
       }
 
+      this.spriteAtaque.body.setVelocity(0);
+
       this.spriteAtaque.setVisible(true);
     this.spriteAtaque.body.enable = true;
 
@@ -496,27 +498,32 @@ if (caminar) {
 
 
 
-        if((this.arma.largoAtaque))
+        if((this.arma.largoAtaque)){
+           
           switch(this.componentesAtaque.textura){
 
+             
             case 'ataqueLateralArriba':
               this.spriteAtaque.body.setVelocityY(-this.arma.tiempoDisparo*(this.arma.nivel));
+              console.log("Estoy en arriba");
 
             break;
             case 'ataqueLateralAbajo':
               this.spriteAtaque.body.setVelocityY(this.arma.tiempoDisparo*(this.arma.nivel));
-
+              console.log("Estoy en abajo");
             break;
             case 'ataqueLateralDerecha':
               this.spriteAtaque.body.setVelocityX(this.arma.tiempoDisparo*(this.arma.nivel));
+              console.log("Estoy en derecha");
             break;
             case 'ataqueLateralIzquierda':
               this.spriteAtaque.body.setVelocityX(-this.arma.tiempoDisparo*(this.arma.nivel));
+              console.log("Estoy en izquierda");
 
             break;
             default:
               break;
-        }
+        }}
 
        // console.log(this.scene.physics.world.colliders.length)
 
