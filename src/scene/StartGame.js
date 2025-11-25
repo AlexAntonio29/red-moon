@@ -593,7 +593,7 @@ this.collisionEnemigosArboles();
           
           empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this);//
           this.player.setVida(1);
-          if(this.player.getVida()<=0)this.finalizarPartida("Has muerto") ;
+          if(this.player.getVida()<=0)this.finalizarPartida("Partida Finalizada") ;
     }
   //colision al contacto del player con el enemigo
       collisionPlayerEnemigo(){
