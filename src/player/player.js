@@ -39,6 +39,7 @@ export class player {
 
     this.componentesAtaque={
       'textura':'ataqueLateralAbajo',
+      'anims': "ataqueAbajo",
       'width':this.sprite.displayWidth*2,
       'height':this.sprite.displayHeight,
       'x':0.5,
@@ -274,6 +275,7 @@ export class player {
 
 
   this.componentesAtaque.textura="ataqueLateralArriba";
+  this.componentesAtaque.anims="ataqueAbajo";
   //cambio de tamaño
    this.componentesAtaque.width=this.sprite.displayWidth*2;
    this.componentesAtaque.height=this.sprite.displayHeight;
@@ -298,6 +300,7 @@ export class player {
 
    
    this.componentesAtaque.textura="ataqueLateralAbajo";
+   this.componentesAtaque.anims="ataqueArriba";
   
      //console.log("DOWN");
     this.sprite.setVelocityY(velocidad);
@@ -314,6 +317,7 @@ export class player {
 
 
    this.componentesAtaque.textura="ataqueLateralIzquierda";
+   this.componentesAtaque.anims="ataqueIzquierda";
    //cambio del tamaño
    
    this.componentesAtaque.width=this.sprite.displayHeight;
@@ -332,6 +336,7 @@ export class player {
   this.componentesAtaque.y=0.5;
 
    this.componentesAtaque.textura="ataqueLateralDerecha";
+   this.componentesAtaque.anims="ataqueDerecha";
 
    //cambio del tamaño
    
@@ -378,6 +383,50 @@ if (caminar) {
         volume:1
       });
 
+      console.log(this.arma.inicioAnim+" "+(parseInt(this.arma.inicioAnim)+3 ));
+
+      if((this.scene.anims.exists("ataqueArriba"))){
+          this.scene.anims.remove("ataqueArriba");
+      }
+      if (this.scene.anims.exists("ataqueAbajo")) {
+          this.scene.anims.remove("ataqueAbajo");
+        }
+      if (this.scene.anims.exists("ataqueDerecha")) {
+          this.scene.anims.remove("ataqueDerecha");
+        }
+      if (this.scene.anims.exists("ataqueIzquierda")) {
+          this.scene.anims.remove("ataqueIzquierda");
+        }
+
+
+
+      this.scene.anims.create({
+        key: "ataqueArriba",
+        frames: this.scene.anims.generateFrameNumbers("ataqueLateralArriba", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
+        frameRate: 10,
+        repeat: -1
+          });
+
+          this.scene.anims.create({
+        key: "ataqueAbajo",
+        frames: this.scene.anims.generateFrameNumbers("ataqueLateralAbajo", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
+        frameRate: 10,
+        repeat: -1
+          });
+
+          this.scene.anims.create({
+        key: "ataqueDerecha",
+        frames: this.scene.anims.generateFrameNumbers("ataqueLateralDerecha", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
+        frameRate: 10,
+        repeat: -1
+          });
+
+          this.scene.anims.create({
+        key: "ataqueIzquierda",
+        frames: this.scene.anims.generateFrameNumbers("ataqueLateralIzquierda", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
+        frameRate: 10,
+        repeat: -1
+          });
   
 
   }
@@ -477,14 +526,19 @@ if (caminar) {
         .setTexture(this.componentesAtaque.textura);
              ;
 
+
+
              //this.scene.physics.add.existing(this.spriteAtaque);
         //this.spriteAtaque.body.setCollideWorldBounds(true);
       }
 
       this.spriteAtaque.body.setVelocity(0);
 
+
       this.spriteAtaque.setVisible(true);
     this.spriteAtaque.body.enable = true;
+
+    this.spriteAtaque.play(this.componentesAtaque.anims);
 
 
 
@@ -505,20 +559,20 @@ if (caminar) {
              
             case 'ataqueLateralArriba':
               this.spriteAtaque.body.setVelocityY(-this.arma.tiempoDisparo*(this.arma.nivel));
-              console.log("Estoy en arriba");
+             
 
             break;
             case 'ataqueLateralAbajo':
               this.spriteAtaque.body.setVelocityY(this.arma.tiempoDisparo*(this.arma.nivel));
-              console.log("Estoy en abajo");
+             
             break;
             case 'ataqueLateralDerecha':
               this.spriteAtaque.body.setVelocityX(this.arma.tiempoDisparo*(this.arma.nivel));
-              console.log("Estoy en derecha");
+              
             break;
             case 'ataqueLateralIzquierda':
               this.spriteAtaque.body.setVelocityX(-this.arma.tiempoDisparo*(this.arma.nivel));
-              console.log("Estoy en izquierda");
+              
 
             break;
             default:

@@ -12,7 +12,8 @@ export const armas=[
         'heigth':40,
         'largoAtaque':false, 
         'sonido':'ataque1',
-        'descripcion':'Palo sirve para machacar a la basura'
+        'descripcion':'Palo sirve para machacar a la basura',
+        'inicioAnim':0
     },
     {
         'id':'2',
@@ -27,7 +28,8 @@ export const armas=[
         'diseno':'arma2', 
         'largoAtaque':false, 
         'sonido':'ataque2',
-        'descripcion':'Rastrillo para rastrear a la basura'
+        'descripcion':'Rastrillo para rastrear a la basura',
+        'inicioAnim':4
     },
     {
         'id':'3',
@@ -42,7 +44,8 @@ export const armas=[
         'diseno':'arma3', 
         'largoAtaque':false, 
         'sonido':'ataque3',
-        'descripcion':'Para escarbar y enterrar a tus enemigos'
+        'descripcion':'Para escarbar y enterrar a tus enemigos',
+        'inicioAnim':8
     },
     {
         'id':'4',
@@ -57,7 +60,8 @@ export const armas=[
         'diseno':'arma4', 
         'largoAtaque':false, 
         'sonido':'ataque4',
-        'descripcion':'Para sembrar plantas, tambien sirven como guantes de boxeo'
+        'descripcion':'Para sembrar plantas, tambien sirven como guantes de boxeo',
+        'inicioAnim':12
     },
     {
         'id':'5',
@@ -72,7 +76,8 @@ export const armas=[
         'diseno':'arma5', 
         'largoAtaque':true,
         'sonido':'ataque5', 
-        'descripcion':'Comida favorita de los pandas y escencial para la picar la basura '
+        'descripcion':'Comida favorita de los pandas y escencial para la picar la basura ',
+        'inicioAnim':16
     },
     {
         'id':'6',
@@ -87,13 +92,14 @@ export const armas=[
         'diseno':'arma6', 
         'largoAtaque':true,
         'sonido':'ataque6', 
-        'descripcion':'Util para sembrar lo mas rapido posible y disparar.'
+        'descripcion':'Util para sembrar lo mas rapido posible y disparar.',
+        'inicioAnim':20
     },
     {
         'id':'7',
         'nombre':'Disparador de agua',
         'ataque':5,
-        'puntos':100, 
+        'puntos':300, 
         'tiempoDisparo':450,
         'velocidad':250, 
         'nivel':2, 
@@ -102,7 +108,8 @@ export const armas=[
         'diseno':'arma7', 
         'largoAtaque':true, 
         'sonido':'ataque7',
-        'descripcion':'Sirve para la regar las plantas y para limpiar la suciedad.'
+        'descripcion':'Sirve para la regar las plantas y para limpiar la suciedad.',
+        'inicioAnim':24
     },
     {
         'id':'8',
@@ -117,7 +124,8 @@ export const armas=[
         'diseno':'arma8', 
         'largoAtaque':false,
         'sonido':'ataque8', 
-        'descripcion':'Util para el trabajo y aplasta.'
+        'descripcion':'Util para el trabajo y aplasta.',
+        'inicioAnim':28
     },
     {
         'id':'9',
@@ -132,7 +140,8 @@ export const armas=[
         'diseno':'arma9',
         'largoAtaque':true, 
         'sonido':'ataque9',
-        'descripcion':'A todos nos gusta la fruta'
+        'descripcion':'A todos nos gusta la fruta',
+        'inicioAnim':32
     },
     {
         'id':'10',
@@ -147,6 +156,7 @@ export const armas=[
         'diseno':'arma10', 
         'largoAtaque':true,
         'sonido':'ataque10', 
-        'descripcion':'Maquina asesina mortal ultra super poderosa 3000'
+        'descripcion':'Maquina asesina mortal ultra super poderosa 3000',
+        'inicioAnim':36
     },
 ]

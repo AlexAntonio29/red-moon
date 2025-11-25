@@ -111,6 +111,35 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
       
     }
 
+
+    crearEfectos(){
+   // this.load.image("ataqueLateralAbajo","./assets/effect/ataqueLateralAbajo.png");
+   // this.load.image("ataqueLateralArriba","./assets/effect/ataqueLateralArriba.png");
+   // this.load.image("ataqueLateralDerecha","./assets/effect/ataqueLateralDerecha.png");
+   // this.load.image("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzquierda.png");
+
+     this.load.spritesheet("ataqueLateralAbajo", "./assets/effect/ataqueLateralAbajo.png", {
+  frameWidth: 64,
+  frameHeight: 64
+});
+
+this.load.spritesheet("ataqueLateralArriba", "./assets/effect/ataqueLateralArriba.png", {
+  frameWidth: 64,
+  frameHeight: 64
+});
+
+this.load.spritesheet("ataqueLateralDerecha", "./assets/effect/ataqueLateralDerecha.png", {
+  frameWidth: 64,
+  frameHeight: 64
+});
+
+this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzquierda.png", {
+  frameWidth: 64,
+  frameHeight: 64
+});
+
+    }
+
     
   
 
@@ -118,10 +147,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
       
       //Agregar efectos
 
-    this.load.image("ataqueLateralAbajo","./assets/effect/ataqueLateralAbajo.png");
-    this.load.image("ataqueLateralArriba","./assets/effect/ataqueLateralArriba.png");
-    this.load.image("ataqueLateralDerecha","./assets/effect/ataqueLateralDerecha.png");
-    this.load.image("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzquierda.png");
+      this.crearEfectos();
     
 
     //imagen mochila
