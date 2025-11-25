@@ -728,7 +728,7 @@ this.physics.add.collider(this.player.getContainer(),this.muros);
                
               this.puntosCreacionEnemigo=this.puntosCreacionEnemigo+200;
               
-              if(this.topeCreacionEnemigos<100)
+              if(this.topeCreacionEnemigos<1000)
                 this.topeCreacionEnemigos+=10;
             }
 
