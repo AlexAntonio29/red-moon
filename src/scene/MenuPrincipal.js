@@ -18,9 +18,10 @@ bStart(){
 document.fonts.load(`32px ${this.fontText}`).then(() => {
 
   this.boton = this.add.text((this.widthPantalla)/2, this.heightPantalla/2, 'Jugar', {
-  fontSize: '32px',
-  fill: '#000',
-  backgroundColor: '#fff',
+  fontSize: '40px',
+  fill: '#ff0000',
+ 
+  
   padding: { x: 80, y: 30 },
   fontFamily:this.fontText
 })
@@ -64,7 +65,7 @@ this.tweens.add({
     this.load.image("titulo","./assets/tituloMain.png");
     this.load.audio('musicaFondo','./sounds/menu.mp3');
     this.load.audio("touch","./sounds/touch2.mp3");
-    this.fontText='FontArcade3'
+    this.fontText='FontArcade1'
     this.widthPantalla=this.sys.game.config.width;
     this.heightPantalla=this.sys.game.config.height;
     //console.log("Preload "+this.scene.key);
@@ -95,7 +96,7 @@ create(){
 
 
     this.fondo = this.add.image(0, 0, 'imagenFondo').setOrigin(0,0)
-    .setDisplaySize(this.widthPantalla*1.5,this.heightPantalla);
+    .setDisplaySize(this.widthPantalla*1.0,this.heightPantalla*1.0);
 
     if(this.widthPantalla<this.heightPantalla){
       this.fondo.setDisplaySize(this.widthPantalla*2.5,this.heightPantalla);
@@ -110,7 +111,7 @@ create(){
 this.tweens.add({
   targets: this.fondo,
   x: -desplazamientoFondo, // desplaza hacia la izquierda para simular movimiento a la derecha
-  duration: 20000,
+  duration: 30000,
   yoyo: true, // regresa al punto inicial
   repeat: -1, // infinito
   ease: 'Sine.easeInOut'
