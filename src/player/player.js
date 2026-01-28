@@ -4,7 +4,7 @@ import { armas } from "../items/DataItemsPotenciadores.js";
 import {dataEnemigos} from "../enemies/DataEnemies.js"
 export class player {
 
-  constructor(scene, texture, x = 20, y = 25, joystick,controles, keys,listaEnemigos) {
+  constructor(scene, texture, x = 25, y = 25, joystick,controles, keys,listaEnemigos) {
 
     this.vida=3;
     this.scene = scene;
@@ -22,6 +22,8 @@ export class player {
     this.controles=controles;
     this.caminar=false;
     this.caminarInversoEstatico=false;
+    this.caminarArriba=false;
+    this.caminarAbajo=false;
     this.keys=keys;
 
     this.habilitarCollision=false;
@@ -58,23 +60,37 @@ export class player {
 
     this.scene.anims.create({
         key: "player_camina",
-        frames: this.scene.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
+        frames: this.scene.anims.generateFrameNumbers('player', { start: 0, end: 5 }),
         frameRate: 10,
         repeat: -1
           });
           this.scene.anims.create({
         key: "player_camina_inverso",
-        frames: this.scene.anims.generateFrameNumbers('player', { start: 4, end: 7 }),
+        frames: this.scene.anims.generateFrameNumbers('player', { start: 6, end: 11 }),
+        frameRate: 10,
+        repeat: -1
+          });
+          this.scene.anims.create({
+        key: "player_camina_up",
+        frames: this.scene.anims.generateFrameNumbers('player_walk_up', { start: 0, end: 5 }),
         frameRate: 10,
         repeat: -1
           });
 
+                    this.scene.anims.create({
+        key: "player_camina_down",
+        frames: this.scene.anims.generateFrameNumbers('player_walk_down', { start: 0, end: 5 }),
+        frameRate: 10,
+        repeat: -1
+          });
           this.scene.anims.create({
         key: "player_estatico_inverso",
         frames: this.scene.anims.generateFrameNumbers('player', { start: 5, end: 5 }),
         frameRate: 6,
         repeat: -1
           });
+
+
 
    
          // this.sprite.play('player_camina');
@@ -229,6 +245,7 @@ export class player {
       
      caminar=true;
      this.caminarInversoEstatico=true;
+     this.caminarArriba=false;
     //this.sprite.play('player_camina');
      
      this.sprite.setVelocityY(-velocidadDiagonal);
@@ -241,6 +258,7 @@ export class player {
     this.caminarInversoEstatico=true;
      caminar=true;
      caminarInverso=true;
+     this.caminarArriba=false;
      this.sprite.setVelocityY(-velocidadDiagonal);
      this.sprite.setVelocityX(-velocidadDiagonal);
   }
@@ -250,6 +268,7 @@ export class player {
     this.caminarInversoEstatico=true;
      caminar=true;
      caminarInverso=true;
+     this.caminarArriba=false;
      this.sprite.setVelocityY(velocidadDiagonal);
      this.sprite.setVelocityX(-velocidadDiagonal);
   }
@@ -259,6 +278,7 @@ export class player {
      //this.sprite.play('player_camina');
      this.caminarInversoEstatico=false;
      caminar=true;
+     this.caminarArriba=false;
      this.sprite.setVelocityY(velocidadDiagonal);
      this.sprite.setVelocityX(velocidadDiagonal);
   }
@@ -268,6 +288,8 @@ export class player {
 //.setOrigin(0.5,1)//arriba
   //this.sprite.play('player_camina');
   caminar=true;
+  this.caminarArriba=true;
+   this.caminarAbajo=false;
   this.caminarInversoEstatico=false;
   this.componentesAtaque.x=0.5;
   this.componentesAtaque.y=1;
@@ -290,6 +312,9 @@ export class player {
   //this.sprite.play('player_camina');
   caminar=true;
   this.caminarInversoEstatico=false;
+  this.caminarArriba=false;
+  this.caminarAbajo=true;
+  
    this.componentesAtaque.x=0.5;
   this.componentesAtaque.y=0;
  
@@ -312,6 +337,8 @@ export class player {
   this.caminarInversoEstatico=true;
   caminar=true;
   caminarInverso=true;
+   this.caminarAbajo=false;
+  this.caminarArriba=false;
   this.componentesAtaque.x=1;
   this.componentesAtaque.y=0.5;
 
@@ -332,6 +359,8 @@ export class player {
   //.setOrigin(0,0.5)//derecha
   this.caminarInversoEstatico=false;
   caminar=true;
+  this.caminarArriba=false;
+   this.caminarAbajo=false;
   this.componentesAtaque.x=0;
   this.componentesAtaque.y=0.5;
 
@@ -349,6 +378,20 @@ export class player {
  }
 
 if (caminar) {
+
+    if(this.caminarAbajo){
+        if (this.sprite.anims.currentAnim?.key !== 'player_camina_down') {
+      this.sprite.play('player_camina_down');
+    }
+  }
+  else
+  if(this.caminarArriba){
+        if (this.sprite.anims.currentAnim?.key !== 'player_camina_up') {
+      this.sprite.play('player_camina_up');
+    }
+  }
+  else
+
   if (caminarInverso) {
     if (this.sprite.anims.currentAnim?.key !== 'player_camina_inverso') {
       this.sprite.play('player_camina_inverso');
@@ -358,6 +401,9 @@ if (caminar) {
       this.sprite.play('player_camina');
     }
   }
+
+
+
 } else {
   if (this.caminarInversoEstatico) {
     if (this.sprite.anims.currentAnim?.key !== 'player_estatico_inverso') {
@@ -579,96 +625,6 @@ if (caminar) {
               break;
         }}
 
-       // console.log(this.scene.physics.world.colliders.length)
-
-        /*
-
-           listaEnemigos.map(enemigo=>{
-          this.scene.physics.add.overlap(
-          this.spriteAtaque,
-          enemigo.getContainer(),
-          ()=>{
-
-              if (!enemigo) return;
-
-            if(enemigo.golpeado) return;
-               enemigo.golpeado=true;
-        
-            enemigo.setVida(parseInt((this.arma.ataque)*(this.arma.nivel)));
-            //sound.play();
-            
-             if(enemigo.getVida()<=0){
-                //crearItemsBasura(this.scene,enemigo.dataEnemie.items,listaItems,enemigo.getPositionX(),enemigo.getpositionY(),false,this.sprite);
-             
-
-              let x=Math.floor(Math.random() * ((widthEscenario-30) - 0 + 1)) + 0;
-              let y=Math.floor(Math.random() * ((heightEscenario-30) - 0 + 1)) + 0;
-              let t=parseInt(enemigo.dataEnemie.id)-1;
-
-              
-              enemigo.setFullVida(dataEnemigos[t].vida);
-              enemigo.setEnemiePosition(x,y);
-              //enemigo
-              //enemigo.setMovimientoEnemigo(this.sprite,contactoMov[0],contactoMov[1],contactoMov[2]);
-
-              
-              
-              
-             /*enemigo.getContainer().destroy();
-             // console.log("Enemigo Eliminado - Cantidad: "+ listaEnemigos.length);
-               const index = listaEnemigos.indexOf(enemigo);
-              if (index !== -1) listaEnemigos.splice(index, 1);
-                this.habilitarCollision=true;
-        //console.log("Enemigo Eliminado - Cantidad: " + listaEnemigos.length);
-             }
-          else empujar(this.spriteAtaque,enemigo.getContainer(),n,contacto,this.scene);
-          enemigo.setGolpeado();
-
-          // contacto[n]=false;
-
-              }, null, this
-              );
-                })
-
-
-
-                */
-
-                /*
-this.grupoEnemigos = this.scene.physics.add.group();
-
-listaEnemigos.forEach(enemigo => {
-  this.grupoEnemigos.add(enemigo.getContainer());
-});
-
-this.scene.physics.add.overlap(spriteAtaque, this.grupoEnemigos, (ataque, enemigoSprite) => {
-  const enemigo = listaEnemigos.find(e => e.getContainer() === enemigoSprite);
-  if (!enemigo) return;
-
-  if(enemigo.golpeado) return;
-  enemigo.golpeado=true;
-
-  //console.log("vida enemigo: " + enemigo.getVida());
-  enemigo.setVida(parseInt(this.arma.ataque * this.arma.nivel));
-
-  if (enemigo.getVida() <= 0) {
-    
-
-    //crearItemsBasura(this.scene,enemigo.dataEnemie.items,listaItems,enemigo.getPositionX(),enemigo.getpositionY(),false,this.sprite);
-    enemigo.getContainer().destroy();
-    const index = listaEnemigos.indexOf(enemigo);
-              if (index !== -1) listaEnemigos.splice(index, 1);
-   // console.log("Enemigo Eliminado - Cantidad: " + listaEnemigos.length);
-
-    this.habilitarCollision=true;
-
-  } else {
-    empujar(spriteAtaque, enemigo.getContainer(), n, contacto, this.scene);
-    enemigo.setGolpeado();
-  }
-
-}, null, this);*/
-                
 
                  //contacto[n]=false;
       

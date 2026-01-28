@@ -97,7 +97,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
       this.load.audio("powerUp","./sounds/powerUp.mp3");
 
-      this.load.audio("fondoStart","./sounds/fondoStart.mp3");
+      this.load.audio("fondoStart","./sounds/base_nexo.mp3");
 
       this.load.audio("potenciador","./sounds/woo.mp3");
 
@@ -142,6 +142,28 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
 
     
   
+        cargarSpritesPlayer(){
+
+  this.load.spritesheet("player", "./assets/player/Animations/Carry_Run/Carry_Run_Side-Sheet-Rev.png", {
+ frameWidth: 64,
+  frameHeight: 64
+});
+
+
+  this.load.spritesheet("player_walk_up", "./assets/player/Animations/Carry_Run/Carry_Run_Up-Sheet-Rev.png", {
+ frameWidth: 64,
+  frameHeight: 64
+});
+
+  this.load.spritesheet("player_walk_down", "./assets/player/Animations/Carry_Run/Carry_Run_Down-Sheet.png", {
+ frameWidth: 64,
+  frameHeight: 64
+});
+
+
+
+
+        }
 
     cargarImagenes(){
       
@@ -156,10 +178,9 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
 
 
    //this.load.image("player","./assets/player/Player.png");
-   this.load.spritesheet("player", "./assets/player/Player.png", {
-  frameWidth: 80,
-  frameHeight: 128
-});
+      this.cargarSpritesPlayer();
+
+
    
 
    this.load.image('tiles', './assets/[Base]BaseChip_pipo.png');
@@ -450,7 +471,7 @@ movimientosEnemigo(){
 getPlayer(){
 
   
-    this.player=new player(this, 'player',30,40,this.joystickCursors, this.controles, this.keys,this.listaEnemigos);
+    this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos);
 
 
   
@@ -526,6 +547,7 @@ crearColisiones(){
   //crear collider de objetos
 
   //ARBOLES
+
   this.arboles.setCollisionByProperty({collider:true});
 
   this.muros.setCollisionByProperty({collider:true});
@@ -1176,7 +1198,7 @@ create(){
     this.cargarSonido();
     
     //cantidad de items a crear
-    this.crearItems(1000);//aqui puedo agregar la cantidad de items que quiero crear
+    this.crearItems(10);//aqui puedo agregar la cantidad de items que quiero crear
 
 
     //crear personaje
