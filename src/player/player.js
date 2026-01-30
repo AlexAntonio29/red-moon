@@ -12,6 +12,9 @@ export class player {
     this.x=x;
     this.y=y;
     this.arma;
+    this.setArma(armas[2]);
+
+    console.log(this.arma);
 
     this.sonidoAtaque;
     this.spriteAtaque;
@@ -539,8 +542,14 @@ if (caminar) {
    
 
     if(this.arma!=undefined) 
+      
+      if((Phaser.Input.Keyboard.JustDown((this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)))
+        ||this.controles.ataque
+        ||Phaser.Input.Keyboard.JustDown(this.keys.J))
+      &&!this.estaAtacando){
 
-      if((Phaser.Input.Keyboard.JustDown((this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)))||this.controles.ataque)&&!this.estaAtacando){
+
+        
          this.estaAtacando=true;
         this.widthEscenario=widthEscenario;
         this.heightEscenario=heightEscenario;

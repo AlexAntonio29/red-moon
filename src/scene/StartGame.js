@@ -20,7 +20,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
     //aqui se cargan las variables globales desde preload()
     cargarVariablesGlobales(){
 
-      this.tiempo=100;
+      this.tiempo=0;
       this.tiempoProgresivo=0;//el tiempo progresivo sirve para llevar el tiempo siempre adelante
       this.tiempoParaCrearEnemigos=20;
 
@@ -35,7 +35,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
       //fuente del texto
 
-      this.fontText='FontArcade3';
+      this.fontText='FontArcade4';
    // console.log("Preload "+this.scene.key);
       this.widthPantalla=this.sys.game.config.width;
       this.heightPantalla=this.sys.game.config.height;
@@ -55,7 +55,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
     this.estaAtacando=false;//esto me sirve para generar una condicional de tiempo de ataque asi no genera errores
 
-     this.cantidadRelojes=20;
+     this.cantidadRelojes=0;
      //relojes
 
      this.listaRelojes=this.physics.add.group();
@@ -65,10 +65,10 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
    this.listaEnemigos=this.physics.add.group();
 
     
-    this.puntosCreacionEnemigo=10;
+    this.puntosCreacionEnemigo=0;
     this.topeCreacionEnemigos=0;
 
-    this.getPotenciadorPuntos=200;
+    this.getPotenciadorPuntos=0;
     this.puntosPotenciadorAcumulador=1;
 
     this.items_basura=this.physics.add.group();
@@ -142,7 +142,7 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
 
     
   
-        cargarSpritesPlayer(){
+    cargarSpritesPlayer(){
 
   this.load.spritesheet("player", "./assets/player/Animations/Carry_Run/Carry_Run_Side-Sheet-Rev.png", {
  frameWidth: 64,
@@ -188,6 +188,11 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
    this.load.tilemapTiledJSON('mapa', './assets/mapa_scene.json');
    //item basura
 
+    this.load.image('tiles_suelo_nexus','./assets/tiles_maps/nexus/asset_suelo_castillo.png');
+    this.load.tilemapTiledJSON('mapa_nexus','./assets/tiles_maps/nexus/base_nexus.json');
+
+
+
    let cantidadItems=itemsInorganicos.length+itemsOrganicos.length;
    
     for(let i=0;i<cantidadItems;i++){
@@ -212,6 +217,9 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
 
   for(let i=0;i<armas.length;i++)
     this.load.image(armas[i].diseno,"./assets/potenciadores/armas/"+(i+1)+".png"); 
+
+
+
 
     }
 
@@ -249,7 +257,9 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
     W: Phaser.Input.Keyboard.KeyCodes.W,
     A: Phaser.Input.Keyboard.KeyCodes.A,
     S: Phaser.Input.Keyboard.KeyCodes.S,
-    D: Phaser.Input.Keyboard.KeyCodes.D
+    D: Phaser.Input.Keyboard.KeyCodes.D,
+    ESC: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC),
+    J: Phaser.Input.Keyboard.KeyCodes.J//golpear
     
 });
     }
@@ -292,7 +302,7 @@ crearEscenario(){
     //console.log(this.escenario);
 
    //Dimensiones del mapa
-    this.map= this.make.tilemap({ key: "mapa" });
+    this.map= this.make.tilemap({ key: "mapa_nexus" });
     this.widthEscenario=this.map.widthInPixels;
     this.heightEscenario=this.map.heightInPixels;
 
@@ -301,23 +311,23 @@ crearEscenario(){
 
 
     //console.log(`width:${this.widthEscenario} height:${this.heightEscenario}`);
-    this.tileset = this.map.addTilesetImage('map-tecmm', 'tiles');
+    this.tileset = this.map.addTilesetImage('asset_suelo_castillo', 'tiles_suelo_nexus');
     //this.tileset2= this.map.addTilesetImage('map-tecmm2', 'tiles2');
   //  const tileset2 = map.addTilesetImage('[Base]BaseChip_pipo', 'tiles');
 
   // const fondo0 = map.createLayer('Capa de patrones 1', tileset, 0, 0);
      //const fondo1 = map.createLayer('FONDO', tileset, 0, 0);
 
-     const fondo14 = this.map.createLayer('BACKGRASS', this.tileset , 0, 0);
-    const fondo2 = this.map.createLayer('GRASS', this.tileset , 0, 0);
+     //const fondo14 = this.map.createLayer('BACKGRASS', this.tileset , 0, 0);
+   // const fondo2 = this.map.createLayer('GRASS', this.tileset , 0, 0);
     //const grass2=this.map.createLayer('GRASS', this.tileset2 , 0, 0);
 
-   const fondo4 = this.map.createLayer('BASE_ROADS_CAR', this.tileset , 0, 0);
-   const fondo5 = this.map.createLayer('BASE_ROADS_WALK', this.tileset , 0, 0);
-   const canchas = this.map.createLayer('CANCHAS', this.tileset , 0, 0);
+   //const fondo4 = this.map.createLayer('BASE_ROADS_CAR', this.tileset , 0, 0);
+   //const fondo5 = this.map.createLayer('BASE_ROADS_WALK', this.tileset , 0, 0);
+   //const canchas = this.map.createLayer('CANCHAS', this.tileset , 0, 0);
     
     
-    this.muros= this.map.createLayer('DOORS', this.tileset , 0, 0);
+    //this.muros= this.map.createLayer('DOORS', this.tileset , 0, 0);
     
     //const fondo7 = this.map.createLayer('arbol', tileset, 0, 0);
    
@@ -331,6 +341,9 @@ crearEscenario(){
 
     //this.physics.world.setBounds(0, 0, this.width, this.height);
     //console.log(this.map);
+
+    this.suelo=this.map.createLayer('base', this.tileset,0,0);
+
     this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
     this.cameras.main.setBounds(0,0,this.map.widthInPixels,this.map.heightInPixels);
 
@@ -362,7 +375,7 @@ crearEdificios(){
 }
 //metodo para crear los arboles
 crearArboles(){
-    this.arboles = this.map.createLayer('TREE', this.tileset , 0, 0);
+    //this.arboles = this.map.createLayer('TREE', this.tileset , 0, 0);
 }
 
 
@@ -443,7 +456,7 @@ crearEnemigo(n=1){
    
 
     // this.collisionPlayerEnemigo();
-     //this.collisionEnemigoEnemigo();
+     this.collisionEnemigoEnemigo();
      //this.colisionesEnemigo();
   } else console.log("Tope al maximo no se crearan enemigo: "+this.listaEnemigos.countActive(true));
   
@@ -510,10 +523,21 @@ getPlayer(){
 
 //Moviemientos Player
 
+pausarEscena(){
+this.scene.pause();
+this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.player,puntaje:this.puntaje,armas:this.armas, keys:this.keys});
+
+
+}
+
 movimientosPlayer(){
      this.player.setMovimientoPlayer(this.contactoSprites[0]);
     
      this.player.getAtaque(this.listaEnemigos,this.contactoSprites,1,this.items_basura,this.widthEscenario,this.heightEscenario,this.contactoSprites,this.golpeEnemie);
+
+     //pausar juego
+
+     if(Phaser.Input.Keyboard.JustDown(this.keys.ESC))this.pausarEscena();
 
 
      
@@ -548,29 +572,29 @@ crearColisiones(){
 
   //ARBOLES
 
-  this.arboles.setCollisionByProperty({collider:true});
+  //this.arboles.setCollisionByProperty({collider:true});
 
-  this.muros.setCollisionByProperty({collider:true});
+  //this.muros.setCollisionByProperty({collider:true});
 
   //EDIFICIOS
-  this.edificios.setCollisionByProperty({collider:true});
+  //this.edificios.setCollisionByProperty({collider:true});
 
 
   this.collisionRecogerItemBasura();
   this.collisionRecogerItemTiempo();
 
-  this.collisionPlayerEdificioColision();
-  this.collisionPlayerArboles();
-  this.collisionPlayerMuros();
+ // this.collisionPlayerEdificioColision();
+  //this.collisionPlayerArboles();
+ // this.collisionPlayerMuros();
 
   this.colisionesEnemigo();
   
 }
 
 colisionesEnemigo(){
-this.collisionEnemigosArboles();
-  this.collisionEnemigosEdificios();
-  this.collisionEnemigosMuros();
+//this.collisionEnemigosArboles();
+ // this.collisionEnemigosEdificios();
+//  this.collisionEnemigosMuros();
   this.collisionPlayerEnemigo();
 }
 
@@ -581,7 +605,7 @@ this.collisionEnemigosArboles();
        this.golpeToPlayer.play();
           
           empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this);//
-          this.player.setVida(1);
+          //this.player.setVida(1); desactivar para el contacto player enemigo
           if(this.player.getVida()<=0)this.finalizarPartida("Partida Finalizada") ;
     }
   //colision al contacto del player con el enemigo
@@ -722,7 +746,7 @@ this.physics.add.collider(this.player.getContainer(),this.muros);
             }
 
             //verifica si es candidato para obtener power Up
-            if(this.puntos>=this.getPotenciadorPuntos)  this.getPotenciador();
+            //if(this.puntos>=this.getPotenciadorPuntos)  this.getPotenciador();
             //this.crearEnemigo(this.topeCreacionEnemigos-this.listaEnemigos.length);
         
         }
@@ -1026,22 +1050,22 @@ this.input.keyboard.on('keyup-M', () => {
 
     if(this.tiempoProgresivo===this.tiempoParaCrearEnemigos){
       this.tiempoParaCrearEnemigos+=10;
-      this.crearEnemigo(this.topeCreacionEnemigos-this.listaEnemigos.countActive(true));
+      //this.crearEnemigo(this.topeCreacionEnemigos-this.listaEnemigos.countActive(true));
 
       
      // console.log("Creando enemigos segun el tope: ");
 
-    }
+    } 
 
 
     
    
     
 
-    if(this.tiempo<=0) this.finalizarPartida("Se agotó el tiempo");
-    else{
-    this.tiempo--;
-    this.cronometro.setText('Tiempo: ' + this.tiempo);}
+    //if(this.tiempo<=0) this.finalizarPartida("Se agotó el tiempo");
+    //else{
+    this.tiempo++;
+    this.cronometro.setText('Tiempo: ' + this.tiempo);//}
   },
   loop: true
 });
@@ -1203,8 +1227,8 @@ create(){
 
     //crear personaje
 
-    this.crearEdificios();  
-    this.crearArboles();
+    //this.crearEdificios();  
+    //this.crearArboles();
     
 
 

@@ -2,6 +2,7 @@ import {MenuPrincipal} from './scene/MenuPrincipal.js'
 import {StartGame} from './scene/StartGame.js'
 import { FinPartida } from './scene/FinPartida.js';
 import { ScenePotenciador } from './scene/ScenePotenciador.js';
+import {ScenePause} from './scene/ScenePause.js';
 
 const config={ //configuracion del escenario
     width: document.documentElement.clientWidth,//tamaño de ancho
@@ -20,7 +21,7 @@ const config={ //configuracion del escenario
 
  /*   //EL APARTADO DE ARRIBA ES EL CORRECTO CORRERE ESTA SCENE PORQUE TRABAJARE CON StartGame*/
    
- scene:[MenuPrincipal,StartGame,FinPartida,ScenePotenciador],
+ scene:[MenuPrincipal,StartGame,FinPartida,ScenePotenciador,ScenePause],
  input: {
     activePointers: 3 // permite hasta 3 dedos simultáneos
   }
