@@ -908,7 +908,7 @@
         {
          "columns":8,
          "firstgid":1,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Tiled\/img\/BaseMap.png",
+         "image":"..\/Tiled\/img\/BaseMap.png",
          "imageheight":4256,
          "imagewidth":256,
          "margin":0,
@@ -921,7 +921,7 @@
         {
          "columns":12,
          "firstgid":1065,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Tiled\/img\/sprites juego\/Tilesets\/Dungeon_Tiles.png",
+         "image":"..\/Tiled\/img\/sprites juego\/Tilesets\/Dungeon_Tiles.png",
          "imageheight":400,
          "imagewidth":400,
          "margin":0,
@@ -934,7 +934,7 @@
         {
          "columns":6,
          "firstgid":1209,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Tiled\/img\/sprites juego\/decoracion\/Rocks.png",
+         "image":"..\/Tiled\/img\/sprites juego\/decoracion\/Rocks.png",
          "imageheight":304,
          "imagewidth":208,
          "margin":0,
@@ -947,7 +947,7 @@
         {
          "columns":8,
          "firstgid":1263,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Tiled\/img\/sprites juego\/arboles\/Arbol_T1.png",
+         "image":"..\/Tiled\/img\/sprites juego\/arboles\/Arbol_T1.png",
          "imageheight":128,
          "imagewidth":256,
          "margin":0,
@@ -960,7 +960,7 @@
         {
          "columns":6,
          "firstgid":1295,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Tiled\/img\/sprites juego\/arboles\/Arbol_T2.png",
+         "image":"..\/Tiled\/img\/sprites juego\/arboles\/Arbol_T2.png",
          "imageheight":192,
          "imagewidth":208,
          "margin":0,
@@ -973,7 +973,7 @@
         {
          "columns":32,
          "firstgid":1331,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Tiled\/img\/sprite 3\/mainlevbuild.png",
+         "image":"..\/Tiled\/img\/sprite 3\/mainlevbuild.png",
          "imageheight":640,
          "imagewidth":1024,
          "margin":0,
@@ -986,7 +986,7 @@
         {
          "columns":32,
          "firstgid":1971,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Tiled\/img\/sprite 3\/mainlevbuild.png",
+         "image":"..\/Tiled\/img\/sprite 3\/mainlevbuild.png",
          "imageheight":640,
          "imagewidth":1024,
          "margin":0,
@@ -1012,7 +1012,7 @@
         {
          "columns":12,
          "firstgid":2615,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Tiled\/img\/Godot 4.2.2 Ready Top-Down RPG 32x32 by Mixel v1.4\/Top-Down RPG 32x32 by Mixel v1.4\/Buildings v.1.0\/Topdown RPG 32x32 - Ruins.PNG",
+         "image":"..\/Tiled\/img\/Godot 4.2.2 Ready Top-Down RPG 32x32 by Mixel v1.4\/Top-Down RPG 32x32 by Mixel v1.4\/Buildings v.1.0\/Topdown RPG 32x32 - Ruins.PNG",
          "imageheight":512,
          "imagewidth":384,
          "margin":0,
@@ -1025,7 +1025,7 @@
         {
          "columns":12,
          "firstgid":2807,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Tiled\/img\/Godot 4.2.2 Ready Top-Down RPG 32x32 by Mixel v1.4\/Top-Down RPG 32x32 by Mixel v1.4\/Nature v1.4\/Topdown RPG 32x32 - Ground Tileset.PNG",
+         "image":"..\/Tiled\/img\/Godot 4.2.2 Ready Top-Down RPG 32x32 by Mixel v1.4\/Top-Down RPG 32x32 by Mixel v1.4\/Nature v1.4\/Topdown RPG 32x32 - Ground Tileset.PNG",
          "imageheight":384,
          "imagewidth":384,
          "margin":0,
@@ -1038,7 +1038,7 @@
         {
          "columns":12,
          "firstgid":2951,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Tiled\/img\/Godot 4.2.2 Ready Top-Down RPG 32x32 by Mixel v1.4\/Top-Down RPG 32x32 by Mixel v1.4\/Nature v1.4\/Topdown RPG 32x32 - Bushes 1.1.PNG",
+         "image":"..\/Tiled\/img\/Godot 4.2.2 Ready Top-Down RPG 32x32 by Mixel v1.4\/Top-Down RPG 32x32 by Mixel v1.4\/Nature v1.4\/Topdown RPG 32x32 - Bushes 1.1.PNG",
          "imageheight":320,
          "imagewidth":384,
          "margin":0,
@@ -1051,7 +1051,7 @@
         {
          "columns":12,
          "firstgid":3071,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Tiled\/img\/Godot 4.2.2 Ready Top-Down RPG 32x32 by Mixel v1.4\/Top-Down RPG 32x32 by Mixel v1.4\/Nature v1.4\/Topdown RPG 32x32 - Trees 1.1.PNG",
+         "image":"..\/Tiled\/img\/Godot 4.2.2 Ready Top-Down RPG 32x32 by Mixel v1.4\/Top-Down RPG 32x32 by Mixel v1.4\/Nature v1.4\/Topdown RPG 32x32 - Trees 1.1.PNG",
          "imageheight":320,
          "imagewidth":384,
          "margin":0,
