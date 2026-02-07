@@ -144,7 +144,7 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
   
     cargarSpritesPlayer(){
 
-  this.load.spritesheet("player", "./assets/player/Animations/Carry_Run/Carry_Run_Side-Sheet-Rev.png", {
+  this.load.spritesheet("player", "./assets/player/Animations/Carry_Run/Run-lefth-right.png", {
  frameWidth: 64,
   frameHeight: 64
 });
@@ -159,6 +159,22 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
  frameWidth: 64,
   frameHeight: 64
 });
+
+this.load.spritesheet("player_idle","./assets/player/Animations/Carry_Idle/Idle.png",{
+  frameWidth: 64,
+  frameHeight: 64
+})
+
+//ataque 
+
+this.load.spritesheet("attack_right","./assets/player/Animations/attack/attack1.png",{
+  frameWidth: 64,
+  frameHeight: 64
+})
+
+
+
+
 
 
 
