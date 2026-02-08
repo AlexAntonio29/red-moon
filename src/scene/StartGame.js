@@ -1225,7 +1225,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 //El create es donde acomo las cosas para que tengan un orden
 create(){
 
-   
+  
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
 //this.physics.world.createDebugGraphic();
 
@@ -1238,7 +1238,7 @@ create(){
     this.cargarSonido();
     
     //cantidad de items a crear
-    this.crearItems(10);//aqui puedo agregar la cantidad de items que quiero crear
+    this.crearItems(0);//aqui puedo agregar la cantidad de items que quiero crear
 
 
     //crear personaje
@@ -1257,7 +1257,7 @@ create(){
     
   
 
-    this.crearEnemigo(0);
+    this.crearEnemigo(3);
 
     //colisiones en entre items
     this.crearColisiones();
