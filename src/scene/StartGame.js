@@ -1,5 +1,4 @@
-import {itemsOrganicos, itemsInorganicos} from "../items/DataItems.js";
-
+import {puntos, itemsConsumibles} from "../items/ItemsData.js";
 import { Items } from "../items/Items.js";
 import {player} from "../player/player.js";
 import {dataEnemigos} from "../enemies/DataEnemies.js"
@@ -7,7 +6,7 @@ import { Enemies } from "../enemies/Enemies.js";
 import { empujar } from "../funciones/empujar.js";
 import { itemTiempo } from "../items/ItemTiempo.js";
 import { armas } from "../items/DataItemsPotenciadores.js";
-import { crearItemsBasura } from "../funciones/crearItemsBasura.js";
+import { crearItemsPunto } from "../funciones/crearItemsPuntos.js";
 import { conjuntoArmas } from "../armas/conjuntoArmas.js"
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
@@ -28,8 +27,8 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
       //agregar arma
       this.armas=new conjuntoArmas().getArmas();
 
-      this.itemsOrganicos=itemsOrganicos.map(a => ({ ...a }));
-      this.itemsInorganicos=itemsInorganicos.map(a => ({ ...a }));
+      this.itemsOrganicos=puntos.map(a => ({ ...a }));
+      this.itemsInorganicos=itemsConsumibles.map(a => ({ ...a }));
 
       
 
@@ -71,7 +70,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
     this.getPotenciadorPuntos=0;
     this.puntosPotenciadorAcumulador=1;
 
-    this.items_basura=this.physics.add.group();
+    this.items_punto=this.physics.add.group();
     }
 
     cargarBotonesTeclas(){  
@@ -84,28 +83,39 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
     crearSonidos(){
       //sonido items basura
-      for(let i=1;i<=10;i++){
+     /* for(let i=1;i<=10;i++){
         this.load.audio('pop'+i,"./sounds/pop"+i+".mp3");
         this.load.audio('ataque'+i,"./sounds/ataque"+i+".mp3");
       
-      }
+      }*/
 
      // this.sonidoAtaquePlayer;
       
+      //cargar sonidos de ataque
+     this.load.audio("ataque1","./sounds/player/atacando/ataque_espada.mp3")
+
+
+     //sonido de puntos
+     this.load.audio("point1","./sounds/general/points/sound1.mp3");
+     this.load.audio("point2","./sounds/general/points/sound2.mp3");
+     this.load.audio("point3","./sounds/general/points/sound3.mp3");
+     
+
+
 
       
 
       this.load.audio("powerUp","./sounds/powerUp.mp3");
 
-      this.load.audio("fondoStart","./sounds/base_nexo.mp3");
+      this.load.audio("fondoStart","./sounds/level/nexus/soundtrack.mp3");
 
       this.load.audio("potenciador","./sounds/woo.mp3");
 
       this.load.audio("touch","./sounds/touch.mp3");
 
-      this.load.audio("golpeEnemie","./sounds/golpeEnemie2.mp3");
+      this.load.audio("golpeEnemie","./sounds/enemigo/enemie1/golpeado/espada/golpe.mp3");
 
-      this.load.audio("golpeToPlayer","./sounds/golpeToPlayer.mp3");
+      this.load.audio("golpeToPlayer","./sounds/player/atacado/ataque.mp3");
 
       this.load.audio("reloj","./sounds/reloj.mp3");
       
@@ -144,7 +154,7 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
   
     cargarSpritesPlayer(){
 
-  this.load.spritesheet("player", "./assets/player/Animations/Carry_Run/Carry_Run_Side-Sheet-Rev.png", {
+  this.load.spritesheet("player", "./assets/player/Animations/Carry_Run/Run-lefth-right.png", {
  frameWidth: 64,
   frameHeight: 64
 });
@@ -159,6 +169,27 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
  frameWidth: 64,
   frameHeight: 64
 });
+
+this.load.spritesheet("player_idle","./assets/player/Animations/Carry_Idle/Idle.png",{
+  frameWidth: 64,
+  frameHeight: 64
+})
+
+//ataque 
+
+this.load.spritesheet("attack_right","./assets/player/Animations/attack/attack1.png",{
+  frameWidth: 64,
+  frameHeight: 64
+})
+
+this.load.spritesheet("player_golpeado_espada","./assets/player/Animations/golpeado/golpeado_espada.png",{
+  frameWidth: 64,
+  frameHeight: 64
+});
+
+
+
+
 
 
 
@@ -193,20 +224,53 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
 
 
 
-   let cantidadItems=itemsInorganicos.length+itemsOrganicos.length;
+    //tiles de nexus personal cargar imagenes
+    this.load.image("baseMap","/assets/tiles_maps/nexus/BaseMap.png");
+    this.load.image("suelo_castillo","/assets/tiles_maps/nexus/asset_suelo_castillo.png");
+    this.load.image("arbol1","/assets/tiles_maps/nexus/Arbol_T1.png");
+    this.load.image("arbol2","/assets/tiles_maps/nexus/Arbol_T2.png");
+    this.load.image("rocks","/assets/tiles_maps/nexus/Rocks.png");
+    this.load.image("tiles_dungeon","/assets/tiles_maps/nexus/Dungeon_Tiles.png");
+    this.load.image("build","/assets/tiles_maps/nexus/mainlevbuild.png");
+    this.load.image("build2","/assets/tiles_maps/nexus/mainlevbuild.png");
+    this.load.image("bushes","/assets/tiles_maps/nexus/Topdown_RPG_Bushes.png");
+    this.load.image("ground","/assets/tiles_maps/nexus/Topdown_RPG_Ground.png");
+    this.load.image("ruins","/assets/tiles_maps/nexus/Topdown_RPG_Ruins.png");
+    this.load.image("trees","/assets/tiles_maps/nexus/Topdown_RPG_Trees.png");
+
+
+    //cargar el tiled
+    this.load.tilemapTiledJSON("nexus_mapa","./assets/tiles_maps/nexus/MapaNeexo.json")
+    
+    
+
+
+
+   let cantidadItems=itemsConsumibles.length+puntos.length;
    
-    for(let i=0;i<cantidadItems;i++){
+    /*for(let i=0;i<cantidadItems;i++){
 
       this.load.spritesheet("item_basura"+(i+1), "./assets/items/item_basura"+(i+1)+".png", {
   frameWidth: 32,
   frameHeight: 32
 });
 
-    }
+
+
+    
+
+    }*/
+
+      this.load.spritesheet("item_punto","./assets/items/soul.png",{
+        frameWidth: 32,
+        frameHeight:32
+      });
+
+
 
 
    //Textura de tiempo
-   this.load.image("reloj","./assets/items/otrosItems/reloj.png");
+  // this.load.image("reloj","./assets/items/otrosItems/reloj.png");
   
 
    //enemigos
@@ -228,8 +292,8 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
       for(let i=0;i<=3;i++){
 
       this.load.spritesheet(dataEnemigos[i].diseno, "./assets/enemies/"+dataEnemigos[i].diseno+".png", {
-  frameWidth: 32,
-  frameHeight: 32
+  frameWidth: 64,
+  frameHeight: 64
 });
 
 //console.log("Creado "+dataEnemigos[i].diseno+" de directorio: ./assets/enemies/"+dataEnemigos[i].diseno+".png");
@@ -302,7 +366,7 @@ crearEscenario(){
     //console.log(this.escenario);
 
    //Dimensiones del mapa
-    this.map= this.make.tilemap({ key: "mapa_nexus" });
+    this.map= this.make.tilemap({ key: "nexus_mapa" });
     this.widthEscenario=this.map.widthInPixels;
     this.heightEscenario=this.map.heightInPixels;
 
@@ -311,38 +375,73 @@ crearEscenario(){
 
 
     //console.log(`width:${this.widthEscenario} height:${this.heightEscenario}`);
-    this.tileset = this.map.addTilesetImage('asset_suelo_castillo', 'tiles_suelo_nexus');
-    //this.tileset2= this.map.addTilesetImage('map-tecmm2', 'tiles2');
-  //  const tileset2 = map.addTilesetImage('[Base]BaseChip_pipo', 'tiles');
 
-  // const fondo0 = map.createLayer('Capa de patrones 1', tileset, 0, 0);
-     //const fondo1 = map.createLayer('FONDO', tileset, 0, 0);
-
-     //const fondo14 = this.map.createLayer('BACKGRASS', this.tileset , 0, 0);
-   // const fondo2 = this.map.createLayer('GRASS', this.tileset , 0, 0);
-    //const grass2=this.map.createLayer('GRASS', this.tileset2 , 0, 0);
-
-   //const fondo4 = this.map.createLayer('BASE_ROADS_CAR', this.tileset , 0, 0);
-   //const fondo5 = this.map.createLayer('BASE_ROADS_WALK', this.tileset , 0, 0);
-   //const canchas = this.map.createLayer('CANCHAS', this.tileset , 0, 0);
+    this.tileset1 = this.map.addTilesetImage('BaseMap', 'baseMap');
+    this.tileset2 = this.map.addTilesetImage('asset_suelo_castillo', 'suelo_castillo');
+    this.tileset3 = this.map.addTilesetImage('Arbol_T1', 'arbol1');
+    this.tileset4 = this.map.addTilesetImage('Arbol_T2', 'arbol2');
+    this.tileset5 = this.map.addTilesetImage('Rocks', 'rocks');
+    this.tileset6 = this.map.addTilesetImage('Dungeon_Tiles', 'tiles_dungeon');
+    this.tileset7 = this.map.addTilesetImage('mainlevbuild', 'build');
+    this.tileset8 = this.map.addTilesetImage('NATURA2', 'bushes');
+    this.tileset9 = this.map.addTilesetImage('NATURA', 'ground');
+    this.tileset10 = this.map.addTilesetImage('CONSTRUCCION2', 'ruins');
+    this.tileset11 = this.map.addTilesetImage('NATURA3', 'trees');
+    this.tileset12 = this.map.addTilesetImage('mainlevbuild', 'build2');
     
+
+
+
+
+
+    this.suelo=this.map.createLayer('SUELOS', 
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,
+        this.tileset12
+      ]
+      ,0,0);
+    //this.detalles_piso=this.map.createLayer('DETAILS_PISO', this.tileset,0,0);SIN ADIGNAR ]
+    this.tierra=this.map.createLayer('TIERRA',
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+      ]
+      ,0,0);
     
-    //this.muros= this.map.createLayer('DOORS', this.tileset , 0, 0);
-    
-    //const fondo7 = this.map.createLayer('arbol', tileset, 0, 0);
-   
-
-    //const fondo7 = this.map.createLayer('WINDOWS', this.tileset , 0, 0);
-
-    //this.edificio_maestria.setCollisionByProperty({colisionar:true});
-   
+    this.pisoCiudad=this.map.createLayer('PISOS_CIUDAD',
+      [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+      ]
+      ,0,0);
 
 
+    this.decoracion_suelo_city=this.map.createLayer('DECORACION_SUELO_CITY',
+      [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+      ]
+      ,0,0);
 
-    //this.physics.world.setBounds(0, 0, this.width, this.height);
-    //console.log(this.map);
+          this.build_city=this.map.createLayer('BUILD_CITY',
+      [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+      ]
+      ,0,0);
 
-    this.suelo=this.map.createLayer('base', this.tileset,0,0);
+      this.edificios=this.map.createLayer('EDFICIOS_GNR',
+      [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+      ]
+      ,0,0);
+
+      this.decoracion=this.map.createLayer('DECORACION_EDI',
+      [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+      ]
+      ,0,0);
+
+
+
+
+
 
     this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
     this.cameras.main.setBounds(0,0,this.map.widthInPixels,this.map.heightInPixels);
@@ -365,8 +464,8 @@ crearEdificios(){
     //this.diseno=this.map.createLayer('DISENO',this.tileset,0,0);
 
     this.complementosMuros=this.map.createLayer('DEPARTAMENTS/COMPLEMENTOS', this.tileset2 , 0, 0);
-    this.edificios = this.map.createLayer('DEPARTAMENTS/INDUSTRIAL', this.tileset , 0, 0);
-    this.windowsEdificio = this.map.createLayer('DEPARTAMENTS/WINDOWS', this.tileset , 0, 0);
+    this.edificios = this.map.createLayer('DEPARTAMENTS/INDUSTRIAL', this.tileset2 , 0, 0);
+    this.windowsEdificio = this.map.createLayer('DEPARTAMENTS/WINDOWS', this.tileset2 , 0, 0);
     
     
     
@@ -399,10 +498,10 @@ crearItemReloj(){
 crearItems(n){
     
 
-   //this.crearItemsBasura(n); 
-   crearItemsBasura(this,n,this.items_basura,this.widthEscenario,this.heightEscenario,true);
+   //this.crearItemsPunto(n); 
+   crearItemsPunto(this,n,this.items_punto,this.widthEscenario,this.heightEscenario,true);
 
-   this.crearItemReloj();
+  // this.crearItemReloj();
 }
 
 //METODOS DEL ENEMIGO
@@ -425,7 +524,10 @@ crearEnemigo(n=1){
   if(n!==0){
     for(let i=0;i<n;i++){
 
-      let valor=Math.floor(Math.random() * 4) + 0;
+      //let valor=Math.floor(Math.random() * 4) + 0;
+      let valor=0;//aqui va el valor del tipo de enemigo
+      //se debe de modificar con el paso del tiempo para la variacion de enemigo
+      //por el momento puse cero ya que es el valor del primero enemigo en el arreglo
       
    
    let x=Math.floor(Math.random() * ((this.widthEscenario-30) - 0 + 1)) + 0;
@@ -533,7 +635,7 @@ this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.
 movimientosPlayer(){
      this.player.setMovimientoPlayer(this.contactoSprites[0]);
     
-     this.player.getAtaque(this.listaEnemigos,this.contactoSprites,1,this.items_basura,this.widthEscenario,this.heightEscenario,this.contactoSprites,this.golpeEnemie);
+     this.player.getAtaque(this.listaEnemigos,this.contactoSprites,1,this.items_punto,this.widthEscenario,this.heightEscenario,this.contactoSprites,this.golpeEnemie);
 
      //pausar juego
 
@@ -580,12 +682,12 @@ crearColisiones(){
   //this.edificios.setCollisionByProperty({collider:true});
 
 
-  this.collisionRecogerItemBasura();
+  this.collisionRecogerItemPuntos();
   this.collisionRecogerItemTiempo();
 
  // this.collisionPlayerEdificioColision();
   //this.collisionPlayerArboles();
- // this.collisionPlayerMuros();
+  this.collisionPlayerMurosObjetos();
 
   this.colisionesEnemigo();
   
@@ -604,6 +706,7 @@ colisionesEnemigo(){
        console.log(this.golpeToPlayer);
        this.golpeToPlayer.play();
           
+       this.player.setGolpeado();
           empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this);//
           //this.player.setVida(1); desactivar para el contacto player enemigo
           if(this.player.getVida()<=0)this.finalizarPartida("Partida Finalizada") ;
@@ -636,12 +739,52 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
 }
 }//s
 
-      collisionPlayerMuros(){
-        if(this.player && this.muros){
-  //console.log("Dentro de player y arbol");
-this.physics.add.collider(this.player.getContainer(),this.muros);
+      collisionPlayerMurosObjetos(){
+
+      //objetos tierra da entender al abismo de la zona
+
+
+      //dar collider a los graficos 
+
+   
+
+        
+        if(this.player && this.tierra)
+  //tierra  zona abismo
+{
+        if(this.tierra.layer.properties.find(p=>p.name==="collider"&&p.value===true))
+          this.tierra.setCollisionByExclusion([-1]);
+  
+        this.physics.add.collider(this.player.getContainer(),this.tierra);
+      
+}
+
+        if(this.player && this.build_city){
+  //objetos de la zona
+        if(this.build_city.layer.properties.find(p=>p.name==="collider"&&p.value===true))
+          this.build_city.setCollisionByExclusion([-1])
+        this.physics.add.collider(this.player.getContainer(),this.build_city);}
+
+        if(this.player && this.edificios){
+  //edificios
+
+        if(this.edificios.layer.properties.find(p=>p.name==="collider"&&p.value===true))
+          this.edificios.setCollisionByExclusion([-1])
+        this.physics.add.collider(this.player.getContainer(),this.edificios);
+      }
+
+        if(this.player && this.decoracion){
+  //decoracion
+          if(this.decoracion.layer.properties.find(p=>p.name==="collider"&&p.value===true))
+            this.decoracion.setCollisionByExclusion([-1]);
+        this.physics.add.collider(this.player.getContainer(),this.decoracion);
+
 }
       }
+
+      //
+
+      
 
 
       //colisiones Enemigos Tiles
@@ -674,14 +817,14 @@ this.physics.add.collider(this.player.getContainer(),this.muros);
 
           //console.log(item.puntos);
 
-          let numAleatorio=Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+          let numAleatorio=Math.floor(Math.random() * (3 - 1 + 1)) + 1;
 
-          let recogerBasura = this.sound.add('pop'+numAleatorio, {
+          let recogerPuntos = this.sound.add('point'+numAleatorio, {
     loop: false,
     volume: 1   // volumen entre 0 y 1
   });
 
-            recogerBasura.play();
+            recogerPuntos.play();
 
           this.puntos=Number(this.puntaje.text);
 
@@ -690,34 +833,13 @@ this.physics.add.collider(this.player.getContainer(),this.muros);
           
           
           //organizar puntos en items
-          let cantidadItem;
-          if(item.categoria=="organico"){
-            
-            cantidadItem=parseInt(this.itemsOrganicos[(parseInt(item.id)-1)].cantidad)+1;
-            this.itemsOrganicos[(parseInt(item.id)-1)].cantidad=cantidadItem;
-            
 
-
-          }
-            else if(item.categoria=="inorganico"){
-              
-               cantidadItem=parseInt(this.itemsInorganicos[parseInt(item.id)-1].cantidad)+1;
-               this.itemsInorganicos[(parseInt(item.id)-1)].cantidad=cantidadItem;
-
-               
-               
-            }
-            
-
-            this.hudContainerMochila.destroy();
-            this.hudBotonMochila.destroy();
-            this.hudMochila(this);
 
             
 
 
            this.puntos+=Number(item.puntos);
-            this.items_basura.remove(item,true,true);
+            this.items_punto.remove(item,true,true);
 
             
             /*
@@ -751,11 +873,11 @@ this.physics.add.collider(this.player.getContainer(),this.muros);
         
         }
 //colision para cuando el player recoge el itemBasura
-      collisionRecogerItemBasura(){
+      collisionRecogerItemPuntos(){
 
         this.physics.add.overlap(
         this.player.getContainer(),
-        this.items_basura,
+        this.items_punto,
         this.contactoPlayerItem,null,this
     );
 
@@ -900,7 +1022,7 @@ crearHUD(){
 
 //creacion de hud de mochila donde iran los items recogidos
 
-   this.hudMochila(this);
+  // this.hudMochila(this);
 
 }
 //donde muestra los items recolectados
@@ -1209,9 +1331,9 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 //El create es donde acomo las cosas para que tengan un orden
 create(){
 
-   
+  
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-//this.physics.world.createDebugGraphic();
+this.physics.world.createDebugGraphic();
 
     
 
@@ -1241,7 +1363,7 @@ create(){
     
   
 
-    this.crearEnemigo(0);
+    this.crearEnemigo(3);
 
     //colisiones en entre items
     this.crearColisiones();
@@ -1271,7 +1393,7 @@ movimientoItemToPlayer(){
 
 
 
-  this.items_basura.children.iterate(item=>{
+  this.items_punto.children.iterate(item=>{
     if(item.moveToPlayer){
       let velocidad=Math.floor(Math.random() * (500 - 300 + 1)) + 300;
    // scene.time.delayedCall(1000, () => {

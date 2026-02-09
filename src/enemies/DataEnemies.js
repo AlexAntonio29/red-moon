@@ -1,16 +1,16 @@
 export const dataEnemigos=[
     {
         'id':'1',
-        'nombre':'Bote de basura',
+        'nombre':'Zombie',
         'vida':15,
         'items':1,
         'ataque':'5',
         'puntos':Math.floor(Math.random() * 10) + 5,
-        'velocidad':100,
+        'velocidad':50,
         'nivel':'1',
         'diseno':'enemie1',
-        'width':50,
-        'height':50,
+        'width':80,
+        'height':80,
         'movimiento':'5',
         'ofzigzag':false
     },

@@ -39,61 +39,26 @@ export class Items extends Phaser.Physics.Arcade.Sprite{
     }
 
     
-    setBody(n="reloj"){//n es el nombre de la textura si es que se crea
+    setBody(n="item_punto"){//n es el nombre de la textura si es que se crea
 
 
-        if(this.categoria==="organico"){
 
-                    this//=this.scene.physics.add.sprite(0,0,"item_basura"+this.id)
+
+                               this//creacion del item
                     .setOrigin(0)
                     .setDisplaySize(this.width,this.height)
                     
                     ;
-                if (!this.scene.anims.exists("item_mov"+this.id)) {
-                     this.scene.anims.create({
+      if (!this.scene.anims.exists("item_mov"+this.id)) {
+          this.scene.anims.create({
         key: "item_mov"+this.id,
-        frames: this.scene.anims.generateFrameNumbers("item_basura"+this.id, { start: 0, end: 4 }),
-        frameRate: 6,
+        frames: this.scene.anims.generateFrameNumbers("item_punto", { start: 0, end: 4 }),
+        frameRate: 10,
         repeat: -1
           });
         }
 
-    this.play("item_mov"+this.id);
-
-
-
-                  }
-            else if(this.categoria==="inorganico") {
-
-
-                    this//=this.scene.physics.add.sprite(0,0,"item_basura"+(parseInt(this.id)+6))
-                    .setOrigin(0)
-                    .setDisplaySize(this.width,this.height)
-                    
-                    ;
-
-                      if (!this.scene.anims.exists("item_mov"+(parseInt(this.id)+6))) {
-                     this.scene.anims.create({
-        key: "item_mov"+(parseInt(this.id)+6),
-        frames: this.scene.anims.generateFrameNumbers("item_basura"+(parseInt(this.id)+6), { start: 0, end: 4 }),
-        frameRate: 6,
-        repeat: -1
-          });}
-    this.play("item_mov"+(parseInt(this.id)+6));
-                 
-}
-else {
-  
-                    this//.scene.physics.add.sprite(0,0,n)
-                    .setOrigin(0)
-                    .setDisplaySize(this.width,this.height)
-                  
-                    ;
-                  
-
-                  }
-
-                 
+    this.play("item_mov"+this.id);      
                     
 
 

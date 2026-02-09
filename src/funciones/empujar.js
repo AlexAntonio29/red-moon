@@ -1,4 +1,4 @@
-export function empujar(sujetoEmpujador, sujetoEmpujado, contacto ,listaContacto, scene,force=600,movCamara=true) {
+export function empujar(sujetoEmpujador, sujetoEmpujado, contacto ,listaContacto, scene,force=300,movCamara=true) {
 
 if(!listaContacto[contacto]){
 

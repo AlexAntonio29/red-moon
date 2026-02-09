@@ -1,5 +1,5 @@
 import  {empujar}  from "../funciones/empujar.js";
-import { crearItemsBasura } from "../funciones/crearItemsBasura.js";
+import { crearItemsPunto } from "../funciones/crearItemsPuntos.js";
 import { armas } from "../items/DataItemsPotenciadores.js";
 import {dataEnemigos} from "../enemies/DataEnemies.js"
 export class player {
@@ -12,7 +12,8 @@ export class player {
     this.x=x;
     this.y=y;
     this.arma;
-    this.setArma(armas[2]);
+    this.setArma(armas[0]);
+
 
     console.log(this.arma);
 
@@ -23,11 +24,16 @@ export class player {
 
     this.joystick=joystick;
     this.controles=controles;
-    this.caminar=false;
-    this.caminarInversoEstatico=false;
-    this.caminarArriba=false;
-    this.caminarAbajo=false;
+   
+   
+
+  
     this.keys=keys;
+    //para cambiar de estado segun la accion
+    this.state="idle";
+     this.subEstado_posicionEstatico="derecha";
+
+    
 
     this.habilitarCollision=false;
 
@@ -43,8 +49,8 @@ export class player {
     this.sprite.setCollideWorldBounds(true);
 
     this.componentesAtaque={
-      'textura':'ataqueLateralAbajo',
-      'anims': "ataqueAbajo",
+      'textura':'ataqueLateralArriba',
+      'anims': "ataqueArriba",
       'width':this.sprite.displayWidth*2,
       'height':this.sprite.displayHeight,
       'x':0.5,
@@ -53,29 +59,38 @@ export class player {
 
     this.ataque=5;
 
+    this.animaciones();
+
+
+   
+  }
+
+  animaciones(){
+
     this.scene.anims.create({
         key: "player_estatico",
-        frames: this.scene.anims.generateFrameNumbers('player', { start: 1, end: 1 }),
-        frameRate: 6,
+        frames: this.scene.anims.generateFrameNumbers('player_idle', { start: 0, end: 3 }),
+        frameRate: 5,
         repeat: -1
           });
-    this.sprite.play("player_estatico");
+    //this.sprite.play("player_estatico");
 
     this.scene.anims.create({
         key: "player_camina",
-        frames: this.scene.anims.generateFrameNumbers('player', { start: 0, end: 5 }),
+        frames: this.scene.anims.generateFrameNumbers('player', { start: 0, end: 6 }),
         frameRate: 10,
         repeat: -1
           });
           this.scene.anims.create({
         key: "player_camina_inverso",
-        frames: this.scene.anims.generateFrameNumbers('player', { start: 6, end: 11 }),
+        frames: this.scene.anims.generateFrameNumbers('player', { start: 0, end: 6 }),
         frameRate: 10,
         repeat: -1
           });
+
           this.scene.anims.create({
         key: "player_camina_up",
-        frames: this.scene.anims.generateFrameNumbers('player_walk_up', { start: 0, end: 5 }),
+        frames: this.scene.anims.generateFrameNumbers('player_walk_up', { start: 0, end: 3 }),
         frameRate: 10,
         repeat: -1
           });
@@ -88,32 +103,29 @@ export class player {
           });
           this.scene.anims.create({
         key: "player_estatico_inverso",
-        frames: this.scene.anims.generateFrameNumbers('player', { start: 5, end: 5 }),
+        frames: this.scene.anims.generateFrameNumbers('player_idle', { start: 0, end: 3 }),
         frameRate: 6,
         repeat: -1
           });
 
+            this.scene.anims.create({
+            key: "ataque-horizontal",
+            frames: this.scene.anims.generateFrameNumbers('attack_right',{start:0, end:4 }),
+            frameRate:15,
+            repeat:0
+          })
 
 
-   
-         // this.sprite.play('player_camina');
-
-         
-
-          //this.sprite.play('player_estatico');
-        /* if(!this.caminar) this.sprite.play('player_estatico');
-          else this.sprite.play('player_caminar');*/
+          this.scene.anims.create({
+            key:"hurt_sword",
+            frames:this.scene.anims.generateFrameNumbers("player_golpeado_espada",{start:0, end:1}),
+            frameRate:6,
+            repeat:0
+          })
 
 
-    
-    
-    /*
-    'x':(this.sprite.x)-(this.sprite.displayWidth/2),
-      'y':(this.sprite.y)+(this.sprite.displayHeight/2)
-    */
 
 
-    //console.log("CREACION del player");
 
    
   }
@@ -150,7 +162,7 @@ export class player {
         frameRate: 6,
         repeat: -1
           });
-    this.sprite.play("player_estatico");
+    //this.sprite.play("player_estatico");
   }
 
   getChangeSprite(){
@@ -183,6 +195,23 @@ export class player {
     return this.vida;
   }
 
+
+  getGolpeado(){
+    
+  }
+
+  setGolpeado(){
+
+    //console.log("EN GOLPEADO");
+    this.state="hurt";
+
+    if(this.sprite.anims.currentAnim?.key!=="hurt_sword")
+
+      this.sprite.play("hurt_sword");
+   
+
+  }
+
   setPositionInitial(x, y) {
     this.sprite.setPosition(x, y);
     
@@ -203,228 +232,7 @@ export class player {
     this.sprite.setVelocityY(n);
   }
 
-
-  setMovimientoPlayer(contacto){
-
-    let caminar=false;
-    let caminarInverso=false;
-    
-
-
-
-      
-
-
-    let velocidad=350;
-
-   // console.log("MM_X: "+this.componentesAtaque.x);
-   // console.log("MM_Y: "+this.componentesAtaque.y);
-    
-
-     //this.player.getContainer().setVelocity(0);
-
-       if (!contacto && !(this.estaAtacando)) {
-
-
-    this.sprite.setVelocity(0);
-  
-
-        //se hace el llamado a la clase "player"
-     //movimientos diagonales
-
-    // const longitud = Math.hypot(velocidad, velocidad);
-   
-      
-      let velocidadDiagonal=velocidad/Math.sqrt(2);
-  
-      
-      // console.log("velocidadparteDiagonal: "+velocidadDiagonal);
-
-   
-
-  if((this.scene.cursor.up.isDown && this.scene.cursor.right.isDown)||(this.keys.W.isDown&&this.keys.D.isDown)||(this.joystick.up.isDown&&this.joystick.right.isDown)){
-    // console.log("UP + RIGHT");
-
-      
-     caminar=true;
-     this.caminarInversoEstatico=true;
-     this.caminarArriba=false;
-    //this.sprite.play('player_camina');
-     
-     this.sprite.setVelocityY(-velocidadDiagonal);
-     this.sprite.setVelocityX(velocidadDiagonal);
-  }
-
-  else if((this.scene.cursor.up.isDown && this.scene.cursor.left.isDown)||(this.keys.W.isDown&&this.keys.A.isDown)||(this.joystick.up.isDown&&this.joystick.left.isDown)){
-   // console.log("UP + LEFT");
-    //this.sprite.play('player_camina');
-    this.caminarInversoEstatico=true;
-     caminar=true;
-     caminarInverso=true;
-     this.caminarArriba=false;
-     this.sprite.setVelocityY(-velocidadDiagonal);
-     this.sprite.setVelocityX(-velocidadDiagonal);
-  }
-  else if((this.scene.cursor.down.isDown && this.scene.cursor.left.isDown)||(this.keys.S.isDown&&this.keys.A.isDown)||(this.joystick.down.isDown&&this.joystick.left.isDown)){
-   // console.log("DOWN + LEFT");
-    // this.sprite.play('player_camina');
-    this.caminarInversoEstatico=true;
-     caminar=true;
-     caminarInverso=true;
-     this.caminarArriba=false;
-     this.sprite.setVelocityY(velocidadDiagonal);
-     this.sprite.setVelocityX(-velocidadDiagonal);
-  }
-
-  else if((this.scene.cursor.down.isDown && this.scene.cursor.right.isDown)||(this.keys.S.isDown&&this.keys.D.isDown)||(this.joystick.down.isDown&&this.joystick.right.isDown)){
-     //console.log("DOWN + RIGHT");
-     //this.sprite.play('player_camina');
-     this.caminarInversoEstatico=false;
-     caminar=true;
-     this.caminarArriba=false;
-     this.sprite.setVelocityY(velocidadDiagonal);
-     this.sprite.setVelocityX(velocidadDiagonal);
-  }
-  else
-//movimientos normales
- if(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown){
-//.setOrigin(0.5,1)//arriba
-  //this.sprite.play('player_camina');
-  caminar=true;
-  this.caminarArriba=true;
-   this.caminarAbajo=false;
-  this.caminarInversoEstatico=false;
-  this.componentesAtaque.x=0.5;
-  this.componentesAtaque.y=1;
-  
-
-
-  this.componentesAtaque.textura="ataqueLateralArriba";
-  this.componentesAtaque.anims="ataqueAbajo";
-  //cambio de tamaño
-   this.componentesAtaque.width=this.sprite.displayWidth*2;
-   this.componentesAtaque.height=this.sprite.displayHeight;
-
-   //this.componentesAtaque.x=-1*this.componentesAtaque.x;
-   //this.componentesAtaque.y=-1*this.componentesAtaque.y;
-
-    //console.log("UP");
-    this.sprite.setVelocityY(-velocidad);
- }else if(this.keys.S.isDown||this.scene.cursor.down.isDown||this.joystick.down.isDown){
-// .setOrigin(0.5,0)//abajo
-  //this.sprite.play('player_camina');
-  caminar=true;
-  this.caminarInversoEstatico=false;
-  this.caminarArriba=false;
-  this.caminarAbajo=true;
-  
-   this.componentesAtaque.x=0.5;
-  this.componentesAtaque.y=0;
- 
-
-   //cambio de tamaño
-   this.componentesAtaque.width=this.sprite.displayWidth*2;
-   this.componentesAtaque.height=this.sprite.displayHeight;
-
-   
-   this.componentesAtaque.textura="ataqueLateralAbajo";
-   this.componentesAtaque.anims="ataqueArriba";
-  
-     //console.log("DOWN");
-    this.sprite.setVelocityY(velocidad);
- }else if(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown){
-
- // this.sprite.play('player_camina');
-  
-  //.setOrigin(1,0.5)//izquierda
-  this.caminarInversoEstatico=true;
-  caminar=true;
-  caminarInverso=true;
-   this.caminarAbajo=false;
-  this.caminarArriba=false;
-  this.componentesAtaque.x=1;
-  this.componentesAtaque.y=0.5;
-
-
-   this.componentesAtaque.textura="ataqueLateralIzquierda";
-   this.componentesAtaque.anims="ataqueIzquierda";
-   //cambio del tamaño
-   
-   this.componentesAtaque.width=this.sprite.displayHeight;
-   this.componentesAtaque.height=this.sprite.displayWidth*2;
-   
-   //  console.log("LEFT");
-    this.sprite.setVelocityX(-velocidad);
- }else if(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown){
-
- // this.sprite.play('player_camina');
-
-  //.setOrigin(0,0.5)//derecha
-  this.caminarInversoEstatico=false;
-  caminar=true;
-  this.caminarArriba=false;
-   this.caminarAbajo=false;
-  this.componentesAtaque.x=0;
-  this.componentesAtaque.y=0.5;
-
-   this.componentesAtaque.textura="ataqueLateralDerecha";
-   this.componentesAtaque.anims="ataqueDerecha";
-
-   //cambio del tamaño
-   
-   this.componentesAtaque.width=this.sprite.displayHeight;
-   this.componentesAtaque.height=this.sprite.displayWidth*2;
-    // console.log("RIGHT");
-    this.sprite.setVelocityX(velocidad);
- }
-
- }
-
-if (caminar) {
-
-    if(this.caminarAbajo){
-        if (this.sprite.anims.currentAnim?.key !== 'player_camina_down') {
-      this.sprite.play('player_camina_down');
-    }
-  }
-  else
-  if(this.caminarArriba){
-        if (this.sprite.anims.currentAnim?.key !== 'player_camina_up') {
-      this.sprite.play('player_camina_up');
-    }
-  }
-  else
-
-  if (caminarInverso) {
-    if (this.sprite.anims.currentAnim?.key !== 'player_camina_inverso') {
-      this.sprite.play('player_camina_inverso');
-    }
-  } else {
-    if (this.sprite.anims.currentAnim?.key !== 'player_camina') {
-      this.sprite.play('player_camina');
-    }
-  }
-
-
-
-} else {
-  if (this.caminarInversoEstatico) {
-    if (this.sprite.anims.currentAnim?.key !== 'player_estatico_inverso') {
-      this.sprite.play('player_estatico_inverso');
-    }
-  } else {
-    if (this.sprite.anims.currentAnim?.key !== 'player_estatico') {
-      this.sprite.play('player_estatico');
-    }
-  }
-}
-
-
- 
-
-  }
-
-  setArma(arma){
+    setArma(arma){
 
     this.arma=arma;
     this.sonidoAtaque=this.scene.sound.add(arma.sonido,{
@@ -452,30 +260,445 @@ if (caminar) {
       this.scene.anims.create({
         key: "ataqueArriba",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralArriba", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
-        frameRate: 10,
+        frameRate: 12,
         repeat: -1
           });
 
           this.scene.anims.create({
         key: "ataqueAbajo",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralAbajo", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
-        frameRate: 10,
+        frameRate: 12,
         repeat: -1
           });
 
           this.scene.anims.create({
         key: "ataqueDerecha",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralDerecha", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
-        frameRate: 10,
+        frameRate: 12,
         repeat: -1
           });
 
           this.scene.anims.create({
         key: "ataqueIzquierda",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralIzquierda", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
-        frameRate: 10,
+        frameRate: 12,
         repeat: -1
           });
+
+
+
+  }
+
+  caminarPlayer(contacto){
+    //realizar las acciones dependiendo de la posicion del estado de caminata
+    let subEstado_caminar="";
+
+  
+    //velocidad del movimiento del player
+    let velocidad=250;
+
+
+    
+
+ 
+    let velocidadDiagonal=velocidad/Math.sqrt(2);
+   if (!contacto && !(this.estaAtacando)&& this.state!="attack") {
+
+
+    //ASIGNAR ESTADOS DE ACUERDO AL MOVIMIENTO
+    //Calcular velocidad de movimimiento
+    this.sprite.setVelocity(0);
+
+    //movimiento diagonal respecto a la velocidad de una pendiente con respecto a la suma de fuerzas
+    
+  
+    //DIAGONAL ARRIBA Y LA DERECHA
+  if((this.scene.cursor.up.isDown && 
+    this.scene.cursor.right.isDown)||
+    (this.keys.W.isDown&&this.keys.D.isDown)
+    ||(this.joystick.up.isDown&&this.joystick.right.isDown
+
+    )){
+    // console.log("UP + RIGHT");  
+
+    if(!(this.keys.S.isDown||this.scene.cursor.down.isDown||this.joystick.down.isDown)&&
+       !(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown)
+  )
+
+     subEstado_caminar="arriba-derecha";
+
+    //this.sprite.play('player_camina');
+     
+     
+  }
+//DIAGONAL ARRIBA IZQUIERDA
+  else if((this.scene.cursor.up.isDown 
+    && this.scene.cursor.left.isDown)||
+    (this.keys.W.isDown&&this.keys.A.isDown)||
+    (this.joystick.up.isDown&&this.joystick.left.isDown)
+  ){
+   // console.log("UP + LEFT");
+    //this.sprite.play('player_camina');
+
+    if(
+      !(this.keys.S.isDown||this.scene.cursor.down.isDown||this.joystick.down.isDown)&&
+      !(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown)
+    )
+
+    subEstado_caminar="arriba-izquierda";
+ 
+
+
+     
+  }//DIAGONAL ABAJO IZQUIERDA
+  else if((this.scene.cursor.down.isDown && 
+    this.scene.cursor.left.isDown)||(this.keys.S.isDown&&this.keys.A.isDown)||
+    (this.joystick.down.isDown&&this.joystick.left.isDown)){
+   // console.log("DOWN + LEFT");
+   
+
+    if(
+      !(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown)&&
+      !(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown)
+    )
+
+    subEstado_caminar="abajo-izquierda";
+     
+
+
+     
+  }
+  //DIAGONAL ABAJO DERECHA
+  else if((this.scene.cursor.down.isDown && 
+    this.scene.cursor.right.isDown)||(this.keys.S.isDown&&this.keys.D.isDown)||
+    (this.joystick.down.isDown&&this.joystick.right.isDown)){
+     //console.log("DOWN + RIGHT");
+     //this.sprite.play('player_camina');
+      if(
+        !(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown)&&
+        !(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown)
+      )
+    subEstado_caminar="abajo-derecha";
+
+     
+  }
+  else
+//movimientos normales
+
+    //ARIBA
+ if(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown){
+
+  if(!(this.keys.S.isDown||this.scene.cursor.down.isDown||this.joystick.down.isDown)
+    &&!(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown)
+    &&!(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown)
+  )
+    subEstado_caminar="arriba";
+ }  //ABAJO
+ else if(this.keys.S.isDown||this.scene.cursor.down.isDown||this.joystick.down.isDown){
+  if(!(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown)
+    &&!(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown)
+    &&!(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown)
+  )
+    subEstado_caminar="abajo"
+ }  //DERECHA
+ else if(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown){
+
+  if(
+      !(this.keys.S.isDown||this.scene.cursor.down.isDown||this.joystick.down.isDown)
+    &&!(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown)
+    &&!(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown)
+  )
+    subEstado_caminar="derecha";
+ }  //IZQUIERDA
+ else if(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown){
+
+  if(
+      !(this.keys.S.isDown||this.scene.cursor.down.isDown||this.joystick.down.isDown)
+    &&!(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown)
+    &&!(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown)
+  )
+    subEstado_caminar="izquierda";
+ }else{
+    this.state="idle";
+
+    /*
+    Aqui utilizare los sub_estados de movimiento idle, si esta en derecha se quedad en posicion derecha quieto, 
+    si esta en izquierda invierte los valores
+    */
+
+
+
+  switch(this.subEstado_posicionEstatico){
+    case "derecha":
+
+    if (this.sprite.anims.currentAnim?.key !== 'player_estatico'&&this.state==="idle") {
+      this.sprite.flipX=false;
+      this.sprite.play('player_estatico');
+      this.state="idle";
+    }
+    break;
+
+    case "izquierda":
+
+    if (this.sprite.anims.currentAnim?.key !== 'player_estatico'&&this.state==="idle") {
+      this.sprite.flipX=true;
+      this.sprite.play('player_estatico');
+      this.state="idle";
+    }
+    break;
+
+    default:
+      if (this.sprite.anims.currentAnim?.key !== 'player_estatico'&&this.state==="idle") {
+      this.sprite.flipX=false;
+      this.sprite.play('player_estatico');
+      this.state="idle";
+    }
+    break;
+
+  }
+
+  
+ }
+       // console.log("subEstadoCaminar: "+subEstado_caminar);
+        //if(subEstado_caminar!=="") 
+ 
+}
+
+ switch(subEstado_caminar){
+  case "arriba":
+
+    //.setOrigin(0.5,1)//arriba
+  //this.sprite.play('player_camina');
+
+
+   
+  this.subEstado_posicionEstatico="arriba";
+  this.componentesAtaque.x=0.5;
+  this.componentesAtaque.y=1;
+  
+
+
+  this.componentesAtaque.textura="ataqueLateralArriba";
+  this.componentesAtaque.anims="ataqueAbajo";
+  //cambio de tamaño
+   this.componentesAtaque.width=this.sprite.displayWidth*2;
+   this.componentesAtaque.height=this.sprite.displayHeight;
+
+   //this.componentesAtaque.x=-1*this.componentesAtaque.x;
+   //this.componentesAtaque.y=-1*this.componentesAtaque.y;
+
+    //console.log("UP");
+    this.sprite.setVelocityY(-velocidad);
+
+      if (this.sprite.anims.currentAnim?.key !== 'player_camina_up') 
+      this.sprite.anims.play('player_camina_up',true);
+  break;
+
+  case "abajo":
+    // .setOrigin(0.5,0)//abajo
+  //this.sprite.play('player_camina');
+ 
+  this.subEstado_posicionEstatico="abajo";
+
+
+  
+   this.componentesAtaque.x=0.5;
+  this.componentesAtaque.y=0;
+ 
+
+   //cambio de tamaño
+   this.componentesAtaque.width=this.sprite.displayWidth*2;
+   this.componentesAtaque.height=this.sprite.displayHeight;
+
+   
+   this.componentesAtaque.textura="ataqueLateralAbajo";
+   this.componentesAtaque.anims="ataqueArriba";
+  
+     //console.log("DOWN");
+    this.sprite.setVelocityY(velocidad);
+
+    if (this.sprite.anims.currentAnim?.key !== 'player_camina_down') 
+      this.sprite.play('player_camina_down');
+
+  break;
+
+  case "derecha":
+  
+
+  //.setOrigin(0,0.5)//derecha
+  //this.state="moveRight";
+  this.subEstado_posicionEstatico="derecha";
+  
+
+
+  this.componentesAtaque.x=0;
+  this.componentesAtaque.y=0.5;
+
+   this.componentesAtaque.textura="ataqueLateralDerecha";
+   this.componentesAtaque.anims="ataqueDerecha";
+
+   //cambio del tamaño
+   
+   this.componentesAtaque.width=this.sprite.displayHeight;
+   this.componentesAtaque.height=this.sprite.displayWidth*2;
+    // console.log("RIGHT");
+    this.sprite.setVelocityX(velocidad);
+
+    if (this.sprite.anims.currentAnim?.key !== 'player_camina') {
+      console.log("cambio derecha");
+      this.sprite.flipX=false;
+      this.sprite.play('player_camina');
+    }
+
+
+  break;
+
+  case "izquierda":
+    
+  
+  this.subEstado_posicionEstatico="izquierda";
+ 
+
+
+
+  this.componentesAtaque.x=1;
+  this.componentesAtaque.y=0.5;
+
+
+   this.componentesAtaque.textura="ataqueLateralIzquierda";
+   this.componentesAtaque.anims="ataqueIzquierda";
+   //cambio del tamaño
+   
+   this.componentesAtaque.width=this.sprite.displayHeight;
+   this.componentesAtaque.height=this.sprite.displayWidth*2;
+   
+   //  console.log("LEFT");
+   
+    this.sprite.setVelocityX(-velocidad);
+
+        if (this.sprite.anims.currentAnim?.key !== 'player_camina_inverso') {
+          console.log("cambio izquierda");
+      this.sprite.flipX=true;
+      this.sprite.play('player_camina_inverso');
+    }
+
+  break;
+
+  case "arriba-derecha":
+
+  this.subEstado_posicionEstatico="arriba-derecha";
+      this.sprite.setVelocityY(-velocidadDiagonal);
+     this.sprite.setVelocityX(velocidadDiagonal);
+
+         if (this.sprite.anims.currentAnim?.key !== 'player_camina') {
+      console.log("cambio derecha");
+      this.sprite.flipX=false;
+      this.sprite.play('player_camina');
+    }
+  break;
+
+  case "arriba-izquierda":
+    this.subEstado_posicionEstatico="arriba-izquierda";
+     this.sprite.setVelocityY(-velocidadDiagonal);
+     this.sprite.setVelocityX(-velocidadDiagonal);
+
+     if (this.sprite.anims.currentAnim?.key !== 'player_camina') {
+      console.log("cambio izquierda");
+      this.sprite.flipX=true;
+      this.sprite.play('player_camina');
+    }
+  break;
+
+  case "abajo-derecha":
+
+  this.subEstado_posicionEstatico="abajo-derecha";
+    this.sprite.setVelocityY(velocidadDiagonal);
+     this.sprite.setVelocityX(velocidadDiagonal);
+
+         if (this.sprite.anims.currentAnim?.key !== 'player_camina') {
+      console.log("cambio derecha");
+      this.sprite.flipX=false;
+      this.sprite.play('player_camina');
+    }
+
+  break;
+
+  case "abajo-izquierda":
+    this.subEstado_posicionEstatico="abajo-izquierda";
+    this.sprite.setVelocityY(velocidadDiagonal);
+     this.sprite.setVelocityX(-velocidadDiagonal);
+
+     if (this.sprite.anims.currentAnim?.key !== 'player_camina') {
+          console.log("cambio izquierda");
+      this.sprite.flipX=true;
+      this.sprite.play('player_camina');
+    }
+  break;
+    default:
+
+      switch(this.subEstado_posicionEstatico){
+    case "derecha":
+
+    if (this.sprite.anims.currentAnim?.key !== 'player_estatico'&&this.state==="idle") {
+      this.sprite.flipX=false;
+      this.sprite.play('player_estatico');
+      this.state="idle";
+    }
+    break;
+
+    case "izquierda":
+
+    if (this.sprite.anims.currentAnim?.key !== 'player_estatico'&&this.state==="idle") {
+      this.sprite.flipX=true;
+      this.sprite.play('player_estatico');
+      this.state="idle";
+    }
+    break;
+
+    default:
+      if (this.sprite.anims.currentAnim?.key !== 'player_estatico'&&this.state==="idle") {
+      this.sprite.flipX=false;
+      this.sprite.play('player_estatico');
+      this.state="idle";
+    }
+    break;
+
+  }
+
+    break;
+
+
+ }
+
+
+
+
+ 
+
+  }
+
+
+
+  setMovimientoPlayer(contacto){
+    console.log("Estado Principal: "+this.state);
+
+
+    
+
+    //cuando termine la animacion
+    this.sprite.on("animationcomplete", (anim)=>{
+      if(
+        this.state==="attack"
+        ||this.state==="hurt"
+      
+      ){
+        
+        this.state="idle";
+      }
+    })
+
+      this.caminarPlayer(contacto);
+
   
 
   }
@@ -504,7 +727,7 @@ if (caminar) {
             this.soundGolpe.play();
             
              if(enemigo.getVida()<=0){
-                crearItemsBasura(this.scene,enemigo.dataEnemie.items,this.listaItems,enemigo.getPositionX(),enemigo.getpositionY(),false,this.sprite);
+                crearItemsPunto(this.scene,enemigo.dataEnemie.items,this.listaItems,enemigo.getPositionX(),enemigo.getpositionY(),false,this.sprite);
              
 
               let x=Math.floor(Math.random() * ((this.widthEscenario-30) - 0 + 1)) + 0;
@@ -515,15 +738,7 @@ if (caminar) {
               enemigo.setFullVida(dataEnemigos[t].vida);
               enemigo.setEnemiePosition(x,y);
               //enemigo
-              //enemigo.setMovimientoEnemigo(this.sprite,contactoMov[0],contactoMov[1],contactoMov[2]);
-
-              
-              
-              
-             /*enemigo.getContainer().destroy();
-             // console.log("Enemigo Eliminado - Cantidad: "+ listaEnemigos.length);
-               const index = listaEnemigos.indexOf(enemigo);
-              if (index !== -1) listaEnemigos.splice(index, 1);*/
+ 
                 this.habilitarCollision=true;
         //console.log("Enemigo Eliminado - Cantidad: " + listaEnemigos.length);
              }
@@ -548,19 +763,21 @@ if (caminar) {
         ||Phaser.Input.Keyboard.JustDown(this.keys.J))
       &&!this.estaAtacando){
 
-
+        
         
          this.estaAtacando=true;
         this.widthEscenario=widthEscenario;
         this.heightEscenario=heightEscenario;
          
          this.contacto=contacto;
-        if(this.spriteAtaque==undefined){
+        if(this.spriteAtaque===undefined){
 
         this.spriteAtaque=this.scene.add.sprite(0,0,this.componentesAtaque.textura)
         .setOrigin(this.componentesAtaque.x,this.componentesAtaque.y)
         .setDisplaySize(Number(this.arma.width)*(this.arma.nivel),Number(this.arma.heigth)*(this.arma.nivel))
         .setPosition(this.sprite.x+this.sprite.displayWidth/2, this.sprite.y+this.sprite.displayHeight/2);
+
+
         
         this.scene.physics.add.existing(this.spriteAtaque);
         this.spriteAtaque.body.setCollideWorldBounds(true);
@@ -587,6 +804,10 @@ if (caminar) {
         //this.spriteAtaque.body.setCollideWorldBounds(true);
       }
 
+      
+
+
+
       this.spriteAtaque.body.setVelocity(0);
 
 
@@ -594,6 +815,12 @@ if (caminar) {
     this.spriteAtaque.body.enable = true;
 
     this.spriteAtaque.play(this.componentesAtaque.anims);
+
+    
+      if(this.state!=="attack"){
+        this.state="attack";
+    this.sprite.anims.play("ataque-horizontal",true);
+  }
 
 
 
@@ -604,6 +831,7 @@ if (caminar) {
 
         //cargarSonido
         this.sonidoAtaque.play();
+        
 
 
 
@@ -639,9 +867,9 @@ if (caminar) {
       
 
        this.scene.time.delayedCall(this.arma.velocidad, () => {
-    this.estaAtacando=false;
-    this.spriteAtaque.setVisible(false);
-    this.spriteAtaque.body.enable = false;
+       this.estaAtacando=false;
+       this.spriteAtaque.setVisible(false);
+       this.spriteAtaque.body.enable = false;
     
   });
 
@@ -651,6 +879,8 @@ if (caminar) {
 
    
   } 
+
+  
 
   
 

@@ -1,18 +1,18 @@
 export const armas=[
     {
         'id':'1',
-        'nombre':'palo',
+        'nombre':'espada',
         'ataque':5,
         'puntos':150, 
         'velocidad':300, 
         'tiempoDisparo':0,
         'nivel':1, 
         'diseno':'arma1', 
-        'width': 40,
-        'heigth':40,
+        'width': 80,
+        'heigth':80,
         'largoAtaque':false, 
         'sonido':'ataque1',
-        'descripcion':'Palo sirve para machacar a la basura',
+        'descripcion':'espada clasica',
         'inicioAnim':0
     },
     {

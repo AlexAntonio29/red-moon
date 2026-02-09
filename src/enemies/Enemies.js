@@ -31,8 +31,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         if (!this.scene.anims.exists(this.dataEnemie.diseno+"_camina")) {
         this.scene.anims.create({
         key: this.dataEnemie.diseno+"_camina",
-        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno, { start: 0, end: 3 }),
-        frameRate: 6,
+        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno, { start: 0, end: 4 }),
+        frameRate: 4,
         repeat: -1
           });
         }
@@ -43,7 +43,12 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
         this.play(this.dataEnemie.diseno+"_camina");
         //this.play('enemigoCamina');
+
+        this.state="walk";
+        this.subState="walk_right"
         
+
+
 
     }
 
@@ -117,6 +122,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       //console.log(`!contacto:${!contacto}, !this.vida${!(this.vida<=0)}, !contractoAtaque:${!contactoAtaque} !contactoEnemigo:${!contactoEnemigo}`)
       if(!contacto && !(this.vida<=0) && !contactoAtaque && !contactoEnemigo){
 
+
+
         //console.log('DENTRO');
          
         let vel=this.velocidad;
@@ -135,6 +142,11 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
     let enemigoX=this.x;
     let enemigoY=this.y;
+
+
+    if(enemigoX>playerX){
+      this.flipX=true
+    }else this.flipX=false;
 
     //console.log(`Posicion Player: x:${playerX} y:${playerY}`);
     //console.log(`Posicion Enemigo: x:${enemigoX} y:${enemigoY}`);
