@@ -1004,7 +1004,7 @@ crearHUD(){
     .setOrigin(0)
     .setStrokeStyle(2,0xffffff);
 
- let textoPuntos= this.add.text(16,16,"Puntos: ",{
+ let textoPuntos= this.add.text(16,16,"esencia de luna roja ",{
         fontSize: '15px',
         fontFamily:this.fontText,
         fill: '#fff'
