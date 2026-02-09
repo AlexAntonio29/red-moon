@@ -1,5 +1,5 @@
 import  {empujar}  from "../funciones/empujar.js";
-import { crearItemsBasura } from "../funciones/crearItemsBasura.js";
+import { crearItemsPunto } from "../funciones/crearItemsPuntos.js";
 import { armas } from "../items/DataItemsPotenciadores.js";
 import {dataEnemigos} from "../enemies/DataEnemies.js"
 export class player {
@@ -90,7 +90,7 @@ export class player {
 
           this.scene.anims.create({
         key: "player_camina_up",
-        frames: this.scene.anims.generateFrameNumbers('player_walk_up', { start: 0, end: 5 }),
+        frames: this.scene.anims.generateFrameNumbers('player_walk_up', { start: 0, end: 3 }),
         frameRate: 10,
         repeat: -1
           });
@@ -112,6 +112,14 @@ export class player {
             key: "ataque-horizontal",
             frames: this.scene.anims.generateFrameNumbers('attack_right',{start:0, end:4 }),
             frameRate:15,
+            repeat:0
+          })
+
+
+          this.scene.anims.create({
+            key:"hurt_sword",
+            frames:this.scene.anims.generateFrameNumbers("player_golpeado_espada",{start:0, end:1}),
+            frameRate:6,
             repeat:0
           })
 
@@ -185,6 +193,23 @@ export class player {
 
   getVida(){
     return this.vida;
+  }
+
+
+  getGolpeado(){
+    
+  }
+
+  setGolpeado(){
+
+    //console.log("EN GOLPEADO");
+    this.state="hurt";
+
+    if(this.sprite.anims.currentAnim?.key!=="hurt_sword")
+
+      this.sprite.play("hurt_sword");
+   
+
   }
 
   setPositionInitial(x, y) {
@@ -434,7 +459,7 @@ export class player {
 
   
  }
-        console.log("subEstadoCaminar: "+subEstado_caminar);
+       // console.log("subEstadoCaminar: "+subEstado_caminar);
         //if(subEstado_caminar!=="") 
  
 }
@@ -655,14 +680,18 @@ export class player {
 
 
   setMovimientoPlayer(contacto){
-    //console.log("Estado Principal: "+this.state);
+    console.log("Estado Principal: "+this.state);
 
 
     
 
     //cuando termine la animacion
     this.sprite.on("animationcomplete", (anim)=>{
-      if(this.state==="attack"){
+      if(
+        this.state==="attack"
+        ||this.state==="hurt"
+      
+      ){
         
         this.state="idle";
       }
@@ -698,7 +727,7 @@ export class player {
             this.soundGolpe.play();
             
              if(enemigo.getVida()<=0){
-                crearItemsBasura(this.scene,enemigo.dataEnemie.items,this.listaItems,enemigo.getPositionX(),enemigo.getpositionY(),false,this.sprite);
+                crearItemsPunto(this.scene,enemigo.dataEnemie.items,this.listaItems,enemigo.getPositionX(),enemigo.getpositionY(),false,this.sprite);
              
 
               let x=Math.floor(Math.random() * ((this.widthEscenario-30) - 0 + 1)) + 0;
