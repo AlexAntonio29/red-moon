@@ -1363,7 +1363,7 @@ this.physics.world.createDebugGraphic();
     
   
 
-    this.crearEnemigo(3);
+    this.crearEnemigo(0);
 
     //colisiones en entre items
     this.crearColisiones();
