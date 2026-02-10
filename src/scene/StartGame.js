@@ -593,7 +593,7 @@ getPlayer(){
 
    
    
-    this.player.setPositionInitial(945,90);
+    this.player.setPositionInitial(1200,3075);
     //this.player.getChangeSprite();
 
 /*
