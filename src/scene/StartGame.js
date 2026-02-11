@@ -1333,7 +1333,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-this.physics.world.createDebugGraphic();
+//this.physics.world.createDebugGraphic();
 
     
 
@@ -1344,7 +1344,7 @@ this.physics.world.createDebugGraphic();
     this.cargarSonido();
     
     //cantidad de items a crear
-    this.crearItems(10);//aqui puedo agregar la cantidad de items que quiero crear
+    this.crearItems(1000);//aqui puedo agregar la cantidad de items que quiero crear
 
 
     //crear personaje
@@ -1363,7 +1363,7 @@ this.physics.world.createDebugGraphic();
     
   
 
-    this.crearEnemigo(0);
+    this.crearEnemigo(4);
 
     //colisiones en entre items
     this.crearColisiones();

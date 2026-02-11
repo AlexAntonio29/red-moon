@@ -20,15 +20,14 @@ document.fonts.load(`32px ${this.fontText}`).then(() => {
   this.boton = this.add.text((this.widthPantalla)/2, this.heightPantalla/2, 'Jugar', {
   fontSize: '40px',
   fill: '#ff0000',
- 
   
-  padding: { x: 80, y: 30 },
+  padding: { x: 80, y: 80 },
   fontFamily:this.fontText
 })
 .setInteractive()
 .on('pointerdown', () => {
 
-  this.touch.play();
+  //this.touch.play();
   
   this.scene.start('StartGame');
 
