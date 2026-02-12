@@ -540,18 +540,7 @@ crearEnemigo(n=1){
     
     
     
-    /*
-    this.listaEnemigos.map(enemigo=>{
 
-      let enemigoNuevo=this.listaEnemigos[this.listaEnemigos.length-1];
-      console.log("AQUI!!!2");
-      this.physics.add.collider(enemigo.getContainer(), enemigoNuevo.getContainer(),()=>{
-        console.log("creacion de colision entre enemigos AQUI Cantidad"+this.listaEnemigos.length);
-     empujar(enemigo.getContainer(),enemigoNuevo.getContainer(),2,this.contactoSprites,this,400,false);
-    });
-
-
-    });*/
   }
 
   
@@ -739,6 +728,15 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
 }
 }//s
 
+
+  eliminarRebote(player){
+
+    player.setVelocity(0);
+    this.player.setCambiarEstado("idle");
+   // player.this.state="idle";
+
+  }
+
       collisionPlayerMurosObjetos(){
 
       //objetos tierra da entender al abismo de la zona
@@ -755,7 +753,7 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
         if(this.tierra.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this.tierra.setCollisionByExclusion([-1]);
   
-        this.physics.add.collider(this.player.getContainer(),this.tierra);
+        this.physics.add.collider(this.player.getContainer(),this.tierra,this.eliminarRebote,null,this);
       
 }
 
@@ -763,21 +761,21 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
   //objetos de la zona
         if(this.build_city.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this.build_city.setCollisionByExclusion([-1])
-        this.physics.add.collider(this.player.getContainer(),this.build_city);}
+        this.physics.add.collider(this.player.getContainer(),this.build_city,this.eliminarRebote,null,this);}
 
         if(this.player && this.edificios){
   //edificios
 
         if(this.edificios.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this.edificios.setCollisionByExclusion([-1])
-        this.physics.add.collider(this.player.getContainer(),this.edificios);
+        this.physics.add.collider(this.player.getContainer(),this.edificios,this.eliminarRebote,null,this);
       }
 
         if(this.player && this.decoracion){
   //decoracion
           if(this.decoracion.layer.properties.find(p=>p.name==="collider"&&p.value===true))
             this.decoracion.setCollisionByExclusion([-1]);
-        this.physics.add.collider(this.player.getContainer(),this.decoracion);
+        this.physics.add.collider(this.player.getContainer(),this.decoracion,this.eliminarRebote,null,this);
 
 }
       }
@@ -924,8 +922,7 @@ this.scene.launch('ScenePotenciador',{scene:this.scene,puntos:this.puntos,player
       this.physics.add.overlap(
         this.player.getContainer(),
         this.listaRelojes,
-        this.contactoReloj,
-        null,this);
+        this.contactoReloj,null,this);
         
 
        // reloj.setRecoger(this.listaRelojes,reloj);
@@ -1344,7 +1341,7 @@ create(){
     this.cargarSonido();
     
     //cantidad de items a crear
-    this.crearItems(1000);//aqui puedo agregar la cantidad de items que quiero crear
+    this.crearItems(10);//aqui puedo agregar la cantidad de items que quiero crear
 
 
     //crear personaje
@@ -1363,7 +1360,7 @@ create(){
     
   
 
-    this.crearEnemigo(4);
+    this.crearEnemigo(0);
 
     //colisiones en entre items
     this.crearColisiones();
