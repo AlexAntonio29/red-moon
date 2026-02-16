@@ -302,7 +302,7 @@ export class player {
   
     //velocidad del movimiento del player
     
-    const velocidadFinal=550;
+    const velocidadFinal=650;
     let aceleracion=10;
 
     //let velocidad= 0;

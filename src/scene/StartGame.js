@@ -1346,6 +1346,8 @@ create(){
 
     //crear personaje
 
+    
+
     //this.crearEdificios();  
     //this.crearArboles();
     
@@ -1360,7 +1362,7 @@ create(){
     
   
 
-    this.crearEnemigo(0);
+    this.crearEnemigo(10);
 
     //colisiones en entre items
     this.crearColisiones();
