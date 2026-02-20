@@ -91,7 +91,7 @@ export class player {
 
           this.scene.anims.create({
         key: "player_camina_up",
-        frames: this.scene.anims.generateFrameNumbers('player_walk_up', { start: 0, end: 3 }),
+        frames: this.scene.anims.generateFrameNumbers('player_walk_up', { start: 0, end: 7 }),
         frameRate: 10,
         repeat: -1
           });
@@ -546,6 +546,7 @@ export class player {
   this.subEstado_posicionEstatico="arriba";
   this.componentesAtaque.x=0.5;
   this.componentesAtaque.y=1;
+  this.player.flipX=false;
   
 
 
