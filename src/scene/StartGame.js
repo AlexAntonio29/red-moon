@@ -194,6 +194,9 @@ this.load.spritesheet("player_golpeado_espada","./assets/player/Animations/golpe
 
 
 
+
+
+
         }
 
     cargarImagenes(){
