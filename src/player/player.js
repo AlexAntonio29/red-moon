@@ -125,6 +125,20 @@ export class player {
           })
 
 
+          this.scene.anims.create({
+            key:"dash-reverso",
+            frames: this.scene.anims.generateFrameNumbers("player_dash_reverso",{start:0,end:7}),
+            frameRate:12,
+            repeat:0
+          });
+
+          this.scene.anims.create({
+            key:"dash-delantero",
+            frames: this.scene.anims.generateFrameNumbers("player_dash_adelante",{start:0,end:7}),
+            frameRate:12,
+            repeat:0
+          });
+
 
 
 
@@ -855,12 +869,14 @@ export class player {
 
       if(this.state==="idle"){
 
+        this.player.play("dash-reverso");
+
         switch(this.subEstado_posicionEstatico){
 
           case "derecha":
 
 
-
+          this.player.flipX=false;
           console.log("derecha dash");
           //console.log(this.player.body.velocity);
           this.player.setVelocityX(-velocidadDash);
@@ -871,6 +887,7 @@ export class player {
           case "izquierda":
 
           console.log("izquierda dash");
+          this.player.flipX=true;
           this.player.setVelocityX(velocidadDash);
 
           break;
@@ -900,7 +917,9 @@ export class player {
       }
       else if(this.state==="walk"){
 
-        let potenciador=2;
+        this.player.play("dash-delantero")
+
+        let potenciador=1.5;
 
         
 
@@ -909,7 +928,7 @@ export class player {
           case "derecha":
 
 
-
+          this.player.flipX=false;
           console.log("derecha dash");
           //console.log(this.player.body.velocity);
           this.player.setVelocityX(velocidadDash*potenciador);
@@ -920,6 +939,7 @@ export class player {
           case "izquierda":
 
           console.log("izquierda dash");
+          this.player.flipX=true;
           this.player.setVelocityX(-velocidadDash*potenciador);
 
           break;
@@ -1087,7 +1107,7 @@ export class player {
       if((Phaser.Input.Keyboard.JustDown((this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)))
         ||this.controles.ataque
         ||Phaser.Input.Keyboard.JustDown(this.keys.J))
-      &&!this.estaAtacando){
+      &&!this.estaAtacando&&this.state!=="dash"){
 
         
         

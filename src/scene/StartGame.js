@@ -187,6 +187,15 @@ this.load.spritesheet("player_golpeado_espada","./assets/player/Animations/golpe
   frameHeight: 64
 });
 
+this.load.spritesheet("player_dash_reverso","./assets/player/Animations/Dash/reverso.png",{
+  frameWidth: 64,
+  frameHeight: 64
+});
+
+this.load.spritesheet("player_dash_adelante","./assets/player/Animations/Dash/adelante.png",{
+  frameWidth: 64,
+  frameHeight: 64
+});
 
 
 
@@ -711,7 +720,7 @@ colisionesEnemigo(){
 
     contactoEnemigoEnemigo(a,b){
       
-      empujar(a,b,2,this.contactoSprites,this,400,false);
+      empujar(a,b,2,this.contactoSprites,this,10,false);
     }
 //colision entre los enemigos para que no transpasen
       collisionEnemigoEnemigo(){
