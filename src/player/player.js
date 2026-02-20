@@ -31,6 +31,7 @@ export class player {
     this.keys=keys;
     //para cambiar de estado segun la accion
     this.state="idle";
+   
      this.subEstado_posicionEstatico="derecha";
 
     
@@ -295,25 +296,25 @@ export class player {
 
   }
 
-  caminarPlayer(contacto){
+  caminarPlayer(contacto,subEstado_caminar){
     //realizar las acciones dependiendo de la posicion del estado de caminata
-    let subEstado_caminar="";
+
 
   
     //velocidad del movimiento del player
     
-    const velocidadFinal=650;
-    let aceleracion=10;
+    const velocidadFinal=300;
+    let aceleracion=25;
 
     //let velocidad= 0;
-    console.log("player x:"+this.player.body.velocity.x);
-    console.log("player y:"+this.player.body.velocity.y);
+    //console.log("player x:"+this.player.body.velocity.x);
+    //console.log("player y:"+this.player.body.velocity.y);
 
     let velocidad={
-      "xm":(this.player.body.velocity.x)-aceleracion,
-      "xM":(this.player.body.velocity.x)+aceleracion,
-      "ym":(this.player.body.velocity.y)-aceleracion,
-      "yM":(this.player.body.velocity.y)+aceleracion
+      "xm":(this.player.body.velocity.x),
+      "xM":(this.player.body.velocity.x),
+      "ym":(this.player.body.velocity.y),
+      "yM":(this.player.body.velocity.y)
     }
 
 
@@ -334,12 +335,15 @@ export class player {
        // console.log(velocidadDiagonal);
 
 
-   if (!contacto && !(this.estaAtacando)&& this.state!="attack") {
+   if (!contacto && !(this.estaAtacando)&& this.state!="attack" &&this.state!="dash") {
 
 
     //ASIGNAR ESTADOS DE ACUERDO AL MOVIMIENTO
     //Calcular velocidad de movimimiento
-    this.player.setVelocity(0);
+
+    
+   
+  
 
 
 
@@ -359,7 +363,8 @@ export class player {
        !(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown)
   )
 
-     subEstado_caminar="arriba-derecha";
+    { this.state="walk";
+      subEstado_caminar="arriba-derecha";}
 
     //this.sprite.play('player_camina');
      
@@ -379,7 +384,8 @@ export class player {
       !(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown)
     )
 
-    subEstado_caminar="arriba-izquierda";
+    { this.state="walk";
+      subEstado_caminar="arriba-izquierda";}
  
 
 
@@ -396,7 +402,8 @@ export class player {
       !(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown)
     )
 
-    subEstado_caminar="abajo-izquierda";
+    { this.state="walk";
+      subEstado_caminar="abajo-izquierda";}
      
 
 
@@ -412,7 +419,8 @@ export class player {
         !(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown)&&
         !(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown)
       )
-    subEstado_caminar="abajo-derecha";
+    { this.state="walk";
+      subEstado_caminar="abajo-derecha";}
 
      
   }
@@ -426,14 +434,16 @@ export class player {
     &&!(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown)
     &&!(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown)
   )
-    subEstado_caminar="arriba";
+    { this.state="walk";
+      subEstado_caminar="arriba";}
  }  //ABAJO
  else if(this.keys.S.isDown||this.scene.cursor.down.isDown||this.joystick.down.isDown){
   if(!(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown)
     &&!(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown)
     &&!(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown)
   )
-    subEstado_caminar="abajo"
+    { this.state="walk";
+      subEstado_caminar="abajo";}
  }  //DERECHA
  else if(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown){
 
@@ -442,7 +452,8 @@ export class player {
     &&!(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown)
     &&!(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown)
   )
-    subEstado_caminar="derecha";
+    { this.state="walk";
+      subEstado_caminar="derecha";}
  }  //IZQUIERDA
  else if(this.scene.cursor.left.isDown||this.keys.A.isDown||this.joystick.left.isDown){
 
@@ -451,15 +462,14 @@ export class player {
     &&!(this.scene.cursor.right.isDown||this.keys.D.isDown||this.joystick.right.isDown)
     &&!(this.scene.cursor.up.isDown||this.keys.W.isDown||this.joystick.up.isDown)
   )
-    subEstado_caminar="izquierda";
+    { this.state="walk";
+      subEstado_caminar="izquierda";}
  }else{
 
 
-
-
-
-    
     this.state="idle";
+
+      //this.player.setVelocity(0);
 
     /*
     Aqui utilizare los sub_estados de movimiento idle, si esta en derecha se quedad en posicion derecha quieto, 
@@ -504,13 +514,20 @@ export class player {
  
 }
 
+
+
+
+  //console.log("SubEstadoCaminar: "+subEstado_caminar);
+
+  
+
  switch(subEstado_caminar){
   case "arriba":
 
     //.setOrigin(0.5,1)//arriba
   //this.sprite.play('player_camina');
 
-
+ // velocidad.ym=velocidad.ym-aceleracion;
    
   this.subEstado_posicionEstatico="arriba";
   this.componentesAtaque.x=0.5;
@@ -530,12 +547,12 @@ export class player {
   
 
   if(velocidad.ym>(-velocidadFinal))
-    this.player.setVelocityY(velocidad.ym);
+    this.player.setVelocityY(velocidad.ym-aceleracion);
   else this.player.setVelocityY(-velocidadFinal);
 
     //console.log(this.player.body.velocity.y);
     //console.log(this.player.body.velocity.x);
-      if(this.player.body.velocity.y===-10) 
+      if(this.player.body.velocity.y===-aceleracion) 
         this.player.anims.play('player_estatico',true);
        else if (this.player.anims.currentAnim?.key !== 'player_camina_up') 
       this.player.anims.play('player_camina_up',true);
@@ -549,6 +566,8 @@ export class player {
   //this.sprite.play('player_camina');
  
   this.subEstado_posicionEstatico="abajo";
+
+ // velocidad.yM=velocidad.yM+aceleracion;
 
 
   
@@ -568,13 +587,13 @@ export class player {
 
      //console.log("DOWN");
       if(velocidad.yM<velocidadFinal)
-    this.player.setVelocityY(velocidad.yM);
+    this.player.setVelocityY(velocidad.yM+aceleracion);
   else this.player.setVelocityY(velocidadFinal);
 
-    console.log(this.player.body.velocity.y);
-    console.log(this.player.body.velocity.x);
+    //console.log(this.player.body.velocity.y);
+    //console.log(this.player.body.velocity.x);
 
-    if(this.player.body.velocity.y===10) 
+    if(this.player.body.velocity.y===aceleracion) 
         this.player.anims.play('player_estatico',true);
     else if (this.player.anims.currentAnim?.key !== 'player_camina_down') 
       this.player.play('player_camina_down');
@@ -588,6 +607,7 @@ export class player {
   //this.state="moveRight";
   this.subEstado_posicionEstatico="derecha";
   
+  //velocidad.xM=velocidad.xM+aceleracion;
 
 
   this.componentesAtaque.x=0;
@@ -605,23 +625,23 @@ export class player {
    //velocidad=this.sprite.body.velocity.x+aceleracion;
     // console.log("RIGHT");
 
-    console.log(velocidad.xM);
-     if(velocidad.xM<velocidadFinal){{
+    //console.log(velocidad.xM);
+     if(velocidad.xM<velocidadFinal){
 
-    this.player.setVelocityX(velocidad.xM);}}
+    this.player.setVelocityX(velocidad.xM+aceleracion);}
      else {this.player.setVelocityX(velocidadFinal);
 
 
      }
 
-       console.log(this.player.body.velocity.y);
-    console.log(this.player.body.velocity.x);
+       //console.log(this.player.body.velocity.y);
+    //console.log(this.player.body.velocity.x);
 
-    if(this.player.body.velocity.x===10) 
+    if(this.player.body.velocity.x===aceleracion) 
         this.player.anims.play('player_estatico',true);
 
     else if (this.player.anims.currentAnim?.key !== 'player_camina') {
-      console.log("cambio derecha");
+    //  console.log("cambio derecha");
       this.player.flipX=false;
       this.player.play('player_camina');
     }
@@ -634,6 +654,7 @@ export class player {
   
   this.subEstado_posicionEstatico="izquierda";
  
+  //velocidad.xm=velocidad.xm-aceleracion;
 
 
 
@@ -652,17 +673,17 @@ export class player {
    //velocidad=-this.sprite.body.velocity.x-aceleracion;
     //  350 - 0  -450<-350   -200<-350
     if(velocidad.xm>(-velocidadFinal))
-    this.player.setVelocityX(velocidad.xm);
+    this.player.setVelocityX(velocidad.xm-aceleracion);
   else this.player.setVelocityX(-velocidadFinal);
   
 
       // console.log(this.sprite.body.velocity.y);
-    console.log(this.player.body.velocity.x);
+    //console.log(this.player.body.velocity.x);
 
-        if(this.player.body.velocity.x===-10) 
+        if(this.player.body.velocity.x===-aceleracion) 
         this.player.anims.play('player_estatico',true);
       else  if (this.player.anims.currentAnim?.key !== 'player_camina_inverso') {
-          console.log("cambio izquierda");
+        //  console.log("cambio izquierda");
       this.player.flipX=true;
       this.player.play('player_camina_inverso');
     }
@@ -677,11 +698,11 @@ export class player {
 
     
     if(velocidadDiagonal.ymd<velocidadFinalDiagonal&&velocidadDiagonal.xMd<velocidadFinalDiagonal){
-      this.player.setVelocityX(velocidadDiagonal.xMd);
-      this.player.setVelocityY(velocidadDiagonal.ymd);
+      this.player.setVelocityX(velocidadDiagonal.xMd+aceleracion);
+      this.player.setVelocityY(velocidadDiagonal.ymd-aceleracion);
 
       let sum= (velocidadDiagonal.xMd*velocidadDiagonal.xMd)+((velocidadDiagonal.ymd)*(velocidadDiagonal.ymd));
-      console.log("operacion: "+(Math.sqrt(sum)));
+      //console.log("operacion: "+(Math.sqrt(sum)));
     }
       
     else{ 
@@ -690,9 +711,9 @@ export class player {
     };
 
 
-          if(this.player.body.velocity.y===-10&&this.player.body.velocity.x===10) 
+          if(this.player.body.velocity.y===-aceleracion&&this.player.body.velocity.x===aceleracion) 
         {
-          this.player.setVelocity(0);
+          //this.player.setVelocity(0);
           this.player.anims.play('player_estatico',true);
         }
         else if (this.player.anims.currentAnim?.key !== 'player_camina') {
@@ -705,21 +726,21 @@ export class player {
   case "arriba-izquierda":
     this.subEstado_posicionEstatico="arriba-izquierda";
     if(velocidadDiagonal.ymd>(-velocidadFinalDiagonal))
-      this.player.setVelocityY(velocidadDiagonal.ymd);
+      this.player.setVelocityY(velocidadDiagonal.ymd-aceleracion);
     else this.player.setVelocityY(-velocidadFinalDiagonal);
 
     if(velocidadDiagonal.xmd>(-velocidadFinalDiagonal))
-     this.player.setVelocityX(velocidadDiagonal.xmd);
+     this.player.setVelocityX(velocidadDiagonal.xmd-aceleracion);
     else this.player.setVelocityX(-velocidadFinalDiagonal);
 
 
-        if(this.player.body.velocity.y===-10&&this.player.body.velocity.x===-10) 
+        if(this.player.body.velocity.y===-aceleracion&&this.player.body.velocity.x===-aceleracion) 
         {
           this.player.anims.play('player_estatico',true);
-          this.player.setVelocity(0);
+          //this.player.setVelocity(0);
         }
     else  if (this.player.anims.currentAnim?.key !== 'player_camina') {
-      console.log("cambio izquierda");
+     // console.log("cambio izquierda");
       this.player.flipX=true;
       this.player.play('player_camina');
     }
@@ -729,20 +750,20 @@ export class player {
 
   this.subEstado_posicionEstatico="abajo-derecha";
     if(velocidadDiagonal.yMd<velocidadFinalDiagonal)
-      this.player.setVelocityY(velocidadDiagonal.yMd);
+      this.player.setVelocityY(velocidadDiagonal.yMd+aceleracion);
     else this.player.setVelocityY(velocidadFinalDiagonal);
 
     if(velocidadDiagonal.xMd<velocidadFinalDiagonal)
-     this.player.setVelocityX(velocidadDiagonal.xMd);
+     this.player.setVelocityX(velocidadDiagonal.xMd+aceleracion);
     else this.player.setVelocityX(velocidadFinalDiagonal);
 
-        if(this.player.body.velocity.y===10&&this.player.body.velocity.x===10) 
+        if(this.player.body.velocity.y===aceleracion&&this.player.body.velocity.x===aceleracion) 
         {
-          this.player.setVelocity(0);
+         // this.player.setVelocity(0);
           this.player.anims.play('player_estatico',true);
         }
         else if (this.player.anims.currentAnim?.key !== 'player_camina') {
-      console.log("cambio derecha");
+      //console.log("cambio derecha");
       this.player.flipX=false;
       this.player.play('player_camina');
     }
@@ -753,20 +774,20 @@ export class player {
     this.subEstado_posicionEstatico="abajo-izquierda";
   this.subEstado_posicionEstatico="abajo-derecha";
     if(velocidadDiagonal.yMd<velocidadFinalDiagonal)
-      this.player.setVelocityY(velocidadDiagonal.yMd);
+      this.player.setVelocityY(velocidadDiagonal.yMd+aceleracion);
     else this.player.setVelocityY(velocidadFinalDiagonal);
 
     if(velocidadDiagonal.xmd>(-velocidadFinalDiagonal))
-     this.player.setVelocityX(velocidadDiagonal.xmd);
+     this.player.setVelocityX(velocidadDiagonal.xmd-aceleracion);
     else this.player.setVelocityX(-velocidadFinalDiagonal);
 
-        if(this.player.body.velocity.y===10&&this.player.body.velocity.x===-10) 
+        if(this.player.body.velocity.y===aceleracion&&this.player.body.velocity.x===-aceleracion) 
        { 
-        this.player.setVelocity(0);
+       // this.player.setVelocity(0);
         this.player.anims.play('player_estatico',true);
       }
     else if (this.player.anims.currentAnim?.key !== 'player_camina') {
-          console.log("cambio izquierda");
+          //console.log("cambio izquierda");
       this.player.flipX=true;
       this.player.play('player_camina');
     }
@@ -776,7 +797,7 @@ export class player {
       switch(this.subEstado_posicionEstatico){
     case "derecha":
 
-    if (this.player.anims.currentAnim?.key !== 'player_estatico'&&this.state==="idle") {
+    if (this.player.anims.currentAnim?.key !== 'player_estatico'&&(this.state==="idle"||this.state==="walk")) {
       this.player.flipX=false;
       this.player.play('player_estatico');
       this.state="idle";
@@ -785,7 +806,7 @@ export class player {
 
     case "izquierda":
 
-    if (this.player.anims.currentAnim?.key !== 'player_estatico'&&this.state==="idle") {
+    if (this.player.anims.currentAnim?.key !== 'player_estatico'&&(this.state==="idle"||this.state==="walk")) {
       this.player.flipX=true;
       this.player.play('player_estatico');
       this.state="idle";
@@ -793,7 +814,7 @@ export class player {
     break;
 
     default:
-      if (this.player.anims.currentAnim?.key !== 'player_estatico'&&this.state==="idle") {
+      if (this.player.anims.currentAnim?.key !== 'player_estatico'&&(this.state==="idle"||this.state==="walk")) {
       this.player.flipX=false;
       this.player.play('player_estatico');
       this.state="idle";
@@ -810,13 +831,172 @@ export class player {
 
 
 
+
+
  
 
   }
 
 
 
+  movimientoDash(subEstado_caminar){
+
+    if((Phaser.Input.Keyboard.JustDown((this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))))){
+
+      let velocidadDash=500;
+
+
+
+
+
+
+      console.log("Dash");
+      console.log(this.state);
+
+      if(this.state==="idle"){
+
+        switch(this.subEstado_posicionEstatico){
+
+          case "derecha":
+
+
+
+          console.log("derecha dash");
+          //console.log(this.player.body.velocity);
+          this.player.setVelocityX(-velocidadDash);
+        
+          
+          break;
+
+          case "izquierda":
+
+          console.log("izquierda dash");
+          this.player.setVelocityX(velocidadDash);
+
+          break;
+
+          case "arriba":
+
+          console.log("arriba dash");
+          this.player.setVelocityY(velocidadDash);
+
+          break;
+
+          case "abajo":
+
+          console.log("abajo dash");
+          this.player.setVelocityY(-velocidadDash);
+
+          break;
+
+          default:
+
+          break;
+
+        }
+
+        
+
+      }
+      else if(this.state==="walk"){
+
+        let potenciador=2;
+
+        
+
+        switch(this.subEstado_posicionEstatico){
+
+          case "derecha":
+
+
+
+          console.log("derecha dash");
+          //console.log(this.player.body.velocity);
+          this.player.setVelocityX(velocidadDash*potenciador);
+        
+          
+          break;
+
+          case "izquierda":
+
+          console.log("izquierda dash");
+          this.player.setVelocityX(-velocidadDash*potenciador);
+
+          break;
+
+          case "arriba":
+
+          console.log("arriba dash");
+          this.player.setVelocityY(-velocidadDash*potenciador);
+
+          break;
+
+          case "abajo":
+
+          console.log("abajo dash");
+          this.player.setVelocityY(velocidadDash*potenciador);
+
+          break;
+
+          default:
+
+          break;
+
+        }
+
+       
+
+      }
+
+
+      this.state="dash";
+    }
+
+  }
+
+
+  detenerMovimiento(){
+    let desaceleracion=18;
+    let desalerar;
+
+        let velocidad={
+      "xm":(this.player.body.velocity.x),
+      "xM":(this.player.body.velocity.x),
+      "ym":(this.player.body.velocity.y),
+      "yM":(this.player.body.velocity.y)
+    }
+    if(this.player.body.velocity.x!==0||this.player.body.velocity.y!==0){
+
+      console.log(this.player.body.velocity);
+      console.log("hay movimiento");
+
+      //en eje x
+      if(this.player.body.velocity.x>0){
+         desalerar=velocidad.xM-desaceleracion;
+        this.player.setVelocityX(desalerar);
+      }else if(this.player.body.velocity.x<0){
+        desalerar=velocidad.xm+desaceleracion;
+        this.player.setVelocityX(desalerar);
+      }
+
+      //en eje y
+
+            if(this.player.body.velocity.y>0){
+         desalerar=velocidad.yM-desaceleracion;
+        this.player.setVelocityY(desalerar);
+      }else if(this.player.body.velocity.y<0){
+        desalerar=velocidad.ym+desaceleracion;
+        this.player.setVelocityY(desalerar);
+      }
+      
+    }
+
+
+  }
+
   setMovimientoPlayer(contacto){
+
+        let subEstado_caminar="";
     //console.log("Estado Principal: "+this.state);
 
 
@@ -827,6 +1007,7 @@ export class player {
       if(
         this.state==="attack"
       ||this.state==="hurt"
+      ||this.state==="dash"
       
       ){
         
@@ -834,7 +1015,15 @@ export class player {
       }
     })
 
-      this.caminarPlayer(contacto);
+
+
+      this.caminarPlayer(contacto,subEstado_caminar);
+
+      this.movimientoDash(subEstado_caminar);
+
+      this.detenerMovimiento();
+      
+      
 
   
 
@@ -964,7 +1153,7 @@ export class player {
         //this.ataque.setPosition((this.sprite.x)+this.componentesAtaque.x,this.sprite.y+this.componentesAtaque.y);
 
        
-        this.player.setVelocity(0);
+        //this.player.setVelocity(0);
 
         //cargarSonido
         this.sonidoAtaque.play();

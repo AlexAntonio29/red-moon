@@ -622,6 +622,8 @@ this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.
 }
 
 movimientosPlayer(){
+
+
      this.player.setMovimientoPlayer(this.contactoSprites[0]);
     
      this.player.getAtaque(this.listaEnemigos,this.contactoSprites,1,this.items_punto,this.widthEscenario,this.heightEscenario,this.contactoSprites,this.golpeEnemie);
@@ -697,7 +699,7 @@ colisionesEnemigo(){
           
        this.player.setGolpeado();
           empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this);//
-          //this.player.setVida(1); desactivar para el contacto player enemigo
+          //this.player.setVida(1); //desactivar para el contacto player enemigo
           if(this.player.getVida()<=0)this.finalizarPartida("Partida Finalizada") ;
     }
   //colision al contacto del player con el enemigo
@@ -1330,7 +1332,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-//this.physics.world.createDebugGraphic();
+this.physics.world.createDebugGraphic();
 
     
 
@@ -1346,7 +1348,7 @@ create(){
 
     //crear personaje
 
-    
+
 
     //this.crearEdificios();  
     //this.crearArboles();
@@ -1355,7 +1357,7 @@ create(){
 
 
     
-     this.cargarBotones();
+    this.cargarBotones();
     this.cargarJoystick();
     this.getPlayer();
     
