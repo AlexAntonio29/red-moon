@@ -98,7 +98,7 @@ export class player {
 
                     this.scene.anims.create({
         key: "player_camina_down",
-        frames: this.scene.anims.generateFrameNumbers('player_walk_down', { start: 0, end: 5 }),
+        frames: this.scene.anims.generateFrameNumbers('player_walk_down', { start: 0, end: 7 }),
         frameRate: 10,
         repeat: -1
           });

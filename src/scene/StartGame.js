@@ -165,7 +165,7 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
   frameHeight: 64
 });
 
-  this.load.spritesheet("player_walk_down", "./assets/player/Animations/Carry_Run/Carry_Run_Down-Sheet.png", {
+  this.load.spritesheet("player_walk_down", "./assets/player/Animations/Carry_Run/run_back.png", {
  frameWidth: 64,
   frameHeight: 64
 });
@@ -196,6 +196,9 @@ this.load.spritesheet("player_dash_adelante","./assets/player/Animations/Dash/ad
   frameWidth: 64,
   frameHeight: 64
 });
+
+
+
 
 
 
