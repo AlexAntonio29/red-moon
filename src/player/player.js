@@ -59,11 +59,15 @@ export class player {
 
     this.ataque=5;
 
-    this.animaciones();
+   this.animaciones();
 
-
-   
-  }
+    // ESCUCHADOR ÚNICO (Solo se crea una vez aquí)
+    this.player.on("animationcomplete", (anim) => {
+        if (this.state === "attack" || this.state === "hurt" || this.state === "healing") {
+            this.state = "idle";
+        }
+    });
+}
 
   animaciones(){
 
@@ -123,6 +127,12 @@ export class player {
             repeat:0
           })
 
+this.scene.anims.create({
+    key: "player_curar_anim",
+    frames: this.scene.anims.generateFrameNumbers('player_heal', { start: 0, end: 9 }), // Ajusta los frames según tu sprite
+    frameRate: 10,
+    repeat: 0 
+});
 
 
 
@@ -306,8 +316,8 @@ export class player {
     let aceleracion=10;
 
     //let velocidad= 0;
-    console.log("player x:"+this.player.body.velocity.x);
-    console.log("player y:"+this.player.body.velocity.y);
+   // console.log("player x:"+this.player.body.velocity.x);
+    //console.log("player y:"+this.player.body.velocity.y);
 
     let velocidad={
       "xm":(this.player.body.velocity.x)-aceleracion,
@@ -333,9 +343,8 @@ export class player {
 
        // console.log(velocidadDiagonal);
 
-
-   if (!contacto && !(this.estaAtacando)&& this.state!="attack") {
-
+//if (!contacto && !(this.estaAtacando)&& this.state!="attack") {
+if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !== "healing") {
 
     //ASIGNAR ESTADOS DE ACUERDO AL MOVIMIENTO
     //Calcular velocidad de movimimiento
@@ -816,25 +825,59 @@ export class player {
 
 
 
-  setMovimientoPlayer(contacto){
-    //console.log("Estado Principal: "+this.state);
+Curar() {
+    // 1. Verificamos la tecla V y que el jugador no esté ya haciendo otra acción (ataque o cura)
+    if (Phaser.Input.Keyboard.JustDown(this.keys.V) && this.state !== "healing" && this.state !== "attack") {
+        
+        this.vidaActualMax = 3; // Definimos el límite máximo
 
+        if (this.vida < this.vidaActualMax) {
+            // AUMENTO DE VIDA
+            this.vida++;
+            if (this.vida > this.vidaActualMax) {
+                this.vida = this.vidaActualMax;
+            }
+
+            // --- LÓGICA DE ANIMACIÓN ---
+            this.state = "healing";      // Cambiamos el estado para bloquear otras acciones
+            this.player.setVelocity(0);  // Frenamos al jugador para que no se mueva mientras se cura
+            this.player.play("player_curar_anim"); // Reproducimos la animación que creaste
+            
+            console.log("Caballero curado. Vida actual: " + this.vida);
+        } else {
+            console.log("La vida ya está al máximo");
+        }
+    }
 
     
 
-    //cuando termine la animacion
-    this.player.on("animationcomplete", (anim)=>{
-      if(
-        this.state==="attack"
-      ||this.state==="hurt"
-      
-      ){
-        
-        this.state="idle";
-      }
-    })
+    
+  }
 
-      this.caminarPlayer(contacto);
+
+  setMovimientoPlayer(contacto) {
+    // console.log("Estado Principal: " + this.state);
+
+    // Cuando termine la animación
+    this.player.on("animationcomplete", (anim) => {
+        if (
+            this.state === "attack" ||
+            this.state === "hurt" ||
+            this.state === "healing" // <-- AÑADIMOS ESTO AQUÍ
+        ) {
+            this.state = "idle";
+        }
+    });
+
+    // Ejecutamos la lógica de movimiento (ahora protegida por el estado 'healing')
+    this.caminarPlayer(contacto);
+
+    // Ejecutamos la lógica de curación
+    this.Curar();
+
+
+
+    
 
   
 
