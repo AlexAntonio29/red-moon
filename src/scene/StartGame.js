@@ -238,6 +238,7 @@ this.load.spritesheet("player_dash_adelante","./assets/player/Animations/Dash/ad
 
     //tiles de nexus personal cargar imagenes
     this.load.image("baseMap","/assets/tiles_maps/nexus/BaseMap.png");
+  
     this.load.image("suelo_castillo","/assets/tiles_maps/nexus/asset_suelo_castillo.png");
     this.load.image("arbol1","/assets/tiles_maps/nexus/Arbol_T1.png");
     this.load.image("arbol2","/assets/tiles_maps/nexus/Arbol_T2.png");
@@ -249,6 +250,10 @@ this.load.spritesheet("player_dash_adelante","./assets/player/Animations/Dash/ad
     this.load.image("ground","/assets/tiles_maps/nexus/Topdown_RPG_Ground.png");
     this.load.image("ruins","/assets/tiles_maps/nexus/Topdown_RPG_Ruins.png");
     this.load.image("trees","/assets/tiles_maps/nexus/Topdown_RPG_Trees.png");
+    this.load.image("vegetacion","/assets/tiles_maps/nexus/Vegetation.png");
+    this.load.image("wall_Tiles","/assets/tiles_maps/nexus/Wall_Tiles.png");
+    this.load.image("wall_Variations","/assets/tiles_maps/nexus/Wall_Variations.png");
+    
 
 
     //cargar el tiled
@@ -400,53 +405,86 @@ crearEscenario(){
     this.tileset10 = this.map.addTilesetImage('CONSTRUCCION2', 'ruins');
     this.tileset11 = this.map.addTilesetImage('NATURA3', 'trees');
     this.tileset12 = this.map.addTilesetImage('mainlevbuild', 'build2');
+    this.tileset13 = this.map.addTilesetImage('Vegetation', 'vegetacion');
+    this.tileset14 = this.map.addTilesetImage('Wall_Tiles', 'wall_Tiles');
+    this.tileset15 = this.map.addTilesetImage('Wall_Variations', 'wall_Variations');
     
 
 
 
-
+        this.fondo=this.map.createLayer('FONDO', 
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,
+        this.tileset12,this.tileset13, this.tileset14, this.tileset15
+      ]
+      ,0,0);
 
     this.suelo=this.map.createLayer('SUELOS', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
         this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,
-        this.tileset12
+        this.tileset12,this.tileset13, this.tileset14, this.tileset15
+      ]
+      ,0,0);
+
+          this.suelo=this.map.createLayer('DETAILS_PISO', 
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,
+        this.tileset12,this.tileset13, this.tileset14, this.tileset15
       ]
       ,0,0);
     //this.detalles_piso=this.map.createLayer('DETAILS_PISO', this.tileset,0,0);SIN ADIGNAR ]
     this.tierra=this.map.createLayer('TIERRA',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              , this.tileset14, this.tileset15
+      ]
+      ,0,0);
+
+          this.trees=this.map.createLayer('TREES',
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              , this.tileset14, this.tileset15
       ]
       ,0,0);
     
     this.pisoCiudad=this.map.createLayer('PISOS_CIUDAD',
       [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12,this.tileset13
+        , this.tileset14, this.tileset15
       ]
       ,0,0);
 
 
     this.decoracion_suelo_city=this.map.createLayer('DECORACION_SUELO_CITY',
       [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12, this.tileset13
+        , this.tileset14, this.tileset15
       ]
       ,0,0);
 
           this.build_city=this.map.createLayer('BUILD_CITY',
       [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12, this.tileset13
+        , this.tileset14, this.tileset15
       ]
       ,0,0);
 
       this.edificios=this.map.createLayer('EDFICIOS_GNR',
       [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12, this.tileset13
+        , this.tileset14, this.tileset15
+      ]
+      ,0,0);
+
+      this.edificios2=this.map.createLayer('EDIFICIOS_GNR_2',
+      [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12, this.tileset13, this.tileset14, this.tileset15
       ]
       ,0,0);
 
       this.decoracion=this.map.createLayer('DECORACION_EDI',
       [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12, this.tileset13, this.tileset14, this.tileset15
       ]
       ,0,0);
 
@@ -1344,7 +1382,8 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-this.physics.world.createDebugGraphic();
+//this.physics.world.createDebugGraphic();
+this.game.renderer.antialias = false;
 
     
 
@@ -1376,7 +1415,7 @@ this.physics.world.createDebugGraphic();
     
   
 
-    this.crearEnemigo(10);
+    this.crearEnemigo(0);
 
     //colisiones en entre items
     this.crearColisiones();
