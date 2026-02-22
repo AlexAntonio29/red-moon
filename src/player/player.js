@@ -14,6 +14,12 @@ export class player {
     this.arma;
     this.setArma(armas[0]);
 
+    //codigo de ian para el progrmar ataque fuerte o cargado
+
+    this.tiempocarga = 0; //esto sirve para contar los frames que lleva cargando
+    this.esAtaquefuerte = false; //se coloca para para saber que ataque se debera a hacer
+
+
 
     console.log(this.arma);
 
@@ -1017,7 +1023,9 @@ export class player {
 
   setMovimientoPlayer(contacto){
 
+
         let subEstado_caminar="";
+
     //console.log("Estado Principal: "+this.state);
 
 
@@ -1103,16 +1111,117 @@ export class player {
 
    
 
-    if(this.arma!=undefined) 
-      
-      if((Phaser.Input.Keyboard.JustDown((this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)))
-        ||this.controles.ataque
-        ||Phaser.Input.Keyboard.JustDown(this.keys.J))
-      &&!this.estaAtacando&&this.state!=="dash"){
+
+    if (this.arma != undefined) {
+
+       
+        if (this.keys.J.isDown && !this.estaAtacando) {
+            this.tiempocarga++; 
+            console.log("Cargando fuerza: " + this.tiempocarga);
+        }
+
 
         
+        if (Phaser.Input.Keyboard.JustUp(this.keys.J) && !this.estaAtacando) {
+
+            // A. Decidir si es Fuerte o Normal
+            if (this.tiempocarga > 30) {
+                this.esAtaqueFuerte = true;
+                console.log("¡SE LANZÓ ATAQUE FUERTE!");
+            } else {
+                this.esAtaqueFuerte = false;
+                console.log("Ataque Normal");
+            }
+
+            
+            this.tiempocarga = 0;
+
+          // ===================================================
+            // INICIO DEL CÓDIGO REUTILIZADO PARA EL GOLPE
+            // ===================================================
+            this.estaAtacando = true;
+            this.widthEscenario = widthEscenario;
+            this.heightEscenario = heightEscenario;
+            this.contacto = contacto;
+
+            // Crear el sprite si no existe
+            if(this.spriteAtaque === undefined){
+                this.spriteAtaque = this.scene.add.sprite(0, 0, this.componentesAtaque.textura)
+                    .setOrigin(this.componentesAtaque.x, this.componentesAtaque.y);
+                
+                this.scene.physics.add.existing(this.spriteAtaque);
+                this.spriteAtaque.body.setCollideWorldBounds(true);
+                
+                this.listaItems = listaItems;
+                this.scene.physics.add.overlap(this.spriteAtaque, this.listaEnemigos, this.contactoAtaque, null, this);
+                this.soundGolpe = sound;
+            }
+
+            // Si es ataque fuerte, multiplicamos por 2. Si es normal, por 1.
+            let multiplicadorFuerza = this.esAtaqueFuerte ? 2 : 1;
+
+            this.spriteAtaque
+                .setOrigin(this.componentesAtaque.x, this.componentesAtaque.y)
+                // Usamos el multiplicador en el ancho y el alto
+                .setDisplaySize(
+                    Number(this.arma.width) * (this.arma.nivel) * multiplicadorFuerza, 
+                    Number(this.arma.heigth) * (this.arma.nivel) * multiplicadorFuerza
+                )
+                .setPosition(this.player.x + this.player.displayWidth / 2, this.player.y + this.player.displayHeight / 2)
+                .setTexture(this.componentesAtaque.textura);
+
+          
+         
+
+            this.spriteAtaque.body.setVelocity(0);
+            this.spriteAtaque.setVisible(true);
+            this.spriteAtaque.body.enable = true;
+            this.spriteAtaque.play(this.componentesAtaque.anims);
+            
+            if(this.state !== "attack"){
+                this.state = "attack";
+                this.player.anims.play("ataque-horizontal", true);
+            }
+            
+            this.player.setVelocity(0);
+            this.sonidoAtaque.play();
+            
+            if((this.arma.largoAtaque)){
+                switch(this.componentesAtaque.textura){
+                    case 'ataqueLateralArriba':
+                        this.spriteAtaque.body.setVelocityY(-this.arma.tiempoDisparo * (this.arma.nivel));
+                        break;
+                    case 'ataqueLateralAbajo':
+                        this.spriteAtaque.body.setVelocityY(this.arma.tiempoDisparo * (this.arma.nivel));
+                        break;
+                    case 'ataqueLateralDerecha':
+                        this.spriteAtaque.body.setVelocityX(this.arma.tiempoDisparo * (this.arma.nivel));
+                        break;
+                    case 'ataqueLateralIzquierda':
+                        this.spriteAtaque.body.setVelocityX(-this.arma.tiempoDisparo * (this.arma.nivel));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+            this.scene.time.delayedCall(this.arma.velocidad, () => {
+                this.estaAtacando = false;
+                this.spriteAtaque.setVisible(false);
+                this.spriteAtaque.body.enable = false;
+            });
         
-         this.estaAtacando=true;
+          
+            
+        }
+
+
+   if (Phaser.Input.Keyboard.JustDown(this.keys.J) && !this.estaAtacando) {
+
+    
+    //ataque normal
+      
+      this.estaAtacando=true;
         this.widthEscenario=widthEscenario;
         this.heightEscenario=heightEscenario;
          
@@ -1220,6 +1329,9 @@ export class player {
     
   });
 
+}
+        
+       
 
   
 

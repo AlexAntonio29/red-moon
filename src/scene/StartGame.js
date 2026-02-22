@@ -206,6 +206,9 @@ this.load.spritesheet("player_dash_adelante","./assets/player/Animations/Dash/ad
 
 
 
+
+
+
         }
 
     cargarImagenes(){
