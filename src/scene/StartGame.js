@@ -21,7 +21,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
       this.tiempo=0;
       this.tiempoProgresivo=0;//el tiempo progresivo sirve para llevar el tiempo siempre adelante
-      this.tiempoParaCrearEnemigos=20;
+      this.tiempoParaCrearEnemigos=0;
 
      
       //agregar arma
@@ -165,7 +165,7 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
   frameHeight: 64
 });
 
-  this.load.spritesheet("player_walk_down", "./assets/player/Animations/Carry_Run/Carry_Run_Down-Sheet.png", {
+  this.load.spritesheet("player_walk_down", "./assets/player/Animations/Carry_Run/run_back.png", {
  frameWidth: 64,
   frameHeight: 64
 });
@@ -186,6 +186,32 @@ this.load.spritesheet("player_golpeado_espada","./assets/player/Animations/golpe
   frameWidth: 64,
   frameHeight: 64
 });
+
+this.load.spritesheet("player_dash_reverso","./assets/player/Animations/Dash/reverso.png",{
+  frameWidth: 64,
+  frameHeight: 64
+});
+
+this.load.spritesheet("player_dash_adelante","./assets/player/Animations/Dash/adelante.png",{
+  frameWidth: 64,
+  frameHeight: 64
+});
+
+
+
+
+
+
+
+this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animations/golpeado/golpeado_espada_arriba.png",{
+  frameWidth: 64,   
+  frameHeight: 64
+});
+
+    this.load.spritesheet("player_heal", "./assets/player/Animations/heal/heal_animation.png", {
+        frameWidth: 64, // Asumo 64 porque tus otros sprites usan ese tamaño
+        frameHeight: 64
+    });
 
 
 
@@ -226,6 +252,7 @@ this.load.spritesheet("player_golpeado_espada","./assets/player/Animations/golpe
 
     //tiles de nexus personal cargar imagenes
     this.load.image("baseMap","/assets/tiles_maps/nexus/BaseMap.png");
+  
     this.load.image("suelo_castillo","/assets/tiles_maps/nexus/asset_suelo_castillo.png");
     this.load.image("arbol1","/assets/tiles_maps/nexus/Arbol_T1.png");
     this.load.image("arbol2","/assets/tiles_maps/nexus/Arbol_T2.png");
@@ -237,6 +264,10 @@ this.load.spritesheet("player_golpeado_espada","./assets/player/Animations/golpe
     this.load.image("ground","/assets/tiles_maps/nexus/Topdown_RPG_Ground.png");
     this.load.image("ruins","/assets/tiles_maps/nexus/Topdown_RPG_Ruins.png");
     this.load.image("trees","/assets/tiles_maps/nexus/Topdown_RPG_Trees.png");
+    this.load.image("vegetacion","/assets/tiles_maps/nexus/Vegetation.png");
+    this.load.image("wall_Tiles","/assets/tiles_maps/nexus/Wall_Tiles.png");
+    this.load.image("wall_Variations","/assets/tiles_maps/nexus/Wall_Variations.png");
+    
 
 
     //cargar el tiled
@@ -323,7 +354,8 @@ this.load.spritesheet("player_golpeado_espada","./assets/player/Animations/golpe
     S: Phaser.Input.Keyboard.KeyCodes.S,
     D: Phaser.Input.Keyboard.KeyCodes.D,
     ESC: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC),
-    J: Phaser.Input.Keyboard.KeyCodes.J//golpear
+    J: Phaser.Input.Keyboard.KeyCodes.J,//golpear
+    V: Phaser.Input.Keyboard.KeyCodes.V//vida
     
 });
     }
@@ -388,53 +420,86 @@ crearEscenario(){
     this.tileset10 = this.map.addTilesetImage('CONSTRUCCION2', 'ruins');
     this.tileset11 = this.map.addTilesetImage('NATURA3', 'trees');
     this.tileset12 = this.map.addTilesetImage('mainlevbuild', 'build2');
+    this.tileset13 = this.map.addTilesetImage('Vegetation', 'vegetacion');
+    this.tileset14 = this.map.addTilesetImage('Wall_Tiles', 'wall_Tiles');
+    this.tileset15 = this.map.addTilesetImage('Wall_Variations', 'wall_Variations');
     
 
 
 
-
+        this.fondo=this.map.createLayer('FONDO', 
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,
+        this.tileset12,this.tileset13, this.tileset14, this.tileset15
+      ]
+      ,0,0);
 
     this.suelo=this.map.createLayer('SUELOS', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
         this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,
-        this.tileset12
+        this.tileset12,this.tileset13, this.tileset14, this.tileset15
+      ]
+      ,0,0);
+
+          this.suelo=this.map.createLayer('DETAILS_PISO', 
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,
+        this.tileset12,this.tileset13, this.tileset14, this.tileset15
       ]
       ,0,0);
     //this.detalles_piso=this.map.createLayer('DETAILS_PISO', this.tileset,0,0);SIN ADIGNAR ]
     this.tierra=this.map.createLayer('TIERRA',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              , this.tileset14, this.tileset15
+      ]
+      ,0,0);
+
+          this.trees=this.map.createLayer('TREES',
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              , this.tileset14, this.tileset15
       ]
       ,0,0);
     
     this.pisoCiudad=this.map.createLayer('PISOS_CIUDAD',
       [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12,this.tileset13
+        , this.tileset14, this.tileset15
       ]
       ,0,0);
 
 
     this.decoracion_suelo_city=this.map.createLayer('DECORACION_SUELO_CITY',
       [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12, this.tileset13
+        , this.tileset14, this.tileset15
       ]
       ,0,0);
 
           this.build_city=this.map.createLayer('BUILD_CITY',
       [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12, this.tileset13
+        , this.tileset14, this.tileset15
       ]
       ,0,0);
 
       this.edificios=this.map.createLayer('EDFICIOS_GNR',
       [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12, this.tileset13
+        , this.tileset14, this.tileset15
+      ]
+      ,0,0);
+
+      this.edificios2=this.map.createLayer('EDIFICIOS_GNR_2',
+      [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12, this.tileset13, this.tileset14, this.tileset15
       ]
       ,0,0);
 
       this.decoracion=this.map.createLayer('DECORACION_EDI',
       [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5,
-        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12
+        this.tileset6, this.tileset7,this.tileset8, this.tileset9, this.tileset10,this.tileset11,this.tileset12, this.tileset13, this.tileset14, this.tileset15
       ]
       ,0,0);
 
@@ -540,18 +605,7 @@ crearEnemigo(n=1){
     
     
     
-    /*
-    this.listaEnemigos.map(enemigo=>{
 
-      let enemigoNuevo=this.listaEnemigos[this.listaEnemigos.length-1];
-      console.log("AQUI!!!2");
-      this.physics.add.collider(enemigo.getContainer(), enemigoNuevo.getContainer(),()=>{
-        console.log("creacion de colision entre enemigos AQUI Cantidad"+this.listaEnemigos.length);
-     empujar(enemigo.getContainer(),enemigoNuevo.getContainer(),2,this.contactoSprites,this,400,false);
-    });
-
-
-    });*/
   }
 
   
@@ -593,7 +647,7 @@ getPlayer(){
 
    
    
-    this.player.setPositionInitial(945,90);
+    this.player.setPositionInitial(1200,3075);
     //this.player.getChangeSprite();
 
 /*
@@ -633,6 +687,8 @@ this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.
 }
 
 movimientosPlayer(){
+
+
      this.player.setMovimientoPlayer(this.contactoSprites[0]);
     
      this.player.getAtaque(this.listaEnemigos,this.contactoSprites,1,this.items_punto,this.widthEscenario,this.heightEscenario,this.contactoSprites,this.golpeEnemie);
@@ -708,8 +764,12 @@ colisionesEnemigo(){
           
        this.player.setGolpeado();
           empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this);//
-          //this.player.setVida(1); desactivar para el contacto player enemigo
+
+          this.player.setVida(1); //desactivar para el contacto player enemigo
+
           if(this.player.getVida()<=0)this.finalizarPartida("Partida Finalizada") ;
+
+          console.log("Contacto Player Enemigo: "+this.player.getVida());
     }
   //colision al contacto del player con el enemigo
       collisionPlayerEnemigo(){
@@ -720,7 +780,7 @@ colisionesEnemigo(){
 
     contactoEnemigoEnemigo(a,b){
       
-      empujar(a,b,2,this.contactoSprites,this,400,false);
+      empujar(a,b,2,this.contactoSprites,this,10,false);
     }
 //colision entre los enemigos para que no transpasen
       collisionEnemigoEnemigo(){
@@ -739,6 +799,15 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
 }
 }//s
 
+
+  eliminarRebote(player){
+
+    player.setVelocity(0);
+    this.player.setCambiarEstado("idle");
+   // player.this.state="idle";
+
+  }
+
       collisionPlayerMurosObjetos(){
 
       //objetos tierra da entender al abismo de la zona
@@ -755,7 +824,7 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
         if(this.tierra.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this.tierra.setCollisionByExclusion([-1]);
   
-        this.physics.add.collider(this.player.getContainer(),this.tierra);
+        this.physics.add.collider(this.player.getContainer(),this.tierra,this.eliminarRebote,null,this);
       
 }
 
@@ -763,21 +832,21 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
   //objetos de la zona
         if(this.build_city.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this.build_city.setCollisionByExclusion([-1])
-        this.physics.add.collider(this.player.getContainer(),this.build_city);}
+        this.physics.add.collider(this.player.getContainer(),this.build_city,this.eliminarRebote,null,this);}
 
         if(this.player && this.edificios){
   //edificios
 
         if(this.edificios.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this.edificios.setCollisionByExclusion([-1])
-        this.physics.add.collider(this.player.getContainer(),this.edificios);
+        this.physics.add.collider(this.player.getContainer(),this.edificios,this.eliminarRebote,null,this);
       }
 
         if(this.player && this.decoracion){
   //decoracion
           if(this.decoracion.layer.properties.find(p=>p.name==="collider"&&p.value===true))
             this.decoracion.setCollisionByExclusion([-1]);
-        this.physics.add.collider(this.player.getContainer(),this.decoracion);
+        this.physics.add.collider(this.player.getContainer(),this.decoracion,this.eliminarRebote,null,this);
 
 }
       }
@@ -924,8 +993,7 @@ this.scene.launch('ScenePotenciador',{scene:this.scene,puntos:this.puntos,player
       this.physics.add.overlap(
         this.player.getContainer(),
         this.listaRelojes,
-        this.contactoReloj,
-        null,this);
+        this.contactoReloj,null,this);
         
 
        // reloj.setRecoger(this.listaRelojes,reloj);
@@ -1004,7 +1072,7 @@ crearHUD(){
     .setOrigin(0)
     .setStrokeStyle(2,0xffffff);
 
- let textoPuntos= this.add.text(16,16,"Puntos: ",{
+ let textoPuntos= this.add.text(16,16,"esencia de luna roja ",{
         fontSize: '15px',
         fontFamily:this.fontText,
         fill: '#fff'
@@ -1333,7 +1401,8 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-this.physics.world.createDebugGraphic();
+//this.physics.world.createDebugGraphic();
+this.game.renderer.antialias = false;
 
     
 
@@ -1349,6 +1418,8 @@ this.physics.world.createDebugGraphic();
 
     //crear personaje
 
+
+
     //this.crearEdificios();  
     //this.crearArboles();
     
@@ -1356,14 +1427,16 @@ this.physics.world.createDebugGraphic();
 
 
     
-     this.cargarBotones();
+    this.cargarBotones();
     this.cargarJoystick();
     this.getPlayer();
     
     
   
 
-    this.crearEnemigo(3);
+
+    this.crearEnemigo(2);
+
 
     //colisiones en entre items
     this.crearColisiones();
