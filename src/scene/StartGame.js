@@ -21,7 +21,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
       this.tiempo=0;
       this.tiempoProgresivo=0;//el tiempo progresivo sirve para llevar el tiempo siempre adelante
-      this.tiempoParaCrearEnemigos=20;
+      this.tiempoParaCrearEnemigos=0;
 
      
       //agregar arma
@@ -203,6 +203,17 @@ this.load.spritesheet("player_dash_adelante","./assets/player/Animations/Dash/ad
 
 
 
+this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animations/golpeado/golpeado_espada_arriba.png",{
+  frameWidth: 64,   
+  frameHeight: 64
+});
+
+    this.load.spritesheet("player_heal", "./assets/player/Animations/heal/heal_animation.png", {
+        frameWidth: 64, // Asumo 64 porque tus otros sprites usan ese tamaño
+        frameHeight: 64
+    });
+
+
 
 
 
@@ -343,7 +354,8 @@ this.load.spritesheet("player_dash_adelante","./assets/player/Animations/Dash/ad
     S: Phaser.Input.Keyboard.KeyCodes.S,
     D: Phaser.Input.Keyboard.KeyCodes.D,
     ESC: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC),
-    J: Phaser.Input.Keyboard.KeyCodes.J//golpear
+    J: Phaser.Input.Keyboard.KeyCodes.J,//golpear
+    V: Phaser.Input.Keyboard.KeyCodes.V//vida
     
 });
     }
@@ -752,8 +764,12 @@ colisionesEnemigo(){
           
        this.player.setGolpeado();
           empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this);//
-          //this.player.setVida(1); //desactivar para el contacto player enemigo
+
+          this.player.setVida(1); //desactivar para el contacto player enemigo
+
           if(this.player.getVida()<=0)this.finalizarPartida("Partida Finalizada") ;
+
+          console.log("Contacto Player Enemigo: "+this.player.getVida());
     }
   //colision al contacto del player con el enemigo
       collisionPlayerEnemigo(){
@@ -1418,7 +1434,9 @@ this.game.renderer.antialias = false;
     
   
 
-    this.crearEnemigo(0);
+
+    this.crearEnemigo(2);
+
 
     //colisiones en entre items
     this.crearColisiones();
