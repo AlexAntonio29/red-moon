@@ -9,8 +9,8 @@ const config={ //configuracion del escenario
     height:document.documentElement.clientHeight,//tamaño de largo
     parent: "container", //tipo contenedor
     pixelArt:false,
-    type: Phaser.CANVAS,  
-    
+    type: Phaser.WEBGL,  
+    render: { antialias: false, },
     physics: {
     default: 'arcade',
     arcade: {

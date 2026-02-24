@@ -48,6 +48,10 @@ export function crearItemsPunto(scene,n=1,items_punto,widthEscenario,heightEscen
 
 
    let item=new Items(scene,tipo.id, tipo.categoria,25,25,x,y,textura,data.puntos);
+   item.setPipeline('Light2D');
+   //item.lights.enable();
+   //item.lights.setAmbientColor(0x222222);    
+    
 
    items_punto.add(item);
 

@@ -260,7 +260,12 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
     this.load.image("fantasy_Outside_A2","/assets/tiles_maps/Tiled/Fantasy_Outside_A2.png");
     this.load.image("fantasy_Outside_A5","/assets/tiles_maps/Tiled/Fantasy_Outside_A5.png");
     this.load.image("fantasy_Outside_D","/assets/tiles_maps/Tiled/Fantasy_Outside_D.png");
+    this.load.image("fantasy_Outside_A4","/assets/tiles_maps/Tiled/Fantasy_Outside_A4.png");
+    this.load.image("fantasy_Outside_B","/assets/tiles_maps/Tiled/Fantasy_Outside_B.png");//Fantasy_Outside_B
+    this.load.image("big_Decoration","/assets/tiles_maps/Tiled/Big_Decoration.png");//Big_Decoration
 
+    this.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
+    this.load.image("a3 - Walls And Floors","/assets/tiles_maps/Tiled/A3 - Walls And Floors.png");//Big_Decoration
 
     
 
@@ -411,52 +416,100 @@ crearEscenario(){
     this.tileset5 = this.map.addTilesetImage('Wall_Tiles', 'wall_Tiles');
     this.tileset6 = this.map.addTilesetImage('Fantasy_Outside_A2', 'fantasy_Outside_A2');//48
     this.tileset7 = this.map.addTilesetImage('Fantasy_Outside_D', 'fantasy_Outside_D');//48
+    this.tileset8 = this.map.addTilesetImage('Fantasy_Outside_A4', 'fantasy_Outside_A4');//Fantasy_Outside_A4
+    this.tileset9 = this.map.addTilesetImage('Fantasy_Outside_B', 'fantasy_Outside_B');
+    this.tileset10 = this.map.addTilesetImage('Big_Decoration', 'big_Decoration');//Big_Decoration
+    this.tileset11 = this.map.addTilesetImage('A4 - Walls', 'a4 - Walls');
+    this.tileset12 = this.map.addTilesetImage('A3 - Walls And Floors', 'a3 - Walls And Floors');//Big_Decoration
+
+       // this.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
+    //this.load.image("a3 - Walls And Floors","/assets/tiles_maps/Tiled/A3 - Walls And Floors.png");
 
     
 
 
 
     this.fondo=this.map.createLayer('FONDO',
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7]
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
       ,0,0);
 
           this.subSuelo=this.map.createLayer('SUBSUELO',
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7]
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
       ,0,0);
 
     this._subSuelo=this.map.createLayer('_SUBSUELO',
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7]
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
       ,0,0);
 
     this.suelo=this.map.createLayer('SUELO', 
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7]  
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]  
       ,0,0);
 
           this._suelo=this.map.createLayer('_SUELO', 
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7]
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
       ,0,0);
 
       
           this._suelo2=this.map.createLayer('_SUELO-2', 
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7]
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
       ,0,0);
 
 
           this._suelo3=this.map.createLayer('_SUELO-3', 
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7]
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
       ,0,0);
     //this.detalles_piso=this.map.createLayer('DETAILS_PISO', this.tileset,0,0);SIN ADIGNAR ]
 
 
 
-            this.decoracion=this.map.createLayer('ABOVE',//TODO lo que esta encima del jugador pero sin collision
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7]
+            this.above=this.map.createLayer('ABOVE',//TODO lo que esta encima del jugador pero sin collision
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
       ,0,0);
 
-          this.build_city=this.map.createLayer('ABOVE-COLLIDER',
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7]
+
+       this._above=this.map.createLayer('_ABOVE',//TODO lo que esta encima del jugador pero sin collision
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
       ,0,0);
 
+          this.above_collider=this.map.createLayer('ABOVE-COLLIDER',
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
+      ,0,0);
+
+
+
+      //agregar luces los mapas
+
+
+      this.fondo.setPipeline('Light2D');
+      this.subSuelo.setPipeline('Light2D');
+      this._subSuelo.setPipeline('Light2D');
+      this.suelo.setPipeline('Light2D');
+      this._suelo.setPipeline('Light2D');
+      this._suelo2.setPipeline('Light2D');
+      this._suelo3.setPipeline('Light2D');
+      this.above.setPipeline('Light2D');
+      this._above.setPipeline('Light2D');
+      this.above_collider.setPipeline('Light2D');
 
 
 
@@ -562,6 +615,7 @@ crearEnemigo(n=1){
     let y=Math.floor(Math.random() * ((this.heightEscenario-30) - 0 + 1)) + 0;
       
     let enemigo=new Enemies(this,({...dataEnemigos[valor]}),x,y);
+    enemigo.setPipeline('Light2D');
     this.listaEnemigos.add(enemigo);
 
    
@@ -602,15 +656,20 @@ movimientosEnemigo(){
 
 getPlayer(){
 
-  
+  let x=2000;
+  let y=4500;
     this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos);
 
+    this.player.getContainer().setTint(0x555555);//para ver si se oscurece mas
+    this.player.getContainer().setPipeline('Light2D');
+  
 
   
 
-   
-   
-    this.player.setPositionInitial(2000,4500);
+    this.player.setPositionInitial(x,y);
+
+    this.lightToPlayer=this.lights.addLight(x, y, 350) .setColor(0xffaa00) .setIntensity(2);
+    //this.lightToPlayer.setOrigin(1,1);
     //this.player.getChangeSprite();
 
 /*
@@ -706,7 +765,10 @@ crearColisiones(){
 
  // this.collisionPlayerEdificioColision();
   //this.collisionPlayerArboles();
-  this.collisionPlayerMurosObjetos();
+
+
+
+  this.collisionPlayerMurosObjetos(this.player.getContainer());
 
   this.colisionesEnemigo();
   
@@ -763,15 +825,19 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
 }//s
 
 
-  eliminarRebote(player){
+  eliminarRebote(objeto){
 
-    player.setVelocity(0);
+    objeto.setVelocity(0);
+
+    if(objeto.name==="player")
     this.player.setCambiarEstado("idle");
+
+    
    // player.this.state="idle";
 
   }
 
-      collisionPlayerMurosObjetos(){
+      collisionPlayerMurosObjetos(objeto){//el collider llegara por un parametro
 
       //objetos tierra da entender al abismo de la zona
 
@@ -781,38 +847,52 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
    
 
         
-        if(this.player && this.fondo)
+        if(objeto && this.fondo)
   //tierra  zona abismo
 {
         if(this.fondo.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this.fondo.setCollisionByExclusion([-1]);
   
-        this.physics.add.collider(this.player.getContainer(),this.fondo,this.eliminarRebote,null,this);
+        this.physics.add.collider(objeto,this.fondo,this.eliminarRebote,null,this);
       
 }
 
-        if(this.player && this.build_city){
+        if(objeto && this.above_collider){
   //objetos de la zona
-        if(this.build_city.layer.properties.find(p=>p.name==="collider"&&p.value===true))
-          this.build_city.setCollisionByExclusion([-1])
-        this.physics.add.collider(this.player.getContainer(),this.build_city,this.eliminarRebote,null,this);}
+        if(this.above_collider.layer.properties.find(p=>p.name==="collider"&&p.value===true))
+          this.above_collider.setCollisionByExclusion([-1])
+        this.physics.add.collider(objeto,this.above_collider,this.eliminarRebote,null,this);}
 
-        if(this.player && this.edificios){
+        if(objeto && this.edificios){
   //edificios
 
         if(this.edificios.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this.edificios.setCollisionByExclusion([-1])
-        this.physics.add.collider(this.player.getContainer(),this.edificios,this.eliminarRebote,null,this);
+        this.physics.add.collider(objeto,this.edificios,this.eliminarRebote,null,this);
       }
 
-        if(this.player && this.decoracion){
-  //decoracion
-          if(this.decoracion.layer.properties.find(p=>p.name==="collider"&&p.value===false))
-            this.decoracion.setCollisionByExclusion([-1]);
-        this.physics.add.collider(this.player.getContainer(),this.decoracion,this.eliminarRebote,null,this);
+        if(objeto && this.above){
+  //above para que este encima del player
+          if(this.above.layer.properties.find(p=>p.name==="collider"&&p.value===false))
+            this.above.setCollisionByExclusion([-1]);
+        this.physics.add.collider(objeto,this.above,this.eliminarRebote,null,this);
 
-        this.decoracion.setDepth(10);
-        this.player.getContainer().setDepth(5);
+        this.above.setDepth(10);
+        objeto.setDepth(5);
+
+
+
+}
+
+
+       if(objeto && this._above){
+  //above para que este encima del player
+          if(this._above.layer.properties.find(p=>p.name==="collider"&&p.value===false))
+            this._above.setCollisionByExclusion([-1]);
+        this.physics.add.collider(objeto,this._above,this.eliminarRebote,null,this);
+
+        this._above.setDepth(10);
+        objeto.setDepth(5);
 
 
 
@@ -1021,6 +1101,7 @@ crearCamera(){
     this.cameras.main.startFollow(this.player.getContainer());
     this.cameras.main.setZoom(1.0);
     this.cameras.main.setBackgroundColor('#FFFFFF');
+    this.cameras.main.roundPixels = true;
 
 }
 
@@ -1055,6 +1136,8 @@ crearHUD(){
     this.hudContainer.add(textoPuntos);
     this.hudContainer.add(this.puntaje);
     this.hudContainer.add(this.cronometro);
+
+    this.hudContainer.setDepth(20);
 
 //creacion de hud de mochila donde iran los items recogidos
 
@@ -1362,6 +1445,26 @@ this.joystickCursors = this.joyStick.createCursorKeys();
  
     }
 
+
+    crearFiltro(){
+      const vignette = this.add.rectangle(0, 0, this.widthPantalla, this.heightPantalla, 0x072EA3, 0.3); 
+      vignette.setOrigin(0); 
+      vignette.setDepth(999);
+      vignette.setScrollFactor(0);
+
+
+      /*
+        this.hudBackground= this.add.rectangle(0,0,300,50,0x000000,0.5)
+    .setOrigin(0)
+    .setStrokeStyle(2,0xffffff);
+      */
+    }
+
+
+    crearLuces(){
+      this.lights.enable();
+      this.lights.setAmbientColor(0x222222); 
+    }
     
 
 //El create es donde acomo las cosas para que tengan un orden
@@ -1369,20 +1472,23 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-this.physics.world.createDebugGraphic();
+//this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
 
     
 
   
+    //this.crearFiltro();
+
     
     //Generacion de escenario
     this.crearEscenario();
     this.cargarSonido();
+    this.crearLuces();
     
     //cantidad de items a crear
-    this.crearItems(10);//aqui puedo agregar la cantidad de items que quiero crear
-
+    this.crearItems(100);//aqui puedo agregar la cantidad de items que quiero crear
+    
 
     //crear personaje
 
@@ -1404,7 +1510,7 @@ this.game.renderer.antialias = false;
   
 
 
-    this.crearEnemigo(0);
+    this.crearEnemigo(30);
 
     //colisiones en entre items
     this.crearColisiones();
@@ -1447,10 +1553,24 @@ movimientoItemToPlayer(){
 }
 
 
+lightplayer(){
+
+     let xPlayer=this.player.getContainer().body.width/2;
+   let yPlayer=this.player.getContainer().body.height/2;
+
+  this.lightToPlayer.setPosition((this.player.getContainer().x)+xPlayer,(this.player.getContainer().y)+yPlayer);
+
+ // console.log("player x: "+)
+
+}
+
+
 //el update es todo lo que se corre en tiempo real
 update(time, delta){
 
    
+  //luz que sigue al player
+    this.lightplayer();
     //movimientos Jugador
     this.movimientosPlayer();
    // console.log(`X:${this.player.getPositionX()} Y:${this.player.getPositionY()}`)

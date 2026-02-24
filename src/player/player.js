@@ -54,6 +54,7 @@ export class player {
     this.player.setDisplaySize(x, y);
     this.player.setBounce(1);
     this.player.setCollideWorldBounds(true);
+    this.player.name="player";
 
     this.componentesAtaque={
       'textura':'ataqueLateralArriba',
@@ -1008,8 +1009,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
     }
     if(this.player.body.velocity.x!==0||this.player.body.velocity.y!==0){
 
-      console.log(this.player.body.velocity);
-      console.log("hay movimiento");
+      //console.log(this.player.body.velocity);
+      //console.log("hay movimiento");
 
       //en eje x
       if(this.player.body.velocity.x>0){

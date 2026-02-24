@@ -46,8 +46,8 @@ export class Items extends Phaser.Physics.Arcade.Sprite{
 
                                this//creacion del item
                     .setOrigin(0)
-                    .setDisplaySize(this.width,this.height)
-                    
+                    .setDisplaySize(this.width,this.height);
+                    //.setPipeline('Light2D');
                     ;
       if (!this.scene.anims.exists("item_mov"+this.id)) {
           this.scene.anims.create({
