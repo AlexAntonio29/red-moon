@@ -940,7 +940,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
         this.player.play("dash-delantero")
 
-        let potenciador=1.5;
+        let potenciador=1.0;
 
         
 
