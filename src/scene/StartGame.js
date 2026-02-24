@@ -1401,10 +1401,10 @@ this.game.renderer.antialias = false;
     
     
   
+  
 
 
     this.crearEnemigo(0);
-
 
     //colisiones en entre items
     this.crearColisiones();
