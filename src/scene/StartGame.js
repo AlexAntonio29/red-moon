@@ -336,6 +336,12 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
         frameHeight: 64
         });
 
+
+        this.load.spritesheet('enemie1', "./assets/enemies/enemie1.png", {
+        frameWidth: 64,
+        frameHeight: 64
+        });
+
       
     }
 

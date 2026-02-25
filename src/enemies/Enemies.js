@@ -24,20 +24,29 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         
       this
         .setOrigin(0)
-        .setDisplaySize(this.dataEnemie.width,this.dataEnemie.height)
+        //.setDisplaySize(this.dataEnemie.width,this.dataEnemie.height)
         .setCollideWorldBounds(true)
+        
         ;
 
+        //this.body.setSourceSize(this.width, this.height);
+
+        this.body.setSize(this.dataEnemie.width, this.dataEnemie.height);
+
+        this.body.setOffset(0, 0);
+
+        
 
         this.cargarAnimaciones();
 
+        
 
 
-        this.body.setSize(this.dataEnemie.width, this.dataEnemie.height);
-        //this.body.setOffset(0, 0);
+
+
         //this.body.setCollideWorldBounds(true);
 
-        this.play(this.dataEnemie.diseno+"_walk");
+       // this.play(this.dataEnemie.diseno+"_walk");
         //this.play('enemigoCamina');
 
         this.state="walk";
