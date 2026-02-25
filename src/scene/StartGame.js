@@ -472,6 +472,12 @@ crearEscenario(){
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
             ]
       ,0,0);
+
+                this._suelo4=this.map.createLayer('_SUELO-4', 
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
+      ,0,0);
     //this.detalles_piso=this.map.createLayer('DETAILS_PISO', this.tileset,0,0);SIN ADIGNAR ]
 
 
@@ -507,6 +513,7 @@ crearEscenario(){
       this._suelo.setPipeline('Light2D');
       this._suelo2.setPipeline('Light2D');
       this._suelo3.setPipeline('Light2D');
+      this._suelo4.setPipeline('Light2D');
       this.above.setPipeline('Light2D');
       this._above.setPipeline('Light2D');
       this.above_collider.setPipeline('Light2D');
@@ -615,6 +622,8 @@ crearEnemigo(n=1){
     let y=Math.floor(Math.random() * ((this.heightEscenario-30) - 0 + 1)) + 0;
       
     let enemigo=new Enemies(this,({...dataEnemigos[valor]}),x,y);
+
+    this.collisionMurosObjetos(enemigo);
     enemigo.setPipeline('Light2D');
     this.listaEnemigos.add(enemigo);
 
@@ -768,7 +777,8 @@ crearColisiones(){
 
 
 
-  this.collisionPlayerMurosObjetos(this.player.getContainer());
+  this.collisionMurosObjetos(this.player.getContainer());
+ 
 
   this.colisionesEnemigo();
   
@@ -827,17 +837,19 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
 
   eliminarRebote(objeto){
 
-    objeto.setVelocity(0);
-
-    if(objeto.name==="player")
-    this.player.setCambiarEstado("idle");
-
     
+
+    if(objeto.name==="player"){
+    this.player.setCambiarEstado("idle");
+    objeto.setVelocity(0);
+  }
+
+
    // player.this.state="idle";
 
   }
 
-      collisionPlayerMurosObjetos(objeto){//el collider llegara por un parametro
+      collisionMurosObjetos(objeto){//el collider llegara por un parametro
 
       //objetos tierra da entender al abismo de la zona
 
@@ -1510,7 +1522,7 @@ this.game.renderer.antialias = false;
   
 
 
-    this.crearEnemigo(30);
+    this.crearEnemigo(10);
 
     //colisiones en entre items
     this.crearColisiones();

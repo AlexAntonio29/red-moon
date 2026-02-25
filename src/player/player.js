@@ -1124,8 +1124,12 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
             if(enemigo.golpeado) return;
                enemigo.golpeado=true;
+
+               let multiplicador=1;
+
+               if(this.esAtaqueFuerte) multiplicador=3;
         
-            enemigo.setVida(parseInt((this.arma.ataque)*(this.arma.nivel)));
+            enemigo.setVida(parseInt((this.arma.ataque)*(this.arma.nivel)*multiplicador));
             this.soundGolpe.play();
             
              if(enemigo.getVida()<=0){
@@ -1207,6 +1211,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
             // Si es ataque fuerte, multiplicamos por 2. Si es normal, por 1.
             let multiplicadorFuerza = this.esAtaqueFuerte ? 2 : 1;
 
+            
+
             this.spriteAtaque
                 .setOrigin(this.componentesAtaque.x, this.componentesAtaque.y)
                 // Usamos el multiplicador en el ancho y el alto
@@ -1267,7 +1273,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
     
     //ataque normal
-      
+    this.esAtaqueFuerte=false;
       this.estaAtacando=true;
         this.widthEscenario=widthEscenario;
         this.heightEscenario=heightEscenario;
