@@ -12,6 +12,7 @@ export const dataEnemigos=[
         'width':80,
         'height':80,
         'movimiento':'5',
+        'distancia_vista':250,
         'ofzigzag':false
     },
     {

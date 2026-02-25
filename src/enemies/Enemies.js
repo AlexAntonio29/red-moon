@@ -28,20 +28,16 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         .setCollideWorldBounds(true)
         ;
 
-        if (!this.scene.anims.exists(this.dataEnemie.diseno+"_camina")) {
-        this.scene.anims.create({
-        key: this.dataEnemie.diseno+"_camina",
-        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno, { start: 0, end: 4 }),
-        frameRate: 4,
-        repeat: -1
-          });
-        }
 
-        //this.body.setSize(200, 200);
+        this.cargarAnimaciones();
+
+
+
+        this.body.setSize(this.dataEnemie.width, this.dataEnemie.height);
         //this.body.setOffset(0, 0);
         //this.body.setCollideWorldBounds(true);
 
-        this.play(this.dataEnemie.diseno+"_camina");
+        this.play(this.dataEnemie.diseno+"_walk");
         //this.play('enemigoCamina');
 
         this.state="walk";
@@ -49,6 +45,33 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         
 
 
+
+    }
+
+
+    cargarAnimaciones(){
+
+      //avanzando
+      if (!this.scene.anims.exists(this.dataEnemie.diseno+"_walk")) {
+        this.scene.anims.create({
+        key: this.dataEnemie.diseno+"_walk",
+        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_walk", { start: 0, end: 4 }),
+        frameRate: 4,
+        repeat: -1
+          });
+        }
+
+
+        
+        //sin movimiento
+        if (!this.scene.anims.exists(this.dataEnemie.diseno+"_idle")) {
+        this.scene.anims.create({
+        key: this.dataEnemie.diseno+"_idle",
+        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_idle", { start: 0, end: 4 }),
+        frameRate: 4,
+        repeat: -1
+          });
+        }
 
     }
 
@@ -75,7 +98,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       if (!this.scene.anims.exists(this.dataEnemie.diseno+"_golpeado")) {
       this.scene.anims.create({
         key: this.dataEnemie.diseno+"_golpeado",
-        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno, { start: 4, end: 4 }),
+        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_idle", { start: 4, end: 4 }),
         frameRate: 6,
         repeat: -1
           });}
@@ -86,7 +109,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
       this.scene.time.delayedCall(500,()=>{ 
          if (this && this.scene && !this.destroyed){
-          this.play(this.dataEnemie.diseno+"_camina");}
+          this.play(this.dataEnemie.diseno+"_idle");}
           this.golpeado=false;
       }
     );
@@ -117,6 +140,15 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     }
 
     setMovimientoEnemigo(player,contacto,contactoAtaque,contactoEnemigo){
+
+  
+
+
+      
+
+
+
+
 
 
       //console.log(`!contacto:${!contacto}, !this.vida${!(this.vida<=0)}, !contractoAtaque:${!contactoAtaque} !contactoEnemigo:${!contactoEnemigo}`)
@@ -223,6 +255,34 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
   }
  
     }
+
+
+
+      console.log(player.x-this.x);
+      console.log(player.y -this.y);
+
+      let distancia_vista=this.dataEnemie.distancia_vista;
+
+      if(
+        (player.x-this.x)<-distancia_vista
+      ||(player.x-this.x)> distancia_vista
+      ||(player.y-this.y)<-distancia_vista
+      ||(player.y-this.y)>distancia_vista
+
+      ){
+        this.setVelocity(0);
+        if(this.anims.currentAnim?.key!==this.dataEnemie.diseno+"_idle"){
+          this.play(this.dataEnemie.diseno+"_idle");
+        }
+
+      }else{
+        if(this.anims.currentAnim?.key!==this.dataEnemie.diseno+"_walk")
+        {
+          this.play(this.dataEnemie.diseno+"_walk");
+        }
+       
+      }
+
 
     
 

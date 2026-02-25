@@ -152,7 +152,7 @@ this.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzq
 
     
   
-    cargarSpritesPlayer(){
+    cargarAnimacionesPlayer(){
 
   this.load.spritesheet("player", "./assets/player/Animations/Carry_Run/Run-lefth-right.png", {
  frameWidth: 64,
@@ -216,6 +216,8 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
 
 
 
+    this.crearEfectos();
+
 
 
 
@@ -226,7 +228,7 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
       
       //Agregar efectos
 
-      this.crearEfectos();
+      
     
 
     //imagen mochila
@@ -235,7 +237,7 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
 
 
    //this.load.image("player","./assets/player/Player.png");
-      this.cargarSpritesPlayer();
+      
 
 
    
@@ -318,18 +320,33 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
 
     }
 
+
+    cargarAnimacionesEnemigos(){
+
+
+      //Idle
+       this.load.spritesheet('enemie1_idle', "./assets/enemies/enemie1/idle/idle.png", {
+        frameWidth: 64,
+        frameHeight: 64
+        });
+
+      //walk
+        this.load.spritesheet('enemie1_walk', "./assets/enemies/enemie1/walk/walk.png", {
+        frameWidth: 64,
+        frameHeight: 64
+        });
+
+      
+    }
+
     cargarAnimaciones(){
 
-      for(let i=0;i<=3;i++){
+      this.cargarAnimacionesEnemigos();
 
-      this.load.spritesheet(dataEnemigos[i].diseno, "./assets/enemies/"+dataEnemigos[i].diseno+".png", {
-  frameWidth: 64,
-  frameHeight: 64
-});
+      this.cargarAnimacionesPlayer();
 
-//console.log("Creado "+dataEnemigos[i].diseno+" de directorio: ./assets/enemies/"+dataEnemigos[i].diseno+".png");
+      
 
-}
 
 
 //this.load.image(dataEnemigos[0].diseno+'_golpeado',"./assets/enemies/"+(dataEnemigos[0].diseno)+"_golpeado.png");
@@ -604,7 +621,7 @@ return valor;
 }
 
 //Crear enemigo
-crearEnemigo(n=1){
+crearEnemigo(n=1, x,y){
 
 
 
@@ -616,14 +633,24 @@ crearEnemigo(n=1){
       let valor=0;//aqui va el valor del tipo de enemigo
       //se debe de modificar con el paso del tiempo para la variacion de enemigo
       //por el momento puse cero ya que es el valor del primero enemigo en el arreglo
+
+
+      if(x===undefined){
+        x=Math.floor(Math.random() * ((this.widthEscenario-30) - 0 + 1)) + 0;
+      }
+
+      if(y===undefined){
+            y=Math.floor(Math.random() * ((this.heightEscenario-30) - 0 + 1)) + 0;
+      }
       
    
-   let x=Math.floor(Math.random() * ((this.widthEscenario-30) - 0 + 1)) + 0;
-    let y=Math.floor(Math.random() * ((this.heightEscenario-30) - 0 + 1)) + 0;
+   
+
       
     let enemigo=new Enemies(this,({...dataEnemigos[valor]}),x,y);
 
     this.collisionMurosObjetos(enemigo);
+
     enemigo.setPipeline('Light2D');
     this.listaEnemigos.add(enemigo);
 
@@ -1484,7 +1511,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-//this.physics.world.createDebugGraphic();
+this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
 
     
@@ -1522,7 +1549,7 @@ this.game.renderer.antialias = false;
   
 
 
-    this.crearEnemigo(10);
+    this.crearEnemigo(1,2150,4500);
 
     //colisiones en entre items
     this.crearColisiones();

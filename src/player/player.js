@@ -533,7 +533,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
     default:
       if (this.player.anims.currentAnim?.key !== 'player_estatico'&&this.state==="idle") {
-      this.player.flipX=false;
+      
       this.player.play('player_estatico');
       this.state="idle";
     }
@@ -599,6 +599,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   case "abajo":
     // .setOrigin(0.5,0)//abajo
   //this.sprite.play('player_camina');
+  this.player.flipX=false;
  
   this.subEstado_posicionEstatico="abajo";
 
@@ -643,7 +644,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   this.subEstado_posicionEstatico="derecha";
   
   //velocidad.xM=velocidad.xM+aceleracion;
-
+  //this.player.flipX=false;
 
   this.componentesAtaque.x=0;
   this.componentesAtaque.y=0.5;
@@ -688,6 +689,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
     
   
   this.subEstado_posicionEstatico="izquierda";
+
+  
  
   //velocidad.xm=velocidad.xm-aceleracion;
 
@@ -807,7 +810,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
   case "abajo-izquierda":
     this.subEstado_posicionEstatico="abajo-izquierda";
-  this.subEstado_posicionEstatico="abajo-derecha";
+  //this.subEstado_posicionEstatico="abajo-derecha";
     if(velocidadDiagonal.yMd<velocidadFinalDiagonal)
       this.player.setVelocityY(velocidadDiagonal.yMd+aceleracion);
     else this.player.setVelocityY(velocidadFinalDiagonal);
@@ -828,6 +831,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
     }
   break;
     default:
+
+
 
       switch(this.subEstado_posicionEstatico){
     case "derecha":
@@ -850,7 +855,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
     default:
       if (this.player.anims.currentAnim?.key !== 'player_estatico'&&(this.state==="idle"||this.state==="walk")) {
-      this.player.flipX=false;
+      
       this.player.play('player_estatico');
       this.state="idle";
     }
@@ -865,7 +870,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
 
-
+// console.log(subEstado_caminar);
 
 
  
@@ -875,7 +880,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
 
-  movimientoDash(subEstado_caminar){
+  movimientoDash(){
 
     if((Phaser.Input.Keyboard.JustDown((this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))))){
 
@@ -883,11 +888,11 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
 
+      console.log(this.subEstado_posicionEstatico);
 
 
-
-      console.log("Dash");
-      console.log(this.state);
+      console.log(this.subEstado_posicionEstatico);
+     // console.log(this.state);
 
       if(this.state==="idle"){
 
@@ -928,6 +933,47 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
           break;
 
+          case "arriba-derecha":
+
+
+          this.player.flipX=false;
+          console.log("arriba-derecha dash");
+          //console.log(this.player.body.velocity);
+          this.player.setVelocityX(-velocidadDash);
+          this.player.setVelocityY(velocidadDash);
+        
+          
+          break;
+
+          case "arriba-izquierda":
+
+          console.log("arriba-izquierda dash");
+          this.player.flipX=true;
+          this.player.setVelocityX(velocidadDash);
+          this.player.setVelocityY(velocidadDash);
+
+          break;
+
+          case "abajo-izquierda":
+
+          //console.log("izquierda dash");
+          console.log("abajo-izquierda");
+          this.player.flipX=true;
+          this.player.setVelocityX(velocidadDash);
+          this.player.setVelocityY(-velocidadDash);
+
+          break;
+
+          case "abajo-derecha":
+
+          console.log("abajo-derecha dash");
+          this.player.flipX=false;
+          this.player.setVelocityX(-velocidadDash);
+          this.player.setVelocityY(-velocidadDash);
+
+          break;
+
+
           default:
 
           break;
@@ -944,8 +990,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         let potenciador=1.0;
 
         
-
+      //  console.log(subEstado_caminar);
         switch(this.subEstado_posicionEstatico){
+
+
 
           case "derecha":
 
@@ -976,6 +1024,59 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
           case "abajo":
 
           console.log("abajo dash");
+          this.player.setVelocityY(velocidadDash*potenciador);
+
+          break;
+
+          
+          case "derecha":
+
+
+          this.player.flipX=false;
+          console.log("derecha dash");
+          //console.log(this.player.body.velocity);
+          this.player.setVelocityX(velocidadDash*potenciador);
+          
+        
+          
+          break;
+
+          case "arriba-derecha":
+
+
+          this.player.flipX=false;
+          console.log("arriba-derecha dash");
+          //console.log(this.player.body.velocity);
+          this.player.setVelocityX(velocidadDash*potenciador);
+          this.player.setVelocityY(-velocidadDash*potenciador);
+        
+          
+          break;
+
+          case "arriba-izquierda":
+
+          console.log("arriba-izquierda dash");
+          this.player.flipX=true;
+          this.player.setVelocityX(-velocidadDash*potenciador);
+          this.player.setVelocityY(-velocidadDash*potenciador);
+
+          break;
+
+          case "abajo-izquierda":
+
+          //console.log("izquierda dash");
+          console.log("abajo-izquierda");
+          this.player.flipX=true;
+          this.player.setVelocityX(-velocidadDash*potenciador);
+          this.player.setVelocityY(velocidadDash*potenciador);
+
+          break;
+
+          case "abajo-derecha":
+
+          console.log("abajo-derecha dash");
+          this.player.flipX=false;
+          this.player.setVelocityX(velocidadDash*potenciador);
           this.player.setVelocityY(velocidadDash*potenciador);
 
           break;
@@ -1092,7 +1193,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
       this.caminarPlayer(contacto,subEstado_caminar);
 
-      this.movimientoDash(subEstado_caminar);
+
+      this.movimientoDash();
 
       this.detenerMovimiento();
 
