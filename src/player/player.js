@@ -55,6 +55,10 @@ export class player {
     this.player.setBounce(1);
     this.player.setCollideWorldBounds(true);
     this.player.name="player";
+    this.player.setSize((x/5), (y/5));
+    this.player.setOffset(x/3,y/1.6);
+    
+
 
     this.componentesAtaque={
       'textura':'ataqueLateralArriba',
@@ -68,6 +72,7 @@ export class player {
     this.ataque=5;
 
    this.animaciones();
+   this.cargarSonidosPlayer();
 
     // ESCUCHADOR ÚNICO (Solo se crea una vez aquí)
     this.player.on("animationcomplete", (anim) => {
@@ -76,6 +81,38 @@ export class player {
         }
     });
 }
+
+
+  cargarSonidosPlayer(){
+
+        this.pisadas_player_tierra = this.scene.sound.add('pisada_player_tierra', {
+    loop: false,
+    volume: 1   // volumen entre 0 y 1
+  });
+
+
+  this.slide = this.scene.sound.add('slide', {
+    loop: false,
+    volume: 5   // volumen entre 0 y 1
+  });
+
+    this.ataque_cargado = this.scene.sound.add('ataque5', {
+    loop: false,
+    volume: 1   // volumen entre 0 y 1
+  });
+
+
+  }
+
+
+  getSound(n){
+    //1 correr
+    switch(n){
+      case 1:
+        return this.pisadas_player_tierra;
+      break
+    }
+  }
 
   animaciones(){
 
@@ -369,15 +406,25 @@ this.scene.anims.create({
 
 
 //if (!contacto && !(this.estaAtacando)&& this.state!="attack") {
+
+
+    if(this.state==="walk"){
+      if(!(this.pisadas_player_tierra.isPlaying))
+      this.pisadas_player_tierra.play();
+
+    }else{
+      this.pisadas_player_tierra.stop();
+    }
+    
 if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !== "healing"  &&this.state!="dash") {
 
 
     //ASIGNAR ESTADOS DE ACUERDO AL MOVIMIENTO
     //Calcular velocidad de movimimiento
 
-    
+
    
-  
+
 
 
 
@@ -888,13 +935,14 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
 
-      console.log(this.subEstado_posicionEstatico);
 
 
-      console.log(this.subEstado_posicionEstatico);
+
      // console.log(this.state);
 
       if(this.state==="idle"){
+
+        this.slide.play();
 
         this.player.play("dash-reverso");
 
@@ -984,6 +1032,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
       }
       else if(this.state==="walk"){
+        this.slide.play();
 
         this.player.play("dash-delantero")
 
@@ -1264,7 +1313,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
    
 
-
+      //console.log(listaEnemigos);
     if (this.arma != undefined) {
 
        
@@ -1339,7 +1388,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
             }
             
             this.player.setVelocity(0);
-            this.sonidoAtaque.play();
+            this.ataque_cargado.play();
             
             if((this.arma.largoAtaque)){
                 switch(this.componentesAtaque.textura){
@@ -1371,7 +1420,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         }
 
 
-   if (Phaser.Input.Keyboard.JustDown(this.keys.J) && !this.estaAtacando) {
+   if (Phaser.Input.Keyboard.JustDown(this.keys.J) && !this.estaAtacando && this.state !== "attack") {
 
     
     //ataque normal

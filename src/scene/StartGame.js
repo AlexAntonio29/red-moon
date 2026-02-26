@@ -92,7 +92,8 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
      // this.sonidoAtaquePlayer;
       
       //cargar sonidos de ataque
-     this.load.audio("ataque1","./sounds/player/atacando/ataque_espada.mp3")
+     this.load.audio("ataque1","./sounds/player/atacando/ataque_espada.mp3");
+     this.load.audio("ataque5","./sounds/player/atacando/ataque_espada_cargado.mp3");
 
 
      //sonido de puntos
@@ -107,7 +108,9 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
       this.load.audio("powerUp","./sounds/powerUp.mp3");
 
-      this.load.audio("fondoStart","./sounds/level/nexus/soundtrack.mp3");
+      this.load.audio("fondoStart","./sounds/level/nexus/soundtrack.wav");
+
+      this.load.audio("pisada_player_tierra","./sounds/general/pisadas/tierra/pisadas.wav");
 
       this.load.audio("potenciador","./sounds/woo.mp3");
 
@@ -118,6 +121,9 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
       this.load.audio("golpeToPlayer","./sounds/player/atacado/ataque.mp3");
 
       this.load.audio("reloj","./sounds/reloj.mp3");
+
+
+      this.load.audio("slide","./sounds/general/slide/slide.mp3");
       
     }
 
@@ -464,6 +470,8 @@ crearEscenario(){
             ]
       ,0,0);
 
+
+
     this._subSuelo=this.map.createLayer('_SUBSUELO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
@@ -518,11 +526,28 @@ crearEscenario(){
             ]
       ,0,0);
 
+             this._above2=this.map.createLayer('_ABOVE2',//TODO lo que esta encima del jugador pero sin collision
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
+      ,0,0);
+
           this.above_collider=this.map.createLayer('ABOVE-COLLIDER',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
             ]
       ,0,0);
+
+                this._above_collider=this.map.createLayer('_ABOVE-COLLIDER',
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
+      ,0,0);
+
+
+
+
+
 
 
 
@@ -539,7 +564,9 @@ crearEscenario(){
       this._suelo4.setPipeline('Light2D');
       this.above.setPipeline('Light2D');
       this._above.setPipeline('Light2D');
+      this._above2.setPipeline('Light2D');
       this.above_collider.setPipeline('Light2D');
+      this._above_collider.setPipeline('Light2D');
 
 
 
@@ -745,6 +772,7 @@ getPlayer(){
 
 pausarEscena(){
 this.scene.pause();
+
 this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.player,puntaje:this.puntaje,armas:this.armas, keys:this.keys});
 
 
@@ -908,13 +936,23 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
           this.above_collider.setCollisionByExclusion([-1])
         this.physics.add.collider(objeto,this.above_collider,this.eliminarRebote,null,this);}
 
+         if(objeto && this._above_collider){
+  //objetos de la zona
+        if(this._above_collider.layer.properties.find(p=>p.name==="collider"&&p.value===true))
+          this._above_collider.setCollisionByExclusion([-1])
+        this.physics.add.collider(objeto,this._above_collider,this.eliminarRebote,null,this);}
+        
+
+
+        /*
+
         if(objeto && this.edificios){
   //edificios
 
         if(this.edificios.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this.edificios.setCollisionByExclusion([-1])
         this.physics.add.collider(objeto,this.edificios,this.eliminarRebote,null,this);
-      }
+      }*/
 
         if(objeto && this.above){
   //above para que este encima del player
@@ -942,6 +980,22 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
 
 
 }
+       if(objeto && this._above2){
+  //above para que este encima del player
+          if(this._above2.layer.properties.find(p=>p.name==="collider"&&p.value===false))
+            this._above2.setCollisionByExclusion([-1]);
+        this.physics.add.collider(objeto,this._above2,this.eliminarRebote,null,this);
+
+        this._above2.setDepth(10);
+        objeto.setDepth(5);
+
+
+
+}
+
+
+
+
       }
 
       //
@@ -983,7 +1037,7 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
 
           let recogerPuntos = this.sound.add('point'+numAleatorio, {
     loop: false,
-    volume: 1   // volumen entre 0 y 1
+    volume: 0.3   // volumen entre 0 y 1
   });
 
             recogerPuntos.play();
@@ -1118,22 +1172,49 @@ this.physics.add.collider(this.player.getContainer(), this.edificios);
 depurarColisiones() {
   const debugGraphics = this.add.graphics().setAlpha(0.75);
 
-  // Dibuja los tiles con colisión activa en la capa TREE
-  if (this.arboles) {
-    this.arboles.renderDebug(debugGraphics, {
+
+  if (this.above_collider) {
+    this.above_collider.renderDebug(debugGraphics, {
       tileColor: null, // tiles sin colisión (transparentes)
       collidingTileColor: new Phaser.Display.Color(243, 134, 48, 200), // naranja
       faceColor: new Phaser.Display.Color(40, 39, 37, 255) // bordes
     });
   }
 
-  if (this.edificio_maestria) {
-    this.edificio_maestria.renderDebug(debugGraphics, {
-      tileColor: null,
-      collidingTileColor: new Phaser.Display.Color(0, 255, 0, 200), // verde
-      faceColor: new Phaser.Display.Color(40, 39, 37, 255)
-    });
-  }
+
+}
+
+
+modificarTamanoCollisiones(){
+
+      console.log(this.above_collider);
+        this.above_collider.forEachTile(tile => {
+    // Solo actuamos sobre los tiles que tengan la propiedad de colisión
+    if (tile.collider) {
+        const altoDeseado = 16;
+        const offsetVertical = 32; // 48 - 16 = 32px para que empiece abajo
+
+        // 1. Ajustamos el alto lógico del tile
+        tile.height = altoDeseado;
+
+        // 2. Forzamos el desplazamiento de los límites de colisión
+        // Esto es lo que el motor de físicas lee realmente:
+        tile.collisionMinY = tile.worldY + offsetVertical;
+        tile.collisionMaxY = tile.worldY + 48;
+
+        // 3. Recalculamos las "caras" (esto activa el choque)
+        tile.faceTop = true;
+        tile.faceBottom = true;
+        tile.faceLeft = true;
+        tile.faceRight = true;
+
+        // 4. Sincronizamos la posición de renderizado de la colisión
+        tile.updatePixelXY();
+    }
+});
+
+// IMPORTANTE: Después del bucle, refresca la capa
+this.above_collider.setCollisionByProperty({ collider: true });
 }
 
 
@@ -1448,6 +1529,8 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     cargarSonido(){
 
+
+
       this.golpeEnemie=this.sound.add("golpeEnemie",{
         loop:false,
         volume:1
@@ -1476,6 +1559,8 @@ this.joystickCursors = this.joyStick.createCursorKeys();
     loop: false,
     volume: 1   // volumen entre 0 y 1
   });
+
+
 
   this.sonidoPotenciador=this.sound.add('potenciador', {
     loop: false,
@@ -1558,9 +1643,11 @@ this.game.renderer.antialias = false;
     this.crearEnemigo(1,2150,4500);
 
     //colisiones en entre items
+    //this.modificarTamanoCollisiones();
     this.crearColisiones();
-  
-    //this.depurarColisiones();
+    
+   // this.depurarColisiones();
+    
 
    //creacion de camara;
 
@@ -1590,7 +1677,7 @@ movimientoItemToPlayer(){
       let velocidad=Math.floor(Math.random() * (500 - 300 + 1)) + 300;
    // scene.time.delayedCall(1000, () => {
     
-    this.physics.moveToObject(item, this.player.getContainer(), velocidad);
+    this.physics.moveToObject(item, this.player.getContainer().body, velocidad);
     //});
     }
 

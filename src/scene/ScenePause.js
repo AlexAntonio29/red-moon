@@ -259,6 +259,7 @@ if(this.widthPantalla<this.heightPantalla) {
   this.puntaje.setText((this.puntos));
 
   this.touch.play();
+  
   this.scene.resume('StartGame');
 
   this.armas[Number(this.seleccionItem.atributos.id)-1].nivel++;
@@ -461,6 +462,8 @@ cargarSonidos(){
 }
 
 create(){
+
+  this.player.getSound(1).pause();
   this.cargarSonidos();
     
   console.log("Entrando en pause");
@@ -471,6 +474,7 @@ salirPausa(){
  if(Phaser.Input.Keyboard.JustDown(this.keys.ESC)){ 
   console.log("Salir del pause")
   this.scene.stop();
+  this.player.getSound(1).resume();
   this.scene.resume('StartGame');
   }
 }

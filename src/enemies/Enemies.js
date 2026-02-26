@@ -26,14 +26,15 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         .setOrigin(0)
         .setDisplaySize(this.dataEnemie.width,this.dataEnemie.height)
         .setCollideWorldBounds(true)
-        
+        //.body.setCircle(20)
         ;
 
-        //this.body.setSourceSize(this.width, this.height);
+ 
 
-        //this.body.setSize(this.dataEnemie.width, this.dataEnemie.height);
+        this.body.setSize((this.dataEnemie.width/5), (this.dataEnemie.height/5));
+        this.body.setOffset(this.dataEnemie.width/4,this.dataEnemie.height/2);
 
-        this.body.setOffset(0, 0);
+        //this.body.setOffset(0, 0);
 
         
 
@@ -50,7 +51,13 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         //this.play('enemigoCamina');
 
         this.state="walk";
-        this.subState="walk_right"
+        this.subState="walk_right";
+
+        //crear un body para cuerpo de ataque
+        this.hitbox = scene.add.zone(this.x, this.y, this.displayWidth, this.displayHeight);
+        scene.physics.add.existing(this.hitbox);
+        this.hitbox.body.setAllowGravity(false);
+        this.hitbox.setOrigin(0,0);
         
 
 
@@ -87,6 +94,11 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
     getContainer(){
         return this;
+    }
+
+
+    getBody(){
+      this.hitbox;
     }
 
     setVida(n){
@@ -163,6 +175,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       //console.log(`!contacto:${!contacto}, !this.vida${!(this.vida<=0)}, !contractoAtaque:${!contactoAtaque} !contactoEnemigo:${!contactoEnemigo}`)
       if(!contacto && !(this.vida<=0) && !contactoAtaque && !contactoEnemigo){
 
+        this.hitbox.setPosition(this.x,this.y);
+
 
 
         //console.log('DENTRO');
@@ -189,6 +203,13 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       this.flipX=true
     }else this.flipX=false;
 
+    if(enemigoY>playerY){
+      this.setDepth(6);
+    }
+    else{
+      this.setDepth(4);
+    }
+
     //console.log(`Posicion Player: x:${playerX} y:${playerY}`);
     //console.log(`Posicion Enemigo: x:${enemigoX} y:${enemigoY}`);
 
@@ -207,8 +228,9 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       
 //movimientos normales
  if(playerY<enemigoY && ((playerX-rango_enemigo_movimiento<=enemigoX&&(playerX+rango_enemigo_movimiento)>=enemigoX))){
-    //console.log("UP");
+    console.log("UP");
     //console.log("ESTOY EN MOV NORMAL -Y");
+
     this.setVelocityY(-vel);
    if(!(this.dataEnemie.ofzigzag))
     this.setVelocityX(0);//para mayor dificultad deja la velocity de la dimension, ejemplo esta
@@ -267,8 +289,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
 
 
-      console.log(player.x-this.x);
-      console.log(player.y -this.y);
+      //console.log(player.x-this.x);
+      //console.log(player.y -this.y);
 
       let distancia_vista=this.dataEnemie.distancia_vista;
 
