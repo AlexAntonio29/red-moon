@@ -1,10 +1,9 @@
 import {puntos, itemsConsumibles} from "../items/ItemsData.js";
-import { Items } from "../items/Items.js";
 import {player} from "../player/player.js";
 import {dataEnemigos} from "../enemies/DataEnemies.js"
 import { Enemies } from "../enemies/Enemies.js";
 import { empujar } from "../funciones/empujar.js";
-import { itemTiempo } from "../items/ItemTiempo.js";
+
 import { armas } from "../items/DataItemsPotenciadores.js";
 import { crearItemsPunto } from "../funciones/crearItemsPuntos.js";
 import { conjuntoArmas } from "../armas/conjuntoArmas.js"
@@ -282,23 +281,6 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
     this.load.tilemapTiledJSON("nexus_mapa","./assets/tiles_maps/nexus/MapaNeexo.json")
     
     
-
-
-
-   let cantidadItems=itemsConsumibles.length+puntos.length;
-   
-    /*for(let i=0;i<cantidadItems;i++){
-
-      this.load.spritesheet("item_basura"+(i+1), "./assets/items/item_basura"+(i+1)+".png", {
-  frameWidth: 32,
-  frameHeight: 32
-});
-
-
-
-    
-
-    }*/
 
       this.load.spritesheet("item_punto","./assets/items/soul.png",{
         frameWidth: 32,
@@ -596,41 +578,9 @@ crearEscenario(){
 
 
 }
-//metodo que crea los edificios
-crearEdificios(){
-
-    //this.diseno=this.map.createLayer('DISENO',this.tileset,0,0);
-
-    this.complementosMuros=this.map.createLayer('DEPARTAMENTS/COMPLEMENTOS', this.tileset2 , 0, 0);
-    this.edificios = this.map.createLayer('DEPARTAMENTS/INDUSTRIAL', this.tileset2 , 0, 0);
-    this.windowsEdificio = this.map.createLayer('DEPARTAMENTS/WINDOWS', this.tileset2 , 0, 0);
-    
-    
-    
 
 
-}
-//metodo para crear los arboles
-crearArboles(){
-    //this.arboles = this.map.createLayer('TREE', this.tileset , 0, 0);
-}
 
-
-crearItemReloj(){
-
-  
-
-  for(let i=0;i<=this.cantidadRelojes;i++){
-
-     let x=Math.floor(Math.random() * ((this.widthEscenario-30) - 0 + 1)) + 0;
-     let y=Math.floor(Math.random() * ((this.heightEscenario-30) - 0 + 1)) + 0;
-
-    this.listaRelojes.add(new itemTiempo(this,null,null,40,40,x,y,"reloj"));
-   // this.listaRelojes[i].setItemPosition(x,y);
-
-  }
-
-}
 
 //Aqui se generaran los items
 crearItems(n){
@@ -639,7 +589,7 @@ crearItems(n){
    //this.crearItemsPunto(n); 
    crearItemsPunto(this,n,this.items_punto,this.widthEscenario,this.heightEscenario,true);
 
-  // this.crearItemReloj();
+  
 }
 
 //METODOS DEL ENEMIGO
@@ -831,10 +781,9 @@ crearColisiones(){
 
 
   this.collisionRecogerItemPuntos();
-  this.collisionRecogerItemTiempo();
+ 
 
- // this.collisionPlayerEdificioColision();
-  //this.collisionPlayerArboles();
+
 
 
 
@@ -1131,38 +1080,8 @@ this.scene.launch('ScenePotenciador',{scene:this.scene,puntos:this.puntos,player
         this.listaRelojes.remove(reloj,true,true);
       }
 
-    collisionRecogerItemTiempo(){
-
-     
-
-      
-      //this.listaRelojes.children.iterate(item=>{});
-      this.physics.add.overlap(
-        this.player.getContainer(),
-        this.listaRelojes,
-        this.contactoReloj,null,this);
-        
-
-       // reloj.setRecoger(this.listaRelojes,reloj);
-      
-    
 
 
-      
-    }
-//colision para que player no transpase los edificios
-      collisionPlayerEdificioColision(){ 
-
-this.physics.add.collider(this.player.getContainer(), this.edificios);
-
-
-
-
-}
-//colision cuando un enemigo recibe un ataque
-      collisionAtaqueEnemigo(){
-
-      }
 
 
 
@@ -1184,38 +1103,6 @@ depurarColisiones() {
 
 }
 
-
-modificarTamanoCollisiones(){
-
-      console.log(this.above_collider);
-        this.above_collider.forEachTile(tile => {
-    // Solo actuamos sobre los tiles que tengan la propiedad de colisión
-    if (tile.collider) {
-        const altoDeseado = 16;
-        const offsetVertical = 32; // 48 - 16 = 32px para que empiece abajo
-
-        // 1. Ajustamos el alto lógico del tile
-        tile.height = altoDeseado;
-
-        // 2. Forzamos el desplazamiento de los límites de colisión
-        // Esto es lo que el motor de físicas lee realmente:
-        tile.collisionMinY = tile.worldY + offsetVertical;
-        tile.collisionMaxY = tile.worldY + 48;
-
-        // 3. Recalculamos las "caras" (esto activa el choque)
-        tile.faceTop = true;
-        tile.faceBottom = true;
-        tile.faceLeft = true;
-        tile.faceRight = true;
-
-        // 4. Sincronizamos la posición de renderizado de la colisión
-        tile.updatePixelXY();
-    }
-});
-
-// IMPORTANTE: Después del bucle, refresca la capa
-this.above_collider.setCollisionByProperty({ collider: true });
-}
 
 
 
@@ -1267,11 +1154,11 @@ crearHUD(){
 
 //creacion de hud de mochila donde iran los items recogidos
 
-  // this.hudMochila(this);
+  // this.hudInventario(this);
 
 }
 //donde muestra los items recolectados
-    hudMochila(scene){
+    hudInventario(scene){
   this.hudBackgroundMochila= this.add.rectangle(0,0,200,200,0x000000,0.5)
     .setOrigin(0)
     .setStrokeStyle(2,0xffffff);
@@ -1624,8 +1511,7 @@ this.game.renderer.antialias = false;
 
 
 
-    //this.crearEdificios();  
-    //this.crearArboles();
+
     
 
 
@@ -1643,7 +1529,7 @@ this.game.renderer.antialias = false;
     this.crearEnemigo(1,2150,4500);
 
     //colisiones en entre items
-    //this.modificarTamanoCollisiones();
+
     this.crearColisiones();
     
    // this.depurarColisiones();
