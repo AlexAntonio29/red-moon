@@ -13,7 +13,15 @@ export const dataEnemigos=[
         'height':80,
         'movimiento':'5',
         'distancia_vista':250,
-        'ofzigzag':false
+        'velocidad_frames':4,
+        'ofzigzag':false,
+
+        'end_frame_idle':4,
+        'end_frame_walk':4,
+        'end_frame_hurt':4,
+        'end_frame_dead':4,
+
+
     },
     {
         'id':'2',
@@ -47,19 +55,26 @@ export const dataEnemigos=[
     },
     {
         'id':'4',
-        'nombre':'Olvido verde',
-        'vida':70,
+        'nombre':'Lobo',
+        'vida':20,
         'items':4,
-        'ataque':'15',
+        'ataque':'15',  
         'puntos':Math.floor(Math.random() * 10) + 5,
-        'velocidad':100,
+        'velocidad':200,
         'nivel':'2',
         'diseno':'enemie4',
-        'width':60,
-        'height':60,
+        'width':80,
+        'height':80,
         'movimiento':'5',
-        'ofzigzag':false
-    },,
+        'distancia_vista':250,
+        'velocidad_frames':10,
+        'ofzigzag':false,
+
+        'end_frame_idle':3,
+        'end_frame_walk':5,
+        'end_frame_hurt':3,
+        'end_frame_dead':3,
+    },
     {
         'id':'5',
         'nombre':'Incendiador',

@@ -179,12 +179,12 @@ this.scene.anims.create({
     repeat: 0 
 });
 
-          this.scene.anims.create({
-            key:"dash-reverso",
-            frames: this.scene.anims.generateFrameNumbers("player_dash_reverso",{start:0,end:7}),
-            frameRate:12,
-            repeat:0
-          });
+   this.scene.anims.create({
+     key:"dash-reverso",
+     frames: this.scene.anims.generateFrameNumbers("player_dash_reverso",{start:0,end:7}),
+     frameRate:12,
+     repeat:0
+ });
 
           this.scene.anims.create({
             key:"dash-delantero",
@@ -1272,6 +1272,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   contactoAtaque(ataque,enemigo){
 
     
+   
 
               if (!enemigo) return;
 
@@ -1284,11 +1285,20 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         
             enemigo.setVida(parseInt((this.arma.ataque)*(this.arma.nivel)*multiplicador));
             this.soundGolpe.play();
+
+            
             
              if(enemigo.getVida()<=0){
+
+              
                 crearItemsPunto(this.scene,enemigo.dataEnemie.items,this.listaItems,enemigo.getPositionX(),enemigo.getpositionY(),false,this.player);
              
 
+
+              //AQUI ESTO COLOCA EN POSICION ALEATORIA ERA PARA OPTIMIZAR AHORA COMO LOS ENEMIGOS SE REPOSICIONAN, ENTONCES SI SE ELIMINAN
+
+
+              /*
               let x=Math.floor(Math.random() * ((this.widthEscenario-30) - 0 + 1)) + 0;
               let y=Math.floor(Math.random() * ((this.heightEscenario-30) - 0 + 1)) + 0;
               let t=parseInt(enemigo.dataEnemie.id)-1;
@@ -1296,15 +1306,32 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
               
               enemigo.setFullVida(dataEnemigos[t].vida);
               enemigo.setEnemiePosition(x,y);
+
+              */
+
+              enemigo.setMuerteEnemigo();
+              console.log("Enemigo eliminado");
+
+
               //enemigo
  
                 this.habilitarCollision=true;
         //console.log("Enemigo Eliminado - Cantidad: " + listaEnemigos.length);
              }
-          else empujar(this.spriteAtaque,enemigo.getContainer(),1,this.contacto,this.scene);
+          else {
+
+            
+            empujar(this.spriteAtaque,enemigo.getContainer(),1,this.contacto,this.scene);
+            
+          
+          }
+
+         
           enemigo.setGolpeado();
 
           // contacto[n]=false;
+
+           
 
               
   }

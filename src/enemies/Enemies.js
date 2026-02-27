@@ -4,7 +4,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
       
 
-      super(scene,x,y,dataEnemie.diseno);
+      super(scene,x,y,dataEnemie.diseno+"_idle");
 
       scene.add.existing(this);
       scene.physics.add.existing(this);
@@ -19,7 +19,9 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
         this.golpeado=false;
 
-        //console.log("escena fisica: "+this.scene.physics);
+        console.log(this.dataEnemie.width+ "  "+this.dataEnemie.height);
+
+
 
         
       this
@@ -71,8 +73,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       if (!this.scene.anims.exists(this.dataEnemie.diseno+"_walk")) {
         this.scene.anims.create({
         key: this.dataEnemie.diseno+"_walk",
-        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_walk", { start: 0, end: 4 }),
-        frameRate: 4,
+        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_walk", { start: 0, end: this.dataEnemie.end_frame_walk }),
+        frameRate: this.dataEnemie.velocidad_frames,
         repeat: -1
           });
         }
@@ -83,8 +85,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         if (!this.scene.anims.exists(this.dataEnemie.diseno+"_idle")) {
         this.scene.anims.create({
         key: this.dataEnemie.diseno+"_idle",
-        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_idle", { start: 0, end: 4 }),
-        frameRate: 4,
+        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_idle", { start: 0, end: this.dataEnemie.end_frame_idle }),
+        frameRate: this.dataEnemie.velocidad_frames,
         repeat: -1
           });
         }
@@ -115,14 +117,17 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     }
 
     setGolpeado(){
+
       if (!this || !this.scene) return;
       if (!this.scene.anims.exists(this.dataEnemie.diseno+"_golpeado")) {
       this.scene.anims.create({
         key: this.dataEnemie.diseno+"_golpeado",
-        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_idle", { start: 4, end: 4 }),
+        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_idle", { start: 0, end:this.dataEnemie.end_frame_hurt }),
         frameRate: 6,
         repeat: -1
           });}
+
+           
 
       
       this.play(this.dataEnemie.diseno+"_golpeado");

@@ -2,9 +2,11 @@ import {puntos, itemsConsumibles} from "../items/ItemsData.js";
 import {player} from "../player/player.js";
 import {dataEnemigos} from "../enemies/DataEnemies.js"
 import { Enemies } from "../enemies/Enemies.js";
+import { Enemie1 } from "../enemies/Enemie1.js";
+import { Enemie4 } from "../enemies/Enemie4.js";
 import { empujar } from "../funciones/empujar.js";
 
-import { armas } from "../items/DataItemsPotenciadores.js";
+//import { armas } from "../items/DataItemsPotenciadores.js";
 import { crearItemsPunto } from "../funciones/crearItemsPuntos.js";
 import { conjuntoArmas } from "../armas/conjuntoArmas.js"
 
@@ -250,7 +252,9 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
    this.load.image('tiles', './assets/[Base]BaseChip_pipo.png');
    this.load.image('tiles2', './assets/[A]Grass_pipo.png');
    this.load.tilemapTiledJSON('mapa', './assets/mapa_scene.json');
-   //item basura
+   
+
+   //carga del mapa las coordenadas en archivo JSON
 
     this.load.image('tiles_suelo_nexus','./assets/tiles_maps/nexus/asset_suelo_castillo.png');
     this.load.tilemapTiledJSON('mapa_nexus','./assets/tiles_maps/nexus/base_nexus.json');
@@ -289,23 +293,6 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
 
 
 
-
-   //Textura de tiempo
-  // this.load.image("reloj","./assets/items/otrosItems/reloj.png");
-  
-
-   //enemigos
-
-  // this.load.image('enemie1',"./assets/enemies/enemie1.png");
-
-  //textura armas
-
-  for(let i=0;i<armas.length;i++)
-    this.load.image(armas[i].diseno,"./assets/potenciadores/armas/"+(i+1)+".png"); 
-
-
-
-
     }
 
 
@@ -325,10 +312,18 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
         });
 
 
-        this.load.spritesheet('enemie1', "./assets/enemies/enemie1.png", {
+        this.load.spritesheet('enemie4_idle', "./assets/enemies/enemie4/idle/idle.png", {
         frameWidth: 64,
         frameHeight: 64
         });
+
+      //walk
+        this.load.spritesheet('enemie4_walk', "./assets/enemies/enemie4/walk/walk.png", {
+        frameWidth: 64,
+        frameHeight: 64
+        });
+
+
 
       
     }
@@ -342,8 +337,6 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
       
 
 
-
-//this.load.image(dataEnemigos[0].diseno+'_golpeado',"./assets/enemies/"+(dataEnemigos[0].diseno)+"_golpeado.png");
 
 
     }
@@ -613,7 +606,7 @@ crearEnemigo(n=1, x,y){
     for(let i=0;i<n;i++){
 
       //let valor=Math.floor(Math.random() * 4) + 0;
-      let valor=0;//aqui va el valor del tipo de enemigo
+      let valor=3;//aqui va el valor del tipo de enemigo
       //se debe de modificar con el paso del tiempo para la variacion de enemigo
       //por el momento puse cero ya que es el valor del primero enemigo en el arreglo
 
@@ -630,7 +623,10 @@ crearEnemigo(n=1, x,y){
    
 
       
-    let enemigo=new Enemies(this,({...dataEnemigos[valor]}),x,y);
+    let enemigo=new Enemie4(this,({...dataEnemigos[valor]}),x,y);
+
+
+
 
     this.collisionMurosObjetos(enemigo);
 
@@ -663,7 +659,7 @@ movimientosEnemigo(){
      this.listaEnemigos.children.iterate(enemigo=>{
       
       enemigo.setMovimientoEnemigo(this.player.getContainer(),this.contactoSprites[0],this.contactoSprites[1],this.contactoSprites[2]);
-     })
+     });
 
      
 
@@ -754,9 +750,7 @@ movimientosPlayer(){
 
 }
 
-ataquePlayer(){
 
-}
 
 
 
@@ -782,11 +776,6 @@ crearColisiones(){
 
   this.collisionRecogerItemPuntos();
  
-
-
-
-
-
   this.collisionMurosObjetos(this.player.getContainer());
  
 
@@ -795,9 +784,8 @@ crearColisiones(){
 }
 
 colisionesEnemigo(){
-//this.collisionEnemigosArboles();
- // this.collisionEnemigosEdificios();
-//  this.collisionEnemigosMuros();
+
+
   this.collisionPlayerEnemigo();
 }
 
@@ -836,13 +824,7 @@ colisionesEnemigo(){
 
 }
 //colision de arboles para que el player no las pase
-      collisionPlayerArboles(){
-   
-if(this.player && this.arboles){
-  //console.log("Dentro de player y arbol");
-this.physics.add.collider(this.player.getContainer(),this.arboles);
-}
-}//s
+
 
 
   eliminarRebote(objeto){
@@ -954,14 +936,6 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
 
       //colisiones Enemigos Tiles
 
-      collisionEnemigosArboles(){
-
-                 this.physics.add.collider(this.listaEnemigos,this.arboles);
-                  
-             
-   
-
-}//s
 
       collisionEnemigosMuros(){
         
@@ -970,11 +944,7 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
                   
       }
 
-       collisionEnemigosEdificios(){
 
-                 this.physics.add.collider(this.listaEnemigos,this.edificios);
-                 
-      }
 
 
 
@@ -1037,6 +1007,8 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
             //this.crearEnemigo(this.topeCreacionEnemigos-this.listaEnemigos.length);
         
         }
+
+        
 //colision para cuando el player recoge el itemBasura
       collisionRecogerItemPuntos(){
 
