@@ -725,8 +725,8 @@ movimientosEnemigo(){
 
 getPlayer(){
 
-  let x=2000;
-  let y=4500;
+  let x=1572;
+  let y=5350;
     this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos);
 
     this.player.getContainer().setTint(0x555555);//para ver si se oscurece mas

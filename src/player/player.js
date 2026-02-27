@@ -1216,6 +1216,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   setMovimientoPlayer(contacto){
 
 
+       // console.log(this.player.x);
+       // console.log(this.player.y);
         let subEstado_caminar="";
 
     //console.log("Estado Principal: "+this.state);
