@@ -606,7 +606,7 @@ crearEnemigo(n=1, x,y){
     for(let i=0;i<n;i++){
 
       //let valor=Math.floor(Math.random() * 4) + 0;
-      let valor=3;//aqui va el valor del tipo de enemigo
+      let valor=0;//aqui va el valor del tipo de enemigo
       //se debe de modificar con el paso del tiempo para la variacion de enemigo
       //por el momento puse cero ya que es el valor del primero enemigo en el arreglo
 
@@ -623,7 +623,7 @@ crearEnemigo(n=1, x,y){
    
 
       
-    let enemigo=new Enemie4(this,({...dataEnemigos[valor]}),x,y);
+    let enemigo=new Enemie1(this,({...dataEnemigos[valor]}),x,y);
 
 
 
@@ -729,7 +729,7 @@ movimientosPlayer(){
 
      this.player.setMovimientoPlayer(this.contactoSprites[0]);
     
-     this.player.getAtaque(this.listaEnemigos,this.contactoSprites,1,this.items_punto,this.widthEscenario,this.heightEscenario,this.contactoSprites,this.golpeEnemie);
+     this.player.getAtaque(this.listaEnemigos,this.contactoSprites,this.items_punto);
 
      //pausar juego
 
@@ -1041,16 +1041,7 @@ this.scene.launch('ScenePotenciador',{scene:this.scene,puntos:this.puntos,player
 
     }
 
-//colision del tiempo
 
-      contactoReloj(player,reloj){
-          this.sonidoReloj.play();
-        this.powerUp.play();
-        let tiempoExtra=Math.floor(Math.random() * (50 - 10 + 1)) + 10;
-
-        this.tiempo+=tiempoExtra;
-        this.listaRelojes.remove(reloj,true,true);
-      }
 
 
 

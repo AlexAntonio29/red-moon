@@ -326,8 +326,9 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     }
 
     setMuerteEnemigo(){
-      
+        this.body.destroy();
         this.destroy();
+
     // this.container.destroy();
     }
 
