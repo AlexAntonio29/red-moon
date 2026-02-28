@@ -1315,8 +1315,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
               */
 
               console.log(listaEnemigos);
-              listaEnemigos.remove(enemigo,true,true);
-              //enemigo.setMuerteEnemigo();
+              //listaEnemigos.remove(enemigo,true,true);
+              enemigo.setMuerteEnemigo();
               console.log("Enemigo eliminado");
 
 

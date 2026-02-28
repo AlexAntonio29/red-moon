@@ -4,6 +4,7 @@ import {dataEnemigos} from "../enemies/DataEnemies.js"
 import { Enemies } from "../enemies/Enemies.js";
 import { Enemie1 } from "../enemies/Enemie1.js";
 import { Enemie4 } from "../enemies/Enemie4.js";
+import { Enemie5 } from "../enemies/Enemie5.js";
 import { empujar } from "../funciones/empujar.js";
 
 //import { armas } from "../items/DataItemsPotenciadores.js";
@@ -82,6 +83,17 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
     }
 
+    cargarSonidosEnemigos(){
+
+
+      //Enemigo5
+
+       this.load.audio("enemie5_sonido","./sounds/enemigo/enemie5/general/sonido.mp3");
+
+
+
+    }
+
     crearSonidos(){
       //sonido items basura
      /* for(let i=1;i<=10;i++){
@@ -125,6 +137,9 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
 
       this.load.audio("slide","./sounds/general/slide/slide.mp3");
+
+
+      this.cargarSonidosEnemigos();
       
     }
 
@@ -319,6 +334,18 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
 
       //walk
         this.load.spritesheet('enemie4_walk', "./assets/enemies/enemie4/walk/walk.png", {
+        frameWidth: 64,
+        frameHeight: 64
+        });
+
+
+        this.load.spritesheet('enemie5_idle', "./assets/enemies/enemie5/idle/idle.png", {
+        frameWidth: 64,
+        frameHeight: 64
+        });
+
+      //walk
+        this.load.spritesheet('enemie5_walk', "./assets/enemies/enemie5/walk/walk.png", {
         frameWidth: 64,
         frameHeight: 64
         });
@@ -606,7 +633,7 @@ crearEnemigo(n=1, x,y){
     for(let i=0;i<n;i++){
 
       //let valor=Math.floor(Math.random() * 4) + 0;
-      let valor=0;//aqui va el valor del tipo de enemigo
+      let valor=4;//aqui va el valor del tipo de enemigo
       //se debe de modificar con el paso del tiempo para la variacion de enemigo
       //por el momento puse cero ya que es el valor del primero enemigo en el arreglo
 
@@ -623,7 +650,7 @@ crearEnemigo(n=1, x,y){
    
 
       
-    let enemigo=new Enemie1(this,({...dataEnemigos[valor]}),x,y);
+    let enemigo=new Enemie5(this,({...dataEnemigos[valor]}),x,y);
 
 
 
@@ -1294,6 +1321,7 @@ this.input.keyboard.on('keyup-M', () => {
 //IR al siguiente escenario
 finalizarPartida(n=""){
 
+   // this.sound.stopAll();
     console.log(this.scene);
     console.log("MENSAJE: "+n);
   this.musicaFondo.stop();

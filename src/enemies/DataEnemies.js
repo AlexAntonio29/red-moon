@@ -13,7 +13,14 @@ export const dataEnemigos=[
         'height':80,
         'movimiento':'5',
         'distancia_vista':250,
+        'distancia_sonido':250,
         'velocidad_frames':4,
+
+        'velocidad_frames_idle':3,
+        'velocidad_frames_walk':4,
+        'velocidad_frames_hurt':5,
+        'velocidad_frames_dead':5,
+
         'ofzigzag':false,
 
         'end_frame_idle':4,
@@ -67,7 +74,15 @@ export const dataEnemigos=[
         'height':80,
         'movimiento':'5',
         'distancia_vista':250,
+        'distancia_sonido':250,
+
         'velocidad_frames':10,
+
+        'velocidad_frames_idle':4,
+        'velocidad_frames_walk':10,
+        'velocidad_frames_hurt':5,
+        'velocidad_frames_dead':5,
+
         'ofzigzag':false,
 
         'end_frame_idle':3,
@@ -77,18 +92,38 @@ export const dataEnemigos=[
     },
     {
         'id':'5',
-        'nombre':'Incendiador',
-        'vida':80,
-        'items':3,
-        'ataque':'10',
-        'puntos':Math.floor(Math.random() * 20) + 10,
+        'nombre':'Bestia',
+        'vida':40,
+        'items':4,
+        'ataque':'15',  
+        'puntos':Math.floor(Math.random() * 10) + 5,
         'velocidad':200,
         'nivel':'2',
         'diseno':'enemie5',
-        'width':50,
-        'height':50,
+        'width':90,
+        'height':90,
         'movimiento':'5',
-        'ofzigzag':false
+        'distancia_vista':350,
+        'distancia_sonido':1000,
+
+
+        'velocidad_frames':20,
+
+        'velocidad_frames_idle':4,
+        'velocidad_frames_walk':25,
+        'velocidad_frames_hurt':5,
+        'velocidad_frames_dead':5,
+
+
+
+
+
+        'ofzigzag':false,
+
+        'end_frame_idle':3,
+        'end_frame_walk':7,
+        'end_frame_hurt':3,
+        'end_frame_dead':3,
     },
     {
         'id':'6',

@@ -41,6 +41,10 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         
 
         this.cargarAnimaciones();
+        this.cargarSonidos();
+
+
+        this.sonido.play();
 
         
 
@@ -60,6 +64,9 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         scene.physics.add.existing(this.hitbox);
         this.hitbox.body.setAllowGravity(false);
         this.hitbox.setOrigin(0,0);
+
+
+
         
 
 
@@ -74,7 +81,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         this.scene.anims.create({
         key: this.dataEnemie.diseno+"_walk",
         frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_walk", { start: 0, end: this.dataEnemie.end_frame_walk }),
-        frameRate: this.dataEnemie.velocidad_frames,
+        frameRate: this.dataEnemie.velocidad_frames_walk,
         repeat: -1
           });
         }
@@ -82,15 +89,26 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
         
         //sin movimiento
+
+        console.log(this.dataEnemie.velocidad_frames_idle);
+
         if (!this.scene.anims.exists(this.dataEnemie.diseno+"_idle")) {
         this.scene.anims.create({
         key: this.dataEnemie.diseno+"_idle",
         frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_idle", { start: 0, end: this.dataEnemie.end_frame_idle }),
-        frameRate: this.dataEnemie.velocidad_frames,
+        frameRate: this.dataEnemie.velocidad_frames_idle,
         repeat: -1
           });
         }
 
+    }
+
+
+    cargarSonidos(){
+        this.sonido=this.scene.sound.add(this.dataEnemie.diseno+"_sonido",{
+        loop:true,
+        volume:1
+      });
     }
 
 
@@ -123,7 +141,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       this.scene.anims.create({
         key: this.dataEnemie.diseno+"_golpeado",
         frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_idle", { start: 0, end:this.dataEnemie.end_frame_hurt }),
-        frameRate: 6,
+        frameRate: this.dataEnemie.velocidad_frames_hurt,
         repeat: -1
           });}
 
@@ -175,10 +193,12 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
 
 
-
+      let distancia_sonido=this.dataEnemie.distancia_sonido;
 
       //console.log(`!contacto:${!contacto}, !this.vida${!(this.vida<=0)}, !contractoAtaque:${!contactoAtaque} !contactoEnemigo:${!contactoEnemigo}`)
       if(!contacto && !(this.vida<=0) && !contactoAtaque && !contactoEnemigo){
+
+        
 
         this.hitbox.setPosition(this.x,this.y);
 
@@ -187,6 +207,9 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         //console.log('DENTRO');
          
         let vel=this.velocidad;
+
+
+
         //console.log("Velocidad enemigo: "+vel);
 
      //this.player.getContainer().setVelocity(0); BLOQUEADO POR EL MOMENTO
@@ -204,6 +227,12 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     let enemigoY=this.y;
 
 
+
+
+
+
+
+        //para generar la vista 
     if(enemigoX>playerX){
       this.flipX=true
     }else this.flipX=false;
@@ -311,6 +340,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
           this.play(this.dataEnemie.diseno+"_idle");
         }
 
+
+
       }else{
         if(this.anims.currentAnim?.key!==this.dataEnemie.diseno+"_walk")
         {
@@ -320,12 +351,55 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       }
 
 
+      let raiz=Math.sqrt(Math.pow((player.x-this.x),2)+Math.pow((player.y-this.y),2));
+      let resultado_parcial=raiz/distancia_sonido;
+
+      let resultado_final=1-resultado_parcial;
+
+
+
+
+
+
+     
+      
+      if(
+        (player.x-this.x)<-distancia_sonido
+      ||(player.x-this.x)> distancia_sonido
+      ||(player.y-this.y)<-distancia_sonido
+      ||(player.y-this.y)>distancia_sonido
+
+      ){
+        this.sonido.volume=0;
+
+      }else{
+
+        
+
+        if(!(resultado_final<0)){
+        
+        this.sonido.volume=resultado_final;
+      
+      }
+        else {
+         
+          this.sonido.volume=0.01;
+        }
+
+
+
+
+      }
+
+
     
 
 
     }
 
     setMuerteEnemigo(){
+
+        this.sonido.stop();
         this.body.destroy();
         this.destroy();
 
