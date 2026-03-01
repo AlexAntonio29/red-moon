@@ -415,14 +415,14 @@ this.scene.anims.create({
           this.scene.anims.create({
         key: "ataqueDerecha",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralDerecha", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
-        frameRate: 25,
+        frameRate: 12,
         repeat: 0
           });
 
           this.scene.anims.create({
         key: "ataqueIzquierda",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralIzquierda", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
-        frameRate: 25,
+        frameRate: 12,
         repeat: 0
           });
 
@@ -1476,7 +1476,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
             }
 
             // Si es ataque fuerte, multiplicamos por 2. Si es normal, por 1.
-            let multiplicadorFuerza = this.esAtaqueFuerte ? 2 : 1;
+            let multiplicadorFuerza = this.esAtaqueFuerte ? 1.5 : 1;
             let sonido_ataque = this.esAtaqueFuerte ? this.ataque_cargado
             : this.scene.sound.add(this.combo[this.posicion_combo].sound,{
         loop:false,
