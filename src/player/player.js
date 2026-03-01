@@ -401,29 +401,29 @@ this.scene.anims.create({
       this.scene.anims.create({
         key: "ataqueArriba",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralArriba", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
-        frameRate: 25,
-        repeat: -1
+        frameRate: 12,
+        repeat: 0
           });
 
           this.scene.anims.create({
         key: "ataqueAbajo",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralAbajo", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
-        frameRate: 25,
-        repeat: -1
+        frameRate: 12,
+        repeat: 0
           });
 
           this.scene.anims.create({
         key: "ataqueDerecha",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralDerecha", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
         frameRate: 25,
-        repeat: -1
+        repeat: 0
           });
 
           this.scene.anims.create({
         key: "ataqueIzquierda",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralIzquierda", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
         frameRate: 25,
-        repeat: -1
+        repeat: 0
           });
 
 
@@ -1549,7 +1549,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
                 this.spriteAtaque.setVisible(false);
                 this.spriteAtaque.body.enable = false;
 
-            });
+            });//this.combo[this.posicion_combo].tiempo_ataque
 
 
 
@@ -1576,47 +1576,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         }
 
 
-             if(this.spriteAtaque){
-
-                      if(this.spriteAtaque.visible){
-                        
-
-              let velocidad=this.combo[this.posicion_combo].velocidad_radio_ataque;
-
-              
-
-              let width=this.spriteAtaque.displayWidth+velocidad;
-              let height=this.spriteAtaque.displayHeight+velocidad;
-              let multiplicador=0;
-              if(this.esAtaqueFuerte) multiplicador=2;
-              let radio=this.spriteAtaque.body.radius+velocidad+multiplicador;
-
-
-
-
-
-              this.spriteAtaque.setDisplaySize(radio*2,radio*2);
-              this.spriteAtaque.body.setCircle(radio,(this.spriteAtaque.width/2-radio),(this.spriteAtaque.height/2-radio));
-
-
-                        
-
-
-              
-                      }
-                      else{
-                        let radio=this.spriteAtaque.body.radius;
-
-                        
-                        this.spriteAtaque.body.setCircle(1,(this.spriteAtaque.width/2-1),(this.spriteAtaque.height/2-1));
-                        
-                        //this.spriteAtaque.setDisplaySize(0,0);
-                        
-             
-
-            }
-
-            }
+  
 
 
         
@@ -1675,6 +1635,47 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
         }
+
+                   if(this.spriteAtaque){
+
+                      if(this.spriteAtaque.visible){
+                        
+
+              let velocidad=this.combo[this.posicion_combo].velocidad_radio_ataque;
+
+              
+
+              let width=this.spriteAtaque.displayWidth+velocidad;
+              let height=this.spriteAtaque.displayHeight+velocidad;
+              
+
+              let radio=this.spriteAtaque.body.radius+velocidad;
+
+              console.log(velocidad);
+              console.log(radio);
+
+              this.spriteAtaque.body.setCircle(radio,(this.spriteAtaque.width/2-radio),(this.spriteAtaque.height/2-radio));
+
+              
+
+                        
+
+
+              
+                      }
+                      else{
+                        let radio=this.spriteAtaque.body.radius;
+
+                        
+                        this.spriteAtaque.body.setCircle(1,(this.spriteAtaque.width/2-1),(this.spriteAtaque.height/2-1));
+                        
+                        //this.spriteAtaque.setDisplaySize(0,0);
+                        
+             
+
+            }
+
+            }
 
 
         //cambiar combo 
