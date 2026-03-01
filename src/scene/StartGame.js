@@ -26,6 +26,11 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
       this.tiempoProgresivo=0;//el tiempo progresivo sirve para llevar el tiempo siempre adelante
       this.tiempoParaCrearEnemigos=0;
 
+
+      //collisiones
+
+      this.colisionEnemigoPlayer ;
+
      
       //agregar arma
       this.armas=new conjuntoArmas().getArmas();
@@ -881,22 +886,56 @@ colisionesEnemigo(){
 //FUNCIONES DE LAS COLISIONES
 
     contactoPlayerEnemigo(player,enemigo){
+
+      let tiempo_invisivilidad=5000;
+      let parpadeo=100;
+      let n=50;
+      
+
+
        console.log(this.golpeToPlayer);
        this.golpeToPlayer.play();
           
        this.player.setGolpeado();
-          empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this);//
+          empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this,500);//
 
           this.player.setVida(1); //desactivar para el contacto player enemigo
 
           if(this.player.getVida()<=0)this.finalizarPartida("Partida Finalizada") ;
 
           console.log("Contacto Player Enemigo: "+this.player.getVida());
+
+
+
+
+        player.setAlpha(0.5)
+        
+          this.physics.world.removeCollider(this.colisionEnemigoPlayer);
+          this.time.delayedCall(tiempo_invisivilidad,()=>{
+
+            console.log("regresa");
+            player.setAlpha(1);
+            player.setVisible(true);
+            this.collisionPlayerEnemigo();
+            
+
+          });
+
+
+          
+          this.time.addEvent({
+        
+        delay: parpadeo, 
+        callback: () => {
+        player.setVisible(!player.visible); 
+                        },
+         repeat: n // número de parpadeos
+                          });
     }
   //colision al contacto del player con el enemigo
       collisionPlayerEnemigo(){
         
- this.physics.add.collider(this.player.getContainer(),this.listaEnemigos,this.contactoPlayerEnemigo,null,this);
+   this.colisionEnemigoPlayer=this.physics.add.collider(this.player.getContainer(),this.listaEnemigos,this.contactoPlayerEnemigo,null,this);
 
 }
 
@@ -1566,7 +1605,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-//this.physics.world.createDebugGraphic();
+this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
 
     
@@ -1603,8 +1642,8 @@ this.game.renderer.antialias = false;
   
 
 
-    this.crearEnemigo(1,2150,4500,1);//cantidad Enemigos, x, y ,tipo de enemigo
-    this.crearEnemigo(1,2050,4500,3);
+    this.crearEnemigo(4,2150,4500,1);//cantidad Enemigos, x, y ,tipo de enemigo
+    //this.crearEnemigo(1,2050,4500,3);
    // this.crearEnemigo(1,2100,4500,4);
 
     //colisiones en entre items

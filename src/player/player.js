@@ -430,6 +430,35 @@ this.scene.anims.create({
 
   }
 
+
+  //EFECTOS******************************************************************************
+
+    getParpadeo(){
+
+      let n=10;
+      let time=1000;
+
+      
+
+        this.player.setVisible(false);
+
+        this.scene.time.delayedCall(time,()=>{
+          console.log("regreso visible")
+          this.player.setVisible(true);
+        })
+
+
+      
+    }
+
+  //******************************************************************************
+
+
+
+
+
+
+
   caminarPlayer(contacto,subEstado_caminar){
     //realizar las acciones dependiendo de la posicion del estado de caminata
 
@@ -1097,6 +1126,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         
 
       }
+
+
       else if(this.state==="walk"){
         this.slide.play();
 
