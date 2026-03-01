@@ -19,7 +19,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
         this.golpeado=false;
 
-        console.log(this.dataEnemie.width+ "  "+this.dataEnemie.height);
+        
 
 
 
@@ -28,6 +28,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         .setOrigin(0)
         .setDisplaySize(this.dataEnemie.width,this.dataEnemie.height)
         .setCollideWorldBounds(true)
+        .setBounce(0);
         //.body.setCircle(20)
         ;
 
@@ -90,7 +91,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         
         //sin movimiento
 
-        console.log(this.dataEnemie.velocidad_frames_idle);
+        //console.log(this.dataEnemie.velocidad_frames_idle);
 
         if (!this.scene.anims.exists(this.dataEnemie.diseno+"_idle")) {
         this.scene.anims.create({
@@ -399,7 +400,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
     setMuerteEnemigo(){
 
-        this.sonido.stop();
+        //this.sonido.stop();
         this.body.destroy();
         this.destroy();
 

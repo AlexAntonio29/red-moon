@@ -92,16 +92,7 @@ export class Items extends Phaser.Physics.Arcade.Sprite{
 
     setItem(){}
 
-    setRecoger(listaItems,item){
 
-
-
-     this.destroy();
-
-     const index = listaItems.indexOf(item);
-              if (index !== -1) listaItems.splice(index, 1);
-
-    }
 
 
 }

@@ -6,6 +6,7 @@ import { Enemie1 } from "../enemies/Enemie1.js";
 import { Enemie4 } from "../enemies/Enemie4.js";
 import { Enemie5 } from "../enemies/Enemie5.js";
 import { empujar } from "../funciones/empujar.js";
+import { DataComboEspada } from "../player/combo/DataCombo.js";
 
 //import { armas } from "../items/DataItemsPotenciadores.js";
 import { crearItemsPunto } from "../funciones/crearItemsPuntos.js";
@@ -90,6 +91,10 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
        this.load.audio("enemie5_sonido","./sounds/enemigo/enemie5/general/sonido.mp3");
 
+       this.load.audio("enemie1_sonido","./sounds/enemigo/enemie1/general/sonido.mp3");
+
+       this.load.audio("enemie4_sonido","./sounds/enemigo/enemie4/general/sonido.mp3");
+
 
 
     }
@@ -106,9 +111,12 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
       
       //cargar sonidos de ataque
      this.load.audio("ataque1","./sounds/player/atacando/ataque_espada.mp3");
+     this.load.audio("ataque2","./sounds/player/atacando/ataque_espada2.mp3");
+     this.load.audio("ataque3","./sounds/player/atacando/ataque_espada3.mp3");
      this.load.audio("ataque5","./sounds/player/atacando/ataque_espada_cargado.mp3");
 
 
+      this.load.audio("health","./sounds/player/health/health.mp3");
      //sonido de puntos
      this.load.audio("point1","./sounds/general/points/sound1.mp3");
      this.load.audio("point2","./sounds/general/points/sound2.mp3");
@@ -129,7 +137,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
       this.load.audio("touch","./sounds/touch.mp3");
 
-      this.load.audio("golpeEnemie","./sounds/enemigo/enemie1/golpeado/espada/golpe.mp3");
+      this.load.audio("atacado_espada","./sounds/enemigo/general/atacado_espada.mp3");
 
       this.load.audio("golpeToPlayer","./sounds/player/atacado/ataque.mp3");
 
@@ -199,10 +207,21 @@ this.load.spritesheet("player_idle","./assets/player/Animations/Carry_Idle/Idle.
 
 //ataque 
 
-this.load.spritesheet("attack_right","./assets/player/Animations/attack/attack1.png",{
+this.load.spritesheet(DataComboEspada[0].sprite,"./assets/player/Animations/attack/attack1.png",{
   frameWidth: 64,
   frameHeight: 64
 })
+
+this.load.spritesheet(DataComboEspada[1].sprite,"./assets/player/Animations/attack/attack2.png",{
+  frameWidth: 64,
+  frameHeight: 64
+})
+
+this.load.spritesheet(DataComboEspada[2].sprite,"./assets/player/Animations/attack/attack3.png",{
+  frameWidth: 64,
+  frameHeight: 64
+})
+
 
 this.load.spritesheet("player_golpeado_espada","./assets/player/Animations/golpeado/golpeado_espada.png",{
   frameWidth: 64,
@@ -534,6 +553,13 @@ crearEscenario(){
             ]
       ,0,0);
 
+
+                   this._above3_decoration=this.map.createLayer('_ABOVE3-DECORATION',//TODO lo que esta encima del jugador pero sin collision
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+            ]
+      ,0,0);
+
           this.above_collider=this.map.createLayer('ABOVE-COLLIDER',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
@@ -567,6 +593,7 @@ crearEscenario(){
       this.above.setPipeline('Light2D');
       this._above.setPipeline('Light2D');
       this._above2.setPipeline('Light2D');
+      this._above3_decoration.setPipeline('Light2D');
       this.above_collider.setPipeline('Light2D');
       this._above_collider.setPipeline('Light2D');
 
@@ -624,20 +651,12 @@ return valor;
 }
 
 //Crear enemigo
-crearEnemigo(n=1, x,y){
+crearEnemigo(n=1, x,y,selector=0){
 
-
-
-
-  if(n!==0){
+ if(n!==0){
     for(let i=0;i<n;i++){
-
-      //let valor=Math.floor(Math.random() * 4) + 0;
-      let valor=4;//aqui va el valor del tipo de enemigo
-      //se debe de modificar con el paso del tiempo para la variacion de enemigo
-      //por el momento puse cero ya que es el valor del primero enemigo en el arreglo
-
-
+  let enemigo;
+  
       if(x===undefined){
         x=Math.floor(Math.random() * ((this.widthEscenario-30) - 0 + 1)) + 0;
       }
@@ -645,12 +664,55 @@ crearEnemigo(n=1, x,y){
       if(y===undefined){
             y=Math.floor(Math.random() * ((this.heightEscenario-30) - 0 + 1)) + 0;
       }
+
+    
+
+  switch(selector){
+
+    case 0:
+
+    enemigo=new Enemie1(this,({...dataEnemigos[selector]}),x,y);
+
+    break;
+
+    case 3:
+
+  
+    enemigo=new Enemie4(this,({...dataEnemigos[selector]}),x,y);
+
+    break;
+
+
+    case 4:
+
+  
+    enemigo=new Enemie5(this,({...dataEnemigos[selector]}),x,y);
+
+    break;
+
+    default:
+
+    enemigo=new Enemie1(this,({...dataEnemigos[0]}),x,y);
+    break;
+
+
+  }
+
+
+ 
+
+      //let valor=Math.floor(Math.random() * 4) + 0;
+      //aqui va el valor del tipo de enemigo
+      //se debe de modificar con el paso del tiempo para la variacion de enemigo
+      //por el momento puse cero ya que es el valor del primero enemigo en el arreglo
+
+
       
    
    
 
       
-    let enemigo=new Enemie5(this,({...dataEnemigos[valor]}),x,y);
+   
 
 
 
@@ -840,7 +902,9 @@ colisionesEnemigo(){
 
     contactoEnemigoEnemigo(a,b){
       
-      empujar(a,b,2,this.contactoSprites,this,10,false);
+     // empujar(a,b,2,this.contactoSprites,this,10,false);
+
+
     }
 //colision entre los enemigos para que no transpasen
       collisionEnemigoEnemigo(){
@@ -860,7 +924,7 @@ colisionesEnemigo(){
 
     if(objeto.name==="player"){
     this.player.setCambiarEstado("idle");
-    objeto.setVelocity(0);
+    //objeto.setVelocity(0);
   }
 
 
@@ -938,6 +1002,11 @@ colisionesEnemigo(){
 
 
 }
+
+
+
+
+
        if(objeto && this._above2){
   //above para que este encima del player
           if(this._above2.layer.properties.find(p=>p.name==="collider"&&p.value===false))
@@ -950,6 +1019,26 @@ colisionesEnemigo(){
 
 
 }
+
+
+
+       if(objeto && this._above3_decoration){
+  //above para que este encima del player
+          if(this._above3_decoration.layer.properties.find(p=>p.name==="collider"&&p.value===false))
+            this._above3_decoration.setCollisionByExclusion([-1]);
+        this.physics.add.collider(objeto,this._above3_decoration,this.eliminarRebote,null,this);
+
+        this._above3_decoration.setDepth(10);
+        objeto.setDepth(5);
+
+
+
+}
+
+
+//generar depth a _suelo3
+
+
 
 
 
@@ -1409,10 +1498,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
 
 
-      this.golpeEnemie=this.sound.add("golpeEnemie",{
-        loop:false,
-        volume:1
-      });
+
 
       this.powerUp=this.sound.add("powerUp",{
         loop:false,
@@ -1480,7 +1566,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-this.physics.world.createDebugGraphic();
+//this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
 
     
@@ -1517,7 +1603,9 @@ this.game.renderer.antialias = false;
   
 
 
-    this.crearEnemigo(1,2150,4500);
+    this.crearEnemigo(1,2150,4500,1);//cantidad Enemigos, x, y ,tipo de enemigo
+    this.crearEnemigo(1,2050,4500,3);
+   // this.crearEnemigo(1,2100,4500,4);
 
     //colisiones en entre items
 
