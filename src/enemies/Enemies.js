@@ -12,6 +12,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         
         
         this.dataEnemie=dataEnemie;
+        
         this.velocidad=Math.floor(Math.random() * ((Number(this.dataEnemie.velocidad)) - (Number(this.dataEnemie.velocidad)-30) + 1)) + (Number(this.dataEnemie.velocidad)-30);
 
         this.vida=Number(dataEnemie.vida);
@@ -68,6 +69,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
 
 
+        this.state="idle";
         
 
 
@@ -184,20 +186,102 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         this.setVelocityY(n);
     }
 
-    setMovimientoEnemigo(player,contacto,contactoAtaque,contactoEnemigo){
 
-  
+      setDistanciaVista(player){
+
+            let distancia_vista=this.dataEnemie.distancia_vista;
+
+      if(
+        (player.x-this.x)<-distancia_vista
+      ||(player.x-this.x)> distancia_vista
+      ||(player.y-this.y)<-distancia_vista
+      ||(player.y-this.y)>distancia_vista
+
+      ){
+   
+        this.setVelocity(0);
+        if(this.anims.currentAnim?.key!==this.dataEnemie.diseno+"_idle" 
+          &&this.state!=="attack"){
+
+          this.play(this.dataEnemie.diseno+"_idle");
+         // console.log(this.anims.currentAnim?.key);
+         
+
+        }
 
 
-      
 
+      }else{
+        if(this.anims.currentAnim?.key!==this.dataEnemie.diseno+"_walk"
+          &&this.state!=="attack")
+        {
+          this.play(this.dataEnemie.diseno+"_walk");
+          this.state="walk";
+        }
+       
+      }
 
+      }
+
+      setDistanciaSonido(player){
+
+            //console.log(player.x-this.x);
+      //console.log(player.y -this.y);
 
 
       let distancia_sonido=this.dataEnemie.distancia_sonido;
 
+      let raiz=Math.sqrt(Math.pow((player.x-this.x),2)+Math.pow((player.y-this.y),2));
+      let resultado_parcial=raiz/distancia_sonido;
+
+      let resultado_final=1-resultado_parcial;
+
+
+
+
+
+
+     
+      
+      if(
+        (player.x-this.x)<-distancia_sonido
+      ||(player.x-this.x)> distancia_sonido
+      ||(player.y-this.y)<-distancia_sonido
+      ||(player.y-this.y)>distancia_sonido
+
+      ){
+        this.sonido.volume=0;
+
+      }else{
+
+        
+
+        if(!(resultado_final<0)){
+        
+        this.sonido.volume=resultado_final;
+      
+      }
+        else {
+         
+          this.sonido.volume=0.01;
+        }
+
+
+
+
+      }
+
+      }
+
+
+    setCaminar(player,contacto,contactoAtaque,contactoEnemigo){
+
+
+      
+      
+
       //console.log(`!contacto:${!contacto}, !this.vida${!(this.vida<=0)}, !contractoAtaque:${!contactoAtaque} !contactoEnemigo:${!contactoEnemigo}`)
-      if(!contacto && !(this.vida<=0) && !contactoAtaque && !contactoEnemigo){
+      if(!contacto && !(this.vida<=0) && !contactoAtaque && !contactoEnemigo && this.state==="walk"){
 
         
 
@@ -322,75 +406,49 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
  
     }
 
+    this.setDistanciaVista(player);
+
+    this.setDistanciaSonido(player);
 
 
-      //console.log(player.x-this.x);
-      //console.log(player.y -this.y);
 
-      let distancia_vista=this.dataEnemie.distancia_vista;
 
+    }
+
+
+    getState(){
+
+      this.on("animationcomplete", (anim)=>{
       if(
-        (player.x-this.x)<-distancia_vista
-      ||(player.x-this.x)> distancia_vista
-      ||(player.y-this.y)<-distancia_vista
-      ||(player.y-this.y)>distancia_vista
-
+        this.state==="attack"
+      ||this.state==="hurt"
+      ||this.state==="dash"
+      ||this.state==="healing"
       ){
-        this.setVelocity(0);
-        if(this.anims.currentAnim?.key!==this.dataEnemie.diseno+"_idle"){
-          this.play(this.dataEnemie.diseno+"_idle");
-        }
 
-
-
-      }else{
-        if(this.anims.currentAnim?.key!==this.dataEnemie.diseno+"_walk")
-        {
-          this.play(this.dataEnemie.diseno+"_walk");
-        }
-       
-      }
-
-
-      let raiz=Math.sqrt(Math.pow((player.x-this.x),2)+Math.pow((player.y-this.y),2));
-      let resultado_parcial=raiz/distancia_sonido;
-
-      let resultado_final=1-resultado_parcial;
-
-
-
-
-
-
-     
-      
-      if(
-        (player.x-this.x)<-distancia_sonido
-      ||(player.x-this.x)> distancia_sonido
-      ||(player.y-this.y)<-distancia_sonido
-      ||(player.y-this.y)>distancia_sonido
-
-      ){
-        this.sonido.volume=0;
-
-      }else{
-
+        console.log("return idle")
         
+        this.state="idle";
+      }
 
-        if(!(resultado_final<0)){
-        
-        this.sonido.volume=resultado_final;
+    });
+
+    }
+
+    setMovimientoEnemigo(player,contacto,contactoAtaque,contactoEnemigo){
+
+  
+      this.getState();
+      //console.log(this.state);
+
       
-      }
-        else {
-         
-          this.sonido.volume=0.01;
-        }
 
 
 
+    this.setCaminar(player,contacto,contactoAtaque,contactoEnemigo);
 
-      }
+
+
 
 
     

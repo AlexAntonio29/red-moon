@@ -4,7 +4,7 @@ export const dataEnemigos=[
         'nombre':'Zombie',
         'vida':15,
         'items':1,
-        'ataque':'5',
+        'ataque':'30',
         'puntos':Math.floor(Math.random() * 10) + 5,
         'velocidad':50,
         'nivel':'1',
@@ -65,7 +65,7 @@ export const dataEnemigos=[
         'nombre':'Lobo',
         'vida':20,
         'items':4,
-        'ataque':'15',  
+        'ataque':'35',  
         'puntos':Math.floor(Math.random() * 10) + 5,
         'velocidad':200,
         'nivel':'2',
@@ -95,7 +95,7 @@ export const dataEnemigos=[
         'nombre':'Bestia',
         'vida':40,
         'items':4,
-        'ataque':'15',  
+        'ataque':'65',  
         'puntos':Math.floor(Math.random() * 10) + 5,
         'velocidad':200,
         'nivel':'2',
@@ -105,6 +105,7 @@ export const dataEnemigos=[
         'movimiento':'5',
         'distancia_vista':350,
         'distancia_sonido':1000,
+        'distancia_ataque':50,
 
 
         'velocidad_frames':20,
@@ -122,6 +123,7 @@ export const dataEnemigos=[
 
         'end_frame_idle':3,
         'end_frame_walk':7,
+        'end_frame_attack1':6,
         'end_frame_hurt':3,
         'end_frame_dead':3,
     },

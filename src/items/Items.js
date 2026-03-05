@@ -4,7 +4,7 @@
 export class Items extends Phaser.Physics.Arcade.Sprite{
 
 
-    constructor(scene,id,categoria,width=25,height=25,x=0,y=0,textura,dataItem){
+    constructor(scene,id,categoria,width=25,height=25,x=0,y=0,textura,dataItem,lights){
 
       
 
@@ -24,10 +24,21 @@ export class Items extends Phaser.Physics.Arcade.Sprite{
        
       this.setBody(textura);
        
+
+      //crear luz
+
+      this.light=lights.addLight(x, y, 40) .setColor(0xEB3636) .setIntensity(3);
+
+
+      this.light.setPosition(this.x+(this.displayWidth/2),this.y+(this.displayHeight/2));
+
+      
         
        
          
     }
+
+
 
     getContainer(){
      //console.log("Dentro de getContainer Items");

@@ -10,7 +10,8 @@ export const DataComboEspada =[
         "velocidad_frames":12,
         "tiempo_ataque":300,
         "sound":"ataque1",
-        "velocidad_radio_ataque":3
+        "velocidad_radio_ataque":3,
+        "stamina":60
     },
 
         {
@@ -22,7 +23,8 @@ export const DataComboEspada =[
         "velocidad_frames":12,
         "tiempo_ataque":300,
         "sound":"ataque2",
-        "velocidad_radio_ataque":3
+        "velocidad_radio_ataque":3,
+        "stamina":70
     },
 
         {
@@ -34,7 +36,8 @@ export const DataComboEspada =[
         "velocidad_frames":12,
         "tiempo_ataque":300,
         "sound":"ataque3",
-        "velocidad_radio_ataque":4
+        "velocidad_radio_ataque":4,
+        "stamina":80
     },
 
 

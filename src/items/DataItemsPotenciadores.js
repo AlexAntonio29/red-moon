@@ -14,7 +14,8 @@ export const armas=[
         'sonido':'ataque1',
         'descripcion':'espada clasica',
         'inicioAnim':0,
-        'tiempo_combo':1000
+        'tiempo_combo':1000,
+        'fuerza':400
     },
     {
         'id':'2',

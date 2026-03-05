@@ -374,6 +374,11 @@ this.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animation
         frameHeight: 64
         });
 
+        this.load.spritesheet('enemie5_attack1', "./assets/enemies/enemie5/attack/attack1.png", {
+        frameWidth: 64,
+        frameHeight: 64
+        });
+
 
 
       
@@ -639,7 +644,7 @@ crearItems(n){
     
 
    //this.crearItemsPunto(n); 
-   crearItemsPunto(this,n,this.items_punto,this.widthEscenario,this.heightEscenario,true);
+   crearItemsPunto(this,n,this.items_punto,this.widthEscenario,this.heightEscenario,true,null,this.lights);
 
   
 }
@@ -767,10 +772,16 @@ getPlayer(){
 
   let x=1572;
   let y=5350;
-    this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos);
+    this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos,this.lights);
 
     this.player.getContainer().setTint(0x555555);//para ver si se oscurece mas
     this.player.getContainer().setPipeline('Light2D');
+
+
+    //curando
+
+  
+
   
 
   
@@ -836,7 +847,34 @@ movimientosPlayer(){
         // this.collisionRecogerItemBasura(); 
          this.player.setHabilitarCollision(false);
         }
-    // console.log("ESTA ATACANDO: "+this.estaAtacando);
+
+
+
+   
+    if(this.player.curando) {
+      console.log("subiendo barra de salud");
+      this.getBarraVida();
+      this.player.curando=false;
+    
+    }
+
+    //estamina
+
+    
+    if(this.player.stamina<this.player.staminaMax){
+
+      console.log("recuperando");
+
+      this.player.stamina+=this.player.velocidad_recuperacion;
+
+
+      this.getBarraStamina();
+      
+      if(this.player.stamina>=this.player.staminaMax){
+        this.player.stamina=this.player.staminaMax;
+        this.player.recuperando=false;
+      }
+    }
 
    
 
@@ -887,30 +925,22 @@ colisionesEnemigo(){
 
     contactoPlayerEnemigo(player,enemigo){
 
-      let tiempo_invisivilidad=5000;
+      let tiempo_invisivilidad=1000;
       let parpadeo=100;
-      let n=50;
+      let n=10;
       
 
 
-       console.log(this.golpeToPlayer);
+       //console.log(this.golpeToPlayer);
        this.golpeToPlayer.play();
           
        this.player.setGolpeado();
-          empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this,500);//
+          empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this,700);//
 
-          this.player.setVida(1); //desactivar para el contacto player enemigo
-
-          if(this.player.getVida()<=0)this.finalizarPartida("Partida Finalizada") ;
-
-          console.log("Contacto Player Enemigo: "+this.player.getVida());
+          this.player.setVida(enemigo.dataEnemie.ataque); //desactivar para el contacto player enemigo
 
 
-
-
-        player.setAlpha(0.5)
-        
-          this.physics.world.removeCollider(this.colisionEnemigoPlayer);
+                this.physics.world.removeCollider(this.colisionEnemigoPlayer);
           this.time.delayedCall(tiempo_invisivilidad,()=>{
 
             console.log("regresa");
@@ -922,8 +952,7 @@ colisionesEnemigo(){
           });
 
 
-          
-          this.time.addEvent({
+        this.time.addEvent({
         
         delay: parpadeo, 
         callback: () => {
@@ -931,6 +960,24 @@ colisionesEnemigo(){
                         },
          repeat: n // número de parpadeos
                           });
+
+
+          if(this.player.getVida()<=0)this.finalizarPartida("Partida Finalizada") ;
+
+          console.log("Contacto Player Enemigo: "+this.player.getVida());
+
+          this.getBarraVida();
+
+
+
+
+        player.setAlpha(0.5)
+        
+
+
+
+          
+
     }
   //colision al contacto del player con el enemigo
       collisionPlayerEnemigo(){
@@ -1129,6 +1176,7 @@ colisionesEnemigo(){
 
 
            this.puntos+=Number(item.puntos);
+           this.lights.removeLight(item.light);
             this.items_punto.remove(item,true,true);
 
             
@@ -1239,6 +1287,77 @@ crearCamera(){
 
 
 //Crear HUD del juego
+
+getBarraStamina(){
+
+  //datos de player
+  let stamina_player;
+  if(this.player.stamina>=0)
+    stamina_player=this.player.stamina;
+  else stamina_player=0;
+
+
+
+  if(this.contenedorStamina) this.contenedorStamina.destroy();
+  this.contenedorStamina=this.add.container(0,0).setScrollFactor(0);
+
+
+
+  if(this.backgroundStamina) this.backgroundStamina.destroy();
+  this.backgroundStamina=this.add.rectangle(10,10+this.backgroundVida.height+10,stamina_player,10,0x438E5B,1)//cambiar el tercer parametro por la vida del player
+  .setOrigin(0)
+
+    if(this.backgroundStaminaCompleta) this.backgroundStaminaCompleta.destroy();
+  this.backgroundStaminaCompleta=this.add.rectangle(10,10+this.backgroundVida.height+10,this.player.staminaMax,10,0x90CBA3,1)//cambiar el tercer parametro por la vida del player
+  .setOrigin(0)
+  
+ 
+  //cambiar despues el valor por uno que tome de la BD
+
+  this.contenedorStamina.add(this.backgroundStaminaCompleta);
+  this.contenedorStamina.add(this.backgroundStamina);
+  this.contenedorStamina.setDepth(20);
+  
+
+
+
+  
+}
+
+getBarraVida(){
+
+  //datos de player
+  let vida_player
+  if(this.player)
+    vida_player=this.player.vida;
+  else vida_player=250;
+
+  if(this.contenedorVida) this.contenedorVida.destroy();
+  this.contenedorVida=this.add.container(0,0).setScrollFactor(0);
+
+
+
+  if(this.backgroundVida) this.backgroundVida.destroy();
+  this.backgroundVida=this.add.rectangle(10,10,vida_player,10,0xFF0000,1)//cambiar el tercer parametro por la vida del player
+  .setOrigin(0)
+
+    if(this.backgroundVidaCompleta) this.backgroundVidaCompleta.destroy();
+  this.backgroundVidaCompleta=this.add.rectangle(10,10,this.player.vidaActualMax,10,0x9C2007,1)//cambiar el tercer parametro por la vida del player
+  .setOrigin(0)
+  
+  //console.log(this.player.vidaActualMax);
+  //cambiar despues el valor por uno que tome de la BD
+
+  this.contenedorVida.add(this.backgroundVidaCompleta);
+  this.contenedorVida.add(this.backgroundVida);
+  this.contenedorVida.setDepth(20);
+  
+  
+
+
+
+  
+}
 crearHUD(){
     //CREAR HUD de Puntos
     this.puntos=0;
@@ -1252,21 +1371,24 @@ crearHUD(){
     .setOrigin(0)
     .setStrokeStyle(2,0xffffff);
 
- let textoPuntos= this.add.text(16,16,"esencia de luna roja ",{
-        fontSize: '15px',
-        fontFamily:this.fontText,
-        fill: '#fff'
 
-    });
-    this.hudPuntos(textoPuntos);
+    this.getBarraVida();
+    this.getBarraStamina();
+
+    
+
+
+    this.hudPuntos();
     this.hudCronometro();
 
    
+    this.hudBackground.setPosition(this.widthPantalla-this.hudBackground.width,10);
 //union de los puntos y cronometro al background para que este todo junto
     this.hudContainer.add(this.hudBackground);
-    this.hudContainer.add(textoPuntos);
-    this.hudContainer.add(this.puntaje);
+    this.hudContainer.add(this.contenedorPuntaje);
+    //this.hudContainer.add(this.puntaje);
     this.hudContainer.add(this.cronometro);
+    
 
     this.hudContainer.setDepth(20);
 
@@ -1394,7 +1516,22 @@ this.input.keyboard.on('keyup-M', () => {
 
 }
 //donde muestra los puntos acumulados
-    hudPuntos(textoPuntos){
+    hudPuntos(){
+
+       let textoPuntos= this.add.text(16,16,"Esencia de luna roja ",{
+        fontSize: '15px',
+        fontFamily:this.fontText,
+        fill: '#fff'
+
+    })
+    
+    
+    ;
+
+
+    textoPuntos.setPosition(this.widthPantalla-this.hudBackground.width,10);
+
+    this.contenedorPuntaje=this.add.container(0,0).setScrollFactor(0);
   
     this.puntaje= this.add.text(16,16,this.puntos,{
         fontSize: '15px',
@@ -1402,13 +1539,19 @@ this.input.keyboard.on('keyup-M', () => {
         fill: '#fff'
 
     }).setPosition(textoPuntos.x+textoPuntos.width+10,textoPuntos.y);
+
+    this.contenedorPuntaje.add(textoPuntos);
+
+    this.contenedorPuntaje.add(this.puntaje);
+
+
 }
 //donde muetra el cronometro
     hudCronometro(){
   
 
     //CREAR HUD de tiempo
-    this.cronometro= this.add.text(16,16,'Tiempo: '+this.tiempo,{
+    this.cronometro= this.add.text(16,16,'Reloj: '+this.tiempo,{
         fontSize: '15px',
         fontFamily: this.fontText,
         fill: '#fff'
@@ -1437,12 +1580,12 @@ this.input.keyboard.on('keyup-M', () => {
     //if(this.tiempo<=0) this.finalizarPartida("Se agotó el tiempo");
     //else{
     this.tiempo++;
-    this.cronometro.setText('Tiempo: ' + this.tiempo);//}
+    this.cronometro.setText('Reloj: ' + this.tiempo);//}
   },
   loop: true
 });
 
-    this.cronometro.setPosition(this.puntaje.width+this.puntaje.x+20, this.puntaje.height);
+    this.cronometro.setPosition(this.puntaje.width+this.puntaje.x+20, 10);
 }
 
 
@@ -1597,6 +1740,17 @@ this.joystickCursors = this.joyStick.createCursorKeys();
     crearLuces(){
       this.lights.enable();
       this.lights.setAmbientColor(0x222222); 
+
+    }
+
+
+    creacionEnemigosPosicionados(){
+
+      this.crearEnemigo(1,2150,4500,1);//cantidad Enemigos, x, y ,tipo de enemigo
+
+      this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
+
+
     }
     
 
@@ -1628,6 +1782,8 @@ this.game.renderer.antialias = false;
 
 
 
+  
+
     
 
 
@@ -1642,11 +1798,14 @@ this.game.renderer.antialias = false;
   
 
 
-    this.crearEnemigo(4,2150,4500,1);//cantidad Enemigos, x, y ,tipo de enemigo
+    this.creacionEnemigosPosicionados()
     //this.crearEnemigo(1,2050,4500,3);
    // this.crearEnemigo(1,2100,4500,4);
 
     //colisiones en entre items
+
+       //crear HUD
+    this.crearHUD();
 
     this.crearColisiones();
     
@@ -1657,8 +1816,7 @@ this.game.renderer.antialias = false;
 
    this.crearCamera();
 
-   //crear HUD
-    this.crearHUD();
+  
 
     //this.crearAnimaciones();
     
@@ -1680,6 +1838,8 @@ movimientoItemToPlayer(){
     if(item.moveToPlayer){
       let velocidad=Math.floor(Math.random() * (500 - 300 + 1)) + 300;
    // scene.time.delayedCall(1000, () => {
+
+    item.light.setPosition((item.x)+item.displayWidth/2,(item.y)+item.displayHeight/2)
     
     this.physics.moveToObject(item, this.player.getContainer().body, velocidad);
     //});
@@ -1691,8 +1851,8 @@ movimientoItemToPlayer(){
 
 lightplayer(){
 
-     let xPlayer=this.player.getContainer().body.width/2;
-   let yPlayer=this.player.getContainer().body.height/2;
+     let xPlayer=this.player.getContainer().displayWidth/2;
+   let yPlayer=this.player.getContainer().displayHeight/2;
 
   this.lightToPlayer.setPosition((this.player.getContainer().x)+xPlayer,(this.player.getContainer().y)+yPlayer);
 
