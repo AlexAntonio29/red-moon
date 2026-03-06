@@ -1,0 +1,20 @@
+import {Enemies} from "./Enemies.js";
+
+export class Enemie4 extends Enemies{
+
+
+    constructor(scene, dataEnemie, x=0,y=0){
+
+        super(scene,dataEnemie,x,y);
+
+      
+
+
+
+    }
+
+
+
+
+
+}
