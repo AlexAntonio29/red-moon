@@ -480,7 +480,7 @@ this.scene.anims.create({
     //velocidad del movimiento del player
     
     const velocidadFinal=300;
-    let aceleracion=25;
+    let aceleracion=30;
 
     //let velocidad= 0;
 
@@ -891,18 +891,18 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
     
-    if(velocidadDiagonal.ymd<velocidadFinalDiagonal&&velocidadDiagonal.xMd<velocidadFinalDiagonal){
-      this.player.setVelocityX(velocidadDiagonal.xMd+aceleracion);
-      this.player.setVelocityY(velocidadDiagonal.ymd-aceleracion);
 
-      let sum= (velocidadDiagonal.xMd*velocidadDiagonal.xMd)+((velocidadDiagonal.ymd)*(velocidadDiagonal.ymd));
-      //console.log("operacion: "+(Math.sqrt(sum)));
-    }
-      
-    else{ 
-      this.player.setVelocityY(-velocidadFinalDiagonal)
-      this.player.setVelocityX(velocidadFinalDiagonal);
-    };
+
+
+          if(velocidadDiagonal.ymd>(-velocidadFinalDiagonal))
+      this.player.setVelocityY(velocidadDiagonal.ymd-aceleracion);
+    else this.player.setVelocityY(-velocidadFinalDiagonal);
+
+    if(velocidadDiagonal.xMd<velocidadFinalDiagonal)
+     this.player.setVelocityX(velocidadDiagonal.xMd+aceleracion);
+    else this.player.setVelocityX(velocidadFinalDiagonal);
+
+
 
 
           if(this.player.body.velocity.y===-aceleracion&&this.player.body.velocity.x===aceleracion) 
@@ -1268,40 +1268,82 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
   detenerMovimiento(){
-    let desaceleracion=18;
+    let desaceleracion=20;//apenas probando entre 18 a 20
     let desalerar;
 
+
+
         let velocidad={
-      "xm":(this.player.body.velocity.x),
-      "xM":(this.player.body.velocity.x),
-      "ym":(this.player.body.velocity.y),
-      "yM":(this.player.body.velocity.y)
+      "xm":(this.player.body.velocity.x)+desaceleracion,
+      "xM":(this.player.body.velocity.x)-desaceleracion,
+      "ym":(this.player.body.velocity.y)+desaceleracion,
+      "yM":(this.player.body.velocity.y)-desaceleracion
     }
-    if(this.player.body.velocity.x!==0||this.player.body.velocity.y!==0){
+
+
+
+    if((this.player.body.velocity.x!==0
+      ||this.player.body.velocity.y!==0 )
+      ){
+
+
 
       //console.log(this.player.body.velocity);
-      //console.log("hay movimiento");
+      //console.log("x: "+this.player.body.velocity.x);
+      //console.log("y: "+this.player.body.velocity.y);
+
+
+      
 
       //en eje x
       if(this.player.body.velocity.x>0){
-         desalerar=velocidad.xM-desaceleracion;
+
+
+
+        
+         desalerar=(
+          this.player.body.velocity.x<desaceleracion&&
+          this.player.body.velocity.x>-desaceleracion
+         )?0:velocidad.xM;
+
+         console.log(desalerar);
         this.player.setVelocityX(desalerar);
       }else if(this.player.body.velocity.x<0){
-        desalerar=velocidad.xm+desaceleracion;
+
+        desalerar=(
+          this.player.body.velocity.x<desaceleracion&&
+          this.player.body.velocity.x>-desaceleracion
+         )?0:velocidad.xm;
+        
         this.player.setVelocityX(desalerar);
       }
 
       //en eje y
 
+
             if(this.player.body.velocity.y>0){
-         desalerar=velocidad.yM-desaceleracion;
+          desalerar=(
+          this.player.body.velocity.y<desaceleracion&&
+          this.player.body.velocity.y>-desaceleracion
+         )?0:velocidad.yM;
         this.player.setVelocityY(desalerar);
       }else if(this.player.body.velocity.y<0){
-        desalerar=velocidad.ym+desaceleracion;
+          desalerar=(
+          this.player.body.velocity.y<desaceleracion&&
+          this.player.body.velocity.y>-desaceleracion
+         )?0:velocidad.ym;
         this.player.setVelocityY(desalerar);
       }
       
     }
+
+
+
+
+
+
+
+
 
 
   }
