@@ -25,7 +25,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
 
         
-      this
+        this
         .setOrigin(0)
         .setDisplaySize(this.dataEnemie.width,this.dataEnemie.height)
         .setCollideWorldBounds(true)

@@ -1,6 +1,7 @@
-import { Items } from "../items/Items.js";
-import {puntos} from "../items/ItemsData.js";
-import { player } from "../player/player.js";
+import {Items } from "../items/Items.js";
+import { ItemPuntos } from "../items/extendsItems/ItemPuntos.js";
+import {puntos} from "../items/DataItemsPuntos.js";
+
 
 export function crearItemsPunto(scene,n=1,items_punto,widthEscenario,heightEscenario,posicionAleatoria,player=null,lights){
 
@@ -47,7 +48,7 @@ export function crearItemsPunto(scene,n=1,items_punto,widthEscenario,heightEscen
 
 
 
-   let item=new Items(scene,tipo.id, tipo.categoria,25,25,x,y,textura,data.puntos,lights);
+   let item=new ItemPuntos(scene,tipo.id, tipo.categoria,25,25,x,y,textura,data.puntos,lights);
    item.setPipeline('Light2D');
    //item.lights.enable();
    //item.lights.setAmbientColor(0x222222);  

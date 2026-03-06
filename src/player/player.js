@@ -1,6 +1,6 @@
 import  {empujar}  from "../funciones/empujar.js";
 import { crearItemsPunto } from "../funciones/crearItemsPuntos.js";
-import { armas } from "../items/DataItemsPotenciadores.js";
+import { armas } from "../items/DataItemsArmas.js";
 import {dataEnemigos} from "../enemies/DataEnemies.js";
 import { DataComboEspada } from "./combo/DataCombo.js";
 export class player {
@@ -14,6 +14,7 @@ export class player {
     this.vidaActualMax=this.vida;
     this.curando=false;
     this.cantidadPociones=3;//llamar por BD
+    this.cantidadPocionesMaximo=this.cantidadPociones;
 
     this.stamina=250;//llamar datos player de Bd
     this.staminaMax=this.stamina;
@@ -252,7 +253,7 @@ export class player {
 
 this.scene.anims.create({
     key: "player_curar_anim",
-    frames: this.scene.anims.generateFrameNumbers('player_heal', { start: 0, end: 9 }), // Ajusta los frames según tu sprite
+    frames: this.scene.anims.generateFrameNumbers('player_heal', { start: 0, end: 8 }), // Ajusta los frames según tu sprite
     frameRate: 10,
     repeat: 0 
 });
@@ -1352,7 +1353,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   setMovimientoPlayer(contacto){
 
 
-      console.log(this.vida);
+      
        // console.log(this.player.x);
        // console.log(this.player.y);
         let subEstado_caminar="";
