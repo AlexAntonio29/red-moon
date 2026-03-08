@@ -912,9 +912,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         }
         else if (this.player.anims.currentAnim?.key !== 'player_camina') {
       console.log("cambio derecha");
-      this.player.flipX=false;
+      
       this.player.play('player_camina');
     }
+    this.player.flipX=false;
   break;
 
   case "arriba-izquierda":

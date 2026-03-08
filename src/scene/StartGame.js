@@ -1224,7 +1224,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
       this.crearEnemigo(1,2150,4500,1);//cantidad Enemigos, x, y ,tipo de enemigo
 
-      //this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
+      this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
 
 
     }
@@ -1235,15 +1235,9 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-this.physics.world.createDebugGraphic();
+//this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
-
-    
-
-  
     //this.crearFiltro();
-
-    
     //Generacion de escenario
     this.crearEscenario();
     this.cargarSonido();
@@ -1255,41 +1249,18 @@ this.game.renderer.antialias = false;
     this.cargarBotones();
     this.cargarJoystick();
     this.getPlayer();
-    
-    
-  
-  
-
-
     this.creacionEnemigosPosicionados()
     //this.crearEnemigo(1,2050,4500,3);
    // this.crearEnemigo(1,2100,4500,4);
-
     //colisiones en entre items
-
        //crear HUD
     this.crearHUD();
-
-    this.crearColisiones();
-    
+    this.crearColisiones(); 
    // this.depurarColisiones();
-    
-
    //creacion de camara;
-
    this.crearCamera();
-
-  
-
     //this.crearAnimaciones();
-    
-    
-  
-    
-
-  
-
-   
+       
 }
 
 
