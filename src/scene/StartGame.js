@@ -230,7 +230,6 @@ crearEscenario(){
 
 
 
-
 //Aqui se generaran los items
 crearItems(n){
     
