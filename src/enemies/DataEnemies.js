@@ -4,7 +4,7 @@ export const dataEnemigos=[
         'nombre':'Zombie',
         'vida':15,
         'items':1,
-        'ataque':'5',
+        'ataque':'30',
         'puntos':Math.floor(Math.random() * 10) + 5,
         'velocidad':50,
         'nivel':'1',
@@ -12,7 +12,23 @@ export const dataEnemigos=[
         'width':80,
         'height':80,
         'movimiento':'5',
-        'ofzigzag':false
+        'distancia_vista':250,
+        'distancia_sonido':250,
+        'velocidad_frames':4,
+
+        'velocidad_frames_idle':3,
+        'velocidad_frames_walk':4,
+        'velocidad_frames_hurt':5,
+        'velocidad_frames_dead':5,
+
+        'ofzigzag':false,
+
+        'end_frame_idle':4,
+        'end_frame_walk':4,
+        'end_frame_hurt':4,
+        'end_frame_dead':4,
+
+
     },
     {
         'id':'2',
@@ -46,33 +62,70 @@ export const dataEnemigos=[
     },
     {
         'id':'4',
-        'nombre':'Olvido verde',
-        'vida':70,
+        'nombre':'Lobo',
+        'vida':20,
         'items':4,
-        'ataque':'15',
+        'ataque':'35',  
         'puntos':Math.floor(Math.random() * 10) + 5,
-        'velocidad':100,
+        'velocidad':200,
         'nivel':'2',
         'diseno':'enemie4',
-        'width':60,
-        'height':60,
+        'width':80,
+        'height':80,
         'movimiento':'5',
-        'ofzigzag':false
-    },,
+        'distancia_vista':250,
+        'distancia_sonido':250,
+
+        'velocidad_frames':10,
+
+        'velocidad_frames_idle':4,
+        'velocidad_frames_walk':10,
+        'velocidad_frames_hurt':5,
+        'velocidad_frames_dead':5,
+
+        'ofzigzag':false,
+
+        'end_frame_idle':3,
+        'end_frame_walk':5,
+        'end_frame_hurt':3,
+        'end_frame_dead':3,
+    },
     {
         'id':'5',
-        'nombre':'Incendiador',
-        'vida':80,
-        'items':3,
-        'ataque':'10',
-        'puntos':Math.floor(Math.random() * 20) + 10,
+        'nombre':'Bestia',
+        'vida':40,
+        'items':4,
+        'ataque':'65',  
+        'puntos':Math.floor(Math.random() * 10) + 5,
         'velocidad':200,
         'nivel':'2',
         'diseno':'enemie5',
-        'width':50,
-        'height':50,
+        'width':90,
+        'height':90,
         'movimiento':'5',
-        'ofzigzag':false
+        'distancia_vista':350,
+        'distancia_sonido':1000,
+        'distancia_ataque':50,
+
+
+        'velocidad_frames':20,
+
+        'velocidad_frames_idle':4,
+        'velocidad_frames_walk':25,
+        'velocidad_frames_hurt':5,
+        'velocidad_frames_dead':5,
+
+
+
+
+
+        'ofzigzag':false,
+
+        'end_frame_idle':3,
+        'end_frame_walk':7,
+        'end_frame_attack1':6,
+        'end_frame_hurt':3,
+        'end_frame_dead':3,
     },
     {
         'id':'6',
