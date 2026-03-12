@@ -501,6 +501,16 @@ crearEscenario(){
             ]
       ,0,0);
 
+          this.blockLayer = this.map.createLayer('BLOCK', 
+              [this.tileset1, this.tileset2, this.tileset3, this.tileset4, this.tileset5, this.tileset6, this.tileset7, this.tileset8, this.tileset9, this.tileset10, this.tileset11, this.tileset12], 
+              0, 0
+          );
+
+// Mantenemos tu sistema de luces
+this.blockLayer.setPipeline('Light2D');
+
+      
+
 
 
       //agregar luces los mapas
@@ -517,6 +527,7 @@ crearEscenario(){
       this.above.setPipeline('Light2D');
       this._above.setPipeline('Light2D');
       this.above_collider.setPipeline('Light2D');
+      this.blockLayer.setPipeline('Light2D');
 
 
 
@@ -908,6 +919,22 @@ this.physics.add.collider(this.player.getContainer(),this.arboles);
 
 
 
+}
+
+if (objeto && this.blockLayer) {
+   
+    if (this.blockLayer.layer.properties.find(p => p.name === "collider" && p.value === true)) {
+        this.blockLayer.setCollisionByExclusion([-1]);
+    }
+
+   
+    this.physics.add.collider(
+        objeto,               
+        this.blockLayer,      
+        this.eliminarRebote,  
+        this.checkCondicionBloque, 
+        this                 
+    );
 }
       }
 
