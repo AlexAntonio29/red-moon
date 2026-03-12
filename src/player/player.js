@@ -1,18 +1,37 @@
 import  {empujar}  from "../funciones/empujar.js";
 import { crearItemsPunto } from "../funciones/crearItemsPuntos.js";
-import { armas } from "../items/DataItemsPotenciadores.js";
-import {dataEnemigos} from "../enemies/DataEnemies.js"
+import { armas } from "../items/DataItemsArmas.js";
+import {dataEnemigos} from "../enemies/DataEnemies.js";
+import { DataComboEspada } from "./combo/DataCombo.js";
 export class player {
 
-  constructor(scene, texture, x = 25, y = 25, joystick,controles, keys,listaEnemigos) {
+  constructor(scene, texture, x = 25, y = 25, joystick,controles, keys,listaEnemigos,lights) {
 
-    this.vida=3;
+
+    //CARGAR VALORES POR BD PARA OBTENER DATOS
+
+    this.vida=250; //llamar datos player de BD
+    this.vidaActualMax=this.vida;
+    this.curando=false;
+    this.cantidadPociones=3;//llamar por BD
+    this.cantidadPocionesMaximo=this.cantidadPociones;
+
+    this.stamina=250;//llamar datos player de Bd
+    this.staminaMax=this.stamina;
+    this.velocidad_recuperacion=1;
+
+
     this.scene = scene;
     this.texture = texture;
     this.x=x;
     this.y=y;
     this.arma;
+    this.lights=lights
+    //aqui despues agregar una clase que busque en la BD que armas tiene para cargarlo sino hay nada 
+    //entonces carga por defecto las armas principales
     this.setArma(armas[0]);
+
+
 
     //codigo de ian para el progrmar ataque fuerte o cargado
 
@@ -21,7 +40,7 @@ export class player {
 
 
 
-    console.log(this.arma);
+    //console.log(this.arma);
 
     this.sonidoAtaque;
     this.spriteAtaque;
@@ -37,8 +56,18 @@ export class player {
     this.keys=keys;
     //para cambiar de estado segun la accion
     this.state="idle";
-   
-     this.subEstado_posicionEstatico="derecha";
+    this.subEstado_posicionEstatico="derecha";
+
+    //aqui tambien cambiar por BD para agregar arma disponible
+    this.combo=DataComboEspada;
+    this.posicion_combo=0;
+    //this.posicion_combo_after=0;//esto sirve para que compare los combos y si el anterior es igual ha donde se quedo entonces
+    //el actual entonces se ejecuta el proceso de reiniciar combo sino entonces no hace nada 
+
+    this.limiteCombo=this.combo.length-1;
+    this.regresaCombo=true;
+
+    
 
     
 
@@ -52,8 +81,13 @@ export class player {
     this.player = scene.physics.add.sprite(0, 0, texture);
     this.player.setOrigin(0);
     this.player.setDisplaySize(x, y);
-    this.player.setBounce(1);
+    this.player.setBounce(0);
     this.player.setCollideWorldBounds(true);
+    this.player.name="player";
+    this.player.setSize((x/5), (y/5));
+    this.player.setOffset(x/3,y/1.6);
+    
+
 
     this.componentesAtaque={
       'textura':'ataqueLateralArriba',
@@ -67,6 +101,7 @@ export class player {
     this.ataque=5;
 
    this.animaciones();
+   this.cargarSonidosPlayer();
 
     // ESCUCHADOR ÚNICO (Solo se crea una vez aquí)
     this.player.on("animationcomplete", (anim) => {
@@ -74,7 +109,73 @@ export class player {
             this.state = "idle";
         }
     });
+
+
+
 }
+
+
+
+
+  cargarSonidosPlayer(){
+
+    
+
+    this.health_sound = this.scene.sound.add('health', {
+    loop: false,
+    volume: 1   // volumen entre 0 y 1
+  });
+
+  this.atacado_espada = this.scene.sound.add('atacado_espada', {
+    loop: false,
+    volume: 1   // volumen entre 0 y 1
+  });
+
+        this.pisadas_player_tierra = this.scene.sound.add('pisada_player_tierra', {
+    loop: false,
+    volume: 1   // volumen entre 0 y 1
+  });
+
+
+  this.slide = this.scene.sound.add('slide', {
+    loop: false,
+    volume: 5   // volumen entre 0 y 1
+  });
+
+    this.ataque_cargado = this.scene.sound.add('ataque5', {
+    loop: false,
+    volume: 1   // volumen entre 0 y 1
+  });
+
+  this.ataque1=this.scene.sound.add(this.combo[0].sound,{
+        loop:false,
+        volume:1
+      });
+
+   this.ataque2=this.scene.sound.add(this.combo[1].sound,{
+        loop:false,
+        volume:1
+      });
+
+
+         this.ataque3=this.scene.sound.add(this.combo[2].sound,{
+        loop:false,
+        volume:1
+      });
+
+
+
+  }
+
+
+  getSound(n){
+    //1 correr
+    switch(n){
+      case 1:
+        return this.pisadas_player_tierra;
+      break
+    }
+  }
 
   animaciones(){
 
@@ -120,11 +221,27 @@ export class player {
           });
 
             this.scene.anims.create({
-            key: "ataque-horizontal",
-            frames: this.scene.anims.generateFrameNumbers('attack_right',{start:0, end:4 }),
-            frameRate:15,
+            key: this.combo[0].nombre,
+            frames: this.scene.anims.generateFrameNumbers(this.combo[0].sprite,{start:0, end:this.combo[1].frame_end }),
+            frameRate:this.combo[0].velocidad_frames,
             repeat:0
           })
+
+
+          this.scene.anims.create({
+            key: this.combo[1].nombre,
+            frames: this.scene.anims.generateFrameNumbers(this.combo[1].sprite,{start:0, end:this.combo[1].frame_end }),
+            frameRate:this.combo[1].velocidad_frames,
+            repeat:0
+          })
+
+          this.scene.anims.create({
+            key: this.combo[2].nombre,
+            frames: this.scene.anims.generateFrameNumbers(this.combo[2].sprite,{start:0, end:this.combo[1].frame_end }),
+            frameRate:this.combo[2].velocidad_frames,
+            repeat:0
+          })
+
 
 
           this.scene.anims.create({
@@ -136,17 +253,17 @@ export class player {
 
 this.scene.anims.create({
     key: "player_curar_anim",
-    frames: this.scene.anims.generateFrameNumbers('player_heal', { start: 0, end: 9 }), // Ajusta los frames según tu sprite
+    frames: this.scene.anims.generateFrameNumbers('player_heal', { start: 0, end: 8 }), // Ajusta los frames según tu sprite
     frameRate: 10,
     repeat: 0 
 });
 
-          this.scene.anims.create({
-            key:"dash-reverso",
-            frames: this.scene.anims.generateFrameNumbers("player_dash_reverso",{start:0,end:7}),
-            frameRate:12,
-            repeat:0
-          });
+   this.scene.anims.create({
+     key:"dash-reverso",
+     frames: this.scene.anims.generateFrameNumbers("player_dash_reverso",{start:0,end:7}),
+     frameRate:12,
+     repeat:0
+ });
 
           this.scene.anims.create({
             key:"dash-delantero",
@@ -277,7 +394,7 @@ this.scene.anims.create({
         volume:1
       });
 
-      console.log(this.arma.inicioAnim+" "+(parseInt(this.arma.inicioAnim)+3 ));
+      //console.log(this.arma.inicioAnim+" "+(parseInt(this.arma.inicioAnim)+3 ));
 
       if((this.scene.anims.exists("ataqueArriba"))){
           this.scene.anims.remove("ataqueArriba");
@@ -298,33 +415,62 @@ this.scene.anims.create({
         key: "ataqueArriba",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralArriba", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
         frameRate: 12,
-        repeat: -1
+        repeat: 0
           });
 
           this.scene.anims.create({
         key: "ataqueAbajo",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralAbajo", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
         frameRate: 12,
-        repeat: -1
+        repeat: 0
           });
 
           this.scene.anims.create({
         key: "ataqueDerecha",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralDerecha", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
         frameRate: 12,
-        repeat: -1
+        repeat: 0
           });
 
           this.scene.anims.create({
         key: "ataqueIzquierda",
         frames: this.scene.anims.generateFrameNumbers("ataqueLateralIzquierda", { start: this.arma.inicioAnim, end: (parseInt(this.arma.inicioAnim)+3) }),
         frameRate: 12,
-        repeat: -1
+        repeat: 0
           });
 
 
 
   }
+
+
+  //EFECTOS******************************************************************************
+
+    getParpadeo(){
+
+      let n=10;
+      let time=1000;
+
+      
+
+        this.player.setVisible(false);
+
+        this.scene.time.delayedCall(time,()=>{
+          console.log("regreso visible")
+          this.player.setVisible(true);
+        })
+
+
+      
+    }
+
+  //******************************************************************************
+
+
+
+
+
+
 
   caminarPlayer(contacto,subEstado_caminar){
     //realizar las acciones dependiendo de la posicion del estado de caminata
@@ -334,7 +480,7 @@ this.scene.anims.create({
     //velocidad del movimiento del player
     
     const velocidadFinal=300;
-    let aceleracion=25;
+    let aceleracion=30;
 
     //let velocidad= 0;
 
@@ -368,15 +514,25 @@ this.scene.anims.create({
 
 
 //if (!contacto && !(this.estaAtacando)&& this.state!="attack") {
+
+
+    if(this.state==="walk"){
+      if(!(this.pisadas_player_tierra.isPlaying))
+      this.pisadas_player_tierra.play();
+
+    }else{
+      this.pisadas_player_tierra.stop();
+    }
+    
 if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !== "healing"  &&this.state!="dash") {
 
 
     //ASIGNAR ESTADOS DE ACUERDO AL MOVIMIENTO
     //Calcular velocidad de movimimiento
 
-    
+
    
-  
+
 
 
 
@@ -532,7 +688,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
     default:
       if (this.player.anims.currentAnim?.key !== 'player_estatico'&&this.state==="idle") {
-      this.player.flipX=false;
+      
       this.player.play('player_estatico');
       this.state="idle";
     }
@@ -598,6 +754,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   case "abajo":
     // .setOrigin(0.5,0)//abajo
   //this.sprite.play('player_camina');
+  this.player.flipX=false;
  
   this.subEstado_posicionEstatico="abajo";
 
@@ -642,7 +799,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   this.subEstado_posicionEstatico="derecha";
   
   //velocidad.xM=velocidad.xM+aceleracion;
-
+  //this.player.flipX=false;
 
   this.componentesAtaque.x=0;
   this.componentesAtaque.y=0.5;
@@ -687,6 +844,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
     
   
   this.subEstado_posicionEstatico="izquierda";
+
+  
  
   //velocidad.xm=velocidad.xm-aceleracion;
 
@@ -718,9 +877,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         this.player.anims.play('player_estatico',true);
       else  if (this.player.anims.currentAnim?.key !== 'player_camina_inverso') {
         //  console.log("cambio izquierda");
-      this.player.flipX=true;
+     
       this.player.play('player_camina_inverso');
     }
+     this.player.flipX=true;
 
   break;
 
@@ -731,18 +891,18 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
     
-    if(velocidadDiagonal.ymd<velocidadFinalDiagonal&&velocidadDiagonal.xMd<velocidadFinalDiagonal){
-      this.player.setVelocityX(velocidadDiagonal.xMd+aceleracion);
-      this.player.setVelocityY(velocidadDiagonal.ymd-aceleracion);
 
-      let sum= (velocidadDiagonal.xMd*velocidadDiagonal.xMd)+((velocidadDiagonal.ymd)*(velocidadDiagonal.ymd));
-      //console.log("operacion: "+(Math.sqrt(sum)));
-    }
-      
-    else{ 
-      this.player.setVelocityY(-velocidadFinalDiagonal)
-      this.player.setVelocityX(velocidadFinalDiagonal);
-    };
+
+
+          if(velocidadDiagonal.ymd>(-velocidadFinalDiagonal))
+      this.player.setVelocityY(velocidadDiagonal.ymd-aceleracion);
+    else this.player.setVelocityY(-velocidadFinalDiagonal);
+
+    if(velocidadDiagonal.xMd<velocidadFinalDiagonal)
+     this.player.setVelocityX(velocidadDiagonal.xMd+aceleracion);
+    else this.player.setVelocityX(velocidadFinalDiagonal);
+
+
 
 
           if(this.player.body.velocity.y===-aceleracion&&this.player.body.velocity.x===aceleracion) 
@@ -752,9 +912,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         }
         else if (this.player.anims.currentAnim?.key !== 'player_camina') {
       console.log("cambio derecha");
-      this.player.flipX=false;
+      
       this.player.play('player_camina');
     }
+    this.player.flipX=false;
   break;
 
   case "arriba-izquierda":
@@ -775,9 +936,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         }
     else  if (this.player.anims.currentAnim?.key !== 'player_camina') {
      // console.log("cambio izquierda");
-      this.player.flipX=true;
+      
       this.player.play('player_camina');
     }
+    this.player.flipX=true;
   break;
 
   case "abajo-derecha":
@@ -798,15 +960,17 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         }
         else if (this.player.anims.currentAnim?.key !== 'player_camina') {
       //console.log("cambio derecha");
-      this.player.flipX=false;
+      
       this.player.play('player_camina');
     }
+
+    this.player.flipX=false;
 
   break;
 
   case "abajo-izquierda":
     this.subEstado_posicionEstatico="abajo-izquierda";
-  this.subEstado_posicionEstatico="abajo-derecha";
+  //this.subEstado_posicionEstatico="abajo-derecha";
     if(velocidadDiagonal.yMd<velocidadFinalDiagonal)
       this.player.setVelocityY(velocidadDiagonal.yMd+aceleracion);
     else this.player.setVelocityY(velocidadFinalDiagonal);
@@ -822,11 +986,14 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
       }
     else if (this.player.anims.currentAnim?.key !== 'player_camina') {
           //console.log("cambio izquierda");
-      this.player.flipX=true;
+      
       this.player.play('player_camina');
     }
+    this.player.flipX=true;
   break;
     default:
+
+
 
       switch(this.subEstado_posicionEstatico){
     case "derecha":
@@ -849,7 +1016,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
     default:
       if (this.player.anims.currentAnim?.key !== 'player_estatico'&&(this.state==="idle"||this.state==="walk")) {
-      this.player.flipX=false;
+      
       this.player.play('player_estatico');
       this.state="idle";
     }
@@ -864,9 +1031,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
 
+// console.log(subEstado_caminar);
 
 
-
+ //console.log(subEstado_caminar);
  
 
   }
@@ -874,21 +1042,23 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
 
-  movimientoDash(subEstado_caminar){
+  movimientoDash(){
 
-    if((Phaser.Input.Keyboard.JustDown((this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT))))){
+    if((Phaser.Input.Keyboard.JustDown((this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT)))) && this.stamina>0){
 
       let velocidadDash=500;
+      let stamina=80;
 
 
 
 
 
 
-      console.log("Dash");
-      console.log(this.state);
+     // console.log(this.state);
 
       if(this.state==="idle"){
+
+        this.slide.play();
 
         this.player.play("dash-reverso");
 
@@ -927,6 +1097,47 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
           break;
 
+          case "arriba-derecha":
+
+
+          this.player.flipX=false;
+          console.log("arriba-derecha dash");
+          //console.log(this.player.body.velocity);
+          this.player.setVelocityX(-velocidadDash);
+          this.player.setVelocityY(velocidadDash);
+        
+          
+          break;
+
+          case "arriba-izquierda":
+
+          console.log("arriba-izquierda dash");
+          this.player.flipX=true;
+          this.player.setVelocityX(velocidadDash);
+          this.player.setVelocityY(velocidadDash);
+
+          break;
+
+          case "abajo-izquierda":
+
+          //console.log("izquierda dash");
+          console.log("abajo-izquierda");
+          this.player.flipX=true;
+          this.player.setVelocityX(velocidadDash);
+          this.player.setVelocityY(-velocidadDash);
+
+          break;
+
+          case "abajo-derecha":
+
+          console.log("abajo-derecha dash");
+          this.player.flipX=false;
+          this.player.setVelocityX(-velocidadDash);
+          this.player.setVelocityY(-velocidadDash);
+
+          break;
+
+
           default:
 
           break;
@@ -935,16 +1146,23 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
         
 
+      
+        this.stamina=this.stamina-stamina;
       }
+
+
       else if(this.state==="walk"){
+        this.slide.play();
 
         this.player.play("dash-delantero")
 
-        let potenciador=1.5;
+        let potenciador=1.0;
 
         
-
+      //  console.log(subEstado_caminar);
         switch(this.subEstado_posicionEstatico){
+
+
 
           case "derecha":
 
@@ -979,12 +1197,66 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
           break;
 
+          
+          case "derecha":
+
+
+          this.player.flipX=false;
+          console.log("derecha dash");
+          //console.log(this.player.body.velocity);
+          this.player.setVelocityX(velocidadDash*potenciador);
+          
+        
+          
+          break;
+
+          case "arriba-derecha":
+
+
+          this.player.flipX=false;
+          console.log("arriba-derecha dash");
+          //console.log(this.player.body.velocity);
+          this.player.setVelocityX(velocidadDash*potenciador);
+          this.player.setVelocityY(-velocidadDash*potenciador);
+        
+          
+          break;
+
+          case "arriba-izquierda":
+
+          console.log("arriba-izquierda dash");
+          this.player.flipX=true;
+          this.player.setVelocityX(-velocidadDash*potenciador);
+          this.player.setVelocityY(-velocidadDash*potenciador);
+
+          break;
+
+          case "abajo-izquierda":
+
+          //console.log("izquierda dash");
+          console.log("abajo-izquierda");
+          this.player.flipX=true;
+          this.player.setVelocityX(-velocidadDash*potenciador);
+          this.player.setVelocityY(velocidadDash*potenciador);
+
+          break;
+
+          case "abajo-derecha":
+
+          console.log("abajo-derecha dash");
+          this.player.flipX=false;
+          this.player.setVelocityX(velocidadDash*potenciador);
+          this.player.setVelocityY(velocidadDash*potenciador);
+
+          break;
+
           default:
 
           break;
 
         }
 
+        this.stamina=this.stamina-stamina;
        
 
       }
@@ -997,40 +1269,82 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
   detenerMovimiento(){
-    let desaceleracion=18;
+    let desaceleracion=20;//apenas probando entre 18 a 20
     let desalerar;
 
-        let velocidad={
-      "xm":(this.player.body.velocity.x),
-      "xM":(this.player.body.velocity.x),
-      "ym":(this.player.body.velocity.y),
-      "yM":(this.player.body.velocity.y)
-    }
-    if(this.player.body.velocity.x!==0||this.player.body.velocity.y!==0){
 
-      console.log(this.player.body.velocity);
-      console.log("hay movimiento");
+
+        let velocidad={
+      "xm":(this.player.body.velocity.x)+desaceleracion,
+      "xM":(this.player.body.velocity.x)-desaceleracion,
+      "ym":(this.player.body.velocity.y)+desaceleracion,
+      "yM":(this.player.body.velocity.y)-desaceleracion
+    }
+
+
+
+    if((this.player.body.velocity.x!==0
+      ||this.player.body.velocity.y!==0 )
+      ){
+
+
+
+      //console.log(this.player.body.velocity);
+      //console.log("x: "+this.player.body.velocity.x);
+      //console.log("y: "+this.player.body.velocity.y);
+
+
+      
 
       //en eje x
       if(this.player.body.velocity.x>0){
-         desalerar=velocidad.xM-desaceleracion;
+
+
+
+        
+         desalerar=(
+          this.player.body.velocity.x<desaceleracion&&
+          this.player.body.velocity.x>-desaceleracion
+         )?0:velocidad.xM;
+
+         console.log(desalerar);
         this.player.setVelocityX(desalerar);
       }else if(this.player.body.velocity.x<0){
-        desalerar=velocidad.xm+desaceleracion;
+
+        desalerar=(
+          this.player.body.velocity.x<desaceleracion&&
+          this.player.body.velocity.x>-desaceleracion
+         )?0:velocidad.xm;
+        
         this.player.setVelocityX(desalerar);
       }
 
       //en eje y
 
+
             if(this.player.body.velocity.y>0){
-         desalerar=velocidad.yM-desaceleracion;
+          desalerar=(
+          this.player.body.velocity.y<desaceleracion&&
+          this.player.body.velocity.y>-desaceleracion
+         )?0:velocidad.yM;
         this.player.setVelocityY(desalerar);
       }else if(this.player.body.velocity.y<0){
-        desalerar=velocidad.ym+desaceleracion;
+          desalerar=(
+          this.player.body.velocity.y<desaceleracion&&
+          this.player.body.velocity.y>-desaceleracion
+         )?0:velocidad.ym;
         this.player.setVelocityY(desalerar);
       }
       
     }
+
+
+
+
+
+
+
+
 
 
   }
@@ -1039,13 +1353,20 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   Curar() {
     // 1. Verificamos la tecla V y que el jugador no esté ya haciendo otra acción (ataque o cura)
     if (Phaser.Input.Keyboard.JustDown(this.keys.V) && this.state !== "healing" && this.state !== "attack") {
+
+
+      if(this.cantidadPociones>0){
+
         
-        this.vidaActualMax = 3; // Definimos el límite máximo
+      let pocion=100;
+        
+  // Definimos el límite máximo
 
 
         if (this.vida < this.vidaActualMax) {
             // AUMENTO DE VIDA
-            this.vida++;
+
+            this.vida=this.vida+pocion;
             if (this.vida > this.vidaActualMax) {
                 this.vida = this.vidaActualMax;
             }
@@ -1054,17 +1375,30 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
             this.state = "healing";      // Cambiamos el estado para bloquear otras acciones
             this.player.setVelocity(0);  // Frenamos al jugador para que no se mueva mientras se cura
             this.player.play("player_curar_anim"); // Reproducimos la animación que creaste
-            
+            this.health_sound.play();
             console.log("Caballero curado. Vida actual: " + this.vida);
+            this.curando=true;
+
         } else {
             console.log("La vida ya está al máximo");
         }
+
+        this.cantidadPociones-=1;
+        
+
+      }
+
+
+
     }
 }
 
   setMovimientoPlayer(contacto){
 
 
+      
+       // console.log(this.player.x);
+       // console.log(this.player.y);
         let subEstado_caminar="";
 
     //console.log("Estado Principal: "+this.state);
@@ -1091,7 +1425,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
       this.caminarPlayer(contacto,subEstado_caminar);
 
-      this.movimientoDash(subEstado_caminar);
+
+      this.movimientoDash();
 
       this.detenerMovimiento();
 
@@ -1115,22 +1450,52 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   }
 
 
-  contactoAtaque(ataque,enemigo){
+  contactoAtaque(player,enemigo){
 
-    
+    try{
 
-              if (!enemigo) return;
 
-            if(enemigo.golpeado) return;
+        if (!enemigo) return;
+
+            if(enemigo.golpeado) {
+              
+              return;}
+
+              
+
+              
                enemigo.golpeado=true;
+
+               let multiplicador=1;
+
+               if(this.esAtaqueFuerte) multiplicador=3;
         
-            enemigo.setVida(parseInt((this.arma.ataque)*(this.arma.nivel)));
-            this.soundGolpe.play();
+            enemigo.setVida(parseInt((this.arma.ataque)*(this.arma.nivel)*multiplicador));
+
+            this.atacado_espada.play();
+
             
-             if(enemigo.getVida()<=0){
-                crearItemsPunto(this.scene,enemigo.dataEnemie.items,this.listaItems,enemigo.getPositionX(),enemigo.getpositionY(),false,this.player);
+            
+             if(enemigo.getVida()>0){
+
+                       
+            empujar(this.spriteAtaque,enemigo.getContainer(),1,this.contacto,this.scene,this.arma.fuerza);
+            
+          
+             }
+          else {
+
+            
+
+              
+                crearItemsPunto(this.scene,enemigo.dataEnemie.items,this.listaItems,enemigo.getPositionX(),enemigo.getpositionY(),false,this.player,this.lights);
              
 
+
+              //AQUI ESTO COLOCA EN POSICION ALEATORIA ERA PARA OPTIMIZAR AHORA COMO LOS ENEMIGOS SE REPOSICIONAN, ENTONCES SI SE ELIMINAN
+
+
+              /*
               let x=Math.floor(Math.random() * ((this.widthEscenario-30) - 0 + 1)) + 0;
               let y=Math.floor(Math.random() * ((this.heightEscenario-30) - 0 + 1)) + 0;
               let t=parseInt(enemigo.dataEnemie.id)-1;
@@ -1138,42 +1503,71 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
               
               enemigo.setFullVida(dataEnemigos[t].vida);
               enemigo.setEnemiePosition(x,y);
+
+              */
+
+              //console.log(listaEnemigos);
+              enemigo.sonido.stop(0);
+
+              console.log(enemigo);
+              if(enemigo){
+                //enemigo.body.destroy();
+                enemigo.disableBody(true,true);
+
+                this.scene.time.delayedCall(50, () => {
+                enemigo.hitbox.destroy();
+                enemigo.body.destroy();
+                enemigo.destroy();
+                
+                //listaEnemigos.remove(enemigo,true,true);
+
+            });
+
+              
+            
+            }
+              //enemigo.setMuerteEnemigo();
+              console.log("Enemigo eliminado");
+
+
               //enemigo
  
                 this.habilitarCollision=true;
         //console.log("Enemigo Eliminado - Cantidad: " + listaEnemigos.length);
-             }
-          else empujar(this.spriteAtaque,enemigo.getContainer(),1,this.contacto,this.scene);
+
+          }
+
+
+
+         
           enemigo.setGolpeado();
 
           // contacto[n]=false;
+
+           
+    }catch(e){
+
+      console.log("ERROR: "+e);
+    }
+   
+
+            
 
               
   }
 
 
-  getAtaque(listaEnemigos,contacto,n,listaItems,widthEscenario,heightEscenario,contactoMov,sound){
 
 
-   
-
-
-    if (this.arma != undefined) {
-
-       
-        if (this.keys.J.isDown && !this.estaAtacando) {
-            this.tiempocarga++; 
-            console.log("Cargando fuerza: " + this.tiempocarga);
-        }
-
+  getAtacando(contacto,listaItems,listaEnemigos){
 
         
-        if (Phaser.Input.Keyboard.JustUp(this.keys.J) && !this.estaAtacando) {
-
+    
             // A. Decidir si es Fuerte o Normal
             if (this.tiempocarga > 30) {
                 this.esAtaqueFuerte = true;
                 console.log("¡SE LANZÓ ATAQUE FUERTE!");
+
             } else {
                 this.esAtaqueFuerte = false;
                 console.log("Ataque Normal");
@@ -1186,51 +1580,86 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
             // INICIO DEL CÓDIGO REUTILIZADO PARA EL GOLPE
             // ===================================================
             this.estaAtacando = true;
-            this.widthEscenario = widthEscenario;
-            this.heightEscenario = heightEscenario;
+
             this.contacto = contacto;
 
             // Crear el sprite si no existe
             if(this.spriteAtaque === undefined){
                 this.spriteAtaque = this.scene.add.sprite(0, 0, this.componentesAtaque.textura)
                     .setOrigin(this.componentesAtaque.x, this.componentesAtaque.y);
+                    
                 
                 this.scene.physics.add.existing(this.spriteAtaque);
                 this.spriteAtaque.body.setCollideWorldBounds(true);
+                //this.spriteAtaque.body.setCircle(0);
+
+                
                 
                 this.listaItems = listaItems;
                 this.scene.physics.add.overlap(this.spriteAtaque, this.listaEnemigos, this.contactoAtaque, null, this);
-                this.soundGolpe = sound;
+
+              //this.spriteAtaque.body.setSize(0,0);
+              //this.spriteAtaque.setDisplaySize(0,0);
+              
+             /*
+                this.scene.physics.add.overlap(this.spriteAtaque, listaEnemigos, (player, enemy) => {
+                 
+                  this.contactoAtaque(listaEnemigos,enemy);
+                 
+
+                });*/
+                
             }
 
             // Si es ataque fuerte, multiplicamos por 2. Si es normal, por 1.
-            let multiplicadorFuerza = this.esAtaqueFuerte ? 2 : 1;
+            let multiplicadorFuerza = this.esAtaqueFuerte ? 1.5 : 1;
+            let sonido_ataque = this.esAtaqueFuerte ? this.ataque_cargado
+            : this.scene.sound.add(this.combo[this.posicion_combo].sound,{
+        loop:false,
+        volume:1
+      });;
+          
+
+            
 
             this.spriteAtaque
                 .setOrigin(this.componentesAtaque.x, this.componentesAtaque.y)
                 // Usamos el multiplicador en el ancho y el alto
+
+                
                 .setDisplaySize(
                     Number(this.arma.width) * (this.arma.nivel) * multiplicadorFuerza, 
                     Number(this.arma.heigth) * (this.arma.nivel) * multiplicadorFuerza
                 )
-                .setPosition(this.player.x + this.player.displayWidth / 2, this.player.y + this.player.displayHeight / 2)
-                .setTexture(this.componentesAtaque.textura);
 
+                 
+                .setPosition(this.player.x + this.player.displayWidth / 2, this.player.y + this.player.displayHeight / 2)
+                .setTexture(this.componentesAtaque.textura)
+
+              this.spriteAtaque.body.setCircle(1);
           
-         
+            //AQUI EL GOLPE EMPIEZA EN VALOR 0 0 
 
             this.spriteAtaque.body.setVelocity(0);
             this.spriteAtaque.setVisible(true);
             this.spriteAtaque.body.enable = true;
             this.spriteAtaque.play(this.componentesAtaque.anims);
+
+
+ 
+ 
+
+
             
             if(this.state !== "attack"){
                 this.state = "attack";
-                this.player.anims.play("ataque-horizontal", true);
+                this.player.anims.play(this.combo[this.posicion_combo].nombre, true);
             }
+
+
             
             this.player.setVelocity(0);
-            this.sonidoAtaque.play();
+            sonido_ataque.play();
             
             if((this.arma.largoAtaque)){
                 switch(this.componentesAtaque.textura){
@@ -1251,131 +1680,152 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
                 }
             }
             
-            this.scene.time.delayedCall(this.arma.velocidad, () => {
+            this.scene.time.delayedCall(this.combo[this.posicion_combo].tiempo_ataque, () => {
                 this.estaAtacando = false;
                 this.spriteAtaque.setVisible(false);
                 this.spriteAtaque.body.enable = false;
-            });
+
+            });//this.combo[this.posicion_combo].tiempo_ataque
+
+
+
+                //agregacion del stamina
+             this.stamina=this.stamina-(this.combo[this.posicion_combo].stamina*multiplicadorFuerza);
         
           
             
+
+  }
+ 
+
+
+  getAtaque(listaEnemigos,contacto,listaItems){
+
+
+   
+
+      //console.log(listaEnemigos);
+    if (this.arma != undefined) {
+
+       
+        if (this.keys.J.isDown && !this.estaAtacando) {
+            this.tiempocarga++; 
+          
         }
 
 
-   if (Phaser.Input.Keyboard.JustDown(this.keys.J) && !this.estaAtacando) {
+  
 
-    
-    //ataque normal
-      
-      this.estaAtacando=true;
-        this.widthEscenario=widthEscenario;
-        this.heightEscenario=heightEscenario;
+
+        
+        if (Phaser.Input.Keyboard.JustUp(this.keys.J) && !this.estaAtacando && this.state !== "attack" && this.stamina>0) {
+
+
+
          
-         this.contacto=contacto;
-        if(this.spriteAtaque===undefined){
-
-        this.spriteAtaque=this.scene.add.sprite(0,0,this.componentesAtaque.textura)
-        .setOrigin(this.componentesAtaque.x,this.componentesAtaque.y)
-        .setDisplaySize(Number(this.arma.width)*(this.arma.nivel),Number(this.arma.heigth)*(this.arma.nivel))
-        .setPosition(this.player.x+this.player.displayWidth/2, this.player.y+this.player.displayHeight/2);
 
 
-        
-        this.scene.physics.add.existing(this.spriteAtaque);
-        this.spriteAtaque.body.setCollideWorldBounds(true);
+          this.getAtacando(contacto,listaItems,listaEnemigos);
 
-        this.listaItems=listaItems;
-
-         this.scene.physics.add.overlap(this.spriteAtaque, this.listaEnemigos, this.contactoAtaque, null, this);
-
-          this.soundGolpe=sound;
-
-
-      
-      } else{
-        this.spriteAtaque
-        .setOrigin(this.componentesAtaque.x,this.componentesAtaque.y)
-        .setDisplaySize(Number(this.arma.width)*(this.arma.nivel),Number(this.arma.heigth)*(this.arma.nivel))
-        .setPosition(this.player.x+this.player.displayWidth/2, this.player.y+this.player.displayHeight/2)
-        .setTexture(this.componentesAtaque.textura);
-             ;
+ 
 
 
 
-             //this.scene.physics.add.existing(this.spriteAtaque);
-        //this.spriteAtaque.body.setCollideWorldBounds(true);
-      }
-
-      
 
 
-
-      this.spriteAtaque.body.setVelocity(0);
-
-
-      this.spriteAtaque.setVisible(true);
-    this.spriteAtaque.body.enable = true;
-
-    this.spriteAtaque.play(this.componentesAtaque.anims);
-
-    
-      if(this.state!=="attack"){
-        this.state="attack";
-    this.player.anims.play("ataque-horizontal",true);
-  }
+            if(this.posicion_combo>=this.limiteCombo){
+                      //console.log("antes de..."+ this.posicion_combo);
+                    // console.log("antes de..."+ this.combo[this.posicion_combo].tiempo_ataque);
+                    // console.log(this.limiteCombo)
+                        this.posicion_combo=0;
+                         }else{
+                     //console.log("antes de..."+ this.posicion_combo);
+                     //console.log("antes de..."+ this.combo[this.posicion_combo].tiempo_ataque);
+                     //console.log(this.limiteCombo)
+                    this.posicion_combo++;
+                      }
 
 
 
-        //this.ataque.setPosition((this.sprite.x)+this.componentesAtaque.x,this.sprite.y+this.componentesAtaque.y);
 
-       
-        //this.player.setVelocity(0);
+                if(this.timer_combo)      
+              this.timer_combo.remove();
+              this.timer_combo=this.scene.time.delayedCall(this.arma.tiempo_combo, () => {
+                  this.posicion_combo=0;
+            });
+          
+          
 
-        //cargarSonido
-        this.sonidoAtaque.play();
-        
+
+            
+
+            
 
 
 
-        if((this.arma.largoAtaque)){
-           
-          switch(this.componentesAtaque.textura){
 
-             
-            case 'ataqueLateralArriba':
-              this.spriteAtaque.body.setVelocityY(-this.arma.tiempoDisparo*(this.arma.nivel));
-             
 
-            break;
-            case 'ataqueLateralAbajo':
-              this.spriteAtaque.body.setVelocityY(this.arma.tiempoDisparo*(this.arma.nivel));
-             
-            break;
-            case 'ataqueLateralDerecha':
-              this.spriteAtaque.body.setVelocityX(this.arma.tiempoDisparo*(this.arma.nivel));
-              
-            break;
-            case 'ataqueLateralIzquierda':
-              this.spriteAtaque.body.setVelocityX(-this.arma.tiempoDisparo*(this.arma.nivel));
+
+
+
+
+
+
+
+
+        }
+
+                   if(this.spriteAtaque){
+
+                      if(this.spriteAtaque.visible){
+                        
+
+              let velocidad=this.combo[this.posicion_combo].velocidad_radio_ataque;
+
               
 
-            break;
-            default:
-              break;
-        }}
+              let width=this.spriteAtaque.displayWidth+velocidad;
+              let height=this.spriteAtaque.displayHeight+velocidad;
+              
+
+              let radio=this.spriteAtaque.body.radius+velocidad;
 
 
-                 //contacto[n]=false;
-      
+              this.spriteAtaque.body.setCircle(radio,(this.spriteAtaque.width/2-radio),(this.spriteAtaque.height/2-radio));
 
-       this.scene.time.delayedCall(this.arma.velocidad, () => {
-       this.estaAtacando=false;
-       this.spriteAtaque.setVisible(false);
-       this.spriteAtaque.body.enable = false;
-    
-  });
+              
 
-}
+                        
+
+
+              
+                      }
+                      else{
+                        let radio=this.spriteAtaque.body.radius;
+
+                        
+                        this.spriteAtaque.body.setCircle(1,(this.spriteAtaque.width/2-1),(this.spriteAtaque.height/2-1));
+                        
+                        //this.spriteAtaque.setDisplaySize(0,0);
+                        
+             
+
+            }
+
+            }
+
+
+        //cambiar combo 
+
+
+
+/*
+   if (Phaser.Input.Keyboard.JustDown(this.keys.J) && !this.estaAtacando && this.state !== "attack") {
+
+    //this.getAtacando(contacto,listaItems,listaEnemigos);
+
+}*/
+
         
        
 
@@ -1387,7 +1837,9 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
   
 
-  
+
+
+       
 
   
 

@@ -1,4 +1,4 @@
-import { armas } from "../items/DataItemsPotenciadores.js";
+import { armas } from "../items/DataItemsArmas.js";
 
 export class conjuntoArmas{
 

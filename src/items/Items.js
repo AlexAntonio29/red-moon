@@ -24,10 +24,16 @@ export class Items extends Phaser.Physics.Arcade.Sprite{
        
       this.setBody(textura);
        
+
+     
+
+      
         
        
          
     }
+
+
 
     getContainer(){
      //console.log("Dentro de getContainer Items");
@@ -39,33 +45,15 @@ export class Items extends Phaser.Physics.Arcade.Sprite{
     }
 
     
-    setBody(n="item_punto"){//n es el nombre de la textura si es que se crea
+    setBody(){//n es el nombre de la textura si es que se crea
 
 
 
 
-                               this//creacion del item
+                    this//creacion del item
                     .setOrigin(0)
                     .setDisplaySize(this.width,this.height)
-                    
-                    ;
-      if (!this.scene.anims.exists("item_mov"+this.id)) {
-          this.scene.anims.create({
-        key: "item_mov"+this.id,
-        frames: this.scene.anims.generateFrameNumbers("item_punto", { start: 0, end: 4 }),
-        frameRate: 10,
-        repeat: -1
-          });
-        }
-
-    this.play("item_mov"+this.id);      
-                    
-
-
-        
-
-
-        
+                    //.setPipeline('Light2D');
 
     }
 
@@ -88,16 +76,7 @@ export class Items extends Phaser.Physics.Arcade.Sprite{
 
     setItem(){}
 
-    setRecoger(listaItems,item){
 
-
-
-     this.destroy();
-
-     const index = listaItems.indexOf(item);
-              if (index !== -1) listaItems.splice(index, 1);
-
-    }
 
 
 }
