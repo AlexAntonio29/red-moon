@@ -4,7 +4,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
       
 
-      super(scene,x,y,dataEnemie.diseno);
+      super(scene,x,y,dataEnemie.diseno+"_idle");
 
       scene.add.existing(this);
       scene.physics.add.existing(this);
@@ -12,6 +12,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         
         
         this.dataEnemie=dataEnemie;
+        
         this.velocidad=Math.floor(Math.random() * ((Number(this.dataEnemie.velocidad)) - (Number(this.dataEnemie.velocidad)-30) + 1)) + (Number(this.dataEnemie.velocidad)-30);
 
         this.vida=Number(dataEnemie.vida);
@@ -19,33 +20,56 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
         this.golpeado=false;
 
-        //console.log("escena fisica: "+this.scene.physics);
+        
+
+
 
         
-      this
+        this
         .setOrigin(0)
         .setDisplaySize(this.dataEnemie.width,this.dataEnemie.height)
         .setCollideWorldBounds(true)
+        .setBounce(0);
+        //.body.setCircle(20)
         ;
 
-        if (!this.scene.anims.exists(this.dataEnemie.diseno+"_camina")) {
-        this.scene.anims.create({
-        key: this.dataEnemie.diseno+"_camina",
-        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno, { start: 0, end: 4 }),
-        frameRate: 4,
-        repeat: -1
-          });
-        }
+ 
 
-        //this.body.setSize(200, 200);
+        this.body.setSize((this.dataEnemie.width/5), (this.dataEnemie.height/5));
+        this.body.setOffset(this.dataEnemie.width/4,this.dataEnemie.height/2);
+
         //this.body.setOffset(0, 0);
+
+        
+
+        this.cargarAnimaciones();
+        this.cargarSonidos();
+
+
+        this.sonido.play();
+
+        
+
+
+
+
         //this.body.setCollideWorldBounds(true);
 
-        this.play(this.dataEnemie.diseno+"_camina");
+       // this.play(this.dataEnemie.diseno+"_walk");
         //this.play('enemigoCamina');
 
         this.state="walk";
-        this.subState="walk_right"
+        this.subState="walk_right";
+
+        //crear un body para cuerpo de ataque
+        this.hitbox = scene.add.zone(this.x, this.y, this.displayWidth, this.displayHeight);
+        scene.physics.add.existing(this.hitbox);
+        this.hitbox.body.setAllowGravity(false);
+        this.hitbox.setOrigin(0,0);
+
+
+
+        this.state="idle";
         
 
 
@@ -53,8 +77,51 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     }
 
 
+    cargarAnimaciones(){
+
+      //avanzando
+      if (!this.scene.anims.exists(this.dataEnemie.diseno+"_walk")) {
+        this.scene.anims.create({
+        key: this.dataEnemie.diseno+"_walk",
+        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_walk", { start: 0, end: this.dataEnemie.end_frame_walk }),
+        frameRate: this.dataEnemie.velocidad_frames_walk,
+        repeat: -1
+          });
+        }
+
+
+        
+        //sin movimiento
+
+        //console.log(this.dataEnemie.velocidad_frames_idle);
+
+        if (!this.scene.anims.exists(this.dataEnemie.diseno+"_idle")) {
+        this.scene.anims.create({
+        key: this.dataEnemie.diseno+"_idle",
+        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_idle", { start: 0, end: this.dataEnemie.end_frame_idle }),
+        frameRate: this.dataEnemie.velocidad_frames_idle,
+        repeat: -1
+          });
+        }
+
+    }
+
+
+    cargarSonidos(){
+        this.sonido=this.scene.sound.add(this.dataEnemie.diseno+"_sonido",{
+        loop:true,
+        volume:1
+      });
+    }
+
+
     getContainer(){
         return this;
+    }
+
+
+    getBody(){
+      this.hitbox;
     }
 
     setVida(n){
@@ -71,14 +138,17 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     }
 
     setGolpeado(){
+
       if (!this || !this.scene) return;
       if (!this.scene.anims.exists(this.dataEnemie.diseno+"_golpeado")) {
       this.scene.anims.create({
         key: this.dataEnemie.diseno+"_golpeado",
-        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno, { start: 4, end: 4 }),
-        frameRate: 6,
+        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_idle", { start: 0, end:this.dataEnemie.end_frame_hurt }),
+        frameRate: this.dataEnemie.velocidad_frames_hurt,
         repeat: -1
           });}
+
+           
 
       
       this.play(this.dataEnemie.diseno+"_golpeado");
@@ -86,7 +156,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
       this.scene.time.delayedCall(500,()=>{ 
          if (this && this.scene && !this.destroyed){
-          this.play(this.dataEnemie.diseno+"_camina");}
+          this.play(this.dataEnemie.diseno+"_idle");}
           this.golpeado=false;
       }
     );
@@ -116,17 +186,115 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         this.setVelocityY(n);
     }
 
-    setMovimientoEnemigo(player,contacto,contactoAtaque,contactoEnemigo){
 
+      setDistanciaVista(player){
+
+            let distancia_vista=this.dataEnemie.distancia_vista;
+
+      if(
+        (player.x-this.x)<-distancia_vista
+      ||(player.x-this.x)> distancia_vista
+      ||(player.y-this.y)<-distancia_vista
+      ||(player.y-this.y)>distancia_vista
+
+      ){
+   
+        this.setVelocity(0);
+        if(this.anims.currentAnim?.key!==this.dataEnemie.diseno+"_idle" 
+          &&this.state!=="attack"){
+
+          this.play(this.dataEnemie.diseno+"_idle");
+         // console.log(this.anims.currentAnim?.key);
+         
+
+        }
+
+
+
+      }else{
+        if(this.anims.currentAnim?.key!==this.dataEnemie.diseno+"_walk"
+          &&this.state!=="attack")
+        {
+          this.play(this.dataEnemie.diseno+"_walk");
+          this.state="walk";
+        }
+       
+      }
+
+      }
+
+      setDistanciaSonido(player){
+
+            //console.log(player.x-this.x);
+      //console.log(player.y -this.y);
+
+
+      let distancia_sonido=this.dataEnemie.distancia_sonido;
+
+      let raiz=Math.sqrt(Math.pow((player.x-this.x),2)+Math.pow((player.y-this.y),2));
+      let resultado_parcial=raiz/distancia_sonido;
+
+      let resultado_final=1-resultado_parcial;
+
+
+
+
+
+
+     
+      
+      if(
+        (player.x-this.x)<-distancia_sonido
+      ||(player.x-this.x)> distancia_sonido
+      ||(player.y-this.y)<-distancia_sonido
+      ||(player.y-this.y)>distancia_sonido
+
+      ){
+        this.sonido.volume=0;
+
+      }else{
+
+        
+
+        if(!(resultado_final<0)){
+        
+        this.sonido.volume=resultado_final;
+      
+      }
+        else {
+         
+          this.sonido.volume=0.01;
+        }
+
+
+
+
+      }
+
+      }
+
+
+    setCaminar(player,contacto,contactoAtaque,contactoEnemigo){
+
+
+      
+      
 
       //console.log(`!contacto:${!contacto}, !this.vida${!(this.vida<=0)}, !contractoAtaque:${!contactoAtaque} !contactoEnemigo:${!contactoEnemigo}`)
-      if(!contacto && !(this.vida<=0) && !contactoAtaque && !contactoEnemigo){
+      if(!contacto && !(this.vida<=0) && !contactoAtaque && !contactoEnemigo && this.state==="walk"){
+
+        
+
+        this.hitbox.setPosition(this.x,this.y);
 
 
 
         //console.log('DENTRO');
          
         let vel=this.velocidad;
+
+
+
         //console.log("Velocidad enemigo: "+vel);
 
      //this.player.getContainer().setVelocity(0); BLOQUEADO POR EL MOMENTO
@@ -144,9 +312,22 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     let enemigoY=this.y;
 
 
+
+
+
+
+
+        //para generar la vista 
     if(enemigoX>playerX){
       this.flipX=true
     }else this.flipX=false;
+
+    if(enemigoY>playerY){
+      this.setDepth(6);
+    }
+    else{
+      this.setDepth(4);
+    }
 
     //console.log(`Posicion Player: x:${playerX} y:${playerY}`);
     //console.log(`Posicion Enemigo: x:${enemigoX} y:${enemigoY}`);
@@ -166,8 +347,9 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       
 //movimientos normales
  if(playerY<enemigoY && ((playerX-rango_enemigo_movimiento<=enemigoX&&(playerX+rango_enemigo_movimiento)>=enemigoX))){
-    //console.log("UP");
+    console.log("UP");
     //console.log("ESTOY EN MOV NORMAL -Y");
+
     this.setVelocityY(-vel);
    if(!(this.dataEnemie.ofzigzag))
     this.setVelocityX(0);//para mayor dificultad deja la velocity de la dimension, ejemplo esta
@@ -224,14 +406,62 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
  
     }
 
+    this.setDistanciaVista(player);
+
+    this.setDistanciaSonido(player);
+
+
+
+
+    }
+
+
+    getState(){
+
+      this.on("animationcomplete", (anim)=>{
+      if(
+        this.state==="attack"
+      ||this.state==="hurt"
+      ||this.state==="dash"
+      ||this.state==="healing"
+      ){
+
+        console.log("return idle")
+        
+        this.state="idle";
+      }
+
+    });
+
+    }
+
+    setMovimientoEnemigo(player,contacto,contactoAtaque,contactoEnemigo){
+
+  
+      this.getState();
+      //console.log(this.state);
+
+      
+
+
+
+    this.setCaminar(player,contacto,contactoAtaque,contactoEnemigo);
+
+
+
+
+
     
 
 
     }
 
     setMuerteEnemigo(){
-      
+
+        //this.sonido.stop();
+        this.body.destroy();
         this.destroy();
+
     // this.container.destroy();
     }
 

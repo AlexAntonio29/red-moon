@@ -45,6 +45,7 @@ cargarTextos(){
 }
 
   preload(){
+    this.sound.stopAll();
     this.fontText='FontArcade3'
     this.widthPantalla=this.sys.game.config.width;
     this.heightPantalla=this.sys.game.config.height;

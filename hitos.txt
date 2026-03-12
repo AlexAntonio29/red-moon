@@ -1,0 +1,65 @@
+1.arte-sprites mov player
+
+2. Diseño Eventos al escenario 1
+
+3. Programación. determinista enemigos
+
+4.Programacion. Ia no determinista enemigos
+
+5. Diseño. Implementacion historia
+Gameplay 
+
+
+
+
+6. Implementacion diálogos npc y eventos
+
+7. Implementacion boss 1
+
+8.implementacion boss 2
+
+9. Implementacion nuevas mecanicas de combate player
+
+10. Uso de puntos en juego y razón. 
+
+11. Npc juego
+
+12. Personajes secundarios.
+
+
+13.expansion escenario.
+
+14. Optimizacion
+
+15. Implementacion assets enemigos.
+
+16. Implementacion cinematica
+
+17. Factor adicción en usuarios.
+
+18. Implementacion sistema cordura player
+
+19. Implementacion historia player.
+
+20. Implementacion animaciones dialogo.
+
+
+
+
+21. Diseño visual atractivo entorno
+
+22. Caminos bloqueados y coherencia con gameplay. 
+
+23. Adicion de melodias
+
+24. Implemenacion de menú mas eficiente
+
+25.posicionar enemigos en mapa.
+
+26. crear fondo dinamico animacion sprite
+
+principales para hacer caso:
+
+08-03-26 - 13-03-26
+
+2,13,22
