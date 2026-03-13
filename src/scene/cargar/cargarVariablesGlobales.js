@@ -1,7 +1,7 @@
 
 import { conjuntoArmas } from "../../armas/conjuntoArmas.js"
 import {puntos, itemsConsumibles} from "../../items/DataItemsPuntos.js";
-
+import { Scenario1Eventos } from "../../eventos/Scenario1Eventos.js";
 
 
 
@@ -51,6 +51,12 @@ export class cargarVariablesGlobales{
 
 
     cargarVariablesGlobales(){
+
+
+          //cargar scenario Eventos
+
+
+          this.scene.Scenario1Eventos=Scenario1Eventos;
     
           this.scene.tiempo=0;
           this.scene.tiempoProgresivo=0;//el tiempo progresivo sirve para llevar el tiempo siempre adelante
