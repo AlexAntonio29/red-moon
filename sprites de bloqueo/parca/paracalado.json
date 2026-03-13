@@ -1,0 +1,48 @@
+{ "frames": {
+   "paracalado 0.ase": {
+    "frame": { "x": 0, "y": 0, "w": 74, "h": 74 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 74, "h": 74 },
+    "sourceSize": { "w": 74, "h": 74 },
+    "duration": 200
+   },
+   "paracalado 1.ase": {
+    "frame": { "x": 74, "y": 0, "w": 74, "h": 74 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 74, "h": 74 },
+    "sourceSize": { "w": 74, "h": 74 },
+    "duration": 200
+   },
+   "paracalado 2.ase": {
+    "frame": { "x": 148, "y": 0, "w": 74, "h": 74 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 74, "h": 74 },
+    "sourceSize": { "w": 74, "h": 74 },
+    "duration": 200
+   },
+   "paracalado 3.ase": {
+    "frame": { "x": 222, "y": 0, "w": 74, "h": 74 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 74, "h": 74 },
+    "sourceSize": { "w": 74, "h": 74 },
+    "duration": 200
+   }
+ },
+ "meta": {
+  "app": "https://github.com/LibreSprite/LibreSprite/",
+  "version": "1.1-dev",
+  "image": "C:\\Users\\BRANDON\\Documents\\Pixelard\\parca\\paracalado.png",
+  "format": "RGBA8888",
+  "size": { "w": 296, "h": 74 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ]
+ }
+}
