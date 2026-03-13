@@ -10,6 +10,8 @@ import {cargarAssets} from "./cargar/cargarAssets.js"
 import {cargarSonido} from "./cargar/cargarSonido.js"
 import { cargarVariablesGlobales } from "./cargar/cargarVariablesGlobales.js";
 import { ItemPocion } from "../items/extendsItems/ItemPocion.js";
+import { CamaraPersonalizada } from "../camera/CamaraPersonalizada.js";
+
 
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
@@ -361,8 +363,8 @@ movimientosEnemigo(){
 
 getPlayer(){
 
-  let x=1572;
-  let y=5350;
+  let x=2585;
+  let y=8500;
     this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos,this.lights);
 
     this.player.getContainer().setTint(0x555555);//para ver si se oscurece mas
@@ -828,12 +830,13 @@ depurarColisiones() {
 
 //creacion de la camara
 crearCamera(){
-    this.cameras.main;
+
+
+    this.camera= new CamaraPersonalizada(this, this.player.getContainer(), this.hudContainer);
+
+  
     
-    this.cameras.main.startFollow(this.player.getContainer());
-    this.cameras.main.setZoom(1.0);
-    this.cameras.main.setBackgroundColor('#FFFFFF');
-    this.cameras.main.roundPixels = true;
+
 
 }
 
@@ -1221,9 +1224,9 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     creacionEnemigosPosicionados(){
 
-      this.crearEnemigo(1,2150,4500,1);//cantidad Enemigos, x, y ,tipo de enemigo
+      this.crearEnemigo(1,2950,8600,1);//cantidad Enemigos, x, y ,tipo de enemigo
 
-      this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
+      //this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
 
 
     }
@@ -1292,6 +1295,12 @@ lightplayer(){
  // console.log("player x: "+)
 
 }
+
+
+cargarEvento(){
+
+}
+
 
 
 //el update es todo lo que se corre en tiempo real
