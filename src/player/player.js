@@ -1307,7 +1307,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
           this.player.body.velocity.x>-desaceleracion
          )?0:velocidad.xM;
 
-         console.log(desalerar);
+         //console.log(desalerar);
         this.player.setVelocityX(desalerar);
       }else if(this.player.body.velocity.x<0){
 
@@ -1397,8 +1397,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
       
-        console.log(this.player.x);
-        console.log(this.player.y);
+       // console.log(this.player.x);
+        //console.log(this.player.y);
         let subEstado_caminar="";
 
     //console.log("Estado Principal: "+this.state);

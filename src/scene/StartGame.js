@@ -14,6 +14,8 @@ import { CamaraPersonalizada } from "../camera/CamaraPersonalizada.js";
 
 
 
+
+
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
     constructor(){
@@ -620,7 +622,8 @@ colisionesEnemigo(){
   //objetos de la zona
         if(this._above_collider.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this._above_collider.setCollisionByExclusion([-1])
-        this.physics.add.collider(objeto,this._above_collider,this.eliminarRebote,null,this);}
+        this.physics.add.collider(objeto,this._above_collider,this.eliminarRebote,null,this);
+      }
         
 
 
@@ -873,7 +876,7 @@ getBarraStamina(){
   this.contenedorStamina.add(this.backgroundStaminaCompleta);
   this.contenedorStamina.add(this.backgroundStamina);
   this.contenedorStamina.setDepth(20);
-  
+  this.hudContainer.add(this.contenedorStamina);
 
 
 
@@ -907,6 +910,7 @@ getBarraVida(){
   this.contenedorVida.add(this.backgroundVidaCompleta);
   this.contenedorVida.add(this.backgroundVida);
   this.contenedorVida.setDepth(20);
+  this.hudContainer.add(this.contenedorVida);
   
   
 
@@ -951,6 +955,7 @@ getCuraciones(){
   }
 
   this.contenedorPociones.setDepth(20);
+  this.hudContainer.add(this.contenedorPociones);
 
 
 }
@@ -1230,6 +1235,62 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
 
     }
+
+    crearEvento(x,y,width,height,tiempoEvento,tiempoTraslado, xadd,yadd, zoom=0.5,ocultarHUD){
+
+
+      /*
+      
+
+       let x=4400;
+       let y=8525;
+       
+       let width=400;
+       let height=250;
+      */
+
+      
+      let evento = new this.Scenario1Eventos(this,x,y,width,height,this.player.getContainer(),this.camera);
+
+      this.physics.add.overlap(
+        this.player.getContainer(),
+        evento,
+        (player, evento)=>{
+
+          
+          let xMovCamera=x+(width/2); //-(this.widthPantalla/2)//
+          let yMovCamera=y+(height/2); //-(this.heightPantalla/2)//
+
+          if(!evento.esActivado&&evento.esActivo){
+                evento.setCollisionEvento(xMovCamera+xadd,yMovCamera+yadd,tiempoEvento,tiempoTraslado,zoom,ocultarHUD);
+                
+              }
+              });
+      
+
+
+    }
+
+    cargarEvento(){
+      //datos de eventos estos para comodidad del programador en agregar eventos se agregaran en variables
+      let x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom, ocultarHUD;
+      x=4400;
+      y=8425;
+      width=400;
+      height=250;
+      tiempo=3000;
+      tiempoTraslado=500;
+      xAdicional=0;
+      yAdicional=0;
+      zoom=0.8;
+      ocultarHUD=false;
+
+      //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD);
+
+      //cuando se va a agregar un nuevo elemento entoces se establecen valores variables;
+      
+}
     
 
 //El create es donde acomo las cosas para que tengan un orden
@@ -1237,7 +1298,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-//this.physics.world.createDebugGraphic();
+this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
     //this.crearFiltro();
     //Generacion de escenario
@@ -1246,7 +1307,7 @@ this.game.renderer.antialias = false;
     this.crearLuces();
     
     //cantidad de items a crear
-    this.crearItems(100);//aqui puedo agregar la cantidad de items que quiero crear
+    this.crearItems(0);//aqui puedo agregar la cantidad de items que quiero crear
     //crear personaje
     this.cargarBotones();
     this.cargarJoystick();
@@ -1261,6 +1322,8 @@ this.game.renderer.antialias = false;
    // this.depurarColisiones();
    //creacion de camara;
    this.crearCamera();
+
+   this.cargarEvento();
     //this.crearAnimaciones();
        
 }
@@ -1297,9 +1360,7 @@ lightplayer(){
 }
 
 
-cargarEvento(){
 
-}
 
 
 
