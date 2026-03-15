@@ -1,5 +1,6 @@
 import {Eventos} from './Eventos.js'
 import {evento1_1} from './Scenario1Eventos/evento1_1.js'
+import {evento1_2} from './Scenario1Eventos/evento1_2.js';
 
 
 export class Scenario1Eventos extends Eventos{
@@ -44,15 +45,23 @@ export class Scenario1Eventos extends Eventos{
 
             break;
 
+            case 2:
+
+            
+            evento1_2(this.scene,this.player, this.lights, movePlayer, this.playerAtributos);
+
+
+            break;
+
 
         }
 
     }
 
 
-    setCollisionEvento(x,y,tiempoEvento,tiempoTraslado, zoom=0.5,ocultarHUD,accion,movePlayer){
+    setCollisionEvento(x,y,tiempoEvento,tiempoTraslado, zoom,ocultarHUD,accion,movePlayer){
 
-        super.setCollisionEvento(x,y,tiempoEvento,tiempoTraslado, zoom=0.5,ocultarHUD,accion,movePlayer);
+        super.setCollisionEvento(x,y,tiempoEvento,tiempoTraslado, zoom,ocultarHUD,accion,movePlayer);
 
         this.selectorEvento(accion,movePlayer);
 

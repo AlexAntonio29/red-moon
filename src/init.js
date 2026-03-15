@@ -23,6 +23,11 @@ const config={ //configuracion del escenario
  /*   //EL APARTADO DE ARRIBA ES EL CORRECTO CORRERE ESTA SCENE PORQUE TRABAJARE CON StartGame*/
    
  scene:[MenuPrincipal,StartGame,FinPartida,ScenePotenciador,ScenePause,scenePauseRapido],
+ plugins: {
+    scene: [
+      { key: 'animatedTiles', plugin: AnimatedTiles, mapping: 'animatedTiles' }
+    ]
+  },
  input: {
     activePointers: 3 // permite hasta 3 dedos simultáneos
   }

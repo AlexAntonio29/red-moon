@@ -2,6 +2,7 @@
 import { conjuntoArmas } from "../../armas/conjuntoArmas.js"
 import {puntos, itemsConsumibles} from "../../items/DataItemsPuntos.js";
 import { Scenario1Eventos } from "../../eventos/Scenario1Eventos.js";
+import { cargarLucesEstaticas } from "../../funciones/cargarLucesEstaticas.js";
 
 
 
@@ -47,6 +48,12 @@ export class cargarVariablesGlobales{
         V: Phaser.Input.Keyboard.KeyCodes.V//vida
         
     });
+        }
+
+
+        crearArchivoLuces(){
+
+          //this.scene.lucesEstaticas=cargarLucesEstaticas();
         }
 
 
@@ -124,5 +131,8 @@ export class cargarVariablesGlobales{
       this.cargarTeclar();
 
       this.cargarBotonesTeclas();
+
+        this.crearArchivoLuces();
+
         }
 }

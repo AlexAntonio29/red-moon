@@ -22,7 +22,7 @@ export class CamaraPersonalizada{
     }
 
 
-    getCameraPosition(x,y, tiempo ,tiempoTraslado,ocultarHUD,zoom=0.5,accion, playerAtributos){
+    getCameraPosition(x,y, tiempo ,tiempoTraslado,ocultarHUD,zoom,accion, playerAtributos){
 
            
 
@@ -34,7 +34,7 @@ export class CamaraPersonalizada{
 
 
             //this.scene.cameras.main.setScroll(x,y);
-            console.log(this.scene.cameras.main);
+            
 
 
             console.log("activate camera modification");

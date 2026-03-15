@@ -54,9 +54,10 @@ export class Eventos extends Phaser.Physics.Arcade.Image{
     }
 
 
-    setCollisionEvento(x,y,tiempoEvento,tiempoTraslado, zoom=0.5,ocultarHUD,accion,movePlayer){
+    setCollisionEvento(x,y,tiempoEvento,tiempoTraslado, zoom,ocultarHUD,accion,movePlayer){
         console.log("Contacto");
         this.esActivado=true;
+      
         
 
         this.camera.getCameraPosition(x,y, tiempoEvento,tiempoTraslado, ocultarHUD, zoom,accion, this.playerAtributos);

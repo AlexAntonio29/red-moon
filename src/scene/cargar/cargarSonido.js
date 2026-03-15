@@ -82,6 +82,10 @@ export class cargarSonido{
         
         
               this.scene.load.audio("slide","./sounds/general/slide/slide.mp3");
+
+              this.scene.load.audio("suspenso","./sounds/evento/momentoSuspenso/suspenso.mp3");
+
+              
         
         
               this.cargarSonidosEnemigos();
