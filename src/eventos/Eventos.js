@@ -3,7 +3,7 @@ export class Eventos extends Phaser.Physics.Arcade.Image{
 
     
 
-    constructor(scene, x,y,width,height,player, camera){
+    constructor(scene, x,y,width,height,player, camera,lights,playerAtributos){
 
 
 
@@ -27,7 +27,8 @@ export class Eventos extends Phaser.Physics.Arcade.Image{
         this.esActivo=true;//para verificar si esta activo el evento, llamar por BD esto se activa cuando pasa otro evento 
         this.esActivado=false; //esto es para que se ejecute una sola vez
 
-        
+        this.lights=lights;
+        this.playerAtributos=playerAtributos;
 
                 
        this
@@ -53,12 +54,14 @@ export class Eventos extends Phaser.Physics.Arcade.Image{
     }
 
 
-    setCollisionEvento(x,y,tiempoEvento,tiempoTraslado, zoom=0.5,ocultarHUD){
+    setCollisionEvento(x,y,tiempoEvento,tiempoTraslado, zoom=0.5,ocultarHUD,accion,movePlayer){
         console.log("Contacto");
         this.esActivado=true;
         
 
-        this.camera.getCameraPosition(x,y, tiempoEvento,tiempoTraslado, ocultarHUD, zoom);
+        this.camera.getCameraPosition(x,y, tiempoEvento,tiempoTraslado, ocultarHUD, zoom,accion, this.playerAtributos);
+
+        
             
 
 

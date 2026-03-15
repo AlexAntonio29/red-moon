@@ -12,7 +12,7 @@ export class CamaraPersonalizada{
     }
 
     getCameratoPlayer(){
-    this.scene.cameras.main.startFollow(this.player);
+    this.scene.cameras.main.startFollow(this.player,true,0.05,0.05,0,0);
     this.scene.cameras.main.setZoom(1.0);
     this.scene.cameras.main.setBackgroundColor('#000000');
     this.scene.cameras.main.roundPixels = true;
@@ -22,7 +22,7 @@ export class CamaraPersonalizada{
     }
 
 
-    getCameraPosition(x,y, tiempo ,tiempoTraslado,ocultarHUD,zoom=0.5){
+    getCameraPosition(x,y, tiempo ,tiempoTraslado,ocultarHUD,zoom=0.5,accion, playerAtributos){
 
            
 
@@ -52,6 +52,8 @@ export class CamaraPersonalizada{
                                     if(progress===1){
                                     this.getCameratoPlayer();
                                     this.hud.setVisible(true);
+                                    //activar movePlayer
+                                    playerAtributos.isInputActive=true;
 
                                     }
                                 }

@@ -9,6 +9,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       scene.add.existing(this);
       scene.physics.add.existing(this);
 
+      this.escena=scene;
+
         
         
         this.dataEnemie=dataEnemie;
@@ -459,8 +461,16 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     setMuerteEnemigo(){
 
         //this.sonido.stop();
-        this.body.destroy();
-        this.destroy();
+        //this.body.destroy();
+        //this.destroy();
+
+
+
+
+
+        
+
+
 
     // this.container.destroy();
     }

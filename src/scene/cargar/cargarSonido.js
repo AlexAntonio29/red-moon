@@ -22,6 +22,15 @@ export class cargarSonido{
                this.scene.load.audio("enemie1_sonido","./sounds/enemigo/enemie1/general/sonido.mp3");
         
                this.scene.load.audio("enemie4_sonido","./sounds/enemigo/enemie4/general/sonido.mp3");
+
+
+
+               //enemigos fondo 
+
+
+               this.scene.load.audio("skyF1","./sounds/enemigo/fondo1/f1/sky.mp3");
+               this.scene.load.audio("roarF1","./sounds/enemigo/fondo1/f1/roar.mp3");
+
         
         
         

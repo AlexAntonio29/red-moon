@@ -5,16 +5,19 @@ import {dataEnemigos} from "../enemies/DataEnemies.js";
 import { DataComboEspada } from "./combo/DataCombo.js";
 export class player {
 
-  constructor(scene, texture, x = 25, y = 25, joystick,controles, keys,listaEnemigos,lights) {
+  constructor(scene, texture, x = 25, y = 25, joystick,controles, keys,listaEnemigos,lights,camera) {
 
 
     //CARGAR VALORES POR BD PARA OBTENER DATOS
 
+    this.pluginScene=scene.scene;
     this.vida=250; //llamar datos player de BD
     this.vidaActualMax=this.vida;
     this.curando=false;
     this.cantidadPociones=3;//llamar por BD
     this.cantidadPocionesMaximo=this.cantidadPociones;
+    this.camera=camera;
+    this.stateCamera="follow"
 
     this.stamina=250;//llamar datos player de Bd
     this.staminaMax=this.stamina;
@@ -27,6 +30,9 @@ export class player {
     this.y=y;
     this.arma;
     this.lights=lights
+
+    //inputActive esto es para verificar si el input esta activo para evitar accion
+    this.isInputActive=true;
     //aqui despues agregar una clase que busque en la BD que armas tiene para cargarlo sino hay nada 
     //entonces carga por defecto las armas principales
     this.setArma(armas[0]);
@@ -468,6 +474,50 @@ this.scene.anims.create({
 
 
 
+  getCameraPosition(offsetX,offsetY,sub_estado="arriba",tiempoTraslado=1000,lerp=0.03){
+
+    
+    //console.log("xCamera: "+this.camera.scrollX);
+    //console.log("yCamera: "+this.camera.scrollY);
+    
+
+    
+    if(this.stateCamera==="follow"){
+
+    
+
+        let destinoX=this.player.x+offsetX;
+        let destinoY=this.player.y+offsetY;
+
+        this.camera.followOffset.set(-offsetX,-offsetY);
+        this.camera.lerp.set(lerp,lerp);
+        
+        //this.camera.stopFollow();
+
+        this.stateCamera=sub_estado;
+
+           /* this.camera.pan(destinoX,destinoY,tiempoTraslado,'Sine.easeInOut',true,
+        (camera,progress)=>{
+          if(progress===1){
+           
+             
+          }
+
+        }
+      )*/
+
+    }else if(this.stateCamera!==sub_estado ){
+       this.stateCamera="follow";
+        //this.camera.startFollow(this.player,true,lerp,lerp,offsetX,offsetY);
+      
+      }
+
+    
+
+     
+    
+  }
+
 
 
 
@@ -481,6 +531,7 @@ this.scene.anims.create({
     
     const velocidadFinal=300;
     let aceleracion=30;
+    let movCam=200;
 
     //let velocidad= 0;
 
@@ -524,7 +575,7 @@ this.scene.anims.create({
       this.pisadas_player_tierra.stop();
     }
     
-if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !== "healing"  &&this.state!="dash") {
+if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !== "healing"  &&this.state!="dash" && this.isInputActive) {
 
 
     //ASIGNAR ESTADOS DE ACUERDO AL MOVIMIENTO
@@ -655,7 +706,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
       subEstado_caminar="izquierda";}
  }else{
 
-
+    this.getCameraPosition(0,0,subEstado_caminar);
     this.state="idle";
 
       //this.player.setVelocity(0);
@@ -716,12 +767,18 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
     //.setOrigin(0.5,1)//arriba
   //this.sprite.play('player_camina');
 
+  //movCamara
+
+  this.getCameraPosition(0,-movCam,subEstado_caminar);
+
  // velocidad.ym=velocidad.ym-aceleracion;
    
   this.subEstado_posicionEstatico="arriba";
   this.componentesAtaque.x=0.5;
   this.componentesAtaque.y=1;
   this.player.flipX=false;
+
+  
   
 
 
@@ -754,6 +811,11 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   case "abajo":
     // .setOrigin(0.5,0)//abajo
   //this.sprite.play('player_camina');
+
+   //movCamara
+
+  this.getCameraPosition(0,movCam,subEstado_caminar);
+
   this.player.flipX=false;
  
   this.subEstado_posicionEstatico="abajo";
@@ -796,6 +858,11 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
   //.setOrigin(0,0.5)//derecha
   //this.state="moveRight";
+
+   //movCamara
+
+  this.getCameraPosition(movCam,0,subEstado_caminar);
+
   this.subEstado_posicionEstatico="derecha";
   
   //velocidad.xM=velocidad.xM+aceleracion;
@@ -848,6 +915,9 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   
  
   //velocidad.xm=velocidad.xm-aceleracion;
+     //movCamara
+
+  this.getCameraPosition(-movCam,0,subEstado_caminar);
 
 
 
@@ -888,6 +958,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
   this.subEstado_posicionEstatico="arriba-derecha";
 
+     //movCamara
+
+  this.getCameraPosition(movCam/2,-movCam/2,subEstado_caminar);
+
 
 
     
@@ -919,6 +993,13 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   break;
 
   case "arriba-izquierda":
+
+
+       //movCamara
+
+      this.getCameraPosition(-movCam/2,-movCam/2,subEstado_caminar);
+
+
     this.subEstado_posicionEstatico="arriba-izquierda";
     if(velocidadDiagonal.ymd>(-velocidadFinalDiagonal))
       this.player.setVelocityY(velocidadDiagonal.ymd-aceleracion);
@@ -943,6 +1024,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   break;
 
   case "abajo-derecha":
+
+       //movCamara
+
+  this.getCameraPosition(movCam/2,movCam/2,subEstado_caminar);
 
   this.subEstado_posicionEstatico="abajo-derecha";
     if(velocidadDiagonal.yMd<velocidadFinalDiagonal)
@@ -969,6 +1054,11 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
   break;
 
   case "abajo-izquierda":
+
+         //movCamara
+
+  this.getCameraPosition(-movCam/2,movCam/2,subEstado_caminar);
+
     this.subEstado_posicionEstatico="abajo-izquierda";
   //this.subEstado_posicionEstatico="abajo-derecha";
     if(velocidadDiagonal.yMd<velocidadFinalDiagonal)
@@ -994,7 +1084,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
     default:
 
 
-
+    this.getCameraPosition(0,0,subEstado_caminar);
       switch(this.subEstado_posicionEstatico){
     case "derecha":
 
@@ -1393,7 +1483,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
     }
 }
 
-  setMovimientoPlayer(contacto){
+  setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto){
 
 
       
@@ -1421,16 +1511,32 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
       }
     })
 
+    //aqui agregar input 
 
+
+
+
+
+    
 
       this.caminarPlayer(contacto,subEstado_caminar);
 
-
+  if(this.isInputActive){
       this.movimientoDash();
+
+      this.Curar();
+
+      this.getAtaque(listaEnemigos,contactoSprites,items_punto);
+
+    }
+
+
+
+
 
       this.detenerMovimiento();
 
-      this.Curar();
+      
       
       
 
@@ -1512,16 +1618,35 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
               console.log(enemigo);
               if(enemigo){
                 //enemigo.body.destroy();
+                //enemigo.setMuerteEnemigo();
                 enemigo.disableBody(true,true);
+
+                
 
                 this.scene.time.delayedCall(50, () => {
                 enemigo.hitbox.destroy();
                 enemigo.body.destroy();
                 enemigo.destroy();
+
                 
+
+                //console.log(this.scene);   
+                            
                 //listaEnemigos.remove(enemigo,true,true);
 
             });
+
+
+              
+            /*
+              this.pluginScene.pause();
+
+              setTimeout(()=>{
+                this.pluginScene.resume()
+              },300);*/
+
+              
+           
 
               
             

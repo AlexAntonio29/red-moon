@@ -367,7 +367,7 @@ getPlayer(){
 
   let x=2585;
   let y=8500;
-    this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos,this.lights);
+    this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos,this.lights,this.cameras.main);
 
     this.player.getContainer().setTint(0x555555);//para ver si se oscurece mas
     this.player.getContainer().setPipeline('Light2D');
@@ -427,9 +427,9 @@ this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.
 movimientosPlayer(){
 
 
-     this.player.setMovimientoPlayer(this.contactoSprites[0]);
+     this.player.setMovimientoPlayer(this.contactoSprites[0],this.listaEnemigos,this.contactoSprites,this.items_punto);
     
-     this.player.getAtaque(this.listaEnemigos,this.contactoSprites,this.items_punto);
+     //this.player.getAtaque(this.listaEnemigos,this.contactoSprites,this.items_punto);
 
      //pausar juego
 
@@ -1236,7 +1236,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     }
 
-    crearEvento(x,y,width,height,tiempoEvento,tiempoTraslado, xadd,yadd, zoom=0.5,ocultarHUD){
+    crearEvento(x,y,width,height,tiempoEvento,tiempoTraslado, xadd,yadd, zoom=0.5,ocultarHUD ,accion,movePlayer){
 
 
       /*
@@ -1250,7 +1250,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       */
 
       
-      let evento = new this.Scenario1Eventos(this,x,y,width,height,this.player.getContainer(),this.camera);
+      let evento = new this.Scenario1Eventos(this,x,y,width,height,this.player.getContainer(),this.camera,this.lights, this.player);
 
       this.physics.add.overlap(
         this.player.getContainer(),
@@ -1262,7 +1262,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
           let yMovCamera=y+(height/2); //-(this.heightPantalla/2)//
 
           if(!evento.esActivado&&evento.esActivo){
-                evento.setCollisionEvento(xMovCamera+xadd,yMovCamera+yadd,tiempoEvento,tiempoTraslado,zoom,ocultarHUD);
+                evento.setCollisionEvento(xMovCamera+xadd,yMovCamera+yadd,tiempoEvento,tiempoTraslado,zoom,ocultarHUD,accion,movePlayer);
                 
               }
               });
@@ -1273,7 +1273,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     cargarEvento(){
       //datos de eventos estos para comodidad del programador en agregar eventos se agregaran en variables
-      let x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom, ocultarHUD;
+      let x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom, ocultarHUD,accion,movePlayer;
       x=4400;
       y=8425;
       width=400;
@@ -1284,12 +1284,16 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       yAdicional=0;
       zoom=0.8;
       ocultarHUD=false;
+      accion=1;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
+      //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
+      movePlayer=false;
+
 
       //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD);
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer);
 
       //cuando se va a agregar un nuevo elemento entoces se establecen valores variables;
-      
+
 }
     
 
@@ -1298,7 +1302,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-this.physics.world.createDebugGraphic();
+//this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
     //this.crearFiltro();
     //Generacion de escenario

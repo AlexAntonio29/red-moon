@@ -232,6 +232,17 @@ export class cargarAssets{
             });
     
     
+
+
+            //Enemigos de fondo 
+
+            //DRAGON
+
+            this.scene.load.spritesheet('enemieF1', "./assets/enemies/fondo/dragon_rojo.png", {
+            frameWidth: 768,
+            frameHeight: 768
+            });
+
     
           
         }
