@@ -131,6 +131,12 @@ export class cargarAssets{
     
     
             }
+
+
+            cargarImagenesRecuerdos(){
+              this.scene.load.image("recuerdo_casa_quemada","/assets/tiles_maps/Tiled/items/portal_inactivo.png");//casa quemada
+
+            }
     
         cargarImagenes(){
           
@@ -179,6 +185,15 @@ export class cargarAssets{
             
         this.scene.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
         this.scene.load.image("a3 - Walls And Floors","/assets/tiles_maps/Tiled/A3 - Walls And Floors.png");//Big_Decoration
+    
+        this.scene.load.image("portal_inactivo","/assets/tiles_maps/Tiled/items/portal_inactivo.png");//portal
+
+
+
+        //cargar bacgrounds recuerdos
+
+        this.cargarImagenesRecuerdos();
+
     
 
     

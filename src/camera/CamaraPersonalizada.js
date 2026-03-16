@@ -30,6 +30,10 @@ export class CamaraPersonalizada{
 
              console.log(this.hud.visible);
 
+
+             
+
+            
             this.scene.cameras.main.stopFollow();
 
 
