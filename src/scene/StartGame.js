@@ -141,38 +141,9 @@ crearEscenario(){
 
 
 
-            this.above=this.map.createLayer('ABOVE',//TODO lo que esta encima del jugador pero sin collision
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11
-              
-            ]
-      ,0,0);
 
 
-       this._above=this.map.createLayer('_ABOVE',//TODO lo que esta encima del jugador pero sin collision
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11
-              
-            ]
-      ,0,0);
-
-             this._above2=this.map.createLayer('_ABOVE2',//TODO lo que esta encima del jugador pero sin collision
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11
-            ]
-      ,0,0);
-
-      //_ABOVE4-ANTORCHA
-
-   
-
-                   this._above3_decoration=this.map.createLayer('_ABOVE3-DECORATION',//TODO lo que esta encima del jugador pero sin collision
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11
-            ]
-      ,0,0);
-
-          this.above_collider=this.map.createLayer('ABOVE-COLLIDER',
+              this.above_collider=this.map.createLayer('ABOVE-COLLIDER',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11
             ]
@@ -184,11 +155,65 @@ crearEscenario(){
             ]
       ,0,0);
 
-         this._above4_antorcha=this.map.createLayer('_ABOVE4-ANTORCHA',//las antorchas
+
+                
+
+
+
+
+                  this.above=this.map.createLayer('ABOVE',//TODO lo que esta encima del jugador pero sin collision
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11
+              
+            ]
+      ,0,0);
+
+
+                  this._above=this.map.createLayer('_ABOVE',//TODO lo que esta encima del jugador pero sin collision
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11
+              
+            ]
+      ,0,0);
+
+
+                         this._above2=this.map.createLayer('_ABOVE2',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11
             ]
       ,0,0);
+
+
+      
+                  this._above3_decoration=this.map.createLayer('_ABOVE3-DECORATION',//TODO lo que esta encima del jugador pero sin collision
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11
+            ]
+      ,0,0);
+
+
+      this._above4_antorcha=this.map.createLayer('_ABOVE4-ANTORCHA',//las antorchas
+            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11
+            ]
+      ,0,0);
+
+
+
+
+
+
+
+      //_ABOVE4-ANTORCHA
+
+   
+
+ 
+
+  
+      
+
+
 
 
       //ANIMAR OBJETOS DE TILED
@@ -206,6 +231,12 @@ crearEscenario(){
 
       }
     })
+
+
+    //crear contacto con collision
+    //this._above3_decoration.setCollisionByExclusion([-1]);
+
+
 
 
 
@@ -509,6 +540,13 @@ movimientosPlayer(){
       }
     }
 
+
+
+    //Crear vista de player con item
+
+
+
+
    
 
 
@@ -719,22 +757,42 @@ colisionesEnemigo(){
 }
 
 
-
+  let ultimoEstado=null;
+    
        if(objeto && this._above3_decoration){
   //above para que este encima del player
           if(this._above3_decoration.layer.properties.find(p=>p.name==="collider"&&p.value===false))
             this._above3_decoration.setCollisionByExclusion([-1]);
-        this.physics.add.collider(objeto,this._above3_decoration,this.eliminarRebote,null,this);
 
-        this._above3_decoration.setDepth(10);
-        objeto.setDepth(5);
+        this.physics.add.collider(objeto,this._above3_decoration);
 
 
+
+      objeto.setDepth(5);
+      this._above3_decoration.setDepth(10);
 
 }
 
 
-//generar depth a _suelo3
+
+//generar depth a _suelo4
+
+
+       if(objeto && this._above4_antorcha){
+  //above para que este encima del player
+          if(this._above4_antorcha.layer.properties.find(p=>p.name==="collider"&&p.value===false))
+            this._above4_antorcha.setCollisionByExclusion([-1]);
+
+        this.physics.add.collider(objeto,this._above4_antorcha);
+
+
+
+      objeto.setDepth(5);
+      this._above4_antorcha.setDepth(10);
+
+}
+
+
 
 
 
@@ -1322,7 +1380,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       tiempoTraslado=500;
       xAdicional=0;
       yAdicional=0;
-      zoom=0.8;
+      zoom=0.4;
       ocultarHUD=false;
       accion=1;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
       //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
@@ -1337,11 +1395,11 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       y=7710;
       width=400;
       height=250;
-      tiempo=3000;
+      tiempo=2000;
       tiempoTraslado=500;
-      xAdicional=300;
-      yAdicional=200;
-      zoom=1.3;
+      xAdicional=0;
+      yAdicional=400;
+      zoom=2.0;
       ocultarHUD=false;
       accion=2;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
       //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
@@ -1424,6 +1482,11 @@ lightplayer(){
 }
 
 
+depthItemsPlayer(){
+
+}
+
+
 
 
 
@@ -1442,6 +1505,10 @@ update(time, delta){
    //this.physics.moveToObject(this.enemie.getContainer(), this.player.getContainer(),200);
 
     this.movimientoItemToPlayer();
+
+    //Aqui establece si el player esta mas arriba de determinado objeto
+
+    this.depthItemsPlayer();
 
 
   

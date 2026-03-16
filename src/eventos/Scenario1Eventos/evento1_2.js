@@ -60,9 +60,10 @@ const crearChild=(scene,player,lights)=>{
     child.play('idle');
 
    
-    child.setPosition(player.x+400,player.y+300);
+    child.setPosition(player.x+200,player.y+600);
 
     child.flipX=true;
+     child.setDepth(5);
 
     scene.time.delayedCall(1500,()=>{
 
@@ -70,6 +71,7 @@ const crearChild=(scene,player,lights)=>{
       child.flipX=false;
       child.setVelocityX(350);
       child.play('walk');
+     
 
     })
 
