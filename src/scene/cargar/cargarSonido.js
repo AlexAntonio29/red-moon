@@ -31,6 +31,11 @@ export class cargarSonido{
                this.scene.load.audio("skyF1","./sounds/enemigo/fondo1/f1/sky.mp3");
                this.scene.load.audio("roarF1","./sounds/enemigo/fondo1/f1/roar.mp3");
 
+
+               //enemigo f1
+
+               this.scene.load.audio("roarF2","./sounds/enemigo/fondo2/f2_roar.mp3");
+               this.scene.load.audio("sismoF2","./sounds/enemigo/fondo2/f2_sismo.mp3");
         
         
         

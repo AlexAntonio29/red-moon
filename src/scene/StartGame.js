@@ -1433,6 +1433,28 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
       //cuando se va a agregar un nuevo elemento entoces se establecen valores variables;
 
+
+
+      
+      x=9890;
+      y=8296;
+      width=200;
+      height=550;
+      tiempo=0;
+      tiempoTraslado=0;
+      xAdicional=0;
+      yAdicional=0;
+      zoom=1.0;
+      ocultarHUD=false;
+      accion=4;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
+      //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
+      movePlayer=false;
+
+
+      //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer);
+
+
 }
     
 

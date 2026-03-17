@@ -264,6 +264,11 @@ export class cargarAssets{
             frameHeight: 768
             });
 
+            this.scene.load.spritesheet('enemieF2', "./assets/enemies/fondo/lov1.png", {
+            frameWidth: 1536,
+            frameHeight: 1536
+            });
+
     
           
         }

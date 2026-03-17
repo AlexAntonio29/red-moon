@@ -43,7 +43,7 @@ const crearChild=(scene,player,lights)=>{
       scene.anims.create({
         key: "idle",
         frames: scene.anims.generateFrameNumbers('npc1_idle', { start: 0, end: 1 }),
-        frameRate: 8,
+        frameRate: 3,
         repeat: -1
           });
 

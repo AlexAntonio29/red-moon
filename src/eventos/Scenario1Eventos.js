@@ -2,6 +2,7 @@ import {Eventos} from './Eventos.js'
 import {evento1_1} from './Scenario1Eventos/evento1_1.js'
 import {evento1_2} from './Scenario1Eventos/evento1_2.js';
 import {evento1_3} from './Scenario1Eventos/evento1_3.js';
+import { evento1_4 } from './Scenario1Eventos/evento1_4.js';
 
 
 export class Scenario1Eventos extends Eventos{
@@ -58,6 +59,14 @@ export class Scenario1Eventos extends Eventos{
 
             
             evento1_3(this.scene,this.player, this.lights, movePlayer, this.playerAtributos);
+
+
+            break;
+
+            case 4:
+
+            
+            evento1_4(this.scene,this.player, this.lights, movePlayer, this.playerAtributos);
 
 
             break;
