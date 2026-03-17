@@ -134,7 +134,7 @@ export class cargarAssets{
 
 
             cargarImagenesRecuerdos(){
-              this.scene.load.image("recuerdo_casa_quemada","/assets/tiles_maps/Tiled/items/portal_inactivo.png");//casa quemada
+              this.scene.load.image("recuerdo_casa_quemada","/assets/background/casa_quemandose.png");//casa quemada
 
             }
     

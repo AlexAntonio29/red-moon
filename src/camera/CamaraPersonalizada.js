@@ -28,19 +28,16 @@ export class CamaraPersonalizada{
 
             this.hud.setVisible(ocultarHUD);
 
-             console.log(this.hud.visible);
+            // console.log(this.hud.visible);
 
 
-             
-
-            
-            this.scene.cameras.main.stopFollow();
-
-
-            //this.scene.cameras.main.setScroll(x,y);
             
 
 
+
+            if(tiempo>0){
+
+            this.scene.cameras.main.stopFollow();  
             console.log("activate camera modification");
             this.scene.cameras.main.zoomTo(zoom,tiempoTraslado,'Sine.easeInOut',true );
             this.scene.cameras.main.pan(x,y,tiempoTraslado,'Sine.easeInOut',true,
@@ -68,6 +65,13 @@ export class CamaraPersonalizada{
 
                     }
                 });
+
+            }
+
+            //this.scene.cameras.main.setScroll(x,y);
+            
+
+
             
                 
 

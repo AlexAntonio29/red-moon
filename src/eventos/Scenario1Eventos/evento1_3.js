@@ -4,7 +4,7 @@ export const evento1_3=(scene,player,lights,movePlayer=true, playerAtributos)=>{
 
    
 
-    console.log("Ejecutando Evento1_2");
+    console.log("Ejecutando Evento1_3");
 
     //activar o desactivar input player
 
@@ -18,7 +18,7 @@ export const evento1_3=(scene,player,lights,movePlayer=true, playerAtributos)=>{
     En este evento estas en una zona donde aparece desde la vista larga un dragon enorme
     */
 
-    crearChild(scene,player,lights);
+    crearRecuerdo(scene,player,lights);
 
     crearSonido(scene);
 
@@ -33,49 +33,27 @@ export const evento1_3=(scene,player,lights,movePlayer=true, playerAtributos)=>{
 }
 
 
-const crearChild=(scene,player,lights)=>{
+const crearRecuerdo=(scene,player,lights)=>{
 
-    console.log(scene);
+ 
 
-    const child= scene.physics.add.sprite(player.x,player.y,'npc1_idle');
-
-
-      scene.anims.create({
-        key: "idle",
-        frames: scene.anims.generateFrameNumbers('npc1_idle', { start: 0, end: 1 }),
-        frameRate: 8,
-        repeat: -1
-          });
-
-    scene.anims.create({
-        key: "walk",
-        frames: scene.anims.generateFrameNumbers('npc1_walk', { start: 0, end: 3 }),
-        frameRate: 6,
-        repeat: -1
-          });
+    const recuerdo= scene.add.image(scene.cameras.main.centerX,
+                                    scene.cameras.main.centerY,
+                                    'recuerdo_casa_quemada').setScrollFactor(0);
 
 
-    child.setPipeline('Light2D');
-
-    child.play('idle');
-
+    //recuerdo.setOrigin(0);
+    recuerdo.setDepth(30);
+    scene.cameras.main.flash(300,255,255,255);
+   // recuerdo.setDisplaySize(scene.widthEscenario,scene.heightEscenario);
    
-    child.setPosition(player.x+200,player.y+600);
-
-    child.flipX=true;
-     child.setDepth(5);
 
     scene.time.delayedCall(1500,()=>{
-
-
-      child.flipX=false;
-      child.setVelocityX(350);
-      child.play('walk');
-     
-
+    
+      scene.cameras.main.flash(300,255,255,255);
+      recuerdo.destroy();
     })
 
-    //child.setVelocityY(-620);
 
     
     
@@ -84,12 +62,12 @@ const crearChild=(scene,player,lights)=>{
 
 const crearSonido=(scene)=>{
 
-    const sound_suspenso= scene.sound.add('suspenso', {
+    const sound_flashBack= scene.sound.add('flashback', {
     loop: false,
-    volume: 1   // volumen entre 0 y 1
+    volume: 2   // volumen entre 0 y 1
   });
 
 
 
-  sound_suspenso.play();
+  sound_flashBack.play();
 }

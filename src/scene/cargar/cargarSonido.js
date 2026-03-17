@@ -35,6 +35,11 @@ export class cargarSonido{
         
         
             }
+
+
+            crearSonidosRecuerdos(){
+              this.scene.load.audio("flashback","./sounds/general/recuerdos/flashback.mp3");
+            }
         
             crearSonidos(){
               //sonido items basura
@@ -89,6 +94,8 @@ export class cargarSonido{
         
         
               this.cargarSonidosEnemigos();
+
+              this.crearSonidosRecuerdos();
               
             }
         

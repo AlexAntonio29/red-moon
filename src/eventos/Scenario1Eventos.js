@@ -74,6 +74,18 @@ export class Scenario1Eventos extends Eventos{
 
         this.selectorEvento(accion,movePlayer);
 
+            if(tiempoEvento<=0){
+               
+
+                 
+                this.scene.hudContainer.setVisible(true);
+                //activar movePlayer
+                this.playerAtributos.isInputActive=true;
+               //this.camera.getCameratoPlayer();
+
+
+            }
+
     }
 
 
