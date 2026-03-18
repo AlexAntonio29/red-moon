@@ -22,9 +22,32 @@ export class cargarSonido{
                this.scene.load.audio("enemie1_sonido","./sounds/enemigo/enemie1/general/sonido.mp3");
         
                this.scene.load.audio("enemie4_sonido","./sounds/enemigo/enemie4/general/sonido.mp3");
+
+
+
+               //enemigos fondo 
+
+
+               this.scene.load.audio("skyF1","./sounds/enemigo/fondo1/f1/sky.mp3");
+               this.scene.load.audio("roarF1","./sounds/enemigo/fondo1/f1/roar.mp3");
+
+
+               //enemigo f1
+
+               this.scene.load.audio("roarF2","./sounds/enemigo/fondo2/f2_roar.mp3");
+               this.scene.load.audio("sismoF2","./sounds/enemigo/fondo2/f2_sismo.mp3");
         
         
         
+            }
+
+
+            cargarSonidosNpc(){
+              this.scene.load.audio('npc2_llorando','./sounds/npc/npc2/npc2_llorando.mp3');
+            }
+
+            crearSonidosRecuerdos(){
+              this.scene.load.audio("flashback","./sounds/general/recuerdos/flashback.mp3");
             }
         
             crearSonidos(){
@@ -73,9 +96,17 @@ export class cargarSonido{
         
         
               this.scene.load.audio("slide","./sounds/general/slide/slide.mp3");
+
+              this.scene.load.audio("suspenso","./sounds/evento/momentoSuspenso/suspenso.mp3");
+
+              
         
         
               this.cargarSonidosEnemigos();
+
+              this.crearSonidosRecuerdos();
+
+              this.cargarSonidosNpc();
               
             }
         

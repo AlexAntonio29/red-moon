@@ -3,13 +3,18 @@ import { DataComboEspada } from "../../player/combo/DataCombo.js";
 
 
 
+
 export class cargarAssets{
+
+  
 
     constructor(scene){
         this.scene=scene;
 
         this.cargarImagenes();
         this.cargarAnimaciones();
+
+        
     }
 
 
@@ -106,10 +111,10 @@ export class cargarAssets{
     
     
     
-    this.scene.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animations/golpeado/golpeado_espada_arriba.png",{
+    /*this.scene.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animations/golpeado/golpeado_espada_arriba.png",{
       frameWidth: 64,   
       frameHeight: 64
-    });
+    });*/
     
         this.scene.load.spritesheet("player_heal", "./assets/player/Animations/heal/heal_animation.png", {
             frameWidth: 64, // Asumo 64 porque tus otros sprites usan ese tamaño
@@ -125,6 +130,12 @@ export class cargarAssets{
     
     
     
+            }
+
+
+            cargarImagenesRecuerdos(){
+              this.scene.load.image("recuerdo_casa_quemada","/assets/background/casa_quemandose.png");//casa quemada
+
             }
     
         cargarImagenes(){
@@ -146,7 +157,7 @@ export class cargarAssets{
        
     
        this.scene.load.image('tiles', './assets/[Base]BaseChip_pipo.png');
-       this.scene.load.image('tiles2', './assets/[A]Grass_pipo.png');
+       
        this.scene.load.tilemapTiledJSON('mapa', './assets/mapa_scene.json');
        
     
@@ -170,11 +181,21 @@ export class cargarAssets{
         this.scene.load.image("fantasy_Outside_A4","/assets/tiles_maps/Tiled/Fantasy_Outside_A4.png");
         this.scene.load.image("fantasy_Outside_B","/assets/tiles_maps/Tiled/Fantasy_Outside_B.png");//Fantasy_Outside_B
         this.scene.load.image("big_Decoration","/assets/tiles_maps/Tiled/Big_Decoration.png");//Big_Decoration
-    
+        this.scene.load.image("antorcha_sheet","/assets/tiles_maps/Tiled/antorcha_sheet.png");//antorcha animada
+            
         this.scene.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
         this.scene.load.image("a3 - Walls And Floors","/assets/tiles_maps/Tiled/A3 - Walls And Floors.png");//Big_Decoration
     
-        
+        this.scene.load.image("portal_inactivo","/assets/tiles_maps/Tiled/items/portal_inactivo.png");//portal
+
+
+
+        //cargar bacgrounds recuerdos
+
+        this.cargarImagenesRecuerdos();
+
+    
+
     
     
         //cargar el tiled
@@ -232,6 +253,22 @@ export class cargarAssets{
             });
     
     
+
+
+            //Enemigos de fondo 
+
+            //DRAGON
+
+            this.scene.load.spritesheet('enemieF1', "./assets/enemies/fondo/dragon_rojo.png", {
+            frameWidth: 768,
+            frameHeight: 768
+            });
+
+            this.scene.load.spritesheet('enemieF2', "./assets/enemies/fondo/lov1.png", {
+            frameWidth: 1536,
+            frameHeight: 1536
+            });
+
     
           
         }
@@ -255,6 +292,32 @@ export class cargarAssets{
             frameHeight:32
           });
         }
+
+        cargarAnimacionesNpc(){
+
+
+            this.scene.load.spritesheet('npc1_idle', "./assets/npc/npc1/agnes_idle.png", {
+            frameWidth: 60,
+            frameHeight: 60
+            });
+
+            this.scene.load.spritesheet('npc1_walk', "./assets/npc/npc1/agnes_walk.png", {
+            frameWidth: 60,
+            frameHeight: 60
+            });
+
+
+
+            // cuidadora
+
+            this.scene.load.spritesheet('npc2_idle', "./assets/npc/npc2/cuidadora_idle.png", {
+            frameWidth: 80,
+            frameHeight: 80
+            });
+
+
+            
+        }
     
         cargarAnimaciones(){
     
@@ -263,6 +326,7 @@ export class cargarAssets{
           this.cargarAnimacionesPlayer();
     
           this.cargarAnimacionesItems();
+          this.cargarAnimacionesNpc();
           
     
     

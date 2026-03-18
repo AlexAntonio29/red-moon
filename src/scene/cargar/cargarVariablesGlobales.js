@@ -1,7 +1,9 @@
 
 import { conjuntoArmas } from "../../armas/conjuntoArmas.js"
 import {puntos, itemsConsumibles} from "../../items/DataItemsPuntos.js";
-
+import { Scenario1Eventos } from "../../eventos/Scenario1Eventos.js";
+import { cargarLucesEstaticas } from "../../funciones/cargarLucesEstaticas.js";
+import { dataNpc } from "../../npc/dataNpc.js";
 
 
 
@@ -50,7 +52,24 @@ export class cargarVariablesGlobales{
         }
 
 
+        crearArchivoLuces(){
+
+          //this.scene.lucesEstaticas=cargarLucesEstaticas();
+        }
+
+
+        crearData(){
+          this.scene.dataNpc=dataNpc;
+        }
+
+
     cargarVariablesGlobales(){
+
+
+          //cargar scenario Eventos
+
+
+          this.scene.Scenario1Eventos=Scenario1Eventos;
     
           this.scene.tiempo=0;
           this.scene.tiempoProgresivo=0;//el tiempo progresivo sirve para llevar el tiempo siempre adelante
@@ -100,6 +119,8 @@ export class cargarVariablesGlobales{
            //TODO REFEREIDO A ENEMIGOS
     
        this.scene.listaEnemigos=this.scene.physics.add.group();
+
+       this.scene.listaNpc=this.scene.physics.add.group();
     
         
         this.scene.puntosCreacionEnemigo=0;
@@ -118,5 +139,10 @@ export class cargarVariablesGlobales{
       this.cargarTeclar();
 
       this.cargarBotonesTeclas();
+
+        this.crearArchivoLuces();
+
+        this.crearData();
+
         }
 }
