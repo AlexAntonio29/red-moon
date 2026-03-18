@@ -1378,7 +1378,9 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
       //this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
 
+
        this.crearEnemigo(1,this.player.x+100,this.player.y)// enemigo
+
 
 
     }
