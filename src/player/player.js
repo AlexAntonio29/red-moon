@@ -1487,8 +1487,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
       
-        console.log(this.player.x);
-        console.log(this.player.y);
+       // console.log(this.player.x);
+       // console.log(this.player.y);
         let subEstado_caminar="";
 
     //console.log("Estado Principal: "+this.state);
@@ -1846,6 +1846,8 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         if (Phaser.Input.Keyboard.JustUp(this.keys.J) && !this.estaAtacando && this.state !== "attack" && this.stamina>0) {
 
 
+          console.log("X: "+this.player.x);
+          console.log("Y: "+this.player.y);
 
          
 

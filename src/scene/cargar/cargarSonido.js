@@ -42,6 +42,10 @@ export class cargarSonido{
             }
 
 
+            cargarSonidosNpc(){
+              this.scene.load.audio('npc2_llorando','./sounds/npc/npc2/npc2_llorando.mp3');
+            }
+
             crearSonidosRecuerdos(){
               this.scene.load.audio("flashback","./sounds/general/recuerdos/flashback.mp3");
             }
@@ -101,6 +105,8 @@ export class cargarSonido{
               this.cargarSonidosEnemigos();
 
               this.crearSonidosRecuerdos();
+
+              this.cargarSonidosNpc();
               
             }
         

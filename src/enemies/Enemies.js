@@ -5,6 +5,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       
 
       super(scene,x,y,dataEnemie.diseno+"_idle");
+      
 
       scene.add.existing(this);
       scene.physics.add.existing(this);
@@ -48,7 +49,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         this.cargarSonidos();
 
 
-        this.sonido.play();
+        
 
         
 
@@ -114,6 +115,11 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         loop:true,
         volume:1
       });
+
+
+      this.sonido.play();
+
+
     }
 
 

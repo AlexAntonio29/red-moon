@@ -43,7 +43,7 @@ const crearRecuerdo=(scene,player,lights)=>{
 
     scene.anims.create({
         key: "mov_lov1",
-        frames: scene.anims.generateFrameNumbers('enemieF2', { start: 0, end: 3 }),
+        frames: scene.anims.generateFrameNumbers('enemieF2', { start: 0, end: 1 }),
         frameRate: 3,
         repeat: -1
           });
@@ -68,7 +68,7 @@ const crearRecuerdo=(scene,player,lights)=>{
 
     lov1.setPipeline('Light2D');
 
-    scene.cameras.main.shake(4000, 0.01);
+    scene.cameras.main.shake(6000, 0.01);
 
     
     

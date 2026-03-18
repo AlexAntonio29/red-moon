@@ -3,6 +3,7 @@ import { conjuntoArmas } from "../../armas/conjuntoArmas.js"
 import {puntos, itemsConsumibles} from "../../items/DataItemsPuntos.js";
 import { Scenario1Eventos } from "../../eventos/Scenario1Eventos.js";
 import { cargarLucesEstaticas } from "../../funciones/cargarLucesEstaticas.js";
+import { dataNpc } from "../../npc/dataNpc.js";
 
 
 
@@ -54,6 +55,11 @@ export class cargarVariablesGlobales{
         crearArchivoLuces(){
 
           //this.scene.lucesEstaticas=cargarLucesEstaticas();
+        }
+
+
+        crearData(){
+          this.scene.dataNpc=dataNpc;
         }
 
 
@@ -113,6 +119,8 @@ export class cargarVariablesGlobales{
            //TODO REFEREIDO A ENEMIGOS
     
        this.scene.listaEnemigos=this.scene.physics.add.group();
+
+       this.scene.listaNpc=this.scene.physics.add.group();
     
         
         this.scene.puntosCreacionEnemigo=0;
@@ -133,6 +141,8 @@ export class cargarVariablesGlobales{
       this.cargarBotonesTeclas();
 
         this.crearArchivoLuces();
+
+        this.crearData();
 
         }
 }

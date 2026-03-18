@@ -111,10 +111,10 @@ export class cargarAssets{
     
     
     
-    this.scene.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animations/golpeado/golpeado_espada_arriba.png",{
+    /*this.scene.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animations/golpeado/golpeado_espada_arriba.png",{
       frameWidth: 64,   
       frameHeight: 64
-    });
+    });*/
     
         this.scene.load.spritesheet("player_heal", "./assets/player/Animations/heal/heal_animation.png", {
             frameWidth: 64, // Asumo 64 porque tus otros sprites usan ese tamaño
@@ -157,7 +157,7 @@ export class cargarAssets{
        
     
        this.scene.load.image('tiles', './assets/[Base]BaseChip_pipo.png');
-       this.scene.load.image('tiles2', './assets/[A]Grass_pipo.png');
+       
        this.scene.load.tilemapTiledJSON('mapa', './assets/mapa_scene.json');
        
     
@@ -305,6 +305,17 @@ export class cargarAssets{
             frameWidth: 60,
             frameHeight: 60
             });
+
+
+
+            // cuidadora
+
+            this.scene.load.spritesheet('npc2_idle', "./assets/npc/npc2/cuidadora_idle.png", {
+            frameWidth: 80,
+            frameHeight: 80
+            });
+
+
             
         }
     

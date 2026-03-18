@@ -13,6 +13,10 @@ import { ItemPocion } from "../items/extendsItems/ItemPocion.js";
 import { CamaraPersonalizada } from "../camera/CamaraPersonalizada.js";
 import { cargarLucesEstaticas } from "../funciones/cargarLucesEstaticas.js";
 
+import {npc1} from '../npc/npc1.js'
+import {npc2} from '../npc/npc2.js'
+
+
 
 
 
@@ -429,6 +433,13 @@ movimientosEnemigo(){
 
 }
 
+movimientosNpc(){
+  this.listaNpc.children.iterate(npc=>{
+
+    npc.setMovimientoNpc(this, this.player)
+  })
+}
+
 
 //METODOS DEL PLAYER
 
@@ -529,7 +540,7 @@ movimientosPlayer(){
     
     if(this.player.stamina<this.player.staminaMax){
 
-      console.log("recuperando");
+      //console.log("recuperando");
 
       this.player.stamina+=this.player.velocidad_recuperacion;
 
@@ -1347,7 +1358,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
        let height=250;
       */
 
-        console.log("ZOOM: "+zoom);
+        
 
       
       let evento = new this.Scenario1Eventos(this,x,y,width,height,this.player.getContainer(),this.camera,this.lights, this.player);
@@ -1400,7 +1411,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       tiempo=2000;
       tiempoTraslado=500;
       xAdicional=0;
-      yAdicional=400;
+      yAdicional=450;
       zoom=2.0;
       ocultarHUD=false;
       accion=2;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
@@ -1456,6 +1467,44 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
 
 }
+
+crearNpc(n,x,y){
+
+  let npc;
+    if(this.dataNpc[n-1]){
+      switch(n){
+        case 1:
+
+        npc= new npc1(this,this.dataNpc[n-1],x,y);
+
+        break;
+
+        case 2:
+
+        npc= new npc2(this,this.dataNpc[n-1],x,y);
+        break;
+    
+      }
+
+      this.physics.add.collider(this.player.getContainer(),npc);
+
+      npc.setPipeline('Light2D');
+      this.listaNpc.add(npc);
+    
+    }
+
+
+
+}
+
+cargarNpc(){
+ 
+
+  this.crearNpc(2,8052,6161);
+
+
+
+}
     
 
 //El create es donde acomo las cosas para que tengan un orden
@@ -1478,6 +1527,8 @@ this.game.renderer.antialias = false;
     this.cargarJoystick();
     this.getPlayer();
     this.creacionEnemigosPosicionados()
+
+    this.cargarNpc();
     //this.crearEnemigo(1,2050,4500,3);
    // this.crearEnemigo(1,2100,4500,4);
     //colisiones en entre items
@@ -1525,9 +1576,7 @@ lightplayer(){
 }
 
 
-depthItemsPlayer(){
 
-}
 
 
 
@@ -1551,7 +1600,11 @@ update(time, delta){
 
     //Aqui establece si el player esta mas arriba de determinado objeto
 
-    this.depthItemsPlayer();
+
+
+    //movimientoNpc
+    this.movimientosNpc();
+
 
 
   
