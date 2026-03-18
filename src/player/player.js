@@ -7,6 +7,8 @@ export class player {
 
   constructor(scene, texture, x = 25, y = 25, joystick,controles, keys,listaEnemigos,lights) {
 
+    
+
 
     //CARGAR VALORES POR BD PARA OBTENER DATOS
 
@@ -37,6 +39,9 @@ export class player {
 
     this.tiempocarga = 0; //esto sirve para contar los frames que lleva cargando
     this.esAtaquefuerte = false; //se coloca para para saber que ataque se debera a hacer
+
+    // ¡AQUÍ AGREGAS LA MOCHILA!
+       this.inventario = [];
 
 
 
@@ -113,6 +118,7 @@ export class player {
 
 
 }
+
 
 
 
@@ -1046,7 +1052,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
     if((Phaser.Input.Keyboard.JustDown((this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT)))) && this.stamina>0){
 
-      let velocidadDash=500;
+      let velocidadDash=300;
       let stamina=80;
 
 
@@ -1269,6 +1275,11 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
   detenerMovimiento(){
+
+    if (this.state === "dash") {
+        return; // Salimos de la función sin frenar al jugador
+    }
+
     let desaceleracion=20;//apenas probando entre 18 a 20
     let desalerar;
 
@@ -1432,11 +1443,19 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
       this.Curar();
       
+      this.interactuar();
+
+
+  
       
 
 
   
 
+  }
+
+  interactuar(){
+    
   }
 
   getArma(){
@@ -1691,6 +1710,19 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
                 //agregacion del stamina
              this.stamina=this.stamina-(this.combo[this.posicion_combo].stamina*multiplicadorFuerza);
+
+
+             //adiciones para colisiones condicionales
+    if (this.scene.blockLayer) {
+        this.scene.physics.add.overlap(this.spriteAtaque, this.scene.blockLayer, (arma, tile) => {
+            
+  
+            
+            if (tile && tile.properties && tile.properties.tipoBloqueo) {
+                this.scene.checkCondicionBloque(this.getContainer(), tile);
+            }
+        }, null, this);
+    }
         
           
             

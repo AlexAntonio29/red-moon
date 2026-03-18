@@ -44,8 +44,8 @@ export class cargarVariablesGlobales{
         D: Phaser.Input.Keyboard.KeyCodes.D,
         ESC: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC),
         J: Phaser.Input.Keyboard.KeyCodes.J,//golpear
-        V: Phaser.Input.Keyboard.KeyCodes.V//vida
-        
+        V: Phaser.Input.Keyboard.KeyCodes.V,//vida
+        E: Phaser.Input.Keyboard.KeyCodes.E//interaccion
     });
         }
 

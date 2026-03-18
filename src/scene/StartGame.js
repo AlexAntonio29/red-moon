@@ -11,14 +11,18 @@ import {cargarSonido} from "./cargar/cargarSonido.js"
 import { cargarVariablesGlobales } from "./cargar/cargarVariablesGlobales.js";
 import { ItemPocion } from "../items/extendsItems/ItemPocion.js";
 
+import { BloqueoAtaqueFuerte } from "./colisiones/BloqueoAtaqueFuerte.js";
+import { BloqueoDash } from "./colisiones/BloqueoDash.js";
+import { BloqueoItem } from "./colisiones/BloqueoItem.js";
+import { RecogerItem } from "./colisiones/RecogerItem.js"; 
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
     constructor(){
         super('StartGame');
-        //console.log("Estoy en StartGame");
-
+       
     }
+    
 
   
 
@@ -1257,6 +1261,8 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
       this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
 
+       this.crearEnemigo(1,this.player.x+100,this.player.y)// enemigo
+
 
     }
     
@@ -1347,5 +1353,69 @@ update(time, delta){
 
 
 
+}
+
+/* NUEVO CODIGO*/
+checkCondicionBloque(objeto, tile) {
+    // 1. Si el que choca no es el player (ej. un enemigo), funciona como pared normal
+    if (objeto !== this.player.getContainer()) {
+        return true; 
+    }
+   
+
+    // 2. Leemos la propiedad que se puso en Tiled para saber que tipo de obstáculo es
+    // Si no tiene la propiedad "tipoBloqueo", es una pared normal e impenetrable
+    if (!tile.properties || !tile.properties.tipoBloqueo) {
+        return true; 
+    }
+
+    let manejadorBloqueo = null;
+    let tipo = tile.properties.tipoBloqueo;
+
+    // 3. EL SWITCH: Asignamos la clase hija correcta segun el tipo de tile en Tiled
+   switch (tipo) {
+        case "roca_fuerte":
+            manejadorBloqueo = new BloqueoAtaqueFuerte();
+            break;
+
+        case "foso":
+            manejadorBloqueo = new BloqueoDash();
+            break;
+
+        case "puerta_llave":
+            // Esta es la puerta. Exige la "llave_roja"
+            manejadorBloqueo = new BloqueoItem("llave_roja"); 
+            break;
+
+        // ==========================================
+        // NUEVO CASO: ESTE SIRVE PARA CUANDO RECOGA LA LLAVE DEL SUELO
+        // ==========================================
+        case "recoger_llave_roja":
+            // Esta es la llave. Te regala la "llave_roja"
+            manejadorBloqueo = new RecogerItem("llave_roja");
+            break;
+
+        default:
+            return true;
+    }
+
+    // 4. se verifica si el jugador cumple la condición mandando a la clase Player
+    // (Usamos this.player porque 'objeto' es el container
+    let permisoConcedido = manejadorBloqueo.puedePasar(this.player);
+
+    if (permisoConcedido) {
+        // Si la clase dice que el bloque se debe destruir (ej. la roca que rompiste)
+        if (manejadorBloqueo.destruirBloque) {
+            this.map.removeTileAt(tile.x, tile.y, true, true, this.blockLayer);
+            
+            // Aquí se puede agregar un sonido:
+        }
+        
+        // Retornamos FALSE para decirle a Phaser: "IGNORA LA COLISIÓN, DÉJALO PASAR"
+        return false; 
+    } else {
+        // Retornamos TRUE para decirle a Phaser: "APLICA FISICAS"
+        return true; 
+    }
 }
 }

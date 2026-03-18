@@ -16,15 +16,15 @@ class colisionescondi extends Phaser.Scene {
         
         // Aquí agregas la creación de la capa BLOCK
         this.blockLayer = this.map.createLayer('BLOCK', 
-    [this.tileset1, this.tileset2, this.tileset3, this.tileset4, this.tileset5, this.tileset6, this.tileset7, this.tileset8, this.tileset9, this.tileset10, this.tileset11, this.tileset12], 
+    [this.tileset1, this.tileset2, this.tileset3, this.tileset4, this.tileset5, this.tileset6, this.tileset7, this.tileset8, this.tileset9, this.tileset10,], 
     0, 0
 );
         this.blockLayer.setPipeline('Light2D');
     }
 
-    // 2. METODO ACTUAL (MODIFICADO)
+    
     collisionMurosObjetos(objeto) {
-        // ... tus colliders actuales (fondo, above_collider, etc) ...
+        //  los colliders actual de BLOCK relacianado con las fisicas
 
         // se agrega nuevo collider para BLOCK
         if (objeto && this.blockLayer) {
@@ -35,10 +35,10 @@ class colisionescondi extends Phaser.Scene {
         }
     }
 
-    // 3. NUEVO MÉTODO!
-    // Al mismo nivel que los demás métodos de la clase
+    // 3. NUEVO METODO
+   
     checkCondicionBloque(objeto, tile) {
-        // ¿El jugador tiene el ítem?
+        // ¿El jugador tiene el item?
         let tieneItemRequerido = false; // Cambia esto por tu variable real
 
         if (tieneItemRequerido) {
