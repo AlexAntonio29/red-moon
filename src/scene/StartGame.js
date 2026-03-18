@@ -1408,7 +1408,7 @@ checkCondicionBloque(objeto, tile) {
         if (manejadorBloqueo.destruirBloque) {
             this.map.removeTileAt(tile.x, tile.y, true, true, this.blockLayer);
             
-            // Aquí se puede agregar un sonido:
+            // Aqui se puede agregar un sonido:
         }
         
         // Retornamos FALSE para decirle a Phaser: "IGNORA LA COLISIÓN, DÉJALO PASAR"

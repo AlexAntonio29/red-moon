@@ -40,7 +40,7 @@ export class player {
     this.tiempocarga = 0; //esto sirve para contar los frames que lleva cargando
     this.esAtaquefuerte = false; //se coloca para para saber que ataque se debera a hacer
 
-    // ¡AQUÍ AGREGAS LA MOCHILA!
+  //INVENTARIO
        this.inventario = [];
 
 

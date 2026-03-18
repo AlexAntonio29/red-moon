@@ -35,7 +35,7 @@ class colisionescondi extends Phaser.Scene {
         }
     }
 
-    // 3. NUEVO METODO
+   
    
     checkCondicionBloque(objeto, tile) {
         // ¿El jugador tiene el item?
