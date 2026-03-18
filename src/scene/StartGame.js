@@ -464,8 +464,8 @@ movimientosNpc(){
 
 getPlayer(){
 
-  let x=2585;
-  let y=8500;
+  let x=2936;//2100;
+  let y=5785;//8500;
     this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos,this.lights,this.cameras.main);
 
     this.player.getContainer().setTint(0x555555);//para ver si se oscurece mas
