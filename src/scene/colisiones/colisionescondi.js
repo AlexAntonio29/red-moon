@@ -34,7 +34,7 @@ class colisionescondi extends Phaser.Scene {
             this.physics.add.collider(objeto, this.blockLayer, this.eliminarRebote, this.checkCondicionBloque, this);
         }
     }
-
+ 
    
    
     checkCondicionBloque(objeto, tile) {

@@ -52,7 +52,7 @@ export class cargarVariablesGlobales{
     });
         }
 
-
+ 
         crearArchivoLuces(){
 
           //this.scene.lucesEstaticas=cargarLucesEstaticas();

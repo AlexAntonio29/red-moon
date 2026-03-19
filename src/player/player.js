@@ -116,9 +116,17 @@ export class player {
    this.animaciones();
    this.cargarSonidosPlayer();
 
+    
     // ESCUCHADOR ÚNICO (Solo se crea una vez aquí)
     this.player.on("animationcomplete", (anim) => {
-        if (this.state === "attack" || this.state === "hurt" || this.state === "healing") {
+        
+        // Si la animación que terminó fue la del dash...
+        if (this.state === "dash") {
+            this.state = "idle";
+            this.verificarTrampaDash(); // <--- MANDAMOS A REVISAR EL PISO
+        } 
+        // Para las demás animaciones normales...
+        else if (this.state === "attack" || this.state === "hurt" || this.state === "healing") {
             this.state = "idle";
         }
     });
@@ -126,6 +134,34 @@ export class player {
 
 
 }
+
+    // ==========================================
+    // SISTEMA DE INVENTARIO DINÁMICO
+    // ==========================================
+
+    agregarItem(idItem) {
+        this.inventario.push(idItem);
+        console.log(`[Inventario] Agregaste: ${idItem}. Mochila:`, this.inventario);
+        // Aquí a futuro puedes reproducir un sonido de "Ítem obtenido"
+    }
+
+    tieneItem(idItem) {
+        // Devuelve true si el ID está en la mochila, false si no lo tiene
+        return this.inventario.includes(idItem);
+    }
+
+    usarItem(idItem) {
+        // Buscamos en qué posición de la mochila está el ítem
+        const indice = this.inventario.indexOf(idItem);
+        
+        // Si el índice es mayor a -1, significa que SÍ lo tiene
+        if (indice > -1) {
+            this.inventario.splice(indice, 1); // Lo eliminamos de la mochila
+            console.log(`[Inventario] Usaste y consumiste: ${idItem}. Mochila:`, this.inventario);
+            return true; // Se usó con éxito
+        }
+        return false; // No lo tenía
+    }
 
 
 
@@ -1057,7 +1093,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
       this.player.play('player_camina');
     }
 
-    
+
     this.player.flipX=false;
 
   break;
@@ -1140,230 +1176,70 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
 
+movimientoDash() {
+      // 1. Verificamos si presiona SHIFT, si tiene stamina y si NO está ya haciendo dash
+      if (Phaser.Input.Keyboard.JustDown(this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT)) && this.stamina > 0 && this.state !== "dash") {
 
-  movimientoDash(){
+          let velocidadDash = 250;
+          let velDiag = velocidadDash * 0.7071; // Matemática exacta (500 / raíz de 2)
+          let costoStamina = 80;
 
-    if((Phaser.Input.Keyboard.JustDown((this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT)))) && this.stamina>0){
-
-      let velocidadDash=250;
-      let stamina=80;
-
-
-
-
-
-
-     // console.log(this.state);
-
-      if(this.state==="idle"){
-
-        this.slide.play();
-
-        this.player.play("dash-reverso");
-
-        switch(this.subEstado_posicionEstatico){
-
-          case "derecha":
+          // 2. Guardamos la posición segura por si cae en un foso (el Punto de Control)
+          this.xSeguro = this.player.x;
+          this.ySeguro = this.player.y;
 
 
-          this.player.flipX=false;
-          console.log("derecha dash");
-          //console.log(this.player.body.velocity);
-          this.player.setVelocityX(-velocidadDash);
-        
-          
-          break;
-
-          case "izquierda":
-
-          console.log("izquierda dash");
-          this.player.flipX=true;
-          this.player.setVelocityX(velocidadDash);
-
-          break;
-
-          case "arriba":
-
-          console.log("arriba dash");
-          this.player.setVelocityY(velocidadDash);
-
-          break;
-
-          case "abajo":
-
-          console.log("abajo dash");
-          this.player.setVelocityY(-velocidadDash);
-
-          break;
-
-          case "arriba-derecha":
+          this.slide.play();
 
 
-          this.player.flipX=false;
-          console.log("arriba-derecha dash");
-          //console.log(this.player.body.velocity);
-          this.player.setVelocityX(-velocidadDash);
-          this.player.setVelocityY(velocidadDash);
-        
-          
-          break;
+          // 3. ¿Es Dash hacia adelante o salto hacia atrás (Backstep)?
+          let dir = 1; 
+          if (this.state === "idle") {
+              this.player.play("dash-reverso");
+              dir = -1; // Invierte toda la física para saltar hacia atrás
+          } else {
+              this.player.play("dash-delantero");
+              dir = 1;  // Va hacia adelante
+          }
 
-          case "arriba-izquierda":
+          // 4. Aplicamos las velocidades correctas y normalizadas
+          switch (this.subEstado_posicionEstatico) {
+              case "derecha":
+                  this.player.flipX = false;
+                  this.player.setVelocity(velocidadDash * dir, 0);
+                  break;
+              case "izquierda":
+                  this.player.flipX = true;
+                  this.player.setVelocity(-velocidadDash * dir, 0);
+                  break;
+              case "arriba":
+                  this.player.setVelocity(0, -velocidadDash * dir);
+                  break;
+              case "abajo":
+                  this.player.setVelocity(0, velocidadDash * dir);
+                  break;
+              case "arriba-derecha":
+                  this.player.flipX = false;
+                  this.player.setVelocity(velDiag * dir, -velDiag * dir);
+                  break;
+              case "arriba-izquierda":
+                  this.player.flipX = true;
+                  this.player.setVelocity(-velDiag * dir, -velDiag * dir);
+                  break;
+              case "abajo-derecha":
+                  this.player.flipX = false;
+                  this.player.setVelocity(velDiag * dir, velDiag * dir);
+                  break;
+              case "abajo-izquierda":
+                  this.player.flipX = true;
+                  this.player.setVelocity(-velDiag * dir, velDiag * dir);
+                  break;
+          }
 
-          console.log("arriba-izquierda dash");
-          this.player.flipX=true;
-          this.player.setVelocityX(velocidadDash);
-          this.player.setVelocityY(velocidadDash);
-
-          break;
-
-          case "abajo-izquierda":
-
-          //console.log("izquierda dash");
-          console.log("abajo-izquierda");
-          this.player.flipX=true;
-          this.player.setVelocityX(velocidadDash);
-          this.player.setVelocityY(-velocidadDash);
-
-          break;
-
-          case "abajo-derecha":
-
-          console.log("abajo-derecha dash");
-          this.player.flipX=false;
-          this.player.setVelocityX(-velocidadDash);
-          this.player.setVelocityY(-velocidadDash);
-
-          break;
-
-
-          default:
-
-          break;
-
-        }
-
-        
-
-      
-        this.stamina=this.stamina-stamina;
+          // 5. Consumimos stamina y cambiamos el estado
+          this.stamina -= costoStamina;
+          this.state = "dash";
       }
-
-
-      else if(this.state==="walk"){
-        this.slide.play();
-
-        this.player.play("dash-delantero")
-
-        let potenciador=1.0;
-
-        
-      //  console.log(subEstado_caminar);
-        switch(this.subEstado_posicionEstatico){
-
-
-
-          case "derecha":
-
-
-          this.player.flipX=false;
-          console.log("derecha dash");
-          //console.log(this.player.body.velocity);
-          this.player.setVelocityX(velocidadDash*potenciador);
-        
-          
-          break;
-
-          case "izquierda":
-
-          console.log("izquierda dash");
-          this.player.flipX=true;
-          this.player.setVelocityX(-velocidadDash*potenciador);
-
-          break;
-
-          case "arriba":
-
-          console.log("arriba dash");
-          this.player.setVelocityY(-velocidadDash*potenciador);
-
-          break;
-
-          case "abajo":
-
-          console.log("abajo dash");
-          this.player.setVelocityY(velocidadDash*potenciador);
-
-          break;
-
-          
-          case "derecha":
-
-
-          this.player.flipX=false;
-          console.log("derecha dash");
-          //console.log(this.player.body.velocity);
-          this.player.setVelocityX(velocidadDash*potenciador);
-          
-        
-          
-          break;
-
-          case "arriba-derecha":
-
-
-          this.player.flipX=false;
-          console.log("arriba-derecha dash");
-          //console.log(this.player.body.velocity);
-          this.player.setVelocityX(velocidadDash*potenciador);
-          this.player.setVelocityY(-velocidadDash*potenciador);
-        
-          
-          break;
-
-          case "arriba-izquierda":
-
-          console.log("arriba-izquierda dash");
-          this.player.flipX=true;
-          this.player.setVelocityX(-velocidadDash*potenciador);
-          this.player.setVelocityY(-velocidadDash*potenciador);
-
-          break;
-
-          case "abajo-izquierda":
-
-          //console.log("izquierda dash");
-          console.log("abajo-izquierda");
-          this.player.flipX=true;
-          this.player.setVelocityX(-velocidadDash*potenciador);
-          this.player.setVelocityY(velocidadDash*potenciador);
-
-          break;
-
-          case "abajo-derecha":
-
-          console.log("abajo-derecha dash");
-          this.player.flipX=false;
-          this.player.setVelocityX(velocidadDash*potenciador);
-          this.player.setVelocityY(velocidadDash*potenciador);
-
-          break;
-
-          default:
-
-          break;
-
-        }
-
-        this.stamina=this.stamina-stamina;
-       
-
-      }
-
-
-      this.state="dash";
-    }
-
   }
 
 
@@ -1563,9 +1439,88 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
   }
 
-  interactuar(){
-    
+  interactuar() {
+      // 1. Verificamos si se presionó la tecla E
+      if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
+          
+          if (!this.scene.blockLayer) return; // Seguridad extra
+
+          // 2. Obtenemos el centro exacto del jugador
+          let px = this.player.x + (this.player.displayWidth / 2);
+          let py = this.player.y + (this.player.displayHeight / 2);
+
+          // 3. Creamos una "caja de búsqueda" a su alrededor (40 píxeles hacia cada lado)
+          let radioBusqueda = 50; 
+          
+          // Le pedimos a Phaser TODOS los cuadritos (tiles) que estén dentro de esa caja
+          let tilesCercanos = this.scene.blockLayer.getTilesWithinWorldXY(
+              px - radioBusqueda, 
+              py - radioBusqueda, 
+              radioBusqueda * 2, 
+              radioBusqueda * 2
+          );
+
+          let tileObjetivo = null;
+          let distanciaMinima = 99999; // Empezamos con un número gigante para irlo reduciendo
+
+          // 4. Analizamos cada cuadrito que encontró en la zona
+          tilesCercanos.forEach(tile => {
+              
+              // Filtro 1: ¿Tiene la propiedad tipoBloqueo de Tiled?
+              if (tile && tile.properties && tile.properties.tipoBloqueo) {
+                  
+                  // Calculamos el centro matemático de ese bloque
+                  let tileCenterX = tile.pixelX + (tile.width / 2);
+                  let tileCenterY = tile.pixelY + (tile.height / 2);
+                  
+                  // Filtro 2: Medimos la distancia exacta usando el motor de matemáticas de Phaser
+                  let dist = Phaser.Math.Distance.Between(px, py, tileCenterX, tileCenterY);
+
+                  // Nos quedamos SOLO con el bloque que esté más cerca
+                  if (dist < distanciaMinima) {
+                      distanciaMinima = dist;
+                      tileObjetivo = tile;
+                  }
+              }
+          });
+
+          // 5. Si despues de escanear todo encontramos un ganador... ¡Interactuamos!
+          if (tileObjetivo) {
+              console.log("🔍 Objeto más cercano detectado a distancia:", distanciaMinima);
+              this.scene.procesarInteraccionE(this, tileObjetivo);
+          } else {
+              console.log("No hay nada cerca para interactuar.");
+          }
+      }
   }
+
+    // ==========================================
+    // SISTEMA ANTITRAMPAS: EL PUNTO DE CONTROL
+    // ==========================================
+    verificarTrampaDash() {
+        if (!this.scene.blockLayer) return;
+
+        // 1. Calculamos dónde están parados los pies del jugador exactamente
+        let px = this.player.x + (this.player.displayWidth / 2);
+        let py = this.player.y + (this.player.displayHeight / 2);
+
+        // 2. Leemos el mapa en esas coordenadas
+        let tileActual = this.scene.blockLayer.getTileAtWorldXY(px, py);
+
+        // 3. ¿Ese bloque tiene la propiedad que le pusimos en Tiled?
+        if (tileActual && tileActual.properties && tileActual.properties.tipoBloqueo) {
+            
+            // Si caíste dentro de CUALQUIER bloque que se supone es un obstáculo...
+            console.log("¡Te quedaste atascado en un obstaculo! Regresando a zona segura...");
+            this.scene.contactoPlayerEnemigo(this.player,null);
+             this.setVida(100); //desactivar para el contacto player enemigo
+            
+            // 4. ¡Magia! Lo regresamos a la coordenada donde inició el salto
+            this.player.setPosition(this.xSeguro, this.ySeguro);
+            
+            // Opcional: Aquí podrías reproducir un sonido de error o quitarle 10 de vida
+        }
+    }
 
   getArma(){
     //console.log("GetArma: ");
@@ -1931,7 +1886,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
 
 
-
+ 
 
 
 

@@ -476,8 +476,8 @@ movimientosNpc(){
 
 getPlayer(){
 
-  let x=8000;//x=2100;
-  let y=6862;//y=8500;
+  let x=2100//8000;//x=2100;
+  let y=8500//6862;//y=8500;
     this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos,this.lights,this.cameras.main);
 
     this.player.getContainer().setTint(0x555555);//para ver si se oscurece mas
@@ -627,12 +627,18 @@ colisionesEnemigo(){
        this.golpeToPlayer.play();
           
        this.player.setGolpeado();
+
+        if(enemigo!==null){
           empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this,700);//
+        
 
           this.player.setVida(enemigo.dataEnemie.ataque); //desactivar para el contacto player enemigo
 
 
                 this.physics.world.removeCollider(this.colisionEnemigoPlayer);
+
+                }
+                
           this.time.delayedCall(tiempo_invisivilidad,()=>{
 
             console.log("regresa");
@@ -1396,6 +1402,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       //this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
 
 
+
        //hacer prueba para jefe
 
        
@@ -1404,6 +1411,12 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
 
 
+
+
+
+
+
+       this.crearEnemigo(1,this.player.x+100,this.player.y)// enemigo
 
 
 
@@ -1576,7 +1589,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-this.physics.world.createDebugGraphic();
+//this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
     //this.crearFiltro();
     //Generacion de escenario
@@ -1719,12 +1732,12 @@ checkCondicionBloque(objeto, tile) {
             // Esta es la llave. Te regala la "llave_roja"
             manejadorBloqueo = new RecogerItem("llave_roja");
             break;
-
+       
         default:
             return true;
     }
 
-    // 4. se verifica si el jugador cumple la condición mandando a la clase Player
+    // 4. se verifica si el jugador cumple la condicion mandando a la clase Player
     // (Usamos this.player porque 'objeto' es el container
     let permisoConcedido = manejadorBloqueo.puedePasar(this.player);
 
@@ -1743,4 +1756,133 @@ checkCondicionBloque(objeto, tile) {
         return true; 
     }
 }
+    // ==========================================
+    // PROCESAR INTERACCIÓN CON LA TECLA "E"
+    // ==========================================
+    procesarInteraccionE(playerInstance, tile) {
+        console.log(" Escaner activado Propiedades del bloque:", tile.properties);
+        // 1. Extraemos qué tipo de bloque es y qué ID de item necesita/da
+        let tipo = tile.properties.tipoBloqueo;
+        let idItem = tile.properties.idItem; // <-- ¡Esta es la magia dinamica!
+
+        switch (tipo) {
+            
+            // CASO A: EL JUGADOR ENCUENTRA UN ÍTEM TIRADO
+            case "recoger_item":
+                // Le avisamos a la consola si nos falta el ID
+                if (!idItem) {
+                    console.log(" ERROR: Es un item, pero no tiene 'idItem' en Tiled.");
+                }
+
+                if (idItem) {
+                    playerInstance.agregarItem(idItem); 
+                    this.blockLayer.removeTileAt(tile.x, tile.y);
+                    console.log(`¡Recogiste el ítem con ID: ${idItem}!`);
+                }
+                break;
+
+           // CASO B: EL JUGADOR INTENTA ABRIR UNA PUERTA
+            case "puerta_item":
+                if (!idItem) break; 
+
+                // Revisamos si la mochila tiene ese ID exacto
+                if (playerInstance.tieneItem(idItem)) {
+                    
+                    // LO USAMOS Y LO CONSUMIMOS
+                    playerInstance.usarItem(idItem); 
+                    
+                    // ==========================================
+                    // CAMBIO: LLAMAMOS A LA REACCIÓN EN CADENA
+                    // ==========================================
+                    this.abrirPuertaCompleta(tile);
+                    
+                    console.log(`¡Puerta abierta! El ítem ${idItem} se consumió y la reja gigante desapareció.`);
+                    
+                } else {
+                    // Si no lo tiene, lo rebotamos (el tile sigue siendo sólido)
+                    console.log(`Está cerrado... Necesitas encontrar el ítem: ${idItem}`);
+                    // Aquí podrías mostrar un texto flotante en pantalla
+                }
+                break;
+
+            // CASO C: LEER UN CARTEL (Ejemplo para el futuro)
+            case "leer_cartel":
+                console.log("El cartel dice: 'Peligro, monstruos adelante'.");
+                break;
+
+            default:
+                console.log("No se puede interactuar con este objeto de esa forma.");
+                break;
+                // CASO C: ACTIVAR UNA PALANCA O INTERRUPTOR
+            case "palanca":
+                // Leemos cual es el ID del dibujo de la palanca activada
+                let tileActivado = tile.properties.idActivado; 
+
+                if (tileActivado) {
+                    // 1. Reemplazamos el dibujo actual por el de la palanca bajada
+                    this.blockLayer.putTileAt(tileActivado, tile.x, tile.y);
+                    
+                    // 2. Le cambiamos el tipo para que el jugador no pueda activarla 100 veces
+                    tile.properties.tipoBloqueo = "palanca_usada";
+                    
+                    console.log("¡Click! La palanca ha sido activada.");
+                    
+                    // ==========================================
+                    // aqui se puede agregar la poder abrir una puerta secreta
+                    // Por ejemplo: this.abrirPuertaSecreta();
+                    // ==========================================
+                    
+                } else {
+                    console.log(" ERROR: A esta palanca le falta la propiedad 'idActivado' en Tiled.");
+                }
+                break;
+
+            // CASO D: SI LA PALANCA YA SE USO
+            case "palanca_usada":
+                console.log("La palanca ya está trabada en la posición de encendido.");
+                break;
+        }
+    }
+    // ==========================================
+    // DESTRUIR PUERTA COMPLETA (REACCION EN CADENA)
+    // ==========================================
+    abrirPuertaCompleta(tileInicial) {
+        let idRequerido = tileInicial.properties.idItem;
+        let tilesPorRevisar = [tileInicial];
+        let tilesVisitados = new Set(); // Para no revisar el mismo tile dos veces
+
+        // Mientras haya bloques de puerta por revisar...
+        while(tilesPorRevisar.length > 0) {
+            let tileActual = tilesPorRevisar.pop();
+            let clave = `${tileActual.x},${tileActual.y}`;
+
+            if (!tilesVisitados.has(clave)) {
+                tilesVisitados.add(clave);
+
+                // 1. Destruimos este pedazo de la puerta
+                this.blockLayer.removeTileAt(tileActual.x, tileActual.y);
+
+                // 2. Buscamos a sus 4 vecinos (Arriba, Abajo, Izquierda, Derecha)
+                let vecinos = [
+                    this.blockLayer.getTileAt(tileActual.x + 1, tileActual.y),
+                    this.blockLayer.getTileAt(tileActual.x - 1, tileActual.y),
+                    this.blockLayer.getTileAt(tileActual.x, tileActual.y + 1),
+                    this.blockLayer.getTileAt(tileActual.x, tileActual.y - 1)
+                ];
+
+                // 3. Revisamos si los vecinos también son de la misma puerta
+                vecinos.forEach(vecino => {
+                    if (vecino && vecino.properties && 
+                        vecino.properties.tipoBloqueo === "puerta_item" && 
+                        vecino.properties.idItem === idRequerido) {
+                        
+                        // Si es parte de la puerta, lo agregamos a la lista para destruirlo
+                        tilesPorRevisar.push(vecino);
+                    }
+                });
+            }
+        }
+    }
+
+
 }

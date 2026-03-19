@@ -18,4 +18,4 @@ export class RecogerItem extends CondicionBloqueo {
         // Siempre retornamos true para que Phaser te deje atravesarlo y la escena lo borre
         return true; 
     }
-}
+} 
