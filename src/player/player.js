@@ -33,6 +33,8 @@ export class player {
     this.arma;
     this.lights=lights
 
+    
+
     //inputActive esto es para verificar si el input esta activo para evitar accion
     this.isInputActive=true;
     //aqui despues agregar una clase que busque en la BD que armas tiene para cargarlo sino hay nada 
@@ -1143,7 +1145,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
     if((Phaser.Input.Keyboard.JustDown((this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT)))) && this.stamina>0){
 
-      let velocidadDash=300;
+      let velocidadDash=250;
       let stamina=80;
 
 

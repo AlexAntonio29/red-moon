@@ -156,22 +156,22 @@ export class cargarAssets{
     
        
     
-       this.scene.load.image('tiles', './assets/[Base]BaseChip_pipo.png');
+       //this.scene.load.image('tiles', './assets/[Base]BaseChip_pipo.png');
        
        this.scene.load.tilemapTiledJSON('mapa', './assets/mapa_scene.json');
        
     
        //carga del mapa las coordenadas en archivo JSON
     
-        this.scene.load.image('tiles_suelo_nexus','./assets/tiles_maps/nexus/asset_suelo_castillo.png');
-        this.scene.load.tilemapTiledJSON('mapa_nexus','./assets/tiles_maps/nexus/base_nexus.json');
+        //this.scene.load.image('tiles_suelo_nexus','./assets/tiles_maps/nexus/asset_suelo_castillo.png');
+        //this.scene.load.tilemapTiledJSON('mapa_nexus','./assets/tiles_maps/nexus/base_nexus.json');
     
     
     
         //tiles de nexus personal cargar imagenes
         this.scene.load.image("baseMap","/assets/tiles_maps/nexus/BaseMap.png");
-        this.scene.load.image("build","/assets/tiles_maps/nexus/mainlevbuild.png");
-        this.scene.load.image("wall_Tiles","/assets/tiles_maps/nexus/Wall_Tiles.png");
+       // this.scene.load.image("build","/assets/tiles_maps/nexus/mainlevbuild.png");
+       // this.scene.load.image("wall_Tiles","/assets/tiles_maps/nexus/Wall_Tiles.png");
     
     
         this.scene.load.image("a2-TerrainAndMisc","/assets/tiles_maps/Tiled/A2-TerrainAndMisc.png");
@@ -207,6 +207,25 @@ export class cargarAssets{
     
         }
     
+
+
+        /*
+        
+        
+        */
+        cargarAnimacionesBosses(){
+
+          this.scene.load.spritesheet('boss1_idle','./assets/bosses/boss1/idle.png',{
+            frameWidth:64,
+            frameHeight:64
+          });
+
+          this.scene.load.spritesheet('boss1_walk','./assets/bosses/boss1/walk.png',{
+            frameWidth:64,
+            frameHeight:64
+          });
+
+        }
     
         cargarAnimacionesEnemigos(){
     
@@ -327,6 +346,8 @@ export class cargarAssets{
     
           this.cargarAnimacionesItems();
           this.cargarAnimacionesNpc();
+          this.cargarAnimacionesBosses();
+
           
     
     

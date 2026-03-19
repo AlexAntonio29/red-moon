@@ -1,6 +1,7 @@
 
 import {player} from "../player/player.js";
 import {dataEnemigos} from "../enemies/DataEnemies.js"
+import {dataBosses} from "../bosses/dataBosses.js"
 import { Enemie1 } from "../enemies/Enemie1.js";
 import { Enemie4 } from "../enemies/Enemie4.js";
 import { Enemie5 } from "../enemies/Enemie5.js";
@@ -12,6 +13,8 @@ import { cargarVariablesGlobales } from "./cargar/cargarVariablesGlobales.js";
 import { ItemPocion } from "../items/extendsItems/ItemPocion.js";
 import { CamaraPersonalizada } from "../camera/CamaraPersonalizada.js";
 import { cargarLucesEstaticas } from "../funciones/cargarLucesEstaticas.js";
+
+import { boss1 } from "../bosses/boss1.js";
 
 import {npc1} from '../npc/npc1.js'
 import {npc2} from '../npc/npc2.js'
@@ -387,6 +390,12 @@ crearEnemigo(n=1, x,y,selector=0){
 
     break;
 
+    case 10:
+
+    enemigo= new boss1(this,({...this.dataBosses[0]}),8004,6400);
+
+    break;
+
     default:
 
     enemigo=new Enemie1(this,({...dataEnemigos[0]}),x,y);
@@ -447,6 +456,9 @@ movimientosEnemigo(){
       enemigo.setMovimientoEnemigo(this.player.getContainer(),this.contactoSprites[0],this.contactoSprites[1],this.contactoSprites[2]);
      });
 
+
+     
+
      
 
 }
@@ -464,8 +476,8 @@ movimientosNpc(){
 
 getPlayer(){
 
-  let x=2936;//2100;
-  let y=5785;//8500;
+  let x=8000;//x=2100;
+  let y=6862;//y=8500;
     this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos,this.lights,this.cameras.main);
 
     this.player.getContainer().setTint(0x555555);//para ver si se oscurece mas
@@ -1221,11 +1233,13 @@ finalizarPartida(n=""){
 
    // this.sound.stopAll();
     console.log(this.scene);
-    console.log("MENSAJE: "+n);
+    
   this.musicaFondo.stop();
   this.scene.stop('StartGame');
   this.scene.restart();
+
   this.scene.start('FinPartida',{puntos:this.puntos,mensaje:n});
+  console.log("MENSAJE: "+n);
 
 }
   //carga de botones digitales
@@ -1374,12 +1388,22 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     creacionEnemigosPosicionados(){
 
-      this.crearEnemigo(1,2950,8600,1);//cantidad Enemigos, x, y ,tipo de enemigo
+      this.crearEnemigo(1,2950,8600,3);//cantidad Enemigos, x, y ,tipo de enemigo
+
+      //this.crearEnemigo(1,0,0,10);
+      this.crearEnemigo(1,8004,6400,10);
 
       //this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
 
 
-       this.crearEnemigo(1,this.player.x+100,this.player.y)// enemigo
+       //hacer prueba para jefe
+
+       
+
+       
+
+
+
 
 
 
@@ -1614,6 +1638,8 @@ lightplayer(){
  // console.log("player x: "+)
 
 }
+
+
 
 
 

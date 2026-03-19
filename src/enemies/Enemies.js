@@ -3,14 +3,14 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, dataEnemie, x=0,y=0){
 
       
-
+      console.log(dataEnemie);
       super(scene,x,y,dataEnemie.diseno+"_idle");
       
 
       scene.add.existing(this);
       scene.physics.add.existing(this);
 
-      this.escena=scene;
+      this.scene=scene;
 
         
         
@@ -316,8 +316,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     let playerX=player.x;
     let playerY=player.y;
 
-    let enemigoX=this.x;
-    let enemigoY=this.y;
+    let enemigoX=this.body.x;
+    let enemigoY=this.body.y;
 
 
 

@@ -4,6 +4,7 @@ import {puntos, itemsConsumibles} from "../../items/DataItemsPuntos.js";
 import { Scenario1Eventos } from "../../eventos/Scenario1Eventos.js";
 import { cargarLucesEstaticas } from "../../funciones/cargarLucesEstaticas.js";
 import { dataNpc } from "../../npc/dataNpc.js";
+import { dataBosses } from "../../bosses/dataBosses.js";
 
 
 
@@ -60,6 +61,8 @@ export class cargarVariablesGlobales{
 
         crearData(){
           this.scene.dataNpc=dataNpc;
+
+          this.scene.dataBosses= dataBosses;
         }
 
 

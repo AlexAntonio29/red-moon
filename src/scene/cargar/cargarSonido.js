@@ -10,6 +10,9 @@ export class cargarSonido{
     }
 
     
+        cargarSonidoBosses(){
+          this.scene.load.audio('boss1_sonido','./sounds/bosses/boss1/boss1_sonido.mp3')
+        }
     
         
             cargarSonidosEnemigos(){
@@ -107,6 +110,7 @@ export class cargarSonido{
               this.crearSonidosRecuerdos();
 
               this.cargarSonidosNpc();
+              this.cargarSonidoBosses();
               
             }
         
