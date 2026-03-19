@@ -1,0 +1,136 @@
+{ "frames": {
+   "puerta-Recovered 0.ase": {
+    "frame": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 1.ase": {
+    "frame": { "x": 90, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 2.ase": {
+    "frame": { "x": 180, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 3.ase": {
+    "frame": { "x": 270, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 4.ase": {
+    "frame": { "x": 360, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 5.ase": {
+    "frame": { "x": 450, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 6.ase": {
+    "frame": { "x": 540, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 7.ase": {
+    "frame": { "x": 630, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 8.ase": {
+    "frame": { "x": 720, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 9.ase": {
+    "frame": { "x": 810, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 10.ase": {
+    "frame": { "x": 900, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 11.ase": {
+    "frame": { "x": 990, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 12.ase": {
+    "frame": { "x": 1080, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 13.ase": {
+    "frame": { "x": 1170, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   },
+   "puerta-Recovered 14.ase": {
+    "frame": { "x": 1260, "y": 0, "w": 90, "h": 90 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 90 },
+    "sourceSize": { "w": 90, "h": 90 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://github.com/LibreSprite/LibreSprite/",
+  "version": "1.1-dev",
+  "image": "C:\\Users\\BRANDON\\Documents\\Pixelard\\bloqueos\\puerta-Recovered.png",
+  "format": "RGBA8888",
+  "size": { "w": 1350, "h": 90 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ]
+ }
+}

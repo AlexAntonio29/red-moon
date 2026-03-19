@@ -1,0 +1,144 @@
+{ "frames": {
+   "Bosque armada-Recovered 0.ase": {
+    "frame": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 1.ase": {
+    "frame": { "x": 100, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 2.ase": {
+    "frame": { "x": 200, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 3.ase": {
+    "frame": { "x": 300, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 4.ase": {
+    "frame": { "x": 400, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 5.ase": {
+    "frame": { "x": 500, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 6.ase": {
+    "frame": { "x": 600, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 7.ase": {
+    "frame": { "x": 700, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 8.ase": {
+    "frame": { "x": 800, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 9.ase": {
+    "frame": { "x": 900, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 10.ase": {
+    "frame": { "x": 1000, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 11.ase": {
+    "frame": { "x": 1100, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 12.ase": {
+    "frame": { "x": 1200, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 13.ase": {
+    "frame": { "x": 1300, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 14.ase": {
+    "frame": { "x": 1400, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   },
+   "Bosque armada-Recovered 15.ase": {
+    "frame": { "x": 1500, "y": 0, "w": 100, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 100, "h": 80 },
+    "sourceSize": { "w": 100, "h": 80 },
+    "duration": 150
+   }
+ },
+ "meta": {
+  "app": "https://github.com/LibreSprite/LibreSprite/",
+  "version": "1.1-dev",
+  "image": "C:\\Users\\BRANDON\\Documents\\Pixelard\\parca\\Bosque armada-Recovered.png",
+  "format": "RGBA8888",
+  "size": { "w": 1600, "h": 80 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ]
+ }
+}
