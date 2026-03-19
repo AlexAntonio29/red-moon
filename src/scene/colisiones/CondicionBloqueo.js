@@ -6,4 +6,4 @@ export class CondicionBloqueo {
     puedePasar(playerInstance) {
         return false;
     }
-}
+} 

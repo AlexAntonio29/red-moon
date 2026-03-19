@@ -1550,7 +1550,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-this.physics.world.createDebugGraphic();
+//this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
     //this.crearFiltro();
     //Generacion de escenario
@@ -1691,12 +1691,12 @@ checkCondicionBloque(objeto, tile) {
             // Esta es la llave. Te regala la "llave_roja"
             manejadorBloqueo = new RecogerItem("llave_roja");
             break;
-
+       
         default:
             return true;
     }
 
-    // 4. se verifica si el jugador cumple la condición mandando a la clase Player
+    // 4. se verifica si el jugador cumple la condicion mandando a la clase Player
     // (Usamos this.player porque 'objeto' es el container
     let permisoConcedido = manejadorBloqueo.puedePasar(this.player);
 
@@ -1715,4 +1715,103 @@ checkCondicionBloque(objeto, tile) {
         return true; 
     }
 }
+    // ==========================================
+    // PROCESAR INTERACCIÓN CON LA TECLA "E"
+    // ==========================================
+    procesarInteraccionE(playerInstance, tile) {
+        console.log(" Escaner activado Propiedades del bloque:", tile.properties);
+        // 1. Extraemos qué tipo de bloque es y qué ID de ítem necesita/da
+        let tipo = tile.properties.tipoBloqueo;
+        let idItem = tile.properties.idItem; // <-- ¡Esta es la magia dinámica!
+
+        switch (tipo) {
+            
+            // CASO A: EL JUGADOR ENCUENTRA UN ÍTEM TIRADO / COFRE
+            case "recoger_item":
+                // Le avisamos a la consola si nos falta el ID
+                if (!idItem) {
+                    console.log(" ERROR: Es un item, pero no tiene 'idItem' en Tiled.");
+                }
+
+                if (idItem) {
+                    playerInstance.agregarItem(idItem); 
+                    this.blockLayer.removeTileAt(tile.x, tile.y);
+                    console.log(`¡Recogiste el ítem con ID: ${idItem}!`);
+                }
+                break;
+
+           // CASO B: EL JUGADOR INTENTA ABRIR UNA PUERTA
+            case "puerta_item":
+                if (!idItem) break; 
+
+                // Revisamos si la mochila tiene ese ID exacto
+                if (playerInstance.tieneItem(idItem)) {
+                    
+                    // LO USAMOS Y LO CONSUMIMOS
+                    playerInstance.usarItem(idItem); 
+                    
+                    // ==========================================
+                    // CAMBIO: LLAMAMOS A LA REACCIÓN EN CADENA
+                    // ==========================================
+                    this.abrirPuertaCompleta(tile);
+                    
+                    console.log(`¡Puerta abierta! El ítem ${idItem} se consumió y la reja gigante desapareció.`);
+                    
+                } else {
+                    // Si no lo tiene, lo rebotamos (el tile sigue siendo sólido)
+                    console.log(`Está cerrado... Necesitas encontrar el ítem: ${idItem}`);
+                    // Aquí podrías mostrar un texto flotante en pantalla
+                }
+                break;
+
+            // CASO C: LEER UN CARTEL (Ejemplo para el futuro)
+            case "leer_cartel":
+                console.log("El cartel dice: 'Peligro, monstruos adelante'.");
+                break;
+
+            default:
+                console.log("No se puede interactuar con este objeto de esa forma.");
+                break;
+        }
+    }
+    // ==========================================
+    // DESTRUIR PUERTA COMPLETA (REACCIÓN EN CADENA)
+    // ==========================================
+    abrirPuertaCompleta(tileInicial) {
+        let idRequerido = tileInicial.properties.idItem;
+        let tilesPorRevisar = [tileInicial];
+        let tilesVisitados = new Set(); // Para no revisar el mismo tile dos veces
+
+        // Mientras haya bloques de puerta por revisar...
+        while(tilesPorRevisar.length > 0) {
+            let tileActual = tilesPorRevisar.pop();
+            let clave = `${tileActual.x},${tileActual.y}`;
+
+            if (!tilesVisitados.has(clave)) {
+                tilesVisitados.add(clave);
+
+                // 1. Destruimos este pedazo de la puerta
+                this.blockLayer.removeTileAt(tileActual.x, tileActual.y);
+
+                // 2. Buscamos a sus 4 vecinos (Arriba, Abajo, Izquierda, Derecha)
+                let vecinos = [
+                    this.blockLayer.getTileAt(tileActual.x + 1, tileActual.y),
+                    this.blockLayer.getTileAt(tileActual.x - 1, tileActual.y),
+                    this.blockLayer.getTileAt(tileActual.x, tileActual.y + 1),
+                    this.blockLayer.getTileAt(tileActual.x, tileActual.y - 1)
+                ];
+
+                // 3. Revisamos si los vecinos también son de la misma puerta
+                vecinos.forEach(vecino => {
+                    if (vecino && vecino.properties && 
+                        vecino.properties.tipoBloqueo === "puerta_item" && 
+                        vecino.properties.idItem === idRequerido) {
+                        
+                        // Si es parte de la puerta, lo agregamos a la lista para destruirlo
+                        tilesPorRevisar.push(vecino);
+                    }
+                });
+            }
+        }
+    }
 }
