@@ -1508,6 +1508,8 @@ movimientoDash() {
             
             // Si caíste dentro de CUALQUIER bloque que se supone es un obstáculo...
             console.log("¡Te quedaste atascado en un obstaculo! Regresando a zona segura...");
+            this.scene.contactoPlayerEnemigo(this.player,null);
+             this.setVida(100); //desactivar para el contacto player enemigo
             
             // 4. ¡Magia! Lo regresamos a la coordenada donde inició el salto
             this.player.setPosition(this.xSeguro, this.ySeguro);

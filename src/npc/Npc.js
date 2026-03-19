@@ -11,7 +11,7 @@ export class Npc extends Phaser.Physics.Arcade.Sprite{
 
 
         this.scene=scene;
-        this.data=data;
+        this.dataNpc=data;
 
         console.log(data);
 
@@ -38,10 +38,10 @@ export class Npc extends Phaser.Physics.Arcade.Sprite{
 
         cargarAnimaciones(){
 
-      if (!this.scene.anims.exists(this.data+"_walk")) {
+      if (!this.scene.anims.exists(this.dataNpc+"_walk")) {
         this.scene.anims.create({
-        key: this.data.diseno+"_walk",
-        frames: this.scene.anims.generateFrameNumbers(this.data+"_walk", { start: 0, end: 3}),
+        key: this.dataNpc.diseno+"_walk",
+        frames: this.scene.anims.generateFrameNumbers(this.dataNpc+"_walk", { start: 0, end: 3}),
         frameRate: 3,
         repeat: -1
           });
@@ -53,17 +53,17 @@ export class Npc extends Phaser.Physics.Arcade.Sprite{
 
         //console.log(this.dataEnemie.velocidad_frames_idle);
 
-        if (!this.scene.anims.exists(this.data.diseno+"_idle")) {
+        if (!this.scene.anims.exists(this.dataNpc.diseno+"_idle")) {
         this.scene.anims.create({
-        key: this.data.diseno+"_idle",
-        frames: this.scene.anims.generateFrameNumbers(this.data+"_idle", { start: 0, end: 1 }),
+        key: this.dataNpc.diseno+"_idle",
+        frames: this.scene.anims.generateFrameNumbers(this.dataNpc+"_idle", { start: 0, end: 1 }),
         frameRate: 6,
         repeat: -1
           });
         }
 
 
-        this.play(this.data.diseno+"_idle");
+        this.play(this.dataNpc.diseno+"_idle");
     }
 
 

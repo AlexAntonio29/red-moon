@@ -26,17 +26,17 @@ export class npc2 extends Npc{
     cargarAnimaciones(){
 
 
-        if (!this.scene.anims.exists(this.data.diseno+"_idle")) {
+        if (!this.scene.anims.exists(this.dataNpc.diseno+"_idle")) {
         this.scene.anims.create({
-        key: this.data.diseno+"_idle",
-        frames: this.scene.anims.generateFrameNumbers(this.data.diseno+"_idle", { start: 0, end: 3 }),
+        key: this.dataNpc.diseno+"_idle",
+        frames: this.scene.anims.generateFrameNumbers(this.dataNpc.diseno+"_idle", { start: 0, end: 3 }),
         frameRate: 3,
         repeat: -1
           });
         }
 
 
-        this.play(this.data.diseno+"_idle");
+        this.play(this.dataNpc.diseno+"_idle");
         
     }
 
