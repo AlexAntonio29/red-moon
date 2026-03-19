@@ -1720,13 +1720,13 @@ checkCondicionBloque(objeto, tile) {
     // ==========================================
     procesarInteraccionE(playerInstance, tile) {
         console.log(" Escaner activado Propiedades del bloque:", tile.properties);
-        // 1. Extraemos qué tipo de bloque es y qué ID de ítem necesita/da
+        // 1. Extraemos qué tipo de bloque es y qué ID de item necesita/da
         let tipo = tile.properties.tipoBloqueo;
-        let idItem = tile.properties.idItem; // <-- ¡Esta es la magia dinámica!
+        let idItem = tile.properties.idItem; // <-- ¡Esta es la magia dinamica!
 
         switch (tipo) {
             
-            // CASO A: EL JUGADOR ENCUENTRA UN ÍTEM TIRADO / COFRE
+            // CASO A: EL JUGADOR ENCUENTRA UN ÍTEM TIRADO
             case "recoger_item":
                 // Le avisamos a la consola si nos falta el ID
                 if (!idItem) {
@@ -1772,10 +1772,38 @@ checkCondicionBloque(objeto, tile) {
             default:
                 console.log("No se puede interactuar con este objeto de esa forma.");
                 break;
+                // CASO C: ACTIVAR UNA PALANCA O INTERRUPTOR
+            case "palanca":
+                // Leemos cual es el ID del dibujo de la palanca activada
+                let tileActivado = tile.properties.idActivado; 
+
+                if (tileActivado) {
+                    // 1. Reemplazamos el dibujo actual por el de la palanca bajada
+                    this.blockLayer.putTileAt(tileActivado, tile.x, tile.y);
+                    
+                    // 2. Le cambiamos el tipo para que el jugador no pueda activarla 100 veces
+                    tile.properties.tipoBloqueo = "palanca_usada";
+                    
+                    console.log("¡Click! La palanca ha sido activada.");
+                    
+                    // ==========================================
+                    // aqui se puede agregar la poder abrir una puerta secreta
+                    // Por ejemplo: this.abrirPuertaSecreta();
+                    // ==========================================
+                    
+                } else {
+                    console.log(" ERROR: A esta palanca le falta la propiedad 'idActivado' en Tiled.");
+                }
+                break;
+
+            // CASO D: SI LA PALANCA YA SE USO
+            case "palanca_usada":
+                console.log("La palanca ya está trabada en la posición de encendido.");
+                break;
         }
     }
     // ==========================================
-    // DESTRUIR PUERTA COMPLETA (REACCIÓN EN CADENA)
+    // DESTRUIR PUERTA COMPLETA (REACCION EN CADENA)
     // ==========================================
     abrirPuertaCompleta(tileInicial) {
         let idRequerido = tileInicial.properties.idItem;
@@ -1814,4 +1842,6 @@ checkCondicionBloque(objeto, tile) {
             }
         }
     }
+
+
 }
