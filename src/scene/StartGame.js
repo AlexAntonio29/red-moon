@@ -1311,7 +1311,6 @@ if(this.widthPantalla>=900){ this.botonesPlayer.ataque.setAlpha(0)}
 
 
 });
-
 if(this.widthPantalla>=900){ this.joyStick.base.setAlpha(0);
                               this.joyStick.thumb.setAlpha(0);
 }
@@ -1590,7 +1589,7 @@ create(){
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
 //this.physics.world.createDebugGraphic();
-this.game.renderer.antialias = false;
+this.game.renderer.antialias = true;
     //this.crearFiltro();
     //Generacion de escenario
     this.crearEscenario();
@@ -1618,6 +1617,9 @@ this.game.renderer.antialias = false;
 
    this.cargarEvento();
     //this.crearAnimaciones();
+
+   //CAJA DE DIALOGO 
+    this.crearCajaDialogoUI();
        
 }
 
@@ -1728,10 +1730,6 @@ checkCondicionBloque(objeto, tile) {
         // ==========================================
         // NUEVO CASO: ESTE SIRVE PARA CUANDO RECOGA LA LLAVE DEL SUELO
         // ==========================================
-        case "recoger_llave_roja":
-            // Esta es la llave. Te regala la "llave_roja"
-            manejadorBloqueo = new RecogerItem("llave_roja");
-            break;
        
         default:
             return true;
@@ -1749,7 +1747,7 @@ checkCondicionBloque(objeto, tile) {
             // Aqui se puede agregar un sonido:
         }
         
-        // Retornamos FALSE para decirle a Phaser: "IGNORA LA COLISIÓN, DÉJALO PASAR"
+        // Retornamos FALSE para decirle a Phaser: "IGNORA LA COLISION, DÉJALO PASAR"
         return false; 
     } else {
         // Retornamos TRUE para decirle a Phaser: "APLICA FISICAS"
@@ -1805,13 +1803,16 @@ checkCondicionBloque(objeto, tile) {
                 }
                 break;
 
-            // CASO C: LEER UN CARTEL (Ejemplo para el futuro)
+           
+            // CASO C: LEER UN CARTEL O DOCUMENTO
             case "leer_cartel":
-                console.log("El cartel dice: 'Peligro, monstruos adelante'.");
-                break;
-
-            default:
-                console.log("No se puede interactuar con este objeto de esa forma.");
+                
+                // 1. Leemos el texto que pusiste en Tiled
+                let mensajeCartel = tile.properties.mensaje || "Las letras están borrosas...";
+                
+                // 2. ¡AQUÍ ESTÁ LA MAGIA! Llamamos a la interfaz visual en lugar de la consola
+                this.mostrarMensaje(mensajeCartel);
+                
                 break;
                 // CASO C: ACTIVAR UNA PALANCA O INTERRUPTOR
             case "palanca":
@@ -1882,6 +1883,65 @@ checkCondicionBloque(objeto, tile) {
                 });
             }
         }
+    }
+
+    // ==========================================
+    // INTERFAZ DE DIALOGO (UI)
+    // ==========================================
+    crearCajaDialogoUI() {
+        // 1. Usamos el ancho y alto que ya definiste en tus variables globales
+        let anchoPantalla = this.sys.game.config.width;
+        let altoPantalla = this.sys.game.config.height;
+
+        // 2. Creamos un contenedor fijo en la parte inferior de la pantalla
+        this.cajaDialogo = this.add.container(anchoPantalla / 2, altoPantalla - 80);
+        
+        // ¡Magia! Esto hace que la caja siga a la camara y no se quede en el mapa
+        this.cajaDialogo.setScrollFactor(0); 
+        this.cajaDialogo.setDepth(9999); // Siempre por encima de todo
+
+        // 3. Dibujamos el fondo (Un rectángulo negro semitransparente con borde)
+        let anchoCaja = anchoPantalla - 100;
+        let altoCaja = 100;
+        let fondo = this.add.rectangle(0, 0, anchoCaja, altoCaja, 0x000000, 0.8);
+        fondo.setStrokeStyle(4, 0xffffff); // Borde blanco retro
+
+        // 4. Agregamos el texto usando la fuente FontArcade4
+        this.textoDialogo = this.add.text(-anchoCaja / 2 + 20, -altoCaja / 2 + 20, "", {
+            fontFamily: 'FontArcade4', // la fuente personalizada
+            fontSize: '20px',
+            color: '#ffffff',
+            wordWrap: { width: anchoCaja - 40 } // Esto evita que el texto se salga de la caja
+        });
+
+        // Metemos el fondo y el texto al contenedor y lo ocultamos por ahora
+        this.cajaDialogo.add([fondo, this.textoDialogo]);
+        this.cajaDialogo.setVisible(false);
+        
+        // Variable para saber si el jugador está leyendo
+        this.dialogoAbierto = false; 
+    }
+
+
+
+
+    mostrarMensaje(texto) {
+        this.textoDialogo.setText(texto);
+        this.cajaDialogo.setVisible(true);
+        this.dialogoAbierto = true;
+        
+        // Opcional: Pausar las físicas del jugador mientras lee
+         this.player.getContainer().body.moves = false;
+    }
+
+    cerrarMensaje() {
+        this.cajaDialogo.setVisible(false);
+        
+        // Pequeño retraso para evitar que vuelva a interactuar instantáneamente
+        this.time.delayedCall(100, () => {
+            this.dialogoAbierto = false;
+            // this.player.getContainer().body.moves = true; // Despausar
+        });
     }
 
 

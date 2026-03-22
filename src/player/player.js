@@ -1442,14 +1442,23 @@ movimientoDash() {
   interactuar() {
       // 1. Verificamos si se presionó la tecla E
       if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
-          
+
+          // ==========================================
+          // NUEVO: Si el diálogo está abierto, la tecla E lo cierra y no hace nada más.
+          // Esto DEBE ir aquí arriba, antes de buscar bloques.
+          // ==========================================
+          if (this.scene.dialogoAbierto) {
+              this.scene.cerrarMensaje();
+              return; 
+          }
+
           if (!this.scene.blockLayer) return; // Seguridad extra
 
           // 2. Obtenemos el centro exacto del jugador
           let px = this.player.x + (this.player.displayWidth / 2);
           let py = this.player.y + (this.player.displayHeight / 2);
 
-          // 3. Creamos una "caja de búsqueda" a su alrededor (40 píxeles hacia cada lado)
+          // 3. Creamos una "caja de búsqueda" a su alrededor (50 píxeles hacia cada lado)
           let radioBusqueda = 50; 
           
           // Le pedimos a Phaser TODOS los cuadritos (tiles) que estén dentro de esa caja
@@ -1482,11 +1491,11 @@ movimientoDash() {
                       tileObjetivo = tile;
                   }
               }
-          });
+          }); // <-- Aquí cierra correctamente el forEach
 
           // 5. Si despues de escanear todo encontramos un ganador... ¡Interactuamos!
           if (tileObjetivo) {
-              console.log("🔍 Objeto más cercano detectado a distancia:", distanciaMinima);
+              console.log("Objeto más cercano detectado a distancia:", distanciaMinima);
               this.scene.procesarInteraccionE(this, tileObjetivo);
           } else {
               console.log("No hay nada cerca para interactuar.");
