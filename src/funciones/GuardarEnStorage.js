@@ -12,21 +12,29 @@ export const GuardarEnStorage =(clave, item )=>{
 
     //comprobar si es un array
 
-    if(Array.isArray(elementos)){
+    //if(Array.isArray(elementos)){
         //guardar dentro del array un elemento nuevo
-        elementos.push(item)
-    }else{
+      //  elementos.push(item)
+
+   // }else{
         //crear un array con el elemento nuevo
-        elementos= [item];
-
-    }
-
+        if(item!==null){
+        elementos= [item];     
     //guardar en el localStorage
     localStorage.setItem(clave,JSON.stringify(elementos));
+    
+    }
+
+    return elementos;
+        
+
+   // }
+
 
     //Devolver un objeto
 
-    return item;     
+    //return item;   
+     
 
 
 }

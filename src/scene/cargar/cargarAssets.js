@@ -137,7 +137,16 @@ export class cargarAssets{
                frameWidth: 144,
                frameHeight:144
               })
+
+
+              this.scene.load.spritesheet('sprite_estatua_desactivado','/assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua_desactivado.png',{
+               frameWidth: 144,
+               frameHeight:144
+              })
+              
             }
+
+            
 
 
             cargarImagenesRecuerdos(){

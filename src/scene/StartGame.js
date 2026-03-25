@@ -514,8 +514,11 @@ movimientosNpc(){
 
 getPlayer(){
 
-  let x=2100//8000;//x=2100;
-  let y=8500//6862;//y=8500;
+
+  
+    console.log(this.dataGuardadoRanura);
+  let x=(this.dataGuardadoRanura!==null)?this.dataGuardadoRanura[this.ranura].player.x:2100//8000;//x=2100;
+  let y=(this.dataGuardadoRanura!==null)?this.dataGuardadoRanura[this.ranura].player.y:8500
     this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos,this.lights,this.cameras.main);
 
     this.player.getContainer().setTint(0x555555);//para ver si se oscurece mas
@@ -1603,7 +1606,9 @@ crearNpc(n,x,y){
     
       }
 
-      this.physics.add.collider(this.player.getContainer(),npc);
+      this.physics.add.collider(this.player.getContainer(),npc,()=>{
+        this.player.pisadas_player_tierra.stop();
+      });
 
       npc.setPipeline('Light2D');
       this.listaNpc.add(npc);
@@ -1627,10 +1632,27 @@ crearCheckpoint(x,y){
 
   let checkpoint=new Estatua(this,x,y);
     checkpoint.setPipeline('Light2D');
-  this.listaCheckpoints.add(checkpoint);
+ 
 
-  this.physics.add.collider(this.player.getContainer(),checkpoint);
+  this.physics.add.collider(this.player.getContainer(),checkpoint,()=>{
+  
+    this.player.pisadas_player_tierra.stop();
+  });
 
+
+
+  this.physics.add.overlap(this.player.getContainer(),checkpoint.hitbox,()=>{
+    if(!this.player.estaGuardando) {
+      
+      this.player.estaGuardando=true;
+
+      checkpoint.esActivado();
+    }
+    
+
+  })
+
+   this.listaCheckpoints.add(checkpoint);
 
 }
 cargarCheckpoints(){
@@ -1650,7 +1672,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-//this.physics.world.createDebugGraphic();
+this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
     //this.crearFiltro();
     //Generacion de escenario
@@ -1718,7 +1740,25 @@ lightplayer(){
 
 
 
+salirAreaGuardado(){
 
+  this.listaCheckpoints.children.iterate(checkpoint=>{
+                  
+              if(this.player.estaGuardando&& !this.physics.overlap(this.player.getContainer(),checkpoint))
+              {
+                this.player.estaGuardando=false;
+                
+                
+              }
+           
+            
+            });
+
+
+          
+
+
+}
 
 
 
@@ -1750,6 +1790,7 @@ update(time, delta){
     this.movimientosNpc();
 
    
+    this.salirAreaGuardado();
 
 
 

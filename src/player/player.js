@@ -3,6 +3,8 @@ import { crearItemsPunto } from "../funciones/crearItemsPuntos.js";
 import { armas } from "../items/DataItemsArmas.js";
 import {dataEnemigos} from "../enemies/DataEnemies.js";
 import { DataComboEspada } from "./combo/DataCombo.js";
+import { GuardarEnStorage } from "../funciones/GuardarEnStorage.js";
+import { guardarPartida } from "../guardarPartida.js";
 export class player {
 
   constructor(scene, texture, x = 25, y = 25, joystick,controles, keys,listaEnemigos,lights,camera) {
@@ -21,6 +23,7 @@ export class player {
     this.camera=camera;
     this.stateCamera="follow"
 
+
     this.stamina=250;//llamar datos player de Bd
     this.staminaMax=this.stamina;
     this.velocidad_recuperacion=1;
@@ -33,6 +36,8 @@ export class player {
     this.arma;
     this.lights=lights
 
+
+    this.estaGuardando=false;
     
 
     //inputActive esto es para verificar si el input esta activo para evitar accion
@@ -63,6 +68,7 @@ export class player {
     this.joystick=joystick;
     this.controles=controles;
    
+
    
 
   
@@ -1388,8 +1394,12 @@ cargarDepth(){
 
 
 
+
+
+
   setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto){
 
+    
 
       this.cargarDepth();
        // console.log(this.player.x);
@@ -1504,9 +1514,22 @@ cargarDepth(){
           if (tileObjetivo) {
               console.log("🔍 Objeto más cercano detectado a distancia:", distanciaMinima);
               this.scene.procesarInteraccionE(this, tileObjetivo);
-          } else {
-              console.log("No hay nada cerca para interactuar.");
-          }
+          } else if(this.estaGuardando){
+
+                let datosPlayer={
+                x:this.player.x,
+                y:this.player.y
+              }
+
+
+              let datos={
+                'player':datosPlayer
+              }
+              
+            guardarPartida(this.scene.ranura,datos);
+
+              
+          }else console.log("No hay nada cerca para interactuar.");
       }
   }
 

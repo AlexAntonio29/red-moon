@@ -5,6 +5,7 @@ import { Scenario1Eventos } from "../../eventos/Scenario1Eventos.js";
 import { cargarLucesEstaticas } from "../../funciones/cargarLucesEstaticas.js";
 import { dataNpc } from "../../npc/dataNpc.js";
 import { dataBosses } from "../../bosses/dataBosses.js";
+import { GuardarEnStorage } from "../../funciones/GuardarEnStorage.js";
 
 
 
@@ -68,6 +69,11 @@ export class cargarVariablesGlobales{
 
     cargarVariablesGlobales(){
 
+
+      //AQUI ESTA LA VARIABLE GENERAL DE LA BD DONDE PODRAS OBTENER LOS DATOS GUARDADOS EN EL JSON
+      //por el momento ocupare la ranuera 1 despues la cambio para que reciba segun la ranura que manda el menu principal
+        this.scene.ranura=0;
+        this.scene.dataGuardadoRanura=GuardarEnStorage(this.scene.ranura,null);
 
           //cargar scenario Eventos
 
