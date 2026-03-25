@@ -13,7 +13,7 @@ export class Npc extends Phaser.Physics.Arcade.Sprite{
         this.scene=scene;
         this.dataNpc=data;
 
-        console.log(data);
+       // console.log(data);
 
         //hacer que no se mueva el npc
 

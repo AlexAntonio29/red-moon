@@ -1373,12 +1373,28 @@ movimientoDash() {
     }
 }
 
+
+cargarDepth(){
+  this.scene.listaCheckpoints.children.iterate(checkpoint=>{
+
+  
+    if(this.player.y>(checkpoint.y+30)){checkpoint.setDepth(4)}
+      else {
+       
+        checkpoint.setDepth(6);}
+  })
+}
+
+
+
+
   setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto){
 
 
-      
+      this.cargarDepth();
        // console.log(this.player.x);
        // console.log(this.player.y);
+       //console.log(this.vida);
         let subEstado_caminar="";
 
     //console.log("Estado Principal: "+this.state);
@@ -1512,8 +1528,9 @@ movimientoDash() {
             
             // Si caíste dentro de CUALQUIER bloque que se supone es un obstáculo...
             console.log("¡Te quedaste atascado en un obstaculo! Regresando a zona segura...");
+            this.setVida(100);
             this.scene.contactoPlayerEnemigo(this.player,null);
-             this.setVida(100); //desactivar para el contacto player enemigo
+             //this.setVida(100); //desactivar para el contacto player enemigo
             
             // 4. ¡Magia! Lo regresamos a la coordenada donde inició el salto
             this.player.setPosition(this.xSeguro, this.ySeguro);

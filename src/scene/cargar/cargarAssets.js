@@ -132,6 +132,13 @@ export class cargarAssets{
     
             }
 
+            cargarAnimacionesEstatua(){
+              this.scene.load.spritesheet('sprite_estatua','/assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua.png',{
+               frameWidth: 144,
+               frameHeight:144
+              })
+            }
+
 
             cargarImagenesRecuerdos(){
               this.scene.load.image("recuerdo_casa_quemada","/assets/background/casa_quemandose.png");//casa quemada
@@ -188,8 +195,12 @@ export class cargarAssets{
     
         this.scene.load.image("portal_inactivo","/assets/tiles_maps/Tiled/items/portal_inactivo.png");//portal
 
+        this.scene.load.image('objeto_llave_basica','/assets/tiles_maps/Tiled/items/objeto_llave_basica/objeto_llave_basica.png')
+
+        //this.scene.load.image('sprite_estatua','/assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua.png')
 
 
+          //sprite_estatua
         //cargar bacgrounds recuerdos
 
         this.cargarImagenesRecuerdos();
@@ -347,6 +358,7 @@ export class cargarAssets{
           this.cargarAnimacionesItems();
           this.cargarAnimacionesNpc();
           this.cargarAnimacionesBosses();
+          this.cargarAnimacionesEstatua();
 
           
     

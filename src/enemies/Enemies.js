@@ -3,7 +3,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, dataEnemie, x=0,y=0){
 
       
-      console.log(dataEnemie);
+     // console.log(dataEnemie);
       super(scene,x,y,dataEnemie.diseno+"_idle");
       
 
@@ -282,7 +282,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       }
 
 
-    setCaminar(player,contacto,contactoAtaque,contactoEnemigo){
+    setCaminar(player,contacto,contactoAtaque,contactoEnemigo, isBoss=false){
 
 
       
@@ -316,8 +316,15 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     let playerX=player.x;
     let playerY=player.y;
 
-    let enemigoX=this.body.x;
-    let enemigoY=this.body.y;
+let enemigoX,enemigoY;
+    if(isBoss){
+      enemigoX=this.body.x;
+       enemigoY=this.body.y;
+    }else{
+      enemigoX=this.x;
+     enemigoY=this.y;
+    }
+     
 
 
 

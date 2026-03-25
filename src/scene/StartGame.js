@@ -28,6 +28,7 @@ import { BloqueoAtaqueFuerte } from "./colisiones/BloqueoAtaqueFuerte.js";
 import { BloqueoDash } from "./colisiones/BloqueoDash.js";
 import { BloqueoItem } from "./colisiones/BloqueoItem.js";
 import { RecogerItem } from "./colisiones/RecogerItem.js"; 
+import { Estatua } from "../items/estatua/Estatua.js";
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
@@ -90,6 +91,8 @@ crearEscenario(){
     this.tileset10 = this.map.addTilesetImage('A3 - Walls And Floors', 'a3 - Walls And Floors');//Big_Decoration
     this.tileset11 = this.map.addTilesetImage('antorcha_sheet', 'antorcha_sheet');//Big_Decoration
     this.tileset12 = this.map.addTilesetImage('portal_inactivo', 'portal_inactivo');//portal
+    this.tileset13 = this.map.addTilesetImage('objeto_llave_basica', 'objeto_llave_basica');//item_llave
+    //this.tileset14 = this.map.addTilesetImage('sprite_estatua', 'sprite_estatua');//estatua checkpoint
 
     
        // this.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
@@ -101,13 +104,15 @@ crearEscenario(){
 
     this.fondo=this.map.createLayer('FONDO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
 
           this.subSuelo=this.map.createLayer('SUBSUELO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
 
@@ -115,39 +120,45 @@ crearEscenario(){
 
     this._subSuelo=this.map.createLayer('_SUBSUELO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
 
     this.suelo=this.map.createLayer('SUELO', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]  
       ,0,0);
 
           this._suelo=this.map.createLayer('_SUELO', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
 
       
           this._suelo2=this.map.createLayer('_SUELO-2', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
 
 
           this._suelo3=this.map.createLayer('_SUELO-3', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
 
                 this._suelo4=this.map.createLayer('_SUELO-4', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
     //this.detalles_piso=this.map.createLayer('DETAILS_PISO', this.tileset,0,0);SIN ADIGNAR ]
@@ -158,13 +169,17 @@ crearEscenario(){
 
               this.above_collider=this.map.createLayer('ABOVE-COLLIDER',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
 
 
           this.blockLayer = this.map.createLayer('BLOCK', 
-              [this.tileset1, this.tileset2, this.tileset3, this.tileset4, this.tileset5, this.tileset6, this.tileset7, this.tileset8, this.tileset9, this.tileset10], 
+              [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
+            ], 
               0, 0
           );
 
@@ -173,7 +188,8 @@ crearEscenario(){
 
                 this._above_collider=this.map.createLayer('_ABOVE-COLLIDER',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
 
@@ -185,7 +201,8 @@ crearEscenario(){
 
                   this.above=this.map.createLayer('ABOVE',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
               
             ]
       ,0,0);
@@ -193,7 +210,8 @@ crearEscenario(){
 
                   this._above=this.map.createLayer('_ABOVE',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
               
             ]
       ,0,0);
@@ -201,7 +219,8 @@ crearEscenario(){
 
                          this._above2=this.map.createLayer('_ABOVE2',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
 
@@ -209,16 +228,20 @@ crearEscenario(){
       
                   this._above3_decoration=this.map.createLayer('_ABOVE3-DECORATION',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
 
 
       this._above4_antorcha=this.map.createLayer('_ABOVE4-ANTORCHA',//las antorchas
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+            
             ]
       ,0,0);
+
+
 
 
 
@@ -249,7 +272,22 @@ crearEscenario(){
       if(tile.index!==-1){
        const x=tile.getCenterX();
        const y=tile.getCenterY();
-        this.lights.addLight(x, y, 350) .setColor(0xffaa00) .setIntensity(2);
+        this.lights.addLight(x, y, 350) .setColor(0xffaa00) .setIntensity(1);
+
+      }
+    })
+
+
+        this.blockLayer.forEachTile(tile=>{
+
+      if(tile.index!==-1&& (tile.properties.tipoBloqueo==="recoger_item")){
+
+        console.log(tile.layer.id);
+        
+        
+       const x=tile.getCenterX();
+       const y=tile.getCenterY();
+        this.lights.addLight(x, y, 50) .setColor(0xffffff) .setIntensity(1);
 
       }
     })
@@ -494,7 +532,8 @@ getPlayer(){
 
     this.player.setPositionInitial(x,y);
 
-    this.lightToPlayer=this.lights.addLight(x, y, 350) .setColor(0xffaa00) .setIntensity(2);
+    this.lightToPlayer=this.lights.addLight(x, y, 150) .setColor(0xffaa00) .setIntensity(2);
+    //this.lightToPlayer.setDepth(6);
     //this.lightToPlayer.setOrigin(1,1);
     //this.player.getChangeSprite();
 
@@ -1396,8 +1435,9 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
       this.crearEnemigo(1,2950,8600,3);//cantidad Enemigos, x, y ,tipo de enemigo
 
+      //this.crearEnemigo(1,3050,8600,1);
       //this.crearEnemigo(1,0,0,10);
-      this.crearEnemigo(1,8004,6400,10);
+      //this.crearEnemigo(1,8004,6400,10);
 
       //this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
 
@@ -1582,7 +1622,28 @@ cargarNpc(){
 
 
 }
-    
+   
+crearCheckpoint(x,y){
+
+  let checkpoint=new Estatua(this,x,y);
+    checkpoint.setPipeline('Light2D');
+  this.listaCheckpoints.add(checkpoint);
+
+  this.physics.add.collider(this.player.getContainer(),checkpoint);
+
+
+}
+cargarCheckpoints(){
+
+      let x=2400//8000;//x=2100;
+  let y=8500//6862;//y=8500;
+
+  this.crearCheckpoint(x,y)
+
+
+}
+
+
 
 //El create es donde acomo las cosas para que tengan un orden
 create(){
@@ -1617,6 +1678,8 @@ this.game.renderer.antialias = false;
    this.crearCamera();
 
    this.cargarEvento();
+
+   this.cargarCheckpoints();
     //this.crearAnimaciones();
        
 }
@@ -1662,6 +1725,8 @@ lightplayer(){
 
 
 
+
+
 //el update es todo lo que se corre en tiempo real
 update(time, delta){
 
@@ -1683,6 +1748,8 @@ update(time, delta){
 
     //movimientoNpc
     this.movimientosNpc();
+
+   
 
 
 
