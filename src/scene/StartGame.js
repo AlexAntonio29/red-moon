@@ -516,7 +516,7 @@ getPlayer(){
 
 
   
-    console.log(this.dataGuardadoRanura);
+    
   let x=(this.dataGuardadoRanura!==null)?this.dataGuardadoRanura[this.ranura].player.x:2100//8000;//x=2100;
   let y=(this.dataGuardadoRanura!==null)?this.dataGuardadoRanura[this.ranura].player.y:8500
     this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos,this.lights,this.cameras.main);
@@ -580,7 +580,14 @@ this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.
 movimientosPlayer(){
 
 
-     this.player.setMovimientoPlayer(this.contactoSprites[0],this.listaEnemigos,this.contactoSprites,this.items_punto);
+     this.player.setMovimientoPlayer(this.contactoSprites[0]
+      ,this.listaEnemigos
+      ,this.contactoSprites
+      ,this.items_punto
+      ,this.listaEventos
+      ,this.listaCheckpoints
+    
+    );
     
      //this.player.getAtaque(this.listaEnemigos,this.contactoSprites,this.items_punto);
 
@@ -1465,7 +1472,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     }
 
-    crearEvento(x,y,width,height,tiempoEvento,tiempoTraslado, xadd,yadd, zoom,ocultarHUD ,accion,movePlayer){
+    crearEvento(x,y,width,height,tiempoEvento,tiempoTraslado, xadd,yadd, zoom,ocultarHUD ,accion,movePlayer,id){
 
 
       /*
@@ -1478,10 +1485,12 @@ this.joystickCursors = this.joyStick.createCursorKeys();
        let height=250;
       */
 
+
+
         
 
       
-      let evento = new this.Scenario1Eventos(this,x,y,width,height,this.player.getContainer(),this.camera,this.lights, this.player);
+      let evento = new this.Scenario1Eventos(this,x,y,width,height,this.player.getContainer(),this.camera,this.lights, this.player,id);
 
       this.physics.add.overlap(
         this.player.getContainer(),
@@ -1498,6 +1507,11 @@ this.joystickCursors = this.joyStick.createCursorKeys();
               }
               });
       
+          
+      this.listaEventos.add(evento);
+
+
+      
 
 
     }
@@ -1505,6 +1519,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
     cargarEvento(){
       //datos de eventos estos para comodidad del programador en agregar eventos se agregaran en variables
       let x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom, ocultarHUD,accion,movePlayer;
+      let id=0;
       x=4400;
       y=8425;
       width=400;
@@ -1521,9 +1536,9 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
 
       //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer);
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id);
 
-
+      id++;
       x=7110;
       y=7710;
       width=400;
@@ -1540,9 +1555,9 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
 
       //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer);
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id);
 
-
+      id++;
       x=2950;
       y=8400;
       width=200;
@@ -1559,14 +1574,14 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
 
       //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer);
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id);
 
 
       //cuando se va a agregar un nuevo elemento entoces se establecen valores variables;
 
 
 
-      
+      id++;
       x=9890;
       y=8296;
       width=200;
@@ -1583,7 +1598,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
 
       //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer);
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id);
 
 
 }
@@ -1628,9 +1643,9 @@ cargarNpc(){
 
 }
    
-crearCheckpoint(x,y){
+crearCheckpoint(x,y,id){
 
-  let checkpoint=new Estatua(this,x,y);
+  let checkpoint=new Estatua(this,x,y,id);
     checkpoint.setPipeline('Light2D');
  
 
@@ -1657,10 +1672,17 @@ crearCheckpoint(x,y){
 }
 cargarCheckpoints(){
 
-      let x=2400//8000;//x=2100;
-  let y=8500//6862;//y=8500;
+      let x=5816//8000;//x=2100;
+      let y=7826//6862;//y=8500;
+      let id=0
 
-  this.crearCheckpoint(x,y)
+  this.crearCheckpoint(x,y,id)
+
+  id++;
+  x=2400;
+  y=8500;
+
+  this.crearCheckpoint(x,y,id);
 
 
 }

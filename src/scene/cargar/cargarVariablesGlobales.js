@@ -66,6 +66,27 @@ export class cargarVariablesGlobales{
           this.scene.dataBosses= dataBosses;
         }
 
+        cargarGruposObjetos(){
+
+              
+       this.scene.listaRelojes=this.scene.physics.add.group();
+    
+       this.scene.listaEnemigos=this.scene.physics.add.group();
+
+       this.scene.listaNpc=this.scene.physics.add.group();
+
+       this.scene.listaLucesObjetos=this.scene.physics.add.group();
+
+       this.scene.listaCheckpoints=this.scene.physics.add.group();
+
+       this.scene.listaJefes=this.scene.physics.add.group();
+
+       this.scene.listaEventos=this.scene.physics.add.group();
+
+       this.scene.listaLaves=this.scene.physics.add.group();
+
+        }
+
 
     cargarVariablesGlobales(){
 
@@ -122,18 +143,10 @@ export class cargarVariablesGlobales{
     
          this.scene.cantidadRelojes=0;
          //relojes
-    
-         this.scene.listaRelojes=this.scene.physics.add.group();
-    
-           //TODO REFEREIDO A ENEMIGOS
-    
-       this.scene.listaEnemigos=this.scene.physics.add.group();
 
-       this.scene.listaNpc=this.scene.physics.add.group();
 
-       this.scene.listaLucesObjetos=this.scene.physics.add.group();
 
-       this.scene.listaCheckpoints=this.scene.physics.add.group();
+       
     
         
         this.scene.puntosCreacionEnemigo=0;
@@ -147,6 +160,7 @@ export class cargarVariablesGlobales{
 
 
         
+      this.cargarGruposObjetos();
 
       this.crearJoystick();
       this.cargarTeclar();

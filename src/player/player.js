@@ -1397,7 +1397,7 @@ cargarDepth(){
 
 
 
-  setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto){
+  setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto,listaEventos,listaCheckpoints){
 
     
 
@@ -1454,7 +1454,7 @@ cargarDepth(){
 
       
       
-      this.interactuar();
+      this.interactuar(listaEventos,listaCheckpoints);
 
 
   
@@ -1465,7 +1465,7 @@ cargarDepth(){
 
   }
 
-  interactuar() {
+  interactuar(listaEventos,listaCheckpoints) {
       // 1. Verificamos si se presionó la tecla E
       if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
           
@@ -1516,17 +1516,14 @@ cargarDepth(){
               this.scene.procesarInteraccionE(this, tileObjetivo);
           } else if(this.estaGuardando){
 
-                let datosPlayer={
-                x:this.player.x,
-                y:this.player.y
-              }
 
-
-              let datos={
-                'player':datosPlayer
-              }
               
-            guardarPartida(this.scene.ranura,datos);
+            guardarPartida(
+              this.scene.ranura,
+              this,
+              listaEventos,
+              listaCheckpoints
+            );//se envia escene porque ahi se almacenan todos los objetos
 
               
           }else console.log("No hay nada cerca para interactuar.");
@@ -1555,7 +1552,7 @@ cargarDepth(){
             this.scene.contactoPlayerEnemigo(this.player,null);
              //this.setVida(100); //desactivar para el contacto player enemigo
             
-            // 4. ¡Magia! Lo regresamos a la coordenada donde inició el salto
+            // 4. ¡Magia! Lo regresamos a la coordenada donde inició el salto ALEXIS ESTUVO AQUI Y VI QUE USASTE IA XD
             this.player.setPosition(this.xSeguro, this.ySeguro);
             
             // Opcional: Aquí podrías reproducir un sonido de error o quitarle 10 de vida

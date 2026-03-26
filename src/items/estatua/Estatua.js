@@ -1,7 +1,7 @@
 export class Estatua extends Phaser.Physics.Arcade.Sprite{
 
 
-    constructor(scene, x,y){
+    constructor(scene, x,y,id){
 
         super(scene,x,y,'sprite_estatua');
 
@@ -10,7 +10,12 @@ export class Estatua extends Phaser.Physics.Arcade.Sprite{
         scene.physics.add.existing(this);
 
         this.quitarMovimiento();
-        this.esEncendido=false;
+
+        
+        this.id=id
+        this.esEncendido=(scene.dataGuardadoRanura!==null)
+        ?scene.dataGuardadoRanura[scene.ranura].checkpoints[id].esEncendido
+        :false;
 
 
         this.setOrigin(0,0);
@@ -71,9 +76,10 @@ export class Estatua extends Phaser.Physics.Arcade.Sprite{
 
     esActivado(){
 
-        if(this.anims.currentAnim?.key!=="checkpoint_activado")
+        if(this.anims.currentAnim?.key!=="checkpoint_activado"){
         this.play("checkpoint_activado");
-
+        this.esEncendido=true;
+    }
 
     }
 
