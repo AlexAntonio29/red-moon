@@ -42,7 +42,7 @@ export class player {
 
     //inputActive esto es para verificar si el input esta activo para evitar accion
     this.isInputActive=true;
-    //aqui despues agregar una clase que busque en la BD que armas tiene para cargarlo sino hay nada 
+    //aqui despues i una clase que busque en la BD que armas tiene para cargarlo sino hay nada 
     //entonces carga por defecto las armas principales
     this.setArma(armas[0]);
 

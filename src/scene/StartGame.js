@@ -278,18 +278,45 @@ crearEscenario(){
     })
 
 
+    //aqui se evalua el objeto para crear una llave y almacenarlo
+
+    let idLlave=0;
+
+
         this.blockLayer.forEachTile(tile=>{
 
-      if(tile.index!==-1&& (tile.properties.tipoBloqueo==="recoger_item")){
+      if(tile.index!==-1&& 
+        (tile.properties.tipoBloqueo==="recoger_item")&&
+        (tile.properties.idItem==="llave_01")){
 
         console.log(tile.layer.id);
         
         
        const x=tile.getCenterX();
        const y=tile.getCenterY();
-        this.lights.addLight(x, y, 50) .setColor(0xffffff) .setIntensity(1);
+       const luzLlave= this.lights.addLight(x, y, 50) .setColor(0xffffff) .setIntensity(1);
+
+        idLlave++;
+
+        const recogido=false;//evaluar con JSON
+
+        if(recogido){
+          this.map.removeTileAt(tile.x, tile.y, true, true, this.blockLayer);
+          this.lights.removeLight(luzLlave);
+        }
+
+        this.listaLaves.push({
+        'id':idLlave,
+        'tile':tile,
+        'recogido':recogido,
+        'luz':luzLlave
+
+      });
+
 
       }
+
+
     })
 
 
@@ -1825,6 +1852,8 @@ update(time, delta){
 
 /* NUEVO CODIGO*/
 checkCondicionBloque(objeto, tile) {
+
+  let idLlave=0;
     // 1. Si el que choca no es el player (ej. un enemigo), funciona como pared normal
     if (objeto !== this.player.getContainer()) {
         return true; 
@@ -1851,16 +1880,20 @@ checkCondicionBloque(objeto, tile) {
             break;
 
         case "puerta_llave":
+
             // Esta es la puerta. Exige la "llave_roja"
             manejadorBloqueo = new BloqueoItem("llave_roja"); 
+
+            
             break;
 
         // ==========================================
         // NUEVO CASO: ESTE SIRVE PARA CUANDO RECOGA LA LLAVE DEL SUELO
         // ==========================================
-        case "recoger_llave_roja":
+        case "recoger_item":
             // Esta es la llave. Te regala la "llave_roja"
-            manejadorBloqueo = new RecogerItem("llave_roja");
+            manejadorBloqueo = new RecogerItem("llave_puerta");
+
             break;
        
         default:
@@ -1890,6 +1923,7 @@ checkCondicionBloque(objeto, tile) {
     // PROCESAR INTERACCIÓN CON LA TECLA "E"
     // ==========================================
     procesarInteraccionE(playerInstance, tile) {
+      
         console.log(" Escaner activado Propiedades del bloque:", tile.properties);
         // 1. Extraemos qué tipo de bloque es y qué ID de item necesita/da
         let tipo = tile.properties.tipoBloqueo;
@@ -1901,14 +1935,22 @@ checkCondicionBloque(objeto, tile) {
             case "recoger_item":
                 // Le avisamos a la consola si nos falta el ID
                 if (!idItem) {
+                    
                     console.log(" ERROR: Es un item, pero no tiene 'idItem' en Tiled.");
                 }
 
                 if (idItem) {
+                  console.log(idItem);
                     playerInstance.agregarItem(idItem); 
                     this.blockLayer.removeTileAt(tile.x, tile.y);
+                    //eliminar la luz de la llave
+                    
+
                     console.log(`¡Recogiste el ítem con ID: ${idItem}!`);
                 }
+
+                
+
                 break;
 
            // CASO B: EL JUGADOR INTENTA ABRIR UNA PUERTA

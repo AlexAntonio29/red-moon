@@ -83,7 +83,7 @@ export class cargarVariablesGlobales{
 
        this.scene.listaEventos=this.scene.physics.add.group();
 
-       this.scene.listaLaves=this.scene.physics.add.group();
+       this.scene.listaLaves=[];
 
         }
 
