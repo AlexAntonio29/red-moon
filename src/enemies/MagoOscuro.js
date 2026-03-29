@@ -1,4 +1,4 @@
-export class Enemie2 extends Enemies {
+export class MagoOscuro extends Enemies {
     constructor(scene, dataEnemie, x = 0, y = 0) {
        
         super(scene, dataEnemie, x, y);

@@ -4,7 +4,6 @@ import { FinPartida } from './scene/FinPartida.js';
 import { ScenePotenciador } from './scene/ScenePotenciador.js';
 import {ScenePause} from './scene/ScenePause.js';
 import {scenePauseRapido} from './scene/SceneHelper/scenePauseRapido.js'
-import Preload from './escenas/Preload.js';
 
 const config={ //configuracion del escenario
     width: document.documentElement.clientWidth,//tamaño de ancho
@@ -14,23 +13,27 @@ const config={ //configuracion del escenario
     type: Phaser.WEBGL,  
     render: { antialias: false, },
     physics: {
-        default: 'arcade',
-        arcade: {
-            debug: false
-        }
-    },
-    
-    // AQUÍ ESTÁ EL ÚNICO CAMBIO: Agregamos Preload al inicio de tu lista original
-    scene:[Preload, MenuPrincipal, StartGame, FinPartida, ScenePotenciador, ScenePause, scenePauseRapido],
-    
-    plugins: {
-        scene: [
-            { key: 'animatedTiles', plugin: AnimatedTiles, mapping: 'animatedTiles' }
-        ]
-    },
-    input: {
-        activePointers: 3 // permite hasta 3 dedos simultáneos
+    default: 'arcade',
+    arcade: {
+      debug: false
     }
+  },
+   /* scene:[MenuPrincipal,StartGame,FinPartida] //escenas se ejecutan por orden*/
+
+ /*   //EL APARTADO DE ARRIBA ES EL CORRECTO CORRERE ESTA SCENE PORQUE TRABAJARE CON StartGame*/
+   
+ scene:[MenuPrincipal,StartGame,FinPartida,ScenePotenciador,ScenePause,scenePauseRapido],
+ plugins: {
+    scene: [
+      { key: 'animatedTiles', plugin: AnimatedTiles, mapping: 'animatedTiles' }
+    ]
+  },
+ input: {
+    activePointers: 3 // permite hasta 3 dedos simultáneos
+  }
+
+    
+
 }
 
 var game= new Phaser.Game(config);//variable que ejecuta la constante config de arriba
@@ -41,10 +44,13 @@ function preload(){
 
 function create(){
     //console.log("Create");
+
     window.addEventListener('resize',()=>{
-        const nuevoAncho=window.innerWidth;
-        const nuevoAltura=window.innerHeight;
+      const nuevoAncho=window.innerWidth;
+      const nuevoAltura=window.innerHeight;
     })
+
+  
 }
 
 function update(time, delta){

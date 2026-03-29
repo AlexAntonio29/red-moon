@@ -1,4 +1,4 @@
-export default class MenuPrincipal extends Phaser.Scene{//cuando estamos en el menu Principal
+export class MenuPrincipal extends Phaser.Scene{//cuando estamos en el menu Principal
 
 constructor(){
     super('MenuPrincipal');
@@ -36,8 +36,7 @@ document.fonts.load(`32px ${this.fontText}`).then(() => {
 
 });
 
-//
-this.boton.setPosition((110),((this.heightPantalla)/3)-40);
+this.boton.setPosition(((this.widthPantalla)/2)-this.boton.width/2,this.titulo.y+this.titulo.displayHeight+10);
 
 
 this.tweens.add({
@@ -60,7 +59,16 @@ this.tweens.add({
 
 
 
-  
+  preload(){
+    this.load.image("imagenFondo","./assets/fondoMain.png");
+    this.load.image("titulo","./assets/tituloMain.png");
+    this.load.audio('musicaFondo','./sounds/menu.WAV');
+    this.load.audio("touch","./sounds/touch2.mp3");
+    this.fontText='FontArcade1'
+    this.widthPantalla=this.sys.game.config.width;
+    this.heightPantalla=this.sys.game.config.height;
+    //console.log("Preload "+this.scene.key);
+}
 
 cargarSonidos(){
   
@@ -110,13 +118,13 @@ this.tweens.add({
 
 
 
-//this.titulo=this.add.image(0,0,'titulo').setOrigin(0)
+this.titulo=this.add.image(0,0,'titulo').setOrigin(0)
 //
 // .setDisplaySize(this.widthPantalla,150)
 
-//.setScale(0.11,0.11);
+.setScale(0.11,0.11);
 ;
-//this.titulo.setPosition((this.widthPantalla/2)-(this.titulo.displayWidth/2),0);
+this.titulo.setPosition((this.widthPantalla/2)-(this.titulo.displayWidth/2),0);
 /*
 this.tweens.add({
   targets: this.titulo,
