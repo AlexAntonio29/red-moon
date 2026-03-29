@@ -29,7 +29,7 @@ import { BloqueoDash } from "./colisiones/BloqueoDash.js";
 import { BloqueoItem } from "./colisiones/BloqueoItem.js";
 import { RecogerItem } from "./colisiones/RecogerItem.js"; 
 
-export class StartGame extends Phaser.Scene{//cuando inicia la partida
+export default class StartGame extends Phaser.Scene{//cuando inicia la partida
 
     constructor(){
         super('StartGame');
@@ -42,18 +42,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
 
 //aqui cargo todos los archivos y objetos necesarios antes de que inicie el escenario
-    preload(){
-
-      //cargar Imagenes y animaciones
-      this.loadAnimations=new cargarAssets(this);
-        //cargar Sonidos
-      this.loadSounds=new cargarSonido(this);
-          //aqui se cargan las variables globales desde preload()
-      this.loadVariablesGlobales=new cargarVariablesGlobales(this);
-      
-
-      
-}
+    
 
 
 //CREACION DE TILES (Son las texturas que no son sprites como tal sino que actua como escenario)
@@ -1810,7 +1799,7 @@ checkCondicionBloque(objeto, tile) {
                 // 1. Leemos el texto que pusiste en Tiled
                 let mensajeCartel = tile.properties.mensaje || "Las letras están borrosas...";
                 
-                // 2. ¡AQUÍ ESTÁ LA MAGIA! Llamamos a la interfaz visual en lugar de la consola
+                // 2.  Llamamos a la interfaz visual en lugar de la consola
                 this.mostrarMensaje(mensajeCartel);
                 
                 break;
@@ -1931,7 +1920,7 @@ checkCondicionBloque(objeto, tile) {
         this.dialogoAbierto = true;
         
         // Opcional: Pausar las físicas del jugador mientras lee
-         this.player.getContainer().body.moves = false;
+         //this.player.getContainer().body.moves = false;
     }
 
     cerrarMensaje() {

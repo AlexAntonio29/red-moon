@@ -1443,10 +1443,10 @@ movimientoDash() {
       // 1. Verificamos si se presionó la tecla E
       if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
 
-          // ==========================================
-          // NUEVO: Si el diálogo está abierto, la tecla E lo cierra y no hace nada más.
-          // Esto DEBE ir aquí arriba, antes de buscar bloques.
-          // ==========================================
+        // ==========================================
+        // NUEVO: Si el diálogo está abierto, la tecla E lo cierra y no hace nada más.
+        // Esto DEBE ir aquí arriba, antes de buscar bloques.
+        // ==========================================
           if (this.scene.dialogoAbierto) {
               this.scene.cerrarMensaje();
               return; 
@@ -1530,6 +1530,42 @@ movimientoDash() {
             // Opcional: Aquí podrías reproducir un sonido de error o quitarle 10 de vida
         }
     }
+
+    // ==========================================
+    // SISTEMA DE AUDIO DINÁMICO DE PISADAS
+    // ==========================================
+    obtenerSonidoPisada() {
+        // Asegúrate de usar el nombre de la capa donde pintas el piso (ej. groundLayer o capaSuelo)
+        // Si tu capa se llama diferente, cámbialo aquí abajo:
+        if (!this.scene.groundLayer) return 'paso_tierra'; 
+
+        // 1. Calculamos la posición de la BASE de los pies del jugador
+        let px = this.player.x + (this.player.displayWidth / 2);
+        let py = this.player.y + this.player.displayHeight; // Hasta abajo
+
+        // 2. Leemos el tile del piso en esa coordenada
+        let tileSuelo = this.scene.groundLayer.getTileAtWorldXY(px, py);
+
+        // 3. Revisamos qué propiedad de suelo tiene
+        if (tileSuelo && tileSuelo.properties && tileSuelo.properties.tipoSuelo) {
+            
+            let tipo = tileSuelo.properties.tipoSuelo;
+            
+            switch(tipo) {
+                case 'piedra': return 'paso_piedra';
+                case 'madera': return 'paso_madera';
+                case 'agua': return 'paso_agua';
+                case 'tierra': return 'paso_tierra';
+            }
+        }
+        
+        // Si el tile no tiene propiedad, regresamos el sonido por defecto
+        return 'paso_tierra'; 
+    }
+
+    /* Donde sea que reproduces tu sonido de caminar actualmente, cámbialo por esto:
+    let nombreSonido = this.obtenerSonidoPisada();
+    this.scene.sound.play(nombreSonido);*/
 
   getArma(){
     //console.log("GetArma: ");
