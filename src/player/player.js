@@ -1480,6 +1480,11 @@ cargarDepth(){
   }
 
 
+  detectarBloqueCercano(){
+    
+  }
+
+
   interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas) {
     // 1. Verificamos si se presionó la tecla E
     if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
@@ -1546,7 +1551,12 @@ if (npcCercano) {
                       tileObjetivo = tile;
                   }
               }
+
           });
+
+
+
+
 
           // 5. Si despues de escanear todo encontramos un ganador... ¡Interactuamos!
           if (tileObjetivo) {
@@ -1567,6 +1577,12 @@ if (npcCercano) {
 
               
           }else console.log("No hay nada cerca para interactuar.");
+
+
+
+
+
+
       }
   }
 

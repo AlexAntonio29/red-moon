@@ -93,7 +93,12 @@ crearEscenario(){
     this.tileset11 = this.map.addTilesetImage('antorcha_sheet', 'antorcha_sheet');//Big_Decoration
     this.tileset12 = this.map.addTilesetImage('portal_inactivo', 'portal_inactivo');//portal
     this.tileset13 = this.map.addTilesetImage('objeto_llave_basica', 'objeto_llave_basica');//item_llave
-    this.tileset14 = this.map.addTilesetImage('bloqueo_puerta', 'bloqueo_puerta');//estatua checkpoint
+    this.tileset14 = this.map.addTilesetImage('bloqueo_puerta', 'bloqueo_puerta');//puerta bloqueo
+
+    this.tileset15 = this.map.addTilesetImage('Gate_Wood1', 'Gate_Wood1');
+    this.tileset16 = this.map.addTilesetImage('Fantasy_door1', 'Fantasy_door1');
+    this.tileset17 = this.map.addTilesetImage('Fantasy_door2', 'Fantasy_door2');
+
 
     
        // this.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
@@ -105,14 +110,14 @@ crearEscenario(){
 
     this.fondo=this.map.createLayer('FONDO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
 
           this.subSuelo=this.map.createLayer('SUBSUELO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
@@ -121,21 +126,21 @@ crearEscenario(){
 
     this._subSuelo=this.map.createLayer('_SUBSUELO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
 
     this.suelo=this.map.createLayer('SUELO', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]  
       ,0,0);
 
           this._suelo=this.map.createLayer('_SUELO', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
@@ -143,7 +148,7 @@ crearEscenario(){
       
           this._suelo2=this.map.createLayer('_SUELO-2', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
@@ -151,14 +156,14 @@ crearEscenario(){
 
           this._suelo3=this.map.createLayer('_SUELO-3', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
 
                 this._suelo4=this.map.createLayer('_SUELO-4', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
@@ -170,7 +175,7 @@ crearEscenario(){
 
               this.above_collider=this.map.createLayer('ABOVE-COLLIDER',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
@@ -178,7 +183,16 @@ crearEscenario(){
 
           this.blockLayer = this.map.createLayer('BLOCK', 
               [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+            
+            ], 
+              0, 0
+          );
+
+
+          this.blockAbove = this.map.createLayer('BLOCK-ABOVE', 
+              [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ], 
               0, 0
@@ -189,7 +203,7 @@ crearEscenario(){
 
                 this._above_collider=this.map.createLayer('_ABOVE-COLLIDER',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
@@ -202,7 +216,7 @@ crearEscenario(){
 
                   this.above=this.map.createLayer('ABOVE',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
               
             ]
@@ -211,7 +225,7 @@ crearEscenario(){
 
                   this._above=this.map.createLayer('_ABOVE',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
               
             ]
@@ -220,7 +234,7 @@ crearEscenario(){
 
                          this._above2=this.map.createLayer('_ABOVE2',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
@@ -229,7 +243,7 @@ crearEscenario(){
       
                   this._above3_decoration=this.map.createLayer('_ABOVE3-DECORATION',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
@@ -237,7 +251,7 @@ crearEscenario(){
 
       this._above4_antorcha=this.map.createLayer('_ABOVE4-ANTORCHA',//las antorchas
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
             
             ]
       ,0,0);
@@ -341,6 +355,21 @@ crearEscenario(){
 
     });
 
+    this.blockAbove.forEachTile(tile=>{
+
+      if(tile.index!==-1){
+
+        if(this.listaPuertasAbiertas.find((t)=>(
+            t.x===tile.x&&
+            t.y===tile.y&&
+            t.nameScene===this.nameScene
+        ))){
+          this.abrirPuertaCompleta(tile);
+        }
+
+      }
+    });
+
 
 
 
@@ -388,6 +417,7 @@ crearEscenario(){
       this.above_collider.setPipeline('Light2D');
 
       this.blockLayer.setPipeline('Light2D');
+      this.blockAbove.setPipeline('Light2D');
 
       this._above_collider.setPipeline('Light2D');
 

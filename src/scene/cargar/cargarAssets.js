@@ -198,7 +198,11 @@ export class cargarAssets{
         this.scene.load.image("fantasy_Outside_B","/assets/tiles_maps/Tiled/Fantasy_Outside_B.png");//Fantasy_Outside_B
         this.scene.load.image("big_Decoration","/assets/tiles_maps/Tiled/Big_Decoration.png");//Big_Decoration
         this.scene.load.image("antorcha_sheet","/assets/tiles_maps/Tiled/antorcha_sheet.png");//antorcha animada
-            
+       
+        this.scene.load.image("Gate_Wood1","/assets/tiles_maps/Tiled/Gate_Wood1.png");
+        this.scene.load.image("Fantasy_door1","/assets/tiles_maps/Tiled/Fantasy_door1.png");
+        this.scene.load.image("Fantasy_door2","/assets/tiles_maps/Tiled/Fantasy_door2.png"); 
+
         this.scene.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
         this.scene.load.image("a3 - Walls And Floors","/assets/tiles_maps/Tiled/A3 - Walls And Floors.png");//Big_Decoration
     
