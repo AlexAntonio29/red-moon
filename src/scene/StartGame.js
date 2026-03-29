@@ -93,7 +93,7 @@ crearEscenario(){
     this.tileset11 = this.map.addTilesetImage('antorcha_sheet', 'antorcha_sheet');//Big_Decoration
     this.tileset12 = this.map.addTilesetImage('portal_inactivo', 'portal_inactivo');//portal
     this.tileset13 = this.map.addTilesetImage('objeto_llave_basica', 'objeto_llave_basica');//item_llave
-    //this.tileset14 = this.map.addTilesetImage('sprite_estatua', 'sprite_estatua');//estatua checkpoint
+    this.tileset14 = this.map.addTilesetImage('bloqueo_puerta', 'bloqueo_puerta');//estatua checkpoint
 
     
        // this.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
@@ -105,14 +105,14 @@ crearEscenario(){
 
     this.fondo=this.map.createLayer('FONDO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
 
           this.subSuelo=this.map.createLayer('SUBSUELO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
@@ -121,21 +121,21 @@ crearEscenario(){
 
     this._subSuelo=this.map.createLayer('_SUBSUELO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
 
     this.suelo=this.map.createLayer('SUELO', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]  
       ,0,0);
 
           this._suelo=this.map.createLayer('_SUELO', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
@@ -143,7 +143,7 @@ crearEscenario(){
       
           this._suelo2=this.map.createLayer('_SUELO-2', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
@@ -151,14 +151,14 @@ crearEscenario(){
 
           this._suelo3=this.map.createLayer('_SUELO-3', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
 
                 this._suelo4=this.map.createLayer('_SUELO-4', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
@@ -170,7 +170,7 @@ crearEscenario(){
 
               this.above_collider=this.map.createLayer('ABOVE-COLLIDER',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
@@ -178,7 +178,7 @@ crearEscenario(){
 
           this.blockLayer = this.map.createLayer('BLOCK', 
               [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ], 
               0, 0
@@ -189,7 +189,7 @@ crearEscenario(){
 
                 this._above_collider=this.map.createLayer('_ABOVE-COLLIDER',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
@@ -202,7 +202,7 @@ crearEscenario(){
 
                   this.above=this.map.createLayer('ABOVE',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
               
             ]
@@ -211,7 +211,7 @@ crearEscenario(){
 
                   this._above=this.map.createLayer('_ABOVE',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
               
             ]
@@ -220,7 +220,7 @@ crearEscenario(){
 
                          this._above2=this.map.createLayer('_ABOVE2',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
@@ -229,7 +229,7 @@ crearEscenario(){
       
                   this._above3_decoration=this.map.createLayer('_ABOVE3-DECORATION',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
@@ -237,7 +237,7 @@ crearEscenario(){
 
       this._above4_antorcha=this.map.createLayer('_ABOVE4-ANTORCHA',//las antorchas
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13
+              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14
             
             ]
       ,0,0);
@@ -1642,8 +1642,8 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id);
 
       id++;
-      x=2950;
-      y=8400;
+      x=9805;
+      y=7300;
       width=200;
       height=550;
       tiempo=0;

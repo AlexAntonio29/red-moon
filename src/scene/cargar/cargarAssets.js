@@ -206,6 +206,8 @@ export class cargarAssets{
 
         this.scene.load.image('objeto_llave_basica','/assets/tiles_maps/Tiled/items/objeto_llave_basica/objeto_llave_basica.png')
 
+        this.scene.load.image('bloqueo_puerta','/assets/tiles_maps/Tiled/items/bloqueoPuerta/bloqueo_puerta.png');
+
         //this.scene.load.image('sprite_estatua','/assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua.png')
 
 
