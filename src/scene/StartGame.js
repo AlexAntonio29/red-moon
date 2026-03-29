@@ -1703,24 +1703,10 @@ crearNpc(n,x,y){
         npc= new npc2(this,this.dataNpc[n-1],x,y);
         break;
 
-case 3:
-                // 1. Creamos un objeto de datos manual para que Npc.js NO explote
-                let datosManualesNpc3 = {
-                    diseno: "npc3_idle", // La key que cargaste en cargarAssets
-                    name: "Mago"
-                };
+        case 3:
 
-                // 2. Se lo pasamos a la clase npc3
-                npc = new npc3(this, datosManualesNpc3, x, y);
-                
-                // 3. Aseguramos visualmente al personaje
-                npc.setTexture('npc3_idle'); 
-                npc.setScale(1); 
-
-                //Apartado del npc  recuadros de colicion para interactuar con el npc
-                npc.body.setOffset(50, 45);
-               
-                npc.body.setSize(100, 100);
+        npc = new npc3(this, this.dataNpc[n-1], x, y);
+              
                 
                 break;
         }

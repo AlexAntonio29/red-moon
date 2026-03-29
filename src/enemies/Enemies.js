@@ -113,7 +113,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     cargarSonidos(){
         this.sonido=this.scene.sound.add(this.dataEnemie.diseno+"_sonido",{
         loop:true,
-        volume:1
+        volume:0
       });
 
 

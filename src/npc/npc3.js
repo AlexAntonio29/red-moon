@@ -13,6 +13,17 @@ export class npc3 extends Npc {
             fill: '#fff',
             backgroundColor: '#000' 
         }).setOrigin(0.5).setVisible(false);
+
+                // 3. Aseguramos visualmente al personaje
+                this.setTexture('npc3_idle'); 
+                this.setScale(1); 
+
+                //Apartado del npc  recuadros de colicion para interactuar con el npc
+                this.body.setOffset(50, 45);
+               
+                this.body.setSize(100, 100);
+
+
     }
 
     // Se ejecuta en cada frame desde la Scene principal
