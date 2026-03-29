@@ -42,7 +42,7 @@ export class player {
 
     //inputActive esto es para verificar si el input esta activo para evitar accion
     this.isInputActive=true;
-    //aqui despues i una clase que busque en la BD que armas tiene para cargarlo sino hay nada 
+    //aqui despues agregar una clase que busque en la BD que armas tiene para cargarlo sino hay nada 
     //entonces carga por defecto las armas principales
     this.setArma(armas[0]);
 
@@ -54,7 +54,9 @@ export class player {
     this.esAtaquefuerte = false; //se coloca para para saber que ataque se debera a hacer
 
   //INVENTARIO
-       this.inventario = [];
+       this.inventario = (this.scene.dataGuardadoRanura!==null)?
+       this.scene.dataGuardadoRanura[this.scene.ranura].player.inventario
+       :[];
 
 
 
@@ -1397,7 +1399,7 @@ cargarDepth(){
 
 
 
-  setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto,listaEventos,listaCheckpoints){
+  setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto,listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas){
 
     
 
@@ -1454,7 +1456,7 @@ cargarDepth(){
 
       
       
-      this.interactuar(listaEventos,listaCheckpoints);
+      this.interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas);
 
 
   
@@ -1465,7 +1467,7 @@ cargarDepth(){
 
   }
 
-  interactuar(listaEventos,listaCheckpoints) {
+  interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas) {
       // 1. Verificamos si se presionó la tecla E
       if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
           
@@ -1522,7 +1524,9 @@ cargarDepth(){
               this.scene.ranura,
               this,
               listaEventos,
-              listaCheckpoints
+              listaCheckpoints,
+              listaLlaves,
+              listaPuertasAbiertas
             );//se envia escene porque ahi se almacenan todos los objetos
 
               
@@ -1875,6 +1879,8 @@ cargarDepth(){
 
           console.log("X: "+this.player.x);
           console.log("Y: "+this.player.y);
+
+          console.log(this.inventario);
 
          
 

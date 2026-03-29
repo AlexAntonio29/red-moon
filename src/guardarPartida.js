@@ -1,7 +1,7 @@
 import { GuardarEnStorage } from "./funciones/GuardarEnStorage.js";
 
 
-export const guardarPartida=(ranura, player, listaEventos,listaCheckpoints)=>{
+export const guardarPartida=(ranura, player, listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas)=>{
 
 
 
@@ -40,6 +40,24 @@ export const guardarPartida=(ranura, player, listaEventos,listaCheckpoints)=>{
                 datosCheckpoint.push(data);
               })
 
+
+              let datosLlaves=[];
+
+              listaLlaves.map((llave)=>{
+
+                let data={
+                  'recogido':llave.recogido
+                }
+
+                datosLlaves.push(data);
+              });
+
+
+              let datosPuertasAbiertas=[];
+
+              listaPuertasAbiertas.map((puerta)=>{
+                datosPuertasAbiertas.push(puerta);
+              });
              
 
 
@@ -47,8 +65,8 @@ export const guardarPartida=(ranura, player, listaEventos,listaCheckpoints)=>{
                 'player':datosPlayer,
                 'eventos':datosEventos,
                 'checkpoints':datosCheckpoint,
-                
-
+                'llaves':datosLlaves,
+                'puertasAbiertas':datosPuertasAbiertas
               }
 
 
@@ -60,7 +78,8 @@ export const guardarPartida=(ranura, player, listaEventos,listaCheckpoints)=>{
               console.log(datos);
     
 
-
+              console.log(ranura);
+              console.log(datos);
               //crear valores falsos por el momento
               GuardarEnStorage(ranura,datos);
               

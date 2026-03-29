@@ -34,6 +34,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
     constructor(){
         super('StartGame');
+        this.nameScene='StartGame';
        
     }
     
@@ -281,6 +282,7 @@ crearEscenario(){
     //aqui se evalua el objeto para crear una llave y almacenarlo
 
     let idLlave=0;
+   
 
 
         this.blockLayer.forEachTile(tile=>{
@@ -288,7 +290,7 @@ crearEscenario(){
       if(tile.index!==-1&& 
         (tile.properties.tipoBloqueo==="recoger_item")&&
         (tile.properties.idItem==="llave_01")){
-
+        
         console.log(tile.layer.id);
         
         
@@ -296,16 +298,18 @@ crearEscenario(){
        const y=tile.getCenterY();
        const luzLlave= this.lights.addLight(x, y, 50) .setColor(0xffffff) .setIntensity(1);
 
-        idLlave++;
-
-        const recogido=false;//evaluar con JSON
+        
+       
+        const recogido=(this.dataGuardadoRanura)?
+        this.dataGuardadoRanura[this.ranura].llaves[idLlave].recogido
+        :false;//evaluar con JSON
 
         if(recogido){
           this.map.removeTileAt(tile.x, tile.y, true, true, this.blockLayer);
           this.lights.removeLight(luzLlave);
         }
 
-        this.listaLaves.push({
+        this.listaLlaves.push({
         'id':idLlave,
         'tile':tile,
         'recogido':recogido,
@@ -313,11 +317,36 @@ crearEscenario(){
 
       });
 
+      idLlave++;
 
       }
 
 
-    })
+       if(tile.index!==-1&& 
+        (tile.properties.tipoBloqueo==="puerta_item")&&
+        (tile.properties.idItem==="llave_01")){
+
+          if(this.listaPuertasAbiertas.find((t)=>(
+            t.x===tile.x&&
+            t.y===tile.y&&
+            t.nameScene===this.nameScene
+          
+          )))
+          this.abrirPuertaCompleta(tile);
+          console.log("abrir");
+          
+        }
+
+
+
+    });
+
+
+
+
+
+
+
 
 
     //crear contacto con collision
@@ -613,7 +642,8 @@ movimientosPlayer(){
       ,this.items_punto
       ,this.listaEventos
       ,this.listaCheckpoints
-    
+      ,this.listaLlaves
+      ,this.listaPuertasAbiertas
     );
     
      //this.player.getAtaque(this.listaEnemigos,this.contactoSprites,this.items_punto);
@@ -1470,7 +1500,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     creacionEnemigosPosicionados(){
 
-      this.crearEnemigo(1,2950,8600,3);//cantidad Enemigos, x, y ,tipo de enemigo
+      this.crearEnemigo(1,2950,8550,3);//cantidad Enemigos, x, y ,tipo de enemigo
 
       //this.crearEnemigo(1,3050,8600,1);
       //this.crearEnemigo(1,0,0,10);
@@ -1493,7 +1523,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
 
 
-       this.crearEnemigo(1,this.player.x+100,this.player.y)// enemigo
+     //  this.crearEnemigo(1,this.player.x+100,this.player.y)// enemigo
 
 
 
@@ -1938,14 +1968,20 @@ checkCondicionBloque(objeto, tile) {
                     
                     console.log(" ERROR: Es un item, pero no tiene 'idItem' en Tiled.");
                 }
+                  
 
-                if (idItem) {
-                  console.log(idItem);
-                    playerInstance.agregarItem(idItem); 
+              
+              
+                const t=this.listaLlaves.find((t)=>((tile.x===t.tile.x)&&tile.y===t.tile.y));
+               
+
+                if (t) {
+                   
+                    playerInstance.agregarItem(idItem); //+"_"+t.id
                     this.blockLayer.removeTileAt(tile.x, tile.y);
                     //eliminar la luz de la llave
-                    
-
+                    this.lights.removeLight(t.luz)
+                    t.recogido=true;
                     console.log(`¡Recogiste el ítem con ID: ${idItem}!`);
                 }
 
@@ -1966,6 +2002,13 @@ checkCondicionBloque(objeto, tile) {
                     // ==========================================
                     // CAMBIO: LLAMAMOS A LA REACCIÓN EN CADENA
                     // ==========================================
+                    const datosPuerta={
+                      nameScene:this.nameScene,
+                      x:tile.x,
+                      y:tile.y
+                    }
+
+                    this.listaPuertasAbiertas.push(datosPuerta);
                     this.abrirPuertaCompleta(tile);
                     
                     console.log(`¡Puerta abierta! El ítem ${idItem} se consumió y la reja gigante desapareció.`);

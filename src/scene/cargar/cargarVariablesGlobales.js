@@ -83,7 +83,11 @@ export class cargarVariablesGlobales{
 
        this.scene.listaEventos=this.scene.physics.add.group();
 
-       this.scene.listaLaves=[];
+       this.scene.listaLlaves=[];
+
+       this.scene.listaPuertasAbiertas=(this.scene.dataGuardadoRanura!==null)?
+       this.scene.dataGuardadoRanura[this.scene.ranura].puertasAbiertas
+       :[];
 
         }
 
@@ -95,6 +99,8 @@ export class cargarVariablesGlobales{
       //por el momento ocupare la ranuera 1 despues la cambio para que reciba segun la ranura que manda el menu principal
         this.scene.ranura=0;
         this.scene.dataGuardadoRanura=GuardarEnStorage(this.scene.ranura,null);
+
+        
 
           //cargar scenario Eventos
 
