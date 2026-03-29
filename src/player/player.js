@@ -1480,8 +1480,52 @@ cargarDepth(){
   }
 
 
-  detectarBloqueCercano(){
+  detectarBloqueCercano(capa){
+
     
+          // 2. Obtenemos el centro exacto del jugador
+          let px = this.player.x + (this.player.displayWidth / 2);
+          let py = this.player.y + (this.player.displayHeight / 2);
+
+          // 3. Creamos una "caja de búsqueda" a su alrededor (40 píxeles hacia cada lado)
+          let radioBusqueda = 50; 
+          
+          // Le pedimos a Phaser TODOS los cuadritos (tiles) que estén dentro de esa caja
+          let tilesCercanos = capa.getTilesWithinWorldXY(
+              px - radioBusqueda, 
+              py - radioBusqueda, 
+              radioBusqueda * 2, 
+              radioBusqueda * 2
+          );
+
+          let tileObjetivo = null;
+          let distanciaMinima = 99999; // Empezamos con un número gigante para irlo reduciendo
+
+          // 4. Analizamos cada cuadrito que encontró en la zona
+          tilesCercanos.forEach(tile => {
+              
+              // Filtro 1: ¿Tiene la propiedad tipoBloqueo de Tiled?
+              if ((tile && tile.properties && tile.properties.tipoBloqueo
+                ||(capa===this.scene.blockAbove&&tile.index!==-1))) {
+                  
+                  // Calculamos el centro matemático de ese bloque
+                  let tileCenterX = tile.pixelX + (tile.width / 2);
+                  let tileCenterY = tile.pixelY + (tile.height / 2);
+                  
+                  // Filtro 2: Medimos la distancia exacta usando el motor de matemáticas de Phaser
+                  let dist = Phaser.Math.Distance.Between(px, py, tileCenterX, tileCenterY);
+
+                  // Nos quedamos SOLO con el bloque que esté más cerca
+                  if (dist < distanciaMinima) {
+                      distanciaMinima = dist;
+                      tileObjetivo = tile;
+                  }
+              }
+
+          });
+
+          return tileObjetivo;
+
   }
 
 
@@ -1512,55 +1556,17 @@ if (npcCercano) {
 
     
 }
+      let tileObjetivo=this.detectarBloqueCercano(this.scene.blockLayer);
+      let tileObjetivoAbovePuerta=this.detectarBloqueCercano(this.scene.blockAbove);
 
-
-          // 2. Obtenemos el centro exacto del jugador
-          let px = this.player.x + (this.player.displayWidth / 2);
-          let py = this.player.y + (this.player.displayHeight / 2);
-
-          // 3. Creamos una "caja de búsqueda" a su alrededor (40 píxeles hacia cada lado)
-          let radioBusqueda = 50; 
-          
-          // Le pedimos a Phaser TODOS los cuadritos (tiles) que estén dentro de esa caja
-          let tilesCercanos = this.scene.blockLayer.getTilesWithinWorldXY(
-              px - radioBusqueda, 
-              py - radioBusqueda, 
-              radioBusqueda * 2, 
-              radioBusqueda * 2
-          );
-
-          let tileObjetivo = null;
-          let distanciaMinima = 99999; // Empezamos con un número gigante para irlo reduciendo
-
-          // 4. Analizamos cada cuadrito que encontró en la zona
-          tilesCercanos.forEach(tile => {
-              
-              // Filtro 1: ¿Tiene la propiedad tipoBloqueo de Tiled?
-              if (tile && tile.properties && tile.properties.tipoBloqueo) {
-                  
-                  // Calculamos el centro matemático de ese bloque
-                  let tileCenterX = tile.pixelX + (tile.width / 2);
-                  let tileCenterY = tile.pixelY + (tile.height / 2);
-                  
-                  // Filtro 2: Medimos la distancia exacta usando el motor de matemáticas de Phaser
-                  let dist = Phaser.Math.Distance.Between(px, py, tileCenterX, tileCenterY);
-
-                  // Nos quedamos SOLO con el bloque que esté más cerca
-                  if (dist < distanciaMinima) {
-                      distanciaMinima = dist;
-                      tileObjetivo = tile;
-                  }
-              }
-
-          });
-
-
-
-
+      if(tileObjetivoAbovePuerta){
+        console.log(tileObjetivoAbovePuerta);
+        console.log("Entrando en above door");
+        this.scene.abrirPuertaCompleta(tileObjetivoAbovePuerta,this.scene.blockAbove);
+      }
 
           // 5. Si despues de escanear todo encontramos un ganador... ¡Interactuamos!
-          if (tileObjetivo) {
-              console.log("🔍 Objeto más cercano detectado a distancia:", distanciaMinima);
+          if (tileObjetivo) {       
               this.scene.procesarInteraccionE(this, tileObjetivo);
           } else if(this.estaGuardando){
 

@@ -346,7 +346,7 @@ crearEscenario(){
             t.nameScene===this.nameScene
           
           )))
-          this.abrirPuertaCompleta(tile);
+          this.abrirPuertaCompleta(tile,this.blockLayer);
           console.log("abrir");
           
         }
@@ -364,7 +364,7 @@ crearEscenario(){
             t.y===tile.y&&
             t.nameScene===this.nameScene
         ))){
-          this.abrirPuertaCompleta(tile);
+          this.abrirPuertaCompleta(tile,this.blockAbove);
         }
 
       }
@@ -2072,7 +2072,7 @@ checkCondicionBloque(objeto, tile) {
                     }
 
                     this.listaPuertasAbiertas.push(datosPuerta);
-                    this.abrirPuertaCompleta(tile);
+                    this.abrirPuertaCompleta(tile,this.blockLayer);
                     
                     console.log(`¡Puerta abierta! El ítem ${idItem} se consumió y la reja gigante desapareció.`);
                     
@@ -2124,13 +2124,14 @@ checkCondicionBloque(objeto, tile) {
     // ==========================================
     // DESTRUIR PUERTA COMPLETA (REACCION EN CADENA)
     // ==========================================
-    abrirPuertaCompleta(tileInicial) {
+    abrirPuertaCompleta(tileInicial,capa) {
         let idRequerido = tileInicial.properties.idItem;
         let tilesPorRevisar = [tileInicial];
         let tilesVisitados = new Set(); // Para no revisar el mismo tile dos veces
 
         // Mientras haya bloques de puerta por revisar...
         while(tilesPorRevisar.length > 0) {
+          console.log(tilesPorRevisar);
             let tileActual = tilesPorRevisar.pop();
             let clave = `${tileActual.x},${tileActual.y}`;
 
@@ -2138,21 +2139,24 @@ checkCondicionBloque(objeto, tile) {
                 tilesVisitados.add(clave);
 
                 // 1. Destruimos este pedazo de la puerta
-                this.blockLayer.removeTileAt(tileActual.x, tileActual.y);
+                capa.removeTileAt(tileActual.x, tileActual.y);
 
                 // 2. Buscamos a sus 4 vecinos (Arriba, Abajo, Izquierda, Derecha)
                 let vecinos = [
-                    this.blockLayer.getTileAt(tileActual.x + 1, tileActual.y),
-                    this.blockLayer.getTileAt(tileActual.x - 1, tileActual.y),
-                    this.blockLayer.getTileAt(tileActual.x, tileActual.y + 1),
-                    this.blockLayer.getTileAt(tileActual.x, tileActual.y - 1)
+                    capa.getTileAt(tileActual.x + 1, tileActual.y),
+                    capa.getTileAt(tileActual.x - 1, tileActual.y),
+                    capa.getTileAt(tileActual.x, tileActual.y + 1),
+                    capa.getTileAt(tileActual.x, tileActual.y - 1)
                 ];
 
-                // 3. Revisamos si los vecinos también son de la misma puerta
+                
+                console.log(vecinos);
                 vecinos.forEach(vecino => {
-                    if (vecino && vecino.properties && 
+                    if ((vecino && vecino.properties && 
                         vecino.properties.tipoBloqueo === "puerta_item" && 
-                        vecino.properties.idItem === idRequerido) {
+                        vecino.properties.idItem === idRequerido)
+                      ||capa===this.blockAbove&&vecino!==null
+                      ) {
                         
                         // Si es parte de la puerta, lo agregamos a la lista para destruirlo
                         tilesPorRevisar.push(vecino);
