@@ -18,7 +18,7 @@ import { boss1 } from "../bosses/boss1.js";
 
 import {npc1} from '../npc/npc1.js'
 import {npc2} from '../npc/npc2.js'
-
+import { npc3 } from '../npc/Npc3.js'//agrego sneyder npc dialogos -nota- bug de la mayuscula de npc3 al crear el archivo, revisar eso para evitar errores de importacion es npc3 original
 
 
 
@@ -1675,16 +1675,36 @@ crearNpc(n,x,y){
 
         npc= new npc2(this,this.dataNpc[n-1],x,y);
         break;
-    
-      }
 
-      this.physics.add.collider(this.player.getContainer(),npc,()=>{
-        this.player.pisadas_player_tierra.stop();
-      });
+case 3:
+                // 1. Creamos un objeto de datos manual para que Npc.js NO explote
+                let datosManualesNpc3 = {
+                    diseno: "npc3_idle", // La key que cargaste en cargarAssets
+                    name: "Mago"
+                };
 
-      npc.setPipeline('Light2D');
-      this.listaNpc.add(npc);
-    
+                // 2. Se lo pasamos a la clase npc3
+                npc = new npc3(this, datosManualesNpc3, x, y);
+                
+                // 3. Aseguramos visualmente al personaje
+                npc.setTexture('npc3_idle'); 
+                npc.setScale(1); 
+
+                //Apartado del npc  recuadros de colicion para interactuar con el npc
+                npc.body.setOffset(50, 45);
+               
+                npc.body.setSize(100, 100);
+                
+                break;
+        }
+
+        // Tus físicas y luces originales
+        this.physics.add.collider(this.player.getContainer(), npc, () => {
+            this.player.pisadas_player_tierra.stop();
+        });
+
+        npc.setPipeline('Light2D');
+        this.listaNpc.add(npc);
     }
 
 
@@ -1695,8 +1715,8 @@ cargarNpc(){
  
 
   this.crearNpc(2,8052,6161);
-
-
+//agrego sneyder npc dialogos
+this.crearNpc(3, 6008.03, 7466.2);
 
 }
    
@@ -1949,9 +1969,9 @@ checkCondicionBloque(objeto, tile) {
         return true; 
     }
 }
-    // ==========================================
+
     // PROCESAR INTERACCIÓN CON LA TECLA "E"
-    // ==========================================
+  
     procesarInteraccionE(playerInstance, tile) {
       
         console.log(" Escaner activado Propiedades del bloque:", tile.properties);
@@ -2100,4 +2120,134 @@ checkCondicionBloque(objeto, tile) {
     }
 
 
+//dialogos
+iniciarDialogo(npc) {
+    // Seguridad: verificamos que el NPC tenga el método de diálogos
+    if (!npc || typeof npc.obtenerDialogos !== 'function') return;
+
+    this.enDialogo = true;
+    this.npcActual = npc; 
+    this.listaTextos = npc.obtenerDialogos();
+
+    // --- 1. REPRODUCIR MÚSICA DE AMBIENTACIÓN ---
+    // Verificamos si ya hay música sonando para no duplicarla
+    if (!this.musicaMagoActiva || !this.musicaMagoActiva.isPlaying) {
+        this.musicaMagoActiva = this.sound.add('musica_mago', { 
+            loop: true, 
+            volume: 0.8 
+        });
+        this.musicaMagoActiva.play();
+    }
+
+    // LÓGICA DE REPETICIÓN
+    if (npc.yaHabloTodo) {
+        this.indiceTexto = this.listaTextos.length - 1;
+    } else {
+        this.indiceTexto = 0;
+    }
+
+    this.mostrarCuadroDeTexto(this.listaTextos[this.indiceTexto]);
+    
+    // Detenemos al caballero
+    if (this.player && this.player.congelarParaDialogo) {
+        this.player.congelarParaDialogo();
+    }
+}
+
+avanzarDialogo() {
+    // ¿Llegamos a la última frase?
+    if (this.indiceTexto >= this.listaTextos.length - 1) {
+        
+        if (this.npcActual) {
+            this.npcActual.yaHabloTodo = true;
+        }
+
+        // --- 2. DETENER MÚSICA AL CERRAR DIÁLOGO ---
+        // Aplicamos un "fade-out" para mantener la atmósfera melancólica y que no se corte de golpe
+        if (this.musicaMagoActiva) {
+            this.tweens.add({
+                targets: this.musicaMagoActiva,
+                volume: 0,
+                duration: 1000, // Tarda 1 segundo en desvanecerse
+                onComplete: () => { 
+                    this.musicaMagoActiva.stop(); 
+                }
+            });
+        }
+
+        this.enDialogo = false;
+        this.ocultarCuadroDeTexto();
+        
+        // Devolvemos el movimiento al caballero
+        if (this.player && this.player.descongelarParaDialogo) {
+            this.player.descongelarParaDialogo();
+        }
+        
+    } else {
+        // Si no es la última frase, avanzamos normal
+        this.indiceTexto++;
+        this.mostrarCuadroDeTexto(this.listaTextos[this.indiceTexto]);
+    }
+}
+
+crearCuadroDialogo() {
+    if (!this.graphicsBox) {
+        // Fondo y borde del cuadro
+        this.graphicsBox = this.add.graphics();
+        this.graphicsBox.fillStyle(0x000000, 0.8); 
+        this.graphicsBox.lineStyle(2, 0xffffff, 1); 
+        this.graphicsBox.fillRect(100, 500, 600, 100); 
+        this.graphicsBox.strokeRect(100, 500, 600, 100);
+        this.graphicsBox.setScrollFactor(0); 
+        this.graphicsBox.setDepth(1000); 
+
+        // Texto
+        this.txtDialogo = this.add.text(120, 520, '', {
+            fontSize: '20px',
+            fill: '#ffffff',
+            wordWrap: { width: 560 } 
+        });
+        this.txtDialogo.setScrollFactor(0);
+        this.txtDialogo.setDepth(1001);
+    }
+}
+
+mostrarCuadroDeTexto(textoCompleto) {
+    this.crearCuadroDialogo();
+
+    this.graphicsBox.setVisible(true);
+    this.txtDialogo.setVisible(true);
+
+    if (this.typewriterTimer) this.typewriterTimer.remove();
+
+    this.txtDialogo.setText(''); 
+    this.typewriterIndex = 0; 
+
+    this.typewriterTimer = this.time.addEvent({
+        delay: 70, 
+        callback: () => {
+            this.txtDialogo.setText(this.txtDialogo.text + textoCompleto[this.typewriterIndex]);
+            this.typewriterIndex++;
+
+            // --- 3. EFECTO DE MÁQUINA DE ESCRIBIR ---
+            // Reproducimos el "blip" bajito cada vez que sale una letra.
+            // Esto le da un toque RPG clásico y mucha vida al pixel art.
+            this.sound.play('sonido_habla_npc', { volume: 1.5 });
+
+            if (this.typewriterIndex >= textoCompleto.length) {
+                this.typewriterTimer.remove();
+                this.isTypewriterDone = true; 
+            }
+        },
+        callbackScope: this,
+        loop: true
+    });
+}
+
+ocultarCuadroDeTexto() {
+    if (this.typewriterTimer) this.typewriterTimer.remove();
+
+    if (this.graphicsBox) this.graphicsBox.setVisible(false);
+    if (this.txtDialogo) this.txtDialogo.setVisible(false);
+}
 }

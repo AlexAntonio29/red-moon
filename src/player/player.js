@@ -98,6 +98,8 @@ export class player {
 
      this.estaAtacando=false;//para determinar que no genere muchos ataques sin limites
 
+     this.puedeMoverse = true;
+
     // Crear sprite físico directamente
     this.player = scene.physics.add.sprite(0, 0, texture);
     this.player.setOrigin(0);
@@ -627,8 +629,7 @@ this.scene.anims.create({
       this.pisadas_player_tierra.stop();
     }
     
-if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !== "healing"  &&this.state!="dash" && this.isInputActive) {
-
+if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !== "healing" && this.state!="dash" && this.isInputActive && this.puedeMoverse) {
 
     //ASIGNAR ESTADOS DE ACUERDO AL MOVIMIENTO
     //Calcular velocidad de movimimiento
@@ -1324,6 +1325,7 @@ movimientoDash() {
         this.player.setVelocityY(desalerar);
       }
       
+      
     }
 
 
@@ -1337,6 +1339,16 @@ movimientoDash() {
 
   }
 
+  // --- AÑADE ESTOS DOS MÉTODOS JUSTO AQUÍ (Antes de cerrar la clase) ---
+  congelarParaDialogo() {
+    this.puedeMoverse = false;
+    if (this.player.body) this.player.body.setVelocity(0, 0);
+    this.player.play('player_estatico', true); // Ponemos animación quieta
+  }
+
+  descongelarParaDialogo() {
+    this.puedeMoverse = true;
+  }
 
   Curar() {
     // 1. Verificamos la tecla V y que el jugador no esté ya haciendo otra acción (ataque o cura)
@@ -1467,11 +1479,35 @@ cargarDepth(){
 
   }
 
+
   interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas) {
-      // 1. Verificamos si se presionó la tecla E
-      if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
-          
-          if (!this.scene.blockLayer) return; // Seguridad extra
+    // 1. Verificamos si se presionó la tecla E
+    if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
+
+       if (!this.scene.blockLayer) return; 
+        // PRIORIDAD 1: ¿Ya estamos en un diálogo activo?
+       
+        if (this.scene.enDialogo) {
+            this.scene.avanzarDialogo();
+            return; //  Detenemos la función para no interactuar con nada más
+        }
+
+        
+
+      
+// PRIORIDAD 2: NPCs (Ahora automático para todos)
+let npcCercano = this.scene.listaNpc.getChildren().find(npc => 
+    npc.estaCercaParaHablar && npc.estaCercaParaHablar(this.getContainer())
+);
+
+if (npcCercano) {
+    // Enviamos el objeto NPC completo para que la escena pueda marcarlo
+    this.scene.iniciarDialogo(npcCercano); 
+    return;
+
+    
+}
+
 
           // 2. Obtenemos el centro exacto del jugador
           let px = this.player.x + (this.player.displayWidth / 2);
