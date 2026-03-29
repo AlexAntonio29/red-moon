@@ -355,6 +355,13 @@ export class cargarAssets{
             });
 
 
+    // NUEVO: NPC 3 -Mago- Sneyder
+
+    this.scene.load.image('npc3_idle', "./assets/npc/npc3/Mago.png"); 
+    
+  
+
+
             
         }
     
