@@ -2133,7 +2133,7 @@ checkCondicionBloque(objeto, tile) {
 
         // Mientras haya bloques de puerta por revisar...
         while(tilesPorRevisar.length > 0) {
-          console.log(tilesPorRevisar);
+          
             let tileActual = tilesPorRevisar.pop();
             let clave = `${tileActual.x},${tileActual.y}`;
 
@@ -2152,7 +2152,7 @@ checkCondicionBloque(objeto, tile) {
                 ];
 
                 
-                console.log(vecinos);
+                
                 vecinos.forEach(vecino => {
                     if (vecino!==null) {
                         
