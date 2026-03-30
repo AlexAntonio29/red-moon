@@ -1559,7 +1559,14 @@ if (npcCercano) {
       let tileObjetivo=this.detectarBloqueCercano(this.scene.blockLayer);
       let tileObjetivoAbovePuerta=this.detectarBloqueCercano(this.scene.blockAbove);
 
-      if(tileObjetivoAbovePuerta){
+
+
+          // 5. Si despues de escanear todo encontramos un ganador... ¡Interactuamos!
+          if (tileObjetivo) {    
+            
+              
+
+        if(this.scene.procesarInteraccionE(this, tileObjetivo)&&tileObjetivoAbovePuerta){
         
         this.scene.abrirPuertaCompleta(tileObjetivoAbovePuerta,this.scene.blockAbove);
         const datosPuerta={
@@ -1570,10 +1577,6 @@ if (npcCercano) {
 
       this.scene.listaPuertasAbiertasAbove.push(datosPuerta);
       }
-
-          // 5. Si despues de escanear todo encontramos un ganador... ¡Interactuamos!
-          if (tileObjetivo) {       
-              this.scene.procesarInteraccionE(this, tileObjetivo);
           } else if(this.estaGuardando){
 
 

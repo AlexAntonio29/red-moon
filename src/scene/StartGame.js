@@ -2076,10 +2076,11 @@ checkCondicionBloque(objeto, tile) {
                     this.abrirPuertaCompleta(tile,this.blockLayer);
                     
                     console.log(`¡Puerta abierta! El ítem ${idItem} se consumió y la reja gigante desapareció.`);
-                    
+                    return true;
                 } else {
                     // Si no lo tiene, lo rebotamos (el tile sigue siendo sólido)
                     console.log(`Está cerrado... Necesitas encontrar el ítem: ${idItem}`);
+                    return false;
                     // Aquí podrías mostrar un texto flotante en pantalla
                 }
                 break;
