@@ -89,6 +89,10 @@ export class cargarVariablesGlobales{
        this.scene.dataGuardadoRanura[this.scene.ranura].puertasAbiertas
        :[];
 
+       this.scene.listaPuertasAbiertasAbove=(this.scene.dataGuardadoRanura!==null)?
+       this.scene.dataGuardadoRanura[this.scene.ranura].puertasAbiertasAbove
+       :[]
+
         }
 
 

@@ -359,7 +359,7 @@ crearEscenario(){
 
       if(tile.index!==-1){
 
-        if(this.listaPuertasAbiertas.find((t)=>(
+        if(this.listaPuertasAbiertasAbove.find((t)=>(
             t.x===tile.x&&
             t.y===tile.y&&
             t.nameScene===this.nameScene
@@ -674,6 +674,7 @@ movimientosPlayer(){
       ,this.listaCheckpoints
       ,this.listaLlaves
       ,this.listaPuertasAbiertas
+      ,this.listaPuertasAbiertasAbove
     );
     
      //this.player.getAtaque(this.listaEnemigos,this.contactoSprites,this.items_punto);
@@ -2152,11 +2153,7 @@ checkCondicionBloque(objeto, tile) {
                 
                 console.log(vecinos);
                 vecinos.forEach(vecino => {
-                    if ((vecino && vecino.properties && 
-                        vecino.properties.tipoBloqueo === "puerta_item" && 
-                        vecino.properties.idItem === idRequerido)
-                      ||capa===this.blockAbove&&vecino!==null
-                      ) {
+                    if (vecino!==null) {
                         
                         // Si es parte de la puerta, lo agregamos a la lista para destruirlo
                         tilesPorRevisar.push(vecino);

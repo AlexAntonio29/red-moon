@@ -1411,7 +1411,7 @@ cargarDepth(){
 
 
 
-  setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto,listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas){
+  setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto,listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove){
 
     
 
@@ -1468,7 +1468,7 @@ cargarDepth(){
 
       
       
-      this.interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas);
+      this.interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove);
 
 
   
@@ -1529,7 +1529,7 @@ cargarDepth(){
   }
 
 
-  interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas) {
+  interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove) {
     // 1. Verificamos si se presionó la tecla E
     if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
 
@@ -1560,9 +1560,15 @@ if (npcCercano) {
       let tileObjetivoAbovePuerta=this.detectarBloqueCercano(this.scene.blockAbove);
 
       if(tileObjetivoAbovePuerta){
-        console.log(tileObjetivoAbovePuerta);
-        console.log("Entrando en above door");
+        
         this.scene.abrirPuertaCompleta(tileObjetivoAbovePuerta,this.scene.blockAbove);
+        const datosPuerta={
+                      nameScene:this.scene.nameScene,
+                      x:tileObjetivoAbovePuerta.x,
+                      y:tileObjetivoAbovePuerta.y
+                    }
+
+      this.scene.listaPuertasAbiertasAbove.push(datosPuerta);
       }
 
           // 5. Si despues de escanear todo encontramos un ganador... ¡Interactuamos!
@@ -1578,7 +1584,8 @@ if (npcCercano) {
               listaEventos,
               listaCheckpoints,
               listaLlaves,
-              listaPuertasAbiertas
+              listaPuertasAbiertas,
+              listaPuertasAbiertasAbove
             );//se envia escene porque ahi se almacenan todos los objetos
 
               
