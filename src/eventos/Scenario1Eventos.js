@@ -9,11 +9,11 @@ export class Scenario1Eventos extends Eventos{
 
     //eventos que solo sucede una sola vez en determinada parte de la hisotoria
 
-    constructor(scene,x=0,y=0,width=100,height=50,player,camera,lights,playerAtributos,id){
+    constructor(scene,x=0,y=0,width=100,height=50,player,camera,lights,playerAtributos,id, esActivo){
 
    
 
-        super(scene, x,y,width,height,player,camera,lights, playerAtributos,id);
+        super(scene, x,y,width,height,player,camera,lights, playerAtributos,id, esActivo);
 
     }
 

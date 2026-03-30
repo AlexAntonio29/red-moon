@@ -1647,6 +1647,15 @@ if (npcCercano) {
               volume:0.5
             }).play();
             palanca.esActivado=true;
+
+            this.scene.listaEventos.children.iterate(evento=>{
+
+              if(evento.id===3){
+                evento.esActivo=true;
+              }
+            })
+
+
             console.log("Palanca Activado");
 
             this.scene.blockLayer.forEachTile(tile=>{

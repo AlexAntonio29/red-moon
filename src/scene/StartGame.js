@@ -1607,7 +1607,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     }
 
-    crearEvento(x,y,width,height,tiempoEvento,tiempoTraslado, xadd,yadd, zoom,ocultarHUD ,accion,movePlayer,id){
+    crearEvento(x,y,width,height,tiempoEvento,tiempoTraslado, xadd,yadd, zoom,ocultarHUD ,accion,movePlayer,id,esActivo){
 
 
       /*
@@ -1625,7 +1625,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
         
 
       
-      let evento = new this.Scenario1Eventos(this,x,y,width,height,this.player.getContainer(),this.camera,this.lights, this.player,id);
+      let evento = new this.Scenario1Eventos(this,x,y,width,height,this.player.getContainer(),this.camera,this.lights, this.player,id, esActivo);
 
       this.physics.add.overlap(
         this.player.getContainer(),
@@ -1653,7 +1653,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     cargarEvento(){
       //datos de eventos estos para comodidad del programador en agregar eventos se agregaran en variables
-      let x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom, ocultarHUD,accion,movePlayer;
+      let x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom, ocultarHUD,accion,movePlayer,esActivo;
       let id=0;
       x=4400;
       y=8425;
@@ -1668,10 +1668,12 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       accion=1;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
       //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
       movePlayer=false;
+      esActivo=true;
+
 
 
       //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id);
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo);
 
       id++;
       x=7110;
@@ -1687,10 +1689,11 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       accion=2;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
       //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
       movePlayer=false;
+      esActivo=true;
 
 
       //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id);
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo);
 
       id++;
       x=9805;
@@ -1706,10 +1709,11 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       accion=3;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
       //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
       movePlayer=false;
+      esActivo=true;
 
 
       //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id);
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo);
 
 
       //cuando se va a agregar un nuevo elemento entoces se establecen valores variables;
@@ -1730,10 +1734,11 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       accion=4;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
       //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
       movePlayer=false;
+      esActivo=false;
 
 
       //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id);
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo);
 
 
 }

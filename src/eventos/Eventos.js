@@ -3,7 +3,7 @@ export class Eventos extends Phaser.Physics.Arcade.Image{
 
     
 
-    constructor(scene, x,y,width,height,player, camera,lights,playerAtributos,id){
+    constructor(scene, x,y,width,height,player, camera,lights,playerAtributos,id, esActivo){
 
 
 
@@ -28,7 +28,7 @@ export class Eventos extends Phaser.Physics.Arcade.Image{
 
        this.esActivo=(scene.dataGuardadoRanura!==null)
        ?scene.dataGuardadoRanura[scene.ranura].eventos[id].esActivo
-       :true;// this.esActivo=true;//para verificar si esta activo el evento, llamar por BD esto se activa cuando pasa otro evento 
+       :esActivo;// this.esActivo=true;//para verificar si esta activo el evento, llamar por BD esto se activa cuando pasa otro evento 
         this.esActivado=(scene.dataGuardadoRanura!==null)
         ?scene.dataGuardadoRanura[scene.ranura].eventos[id].esActivado
         :false; //esto es para que se ejecute una sola vez
