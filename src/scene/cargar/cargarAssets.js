@@ -146,6 +146,13 @@ export class cargarAssets{
               
             }
 
+
+            cargarAnimacionPalanca(){
+              this.scene.load.spritesheet("palanca","/assets/items/palanca/palanca.png",{
+                frameWidth:48,
+                frameHeight:96
+              })
+            }
             
 
 
@@ -202,6 +209,7 @@ export class cargarAssets{
         this.scene.load.image("Gate_Wood1","/assets/tiles_maps/Tiled/Gate_Wood1.png");
         this.scene.load.image("Fantasy_door1","/assets/tiles_maps/Tiled/Fantasy_door1.png");
         this.scene.load.image("Fantasy_door2","/assets/tiles_maps/Tiled/Fantasy_door2.png"); 
+        this.scene.load.image("Fantasy_switches","/assets/tiles_maps/Tiled/Fantasy_switches.png");
 
         this.scene.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
         this.scene.load.image("a3 - Walls And Floors","/assets/tiles_maps/Tiled/A3 - Walls And Floors.png");//Big_Decoration
@@ -385,6 +393,7 @@ export class cargarAssets{
           this.cargarAnimacionesNpc();
           this.cargarAnimacionesBosses();
           this.cargarAnimacionesEstatua();
+          this.cargarAnimacionPalanca();
 
           
     

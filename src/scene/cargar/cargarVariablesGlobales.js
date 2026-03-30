@@ -79,6 +79,8 @@ export class cargarVariablesGlobales{
 
        this.scene.listaCheckpoints=this.scene.physics.add.group();
 
+       this.scene.listaPalancas=this.scene.physics.add.group();
+
        this.scene.listaJefes=this.scene.physics.add.group();
 
        this.scene.listaEventos=this.scene.physics.add.group();

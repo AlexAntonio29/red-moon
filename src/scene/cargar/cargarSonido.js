@@ -98,6 +98,8 @@ this.scene.load.audio('sonido_habla_npc', './assets/npc/npc3/Sonido/sonido_para_
         
               this.scene.load.audio("atacado_espada","./sounds/enemigo/general/atacado_espada.mp3");
         
+              this.scene.load.audio("recoger_item","./sounds/general/recoger/recoger_item.mp3")
+              this.scene.load.audio("palanca","./sounds/general/palanca/palanca.mp3");
               this.scene.load.audio("golpeToPlayer","./sounds/player/atacado/ataque.mp3");
         
               this.scene.load.audio("reloj","./sounds/reloj.mp3");
@@ -107,6 +109,8 @@ this.scene.load.audio('sonido_habla_npc', './assets/npc/npc3/Sonido/sonido_para_
               this.scene.load.audio("puerta_abriendose","./sounds/general/puerta/puerta_abriendose.mp3")
 
               this.scene.load.audio("suspenso","./sounds/evento/momentoSuspenso/suspenso.mp3");
+
+              this.scene.load.audio("soundCheckpoint","./sounds/checkpoint/sound.mp3");
 
               
         

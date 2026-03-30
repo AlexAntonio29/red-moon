@@ -36,8 +36,10 @@ export class player {
     this.arma;
     this.lights=lights
 
-
+    //Interaccion con objetos
     this.estaGuardando=false;
+    this.estaActivandoPalanca=false;
+
     
 
     //inputActive esto es para verificar si el input esta activo para evitar accion
@@ -618,15 +620,33 @@ this.scene.anims.create({
 
        // console.log(velocidadDiagonal);
 
-
+     
 //if (!contacto && !(this.estaAtacando)&& this.state!="attack") {
-    if(this.state==="walk"&&this.puedeMoverse){
+      if(this.state==="walk"
+      &&this.puedeMoverse
+     // &&(this.player.body.velocity.x!==0||this.player.body.velocity.y!==0)
+    ){
+      
+      //if(this.player.body.velocity.x!==0&&this.player.body.velocity.y!==0)
       if(!(this.pisadas_player_tierra.isPlaying))
       this.pisadas_player_tierra.play();
+
      
-    }else{
+    }else {
+
+     
+      if(!(this.pisadas_player_tierra.isStoping))
       this.pisadas_player_tierra.stop();
+     
     }
+
+
+
+
+   // if(this.player.body.velocity.x!==0||this.player.body.velocity.y!==0)
+   //   console.log("HERREEEE");
+   
+
 
 
     
@@ -634,7 +654,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
     //ASIGNAR ESTADOS DE ACUERDO AL MOVIMIENTO
     //Calcular velocidad de movimimiento
-    
+
 
    
 
@@ -762,6 +782,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
     this.getCameraPosition(0,0,subEstado_caminar);
     this.state="idle";
+    
 
       //this.player.setVelocity(0);
 
@@ -779,6 +800,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
       this.player.flipX=false;
       this.player.play('player_estatico');
       this.state="idle";
+      
     }
     break;
 
@@ -788,6 +810,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
       this.player.flipX=true;
       this.player.play('player_estatico');
       this.state="idle";
+      
     }
     break;
 
@@ -796,6 +819,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
       
       this.player.play('player_estatico');
       this.state="idle";
+      
     }
     break;
 
@@ -807,6 +831,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         //if(subEstado_caminar!=="") 
  
 }
+
+
+
+
 
 
 
@@ -853,8 +881,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
 
     //console.log(this.player.body.velocity.y);
     //console.log(this.player.body.velocity.x);
-      if(this.player.body.velocity.y===-aceleracion) 
+      if(this.player.body.velocity.y===-aceleracion) {
         this.player.anims.play('player_estatico',true);
+        this.state="idle";
+      }
        else if (this.player.anims.currentAnim?.key !== 'player_camina_up') 
       this.player.anims.play('player_camina_up',true);
 
@@ -900,8 +930,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
     //console.log(this.player.body.velocity.y);
     //console.log(this.player.body.velocity.x);
 
-    if(this.player.body.velocity.y===aceleracion) 
+    if(this.player.body.velocity.y===aceleracion) {
         this.player.anims.play('player_estatico',true);
+      this.state="idle";
+      }
     else if (this.player.anims.currentAnim?.key !== 'player_camina_down') 
       this.player.play('player_camina_down');
 
@@ -949,8 +981,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
        //console.log(this.player.body.velocity.y);
     //console.log(this.player.body.velocity.x);
 
-    if(this.player.body.velocity.x===aceleracion) 
+    if(this.player.body.velocity.x===aceleracion) {
         this.player.anims.play('player_estatico',true);
+      this.state="idle";
+      }
 
     else if (this.player.anims.currentAnim?.key !== 'player_camina') {
     //  console.log("cambio derecha");
@@ -997,8 +1031,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
       // console.log(this.sprite.body.velocity.y);
     //console.log(this.player.body.velocity.x);
 
-        if(this.player.body.velocity.x===-aceleracion) 
+        if(this.player.body.velocity.x===-aceleracion) {
         this.player.anims.play('player_estatico',true);
+        this.state="idle";
+      }
       else  if (this.player.anims.currentAnim?.key !== 'player_camina_inverso') {
         //  console.log("cambio izquierda");
      
@@ -1037,9 +1073,10 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         {
           //this.player.setVelocity(0);
           this.player.anims.play('player_estatico',true);
+          this.state="idle";
         }
         else if (this.player.anims.currentAnim?.key !== 'player_camina') {
-      console.log("cambio derecha");
+     
       
       this.player.play('player_camina');
     }
@@ -1067,6 +1104,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         if(this.player.body.velocity.y===-aceleracion&&this.player.body.velocity.x===-aceleracion) 
         {
           this.player.anims.play('player_estatico',true);
+          this.state="idle";
           //this.player.setVelocity(0);
         }
     else  if (this.player.anims.currentAnim?.key !== 'player_camina') {
@@ -1096,6 +1134,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
         {
          // this.player.setVelocity(0);
           this.player.anims.play('player_estatico',true);
+          this.state="idle";
         }
         else if (this.player.anims.currentAnim?.key !== 'player_camina') {
       //console.log("cambio derecha");
@@ -1128,6 +1167,7 @@ if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !
        { 
        // this.player.setVelocity(0);
         this.player.anims.play('player_estatico',true);
+        this.state="idle";
       }
     else if (this.player.anims.currentAnim?.key !== 'player_camina') {
           //console.log("cambio izquierda");
@@ -1415,7 +1455,8 @@ cargarDepth(){
   setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto,listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove){
 
     
-
+    //console.log(this.estaGuardando);
+   // console.log(this.estaActivandoPalanca);
       this.cargarDepth();
        // console.log(this.player.x);
        // console.log(this.player.y);
@@ -1439,6 +1480,7 @@ cargarDepth(){
       ){
         
         this.state="idle";
+        
       }
     })
 
@@ -1594,7 +1636,32 @@ if (npcCercano) {
             );//se envia escene porque ahi se almacenan todos los objetos
 
               
-          }else console.log("No hay nada cerca para interactuar.");
+          }else if(this.estaActivandoPalanca){
+
+        this.scene.listaPalancas.children.iterate(palanca=>{
+          if(this.scene.physics.overlap(this.player, palanca) && !(palanca.esActivado)){
+            palanca.play("palanca_move");
+
+            this.scene.sound.add("palanca",{
+              loop:false,
+              volume:0.5
+            }).play();
+            palanca.esActivado=true;
+            console.log("Palanca Activado");
+
+            this.scene.blockLayer.forEachTile(tile=>{
+
+              if(tile.index!==-1 && tile.properties.idItem===palanca.idPuerta){
+
+                this.scene.blockLayer.removeTileAt(tile.x, tile.y);
+              }
+            });
+          }
+        }) 
+        
+
+      } else console.log("No hay nada cerca para interactuar.");
+
 
 
 

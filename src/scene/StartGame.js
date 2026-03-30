@@ -29,6 +29,7 @@ import { BloqueoDash } from "./colisiones/BloqueoDash.js";
 import { BloqueoItem } from "./colisiones/BloqueoItem.js";
 import { RecogerItem } from "./colisiones/RecogerItem.js"; 
 import { Estatua } from "../items/estatua/Estatua.js";
+import { Palanca } from "../items/palanca/Palanca.js";
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
@@ -98,6 +99,7 @@ crearEscenario(){
     this.tileset15 = this.map.addTilesetImage('Gate_Wood1', 'Gate_Wood1');
     this.tileset16 = this.map.addTilesetImage('Fantasy_door1', 'Fantasy_door1');
     this.tileset17 = this.map.addTilesetImage('Fantasy_door2', 'Fantasy_door2');
+    this.tileset18 = this.map.addTilesetImage("Fantasy_switches","Fantasy_switches");
 
 
     
@@ -111,6 +113,7 @@ crearEscenario(){
     this.fondo=this.map.createLayer('FONDO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -118,6 +121,7 @@ crearEscenario(){
           this.subSuelo=this.map.createLayer('SUBSUELO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -127,6 +131,7 @@ crearEscenario(){
     this._subSuelo=this.map.createLayer('_SUBSUELO',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -134,6 +139,7 @@ crearEscenario(){
     this.suelo=this.map.createLayer('SUELO', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]  
       ,0,0);
@@ -141,6 +147,7 @@ crearEscenario(){
           this._suelo=this.map.createLayer('_SUELO', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -149,6 +156,7 @@ crearEscenario(){
           this._suelo2=this.map.createLayer('_SUELO-2', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -157,6 +165,7 @@ crearEscenario(){
           this._suelo3=this.map.createLayer('_SUELO-3', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -164,6 +173,7 @@ crearEscenario(){
                 this._suelo4=this.map.createLayer('_SUELO-4', 
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -176,6 +186,7 @@ crearEscenario(){
               this.above_collider=this.map.createLayer('ABOVE-COLLIDER',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -184,6 +195,7 @@ crearEscenario(){
           this.blockLayer = this.map.createLayer('BLOCK', 
               [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ], 
               0, 0
@@ -193,6 +205,7 @@ crearEscenario(){
           this.blockAbove = this.map.createLayer('BLOCK-ABOVE', 
               [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ], 
               0, 0
@@ -204,6 +217,7 @@ crearEscenario(){
                 this._above_collider=this.map.createLayer('_ABOVE-COLLIDER',
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -217,6 +231,7 @@ crearEscenario(){
                   this.above=this.map.createLayer('ABOVE',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
               
             ]
@@ -226,6 +241,7 @@ crearEscenario(){
                   this._above=this.map.createLayer('_ABOVE',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
               
             ]
@@ -235,6 +251,7 @@ crearEscenario(){
                          this._above2=this.map.createLayer('_ABOVE2',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -244,6 +261,7 @@ crearEscenario(){
                   this._above3_decoration=this.map.createLayer('_ABOVE3-DECORATION',//TODO lo que esta encima del jugador pero sin collision
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -252,6 +270,7 @@ crearEscenario(){
       this._above4_antorcha=this.map.createLayer('_ABOVE4-ANTORCHA',//las antorchas
             [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
               ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
+              ,this.tileset18
             
             ]
       ,0,0);
@@ -842,11 +861,12 @@ colisionesEnemigo(){
   eliminarRebote(objeto){
 
     
-
+/*
     if(objeto.name==="player"){
+    //if(objeto.body.x===0&&objeto.body.y===0)
     this.player.setCambiarEstado("idle");
     //objeto.setVelocity(0);
-  }
+  }*/
 
 
    // player.this.state="idle";
@@ -1744,7 +1764,7 @@ crearNpc(n,x,y){
 
         // Tus físicas y luces originales
         this.physics.add.collider(this.player.getContainer(), npc, () => {
-            this.player.pisadas_player_tierra.stop();
+           
             
         });
 
@@ -1773,7 +1793,7 @@ crearCheckpoint(x,y,id){
 
   this.physics.add.collider(this.player.getContainer(),checkpoint,()=>{
   
-    this.player.pisadas_player_tierra.stop();
+   
   });
 
 
@@ -1807,6 +1827,41 @@ cargarCheckpoints(){
   this.crearCheckpoint(x,y,id);
 
 
+}
+
+crearPalanca(x,y,id,idPuerta){
+
+  let palanca= new Palanca(this,x,y,id,idPuerta);
+
+
+
+  palanca.setPipeline('Light2D');
+
+  this.physics.add.collider(this.player.getContainer(),palanca.hitbox);
+  this.physics.add.overlap(this.player.getContainer(),palanca,()=>{
+    
+    this.player.estaActivandoPalanca=true;
+  });
+
+ 
+  this.listaPalancas.add(palanca);
+
+
+  
+
+
+
+}
+
+cargarPalancas(){
+
+let id=0,idPuerta='palanca_01',x=7935,y=7880;
+
+this.crearPalanca(x,y,id,idPuerta);
+
+
+
+  
 }
 
 
@@ -1847,6 +1902,7 @@ this.game.renderer.antialias = false;
 
    this.cargarCheckpoints();
     //this.crearAnimaciones();
+    this.cargarPalancas();
        
 }
 
@@ -1884,7 +1940,7 @@ lightplayer(){
 
 
 
-salirAreaGuardado(){
+salirAreasInteraccion(){
 
   this.listaCheckpoints.children.iterate(checkpoint=>{
                   
@@ -1897,6 +1953,14 @@ salirAreaGuardado(){
            
             
             });
+
+  this.listaPalancas.children.iterate(palanca=>{
+    if(this.player.estaActivandoPalanca&&!this.physics.overlap(this.player.getContainer(),palanca)){
+      {
+      this.player.estaActivandoPalanca=false;
+    }
+    }
+  })
 
 
           
@@ -1934,7 +1998,7 @@ update(time, delta){
     this.movimientosNpc();
 
    
-    this.salirAreaGuardado();
+    this.salirAreasInteraccion();
 
 
 
@@ -2048,6 +2112,10 @@ checkCondicionBloque(objeto, tile) {
                     this.lights.removeLight(t.luz)
                     t.recogido=true;
                     console.log(`¡Recogiste el ítem con ID: ${idItem}!`);
+                    this.sound.add("recoger_item",{
+                      loop:false,
+                      volume: 0.3
+                    }).play();
                 }
 
                 
@@ -2100,22 +2168,20 @@ checkCondicionBloque(objeto, tile) {
                 console.log("El cartel dice: 'Peligro, monstruos adelante'.");
                 break;
 
-            default:
-                console.log("No se puede interactuar con este objeto de esa forma.");
-                break;
+
                 // CASO C: ACTIVAR UNA PALANCA O INTERRUPTOR
             case "palanca":
                 // Leemos cual es el ID del dibujo de la palanca activada
                 let tileActivado = tile.properties.idActivado; 
 
-                if (tileActivado) {
+                if (tileActivado||tileActivado===0) {
                     // 1. Reemplazamos el dibujo actual por el de la palanca bajada
                     this.blockLayer.putTileAt(tileActivado, tile.x, tile.y);
                     
                     // 2. Le cambiamos el tipo para que el jugador no pueda activarla 100 veces
                     tile.properties.tipoBloqueo = "palanca_usada";
                     
-                    console.log("¡Click! La palanca ha sido activada.");
+                    console.log("La palanca ha sido activada.");
                     
                     // ==========================================
                     // aqui se puede agregar la poder abrir una puerta secreta
@@ -2130,6 +2196,10 @@ checkCondicionBloque(objeto, tile) {
             // CASO D: SI LA PALANCA YA SE USO
             case "palanca_usada":
                 console.log("La palanca ya está trabada en la posición de encendido.");
+                break;
+
+            default:
+                console.log("No se puede interactuar con este objeto de esa forma.");
                 break;
         }
     }
@@ -2186,12 +2256,14 @@ iniciarDialogo(npc) {
 
     // --- 1. REPRODUCIR MÚSICA DE AMBIENTACIÓN ---
     // Verificamos si ya hay música sonando para no duplicarla
-    if (!this.musicaMagoActiva || !this.musicaMagoActiva.isPlaying) {
-        this.musicaMagoActiva = this.sound.add('musica_mago', { 
+    if (!this.sonidoNPC || !this.sonidoNPC.isPlaying) {
+        this.sonidoNPC = this.sound.add('musica_mago', { 
             loop: true, 
             volume: 0.8 
         });
-        this.musicaMagoActiva.play();
+        this.musicaFondo.volume=0.1;
+        this.sonidoNPC.play();
+        
     }
 
     // LÓGICA DE REPETICIÓN
@@ -2219,13 +2291,14 @@ avanzarDialogo() {
 
         // --- 2. DETENER MÚSICA AL CERRAR DIÁLOGO ---
         // Aplicamos un "fade-out" para mantener la atmósfera melancólica y que no se corte de golpe
-        if (this.musicaMagoActiva) {
+        if (this.sonidoNPC) {
             this.tweens.add({
-                targets: this.musicaMagoActiva,
+                targets: this.sonidoNPC,
                 volume: 0,
                 duration: 1000, // Tarda 1 segundo en desvanecerse
                 onComplete: () => { 
-                    this.musicaMagoActiva.stop(); 
+                    this.sonidoNPC.stop(); 
+                    this.musicaFondo.volume=0.5;
                 }
             });
         }

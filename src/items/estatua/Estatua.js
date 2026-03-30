@@ -79,6 +79,10 @@ export class Estatua extends Phaser.Physics.Arcade.Sprite{
         if(this.anims.currentAnim?.key!=="checkpoint_activado"){
         this.play("checkpoint_activado");
         this.esEncendido=true;
+        this.scene.sound.add("soundCheckpoint",{
+            loop:false,
+            volume:0.3
+        }).play();
     }
 
     }
