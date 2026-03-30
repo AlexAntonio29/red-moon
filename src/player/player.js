@@ -99,6 +99,7 @@ export class player {
      this.estaAtacando=false;//para determinar que no genere muchos ataques sin limites
 
      this.puedeMoverse = true;
+     
 
     // Crear sprite físico directamente
     this.player = scene.physics.add.sprite(0, 0, texture);
@@ -619,21 +620,21 @@ this.scene.anims.create({
 
 
 //if (!contacto && !(this.estaAtacando)&& this.state!="attack") {
-
-
-    if(this.state==="walk"){
+    if(this.state==="walk"&&this.puedeMoverse){
       if(!(this.pisadas_player_tierra.isPlaying))
       this.pisadas_player_tierra.play();
-
+     
     }else{
       this.pisadas_player_tierra.stop();
     }
+
+
     
 if (!contacto && !(this.estaAtacando) && this.state !== "attack" && this.state !== "healing" && this.state!="dash" && this.isInputActive && this.puedeMoverse) {
 
     //ASIGNAR ESTADOS DE ACUERDO AL MOVIMIENTO
     //Calcular velocidad de movimimiento
-
+    
 
    
 
@@ -1537,6 +1538,7 @@ cargarDepth(){
         // PRIORIDAD 1: ¿Ya estamos en un diálogo activo?
        
         if (this.scene.enDialogo) {
+            this.pisadas_player_tierra.stop();
             this.scene.avanzarDialogo();
             return; //  Detenemos la función para no interactuar con nada más
         }

@@ -104,6 +104,7 @@ this.scene.load.audio('sonido_habla_npc', './assets/npc/npc3/Sonido/sonido_para_
         
         
               this.scene.load.audio("slide","./sounds/general/slide/slide.mp3");
+              this.scene.load.audio("puerta_abriendose","./sounds/general/puerta/puerta_abriendose.mp3")
 
               this.scene.load.audio("suspenso","./sounds/evento/momentoSuspenso/suspenso.mp3");
 

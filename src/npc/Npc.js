@@ -4,10 +4,14 @@ export class Npc extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, data, x=0,y=0){
         super(scene,x,y,data.diseno+"_idle");
 
+
+
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
         this.scene=scene;
+
+        
         this.dataNpc=data;
 
       // --- AGREGA ESTAS 3 LÍNEAS ---

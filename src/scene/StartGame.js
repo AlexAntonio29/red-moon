@@ -1745,6 +1745,7 @@ crearNpc(n,x,y){
         // Tus físicas y luces originales
         this.physics.add.collider(this.player.getContainer(), npc, () => {
             this.player.pisadas_player_tierra.stop();
+            
         });
 
         npc.setPipeline('Light2D');
@@ -2076,7 +2077,16 @@ checkCondicionBloque(objeto, tile) {
                     this.abrirPuertaCompleta(tile,this.blockLayer);
                     
                     console.log(`¡Puerta abierta! El ítem ${idItem} se consumió y la reja gigante desapareció.`);
+                    
+                    this.cameras.main.fadeOut(1000, 0, 0, 0);
+                    this.cameras.main.fadeIn(1000, 0, 0, 0);
+
+                    this.sound.add('puerta_abriendose', {
+                     loop: false,
+                     volume: 1   // volumen entre 0 y 1
+                      }).play();
                     return true;
+
                 } else {
                     // Si no lo tiene, lo rebotamos (el tile sigue siendo sólido)
                     console.log(`Está cerrado... Necesitas encontrar el ítem: ${idItem}`);
