@@ -54,7 +54,7 @@ export class evento_palanca1_1 extends Phaser.Physics.Arcade.Sprite{
         this.scene.anims.create({
         key: "puerta_move_p1",
         frames: this.scene.anims.generateFrameNumbers('puerta_castillo_p1', { start: 0, end: 11 }),
-        frameRate: 5,
+        frameRate: 3,
         repeat: 0
           
         });
