@@ -153,6 +153,13 @@ export class cargarAssets{
                 frameHeight:96
               })
             }
+
+            cargarAnimacionOtros(){
+              this.scene.load.spritesheet("puerta_castillo_p1","/assets/tiles_maps/Tiled/items/puerta_castillo/puerta_castillo_p1.png",{
+                frameWidth:576,
+                frameHeight:864
+              })
+            }
             
 
 
@@ -394,6 +401,7 @@ export class cargarAssets{
           this.cargarAnimacionesBosses();
           this.cargarAnimacionesEstatua();
           this.cargarAnimacionPalanca();
+          this.cargarAnimacionOtros();
 
           
     

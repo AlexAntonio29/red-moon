@@ -694,6 +694,7 @@ movimientosPlayer(){
       ,this.listaLlaves
       ,this.listaPuertasAbiertas
       ,this.listaPuertasAbiertasAbove
+      ,this.listaPalancas
     );
     
      //this.player.getAtaque(this.listaEnemigos,this.contactoSprites,this.items_punto);
@@ -1831,6 +1832,12 @@ cargarCheckpoints(){
 
   this.crearCheckpoint(x,y,id);
 
+    id++;
+  x=7602;
+  y=7255;
+
+   this.crearCheckpoint(x,y,id);
+
 
 }
 
@@ -1876,7 +1883,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-this.physics.world.createDebugGraphic();
+//this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
     //this.crearFiltro();
     //Generacion de escenario

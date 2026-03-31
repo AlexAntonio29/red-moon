@@ -1452,7 +1452,7 @@ cargarDepth(){
 
 
 
-  setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto,listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove){
+  setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto,listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove,listaPalancas){
 
     
     //console.log(this.estaGuardando);
@@ -1511,7 +1511,7 @@ cargarDepth(){
 
       
       
-      this.interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove);
+      this.interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove,listaPalancas);
 
 
   
@@ -1572,7 +1572,7 @@ cargarDepth(){
   }
 
 
-  interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove) {
+  interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove,listaPalancas) {
     // 1. Verificamos si se presionó la tecla E
     if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
 
@@ -1632,40 +1632,27 @@ if (npcCercano) {
               listaCheckpoints,
               listaLlaves,
               listaPuertasAbiertas,
-              listaPuertasAbiertasAbove
+              listaPuertasAbiertasAbove,
+              listaPalancas
             );//se envia escene porque ahi se almacenan todos los objetos
 
               
           }else if(this.estaActivandoPalanca){
 
+
+
         this.scene.listaPalancas.children.iterate(palanca=>{
-          if(this.scene.physics.overlap(this.player, palanca) && !(palanca.esActivado)){
-            palanca.play("palanca_move");
+        
+           if(this.scene.physics.overlap(this.player, palanca) && !(this.esActivado)){
+            console.log("EN ACTIVACION");
+            palanca.activarSonido();
+            palanca.activarAnimacion();
+            palanca.activar(this.scene.blockLayer);
+            palanca.eventoSecundario(this.scene.listaEventos);
+            
+           }
 
-            this.scene.sound.add("palanca",{
-              loop:false,
-              volume:0.5
-            }).play();
-            palanca.esActivado=true;
-
-            this.scene.listaEventos.children.iterate(evento=>{
-
-              if(evento.id===3){
-                evento.esActivo=true;
-              }
-            })
-
-
-            console.log("Palanca Activado");
-
-            this.scene.blockLayer.forEachTile(tile=>{
-
-              if(tile.index!==-1 && tile.properties.idItem===palanca.idPuerta){
-
-                this.scene.blockLayer.removeTileAt(tile.x, tile.y);
-              }
-            });
-          }
+          
         }) 
         
 

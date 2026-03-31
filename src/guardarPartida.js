@@ -1,7 +1,8 @@
 import { GuardarEnStorage } from "./funciones/GuardarEnStorage.js";
+import { Palanca } from "./items/palanca/Palanca.js";
 
 
-export const guardarPartida=(ranura, player, listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove)=>{
+export const guardarPartida=(ranura, player, listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove, listaPalancas)=>{
 
 
 
@@ -66,6 +67,16 @@ export const guardarPartida=(ranura, player, listaEventos,listaCheckpoints,lista
                 datosPuertasAbiertasAbove.push(puerta);
               })
 
+
+              let datosPalancas=[];
+
+              listaPalancas.children.iterate((palanca)=>{
+                let data={
+                  'esActivado':palanca.esActivado
+                };
+
+                datosPalancas.push(data);
+              })
              
 
 
@@ -75,7 +86,8 @@ export const guardarPartida=(ranura, player, listaEventos,listaCheckpoints,lista
                 'checkpoints':datosCheckpoint,
                 'llaves':datosLlaves,
                 'puertasAbiertas':datosPuertasAbiertas,
-                'puertasAbiertasAbove':datosPuertasAbiertasAbove
+                'puertasAbiertasAbove':datosPuertasAbiertasAbove,
+                'palanca':datosPalancas
               }
 
 
