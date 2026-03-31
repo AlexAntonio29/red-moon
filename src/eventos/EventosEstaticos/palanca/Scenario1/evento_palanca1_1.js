@@ -10,8 +10,9 @@ export class evento_palanca1_1 extends Phaser.Physics.Arcade.Sprite{
         scene.add.existing (this);
         scene.physics.add.existing(this);
         this.setPipeline('Light2D');
-
+        //this.setDepth(11);
         this.cargarAnimaciones();
+
 
     console.log("Entrando a evento 1 palanca");
     if(palanca.esActivado){
@@ -65,9 +66,11 @@ export class evento_palanca1_1 extends Phaser.Physics.Arcade.Sprite{
     }
 
 
-    activarAnimacion(){
+    activar(){
         //aqui se crea la animacion de la puerta abriendose
         this.play("puerta_move_p1");
+        this.scene.camera
+        .getCameraPosition(8080,6725-200, 3000 ,200,true,1,null, this.scene.player);
     }
 
 
