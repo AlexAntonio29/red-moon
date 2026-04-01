@@ -50,7 +50,7 @@ crearPotenciador(){
      let textoSeleccionPotenciador=this.add.text(0,0,"Pause",{
       wordWrap: { width: ((hudBackgroundPotenciador.width))}, // ancho máximo del texto
     fontSize: '25px',
-    color: '#ffffff',
+    color: '#FF0000',
     fontFamily:this.fontText
     })
     .setPosition(centrarHorizontal+10,centrarVertical+10)//.setInteractive()
