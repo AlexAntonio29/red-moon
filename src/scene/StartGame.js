@@ -1020,6 +1020,22 @@ if (objeto && this.blockLayer) {
 
 
 
+    if(objeto.name='player' && this._suelo){
+
+      
+
+        this.physics.add.overlap(this.player.getContainer(),this._suelo,(objeto, tile)=>{
+
+          if(tile.index!==-1&&tile.properties.tipo_piso!==undefined){
+            //console.log(tile.properties);
+            this.player.getSoundPiso(tile.properties.tipo_piso);
+          }
+          
+        })
+      
+
+
+    }
 
 
 

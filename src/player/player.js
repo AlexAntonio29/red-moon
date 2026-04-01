@@ -112,6 +112,8 @@ export class player {
     this.player.name="player";
     this.player.setSize((x/5), (y/5));
     this.player.setOffset(x/3,y/1.6);
+
+
     
 
 
@@ -125,9 +127,14 @@ export class player {
     }
 
     this.ataque=5;
+        this.tipo_piso = "tierra";
+        this.ultimo_tipo_procesado = null; // Flag para evitar procesamiento múltiple
+        this.tiempo_ultimo_cambio = 0;
+        this.tiempo_minimo = 150;
 
    this.animaciones();
    this.cargarSonidosPlayer();
+
 
     
     // ESCUCHADOR ÚNICO (Solo se crea una vez aquí)
@@ -194,7 +201,7 @@ export class player {
     volume: 1   // volumen entre 0 y 1
   });
 
-        this.pisadas_player_tierra = this.scene.sound.add('pisada_player_tierra', {
+        this.pisadas = this.scene.sound.add('pisada_player_tierra', {
     loop: false,
     volume: 1   // volumen entre 0 y 1
   });
@@ -230,12 +237,96 @@ export class player {
 
   }
 
+        getSoundPiso(n) {
+        const ahora = Date.now();
+        
+        // Si ya estamos procesando este mismo tipo, ignorar
+        if (this.ultimo_tipo_procesado === n) {
+            return;
+        }
+        
+        // Si el tiempo desde el último cambio es muy pequeño, ignorar
+        if (ahora - this.tiempo_ultimo_cambio < this.tiempo_minimo) {
+            return;
+        }
+        
+        // Si el tipo no cambió realmente, ignorar
+        if (this.tipo_piso === n) {
+            return;
+        }
+        
+        // Marcar como procesado antes de hacer el cambio
+        this.ultimo_tipo_procesado = n;
+        this.tiempo_ultimo_cambio = ahora;
+        
+        console.log(`Cambiando sonido de ${this.tipo_piso} a ${n}`);
+        
+        // Actualizar tipo
+        this.tipo_piso = n;
+        
+        // Resto de tu código de cambio de sonido...
+        let sonido_anterior;
+        switch(n) {
+            case "pasto":
+                if(this.pisadas.key !== "pisada_player_pasto") {
+                    sonido_anterior = this.pisadas.key;
+                    this.pisadas.stop();
+                    this.pisadas = this.scene.sound.add("pisada_player_pasto", {
+                        loop: false,
+                        volume: 2
+                    });
+                    console.log(sonido_anterior + " sonido cambiado a " + this.pisadas.key);
+                }
+                break;
+            case "concreto_azul":
+                if(this.pisadas.key !== "pisada_player_concreto_azul") {
+                    sonido_anterior = this.pisadas.key;
+                    this.pisadas.stop();
+                    this.pisadas = this.scene.sound.add("pisada_player_concreto_azul", {
+                        loop: false,
+                        volume: 0.5
+                    });
+                    console.log(sonido_anterior + " sonido cambiado a " + this.pisadas.key);
+                }
+                break;
+            case "tierra":
+                if(this.pisadas.key !== "pisada_player_tierra") {
+                    sonido_anterior = this.pisadas.key;
+                    this.pisadas.stop();
+                    this.pisadas = this.scene.sound.add("pisada_player_tierra", {
+                        loop: false,
+                        volume: 0.5
+                    });
+                    console.log(sonido_anterior + " sonido cambiado a " + this.pisadas.key);
+                }
+                break;
+            case "concreto":
+                if(this.pisadas.key !== "pisada_player_concreto") {
+                    sonido_anterior = this.pisadas.key;
+                    this.pisadas.stop();
+                    this.pisadas = this.scene.sound.add("pisada_player_concreto", {
+                        loop: false,
+                        volume: 2
+                    });
+                    console.log(sonido_anterior + " sonido cambiado a " + this.pisadas.key);
+                }
+                break;
+        }
+        
+        // Resetear el flag después de un tiempo
+        setTimeout(() => {
+            if (this.ultimo_tipo_procesado === n) {
+                this.ultimo_tipo_procesado = null;
+            }
+        }, this.tiempo_minimo);
+    }
+
 
   getSound(n){
     //1 correr
     switch(n){
       case 1:
-        return this.pisadas_player_tierra;
+        return this.pisadas;
       break
     }
   }
@@ -628,15 +719,15 @@ this.scene.anims.create({
     ){
       
       //if(this.player.body.velocity.x!==0&&this.player.body.velocity.y!==0)
-      if(!(this.pisadas_player_tierra.isPlaying))
-      this.pisadas_player_tierra.play();
+      if(!(this.pisadas.isPlaying))
+      this.pisadas.play();
 
      
     }else {
 
      
-      if(!(this.pisadas_player_tierra.isStoping))
-      this.pisadas_player_tierra.stop();
+      if(!(this.pisadas.isStoping))
+      this.pisadas.stop();
      
     }
 
@@ -1580,7 +1671,7 @@ cargarDepth(){
         // PRIORIDAD 1: ¿Ya estamos en un diálogo activo?
        
         if (this.scene.enDialogo) {
-            this.pisadas_player_tierra.stop();
+            this.pisadas.stop();
             this.scene.avanzarDialogo();
             return; //  Detenemos la función para no interactuar con nada más
         }
@@ -2012,7 +2103,7 @@ if (npcCercano) {
 
           console.log("X: "+this.player.x);
           console.log("Y: "+this.player.y);
-
+          console.log(this.pisadas);
           console.log(this.inventario);
 
          

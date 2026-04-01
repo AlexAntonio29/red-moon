@@ -90,7 +90,16 @@ this.scene.load.audio('sonido_habla_npc', './assets/npc/npc3/Sonido/sonido_para_
         
               this.scene.load.audio("fondoStart","./sounds/level/nexus/soundtrack.wav");
         
+              //SONIDOS PISADAS
               this.scene.load.audio("pisada_player_tierra","./sounds/general/pisadas/tierra/pisadas.wav");
+              this.scene.load.audio("pisada_player_concreto_azul","./sounds/general/pisadas/concreto_azul/pisadas.wav");
+              this.scene.load.audio("pisada_player_pasto","./sounds/general/pisadas/pasto/pisadas.wav");
+              this.scene.load.audio("pisada_player_concreto","./sounds/general/pisadas/concreto/pisadas.wav");
+              
+
+              
+
+              //+++++
         
               this.scene.load.audio("potenciador","./sounds/woo.mp3");
         
