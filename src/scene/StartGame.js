@@ -1572,7 +1572,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
       //this.crearEnemigo(1,3050,8600,1);
       //this.crearEnemigo(1,0,0,10);
-      //this.crearEnemigo(1,8004,6400,10);
+      this.crearEnemigo(1,8004,6400,10);
 
       //this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
 
@@ -1899,7 +1899,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-//this.physics.world.createDebugGraphic();
+this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
     //this.crearFiltro();
     //Generacion de escenario

@@ -1739,6 +1739,7 @@ if (npcCercano) {
             palanca.activarSonido();
             palanca.activarAnimacion();
             palanca.activar(this.scene.blockLayer);
+            
             palanca.eventoSecundario(this.scene.listaEventos);
             
            }

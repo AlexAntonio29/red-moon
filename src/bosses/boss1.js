@@ -13,7 +13,7 @@ export class boss1 extends Bosses {
         //this.distanciaAtaque=scene.physics.add.sprite(0,0,null);
 
         //this.distanciaAtaque.body.setSize(300,300);
-        this.setDisplaySize(256,256);
+        this.setDisplaySize(200,200);
 
         this.setOrigin(0,0);
         this.body.setSize(16,16);

@@ -313,8 +313,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     // const longitud = Math.hypot(velocidad, velocidad);
     let rango_enemigo_movimiento=Number(this.dataEnemie.movimiento);//es el rango que tendra el enemigo con el player para cambio de movimiento
 
-    let playerX=player.x;
-    let playerY=player.y;
+    let playerX=(isBoss)?player.body.x:player.x;
+    let playerY=(isBoss)?player.body.y:player.y;
 
 let enemigoX,enemigoY;
     if(isBoss){
@@ -454,19 +454,7 @@ let enemigoX,enemigoY;
 
   
       this.getState();
-      //console.log(this.state);
-
-      
-
-
-
-    this.setCaminar(player,contacto,contactoAtaque,contactoEnemigo);
-
-
-
-
-
-    
+      this.setCaminar(player,contacto,contactoAtaque,contactoEnemigo);
 
 
     }

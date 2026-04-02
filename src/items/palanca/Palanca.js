@@ -154,6 +154,7 @@ export class Palanca extends Phaser.Physics.Arcade.Sprite{
                
             });
 
+            if(this.evento)
             this.evento.activar();
             //this.eventoSecundario(eventos)
             this.esActivado=true;
