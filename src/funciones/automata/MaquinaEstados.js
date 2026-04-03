@@ -1,4 +1,4 @@
-class MaquinaEstados{
+export class MaquinaEstados{
 
     constructor(objeto){
 

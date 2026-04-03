@@ -1,3 +1,8 @@
+import {MaquinaEstados} from "../../funciones/automata/MaquinaEstados.js"
+import { IdleEnemies } from "./EstadosEnemies/IdleEnemies.js";
+import { SeguirEnemies } from "./EstadosEnemies/SeguirEnemies.js";
+
+
 export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
     constructor(scene, dataEnemie, x=0,y=0){
@@ -75,6 +80,19 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         this.state="idle";
         
 
+
+        this.maquina=new MaquinaEstados(this);
+        this.asignarEstados();
+
+    }
+
+    asignarEstados(){
+
+      this.maquina.agregarEstado('Idle', new IdleEnemies(this));
+      this.maquina.agregarEstado('Seguir', new SeguirEnemies(this));
+
+
+      this.maquina.cambiarEstado('Idle');
 
 
     }
@@ -194,8 +212,15 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         this.setVelocityY(n);
     }
 
+    getDistanciaPlayer(){
+
+      return Phaser.Math.Distance.Between(this.x,this.y,this.scene.player.x,this.scene.player.y);
+
+    }
+
 
       setDistanciaVista(player){
+
 
             let distancia_vista=this.dataEnemie.distancia_vista;
 
@@ -316,14 +341,9 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     let playerX=(isBoss)?player.body.x:player.x;
     let playerY=(isBoss)?player.body.y:player.y;
 
-let enemigoX,enemigoY;
-    if(isBoss){
-      enemigoX=this.body.x;
-       enemigoY=this.body.y;
-    }else{
-      enemigoX=this.x;
-     enemigoY=this.y;
-    }
+    let enemigoX=(isBoss)?this.body.x:this.x;
+    let enemigoY=(isBoss)?this.body.y:this.y;
+
      
 
 
@@ -453,7 +473,7 @@ let enemigoX,enemigoY;
     setMovimientoEnemigo(player,contacto,contactoAtaque,contactoEnemigo){
 
   
-      this.getState();
+      //this.getState();
       this.setCaminar(player,contacto,contactoAtaque,contactoEnemigo);
 
 

@@ -66,7 +66,7 @@ export class boss1 extends Bosses {
 
             };
 
-            console.log(delta);
+          //  console.log(delta);
 
         
             

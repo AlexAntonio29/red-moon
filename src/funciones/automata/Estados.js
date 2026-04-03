@@ -1,4 +1,4 @@
-class Estados{
+export class Estados{
 
     constructor(objeto){
         this.objeto=objeto;

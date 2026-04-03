@@ -22,7 +22,7 @@ export class Estatua extends Phaser.Physics.Arcade.Sprite{
         this.body.setSize(50,16);
         this.body.setOffset(50,100);
 
-
+        if(!this.scene.anims.exists("checkpoint_desactivado"))
         this.scene.anims.create({
         key: "checkpoint_desactivado",
         frames: this.scene.anims.generateFrameNumbers('sprite_estatua_desactivado', { start: 0, end: 0 }),
@@ -30,9 +30,10 @@ export class Estatua extends Phaser.Physics.Arcade.Sprite{
         repeat: -1
           });
 
+          if(!this.scene.anims.exists("checkpoint_activado"))
            this.scene.anims.create({
         key: "checkpoint_activado",
-        frames: this.scene.anims.generateFrameNumbers('sprite_estatua', { start: 0, end: 9 }),
+        frames: this.scene.anims.generateFrameNumbers('sprite_estatua', { start: 0, end: 8 }),
         frameRate: 5,
         repeat: -1
           });
