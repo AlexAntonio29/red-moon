@@ -1,4 +1,4 @@
-import { Enemies } from "../enemies/Enemies.js";
+import { Enemies } from "../enemies/Enemies/Enemies.js";
 
 
 export class Bosses extends Enemies{

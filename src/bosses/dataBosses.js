@@ -24,8 +24,8 @@ export const dataBosses=[
 
         'ofzigzag':false,
 
-        'end_frame_idle':3,
-        'end_frame_walk':7,
+        'end_frame_idle':7,
+        'end_frame_walk':11,
         'end_frame_hurt':4,
         'end_frame_dead':4,
 

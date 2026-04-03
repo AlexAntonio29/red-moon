@@ -1,4 +1,4 @@
-import {Enemies} from "./Enemies.js";
+import {Enemies} from "../Enemies/Enemies.js";
 
 export class Enemie4 extends Enemies{
 

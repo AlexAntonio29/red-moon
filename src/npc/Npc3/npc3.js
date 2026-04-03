@@ -1,5 +1,5 @@
-import { Npc } from "./Npc.js";
-import { dialogosNpc3 } from "./DialogosNpc/DialogosNpc3.js";
+import { Npc } from "../Npc/Npc.js";
+import { dialogosNpc3 } from "../DialogosNpc/DialogosNpc3.js";
 
 export class npc3 extends Npc {
     constructor(scene, data, x = 0, y = 0) {

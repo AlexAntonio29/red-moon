@@ -13,11 +13,65 @@ export class boss1 extends Bosses {
         //this.distanciaAtaque=scene.physics.add.sprite(0,0,null);
 
         //this.distanciaAtaque.body.setSize(300,300);
-        this.setDisplaySize(200,200);
+        this.setDisplaySize(374,374);
 
         this.setOrigin(0,0);
-        this.body.setSize(16,16);
-        this.body.setOffset(25,32);
+        this.body.setSize(50,50);
+        this.body.setOffset(150,150);
+
+        this.hitbox.body.setSize(this.displayWidth+100,this.displayHeight+100);
+        this.hitbox.setOrigin(0,0);
+        this.hitbox.body.setOffset(-50,-50);
+
+
+
+        this.getFuncionTransicion();
+
+    }
+
+
+    getFuncionTransicion(){
+
+        let lenguaje=['detecta','cerca','lejos','ultraLejos','choca','pierdePlayer'];
+
+
+        let estados=['idle','seguir','atacar','correr','aturdido'];
+
+        //aqui se creara la funcion de transicion del enemigo
+
+           
+            let delta={
+                idle:{
+                    detecta:'seguir'
+                },
+
+                seguir:{
+                    cerca:'atacar',
+                    ultralejos:'correr'
+                },
+
+                atacar:{
+                    lejos:'seguir'
+                },
+
+                correr:{
+                    choca:'aturdido',
+                    pierdaPlayer:'idle'
+                },
+
+                aturdido:{
+                    cerca:'atacar',
+                    lejos:'seguir',
+                }
+
+            };
+
+            console.log(delta);
+
+        
+            
+
+
 
     }
 

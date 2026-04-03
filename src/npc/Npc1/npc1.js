@@ -1,4 +1,4 @@
-import { Npc } from "./Npc.js";
+import { Npc } from "../Npc/Npc.js";
 
 export class npc1 extends Npc{
 

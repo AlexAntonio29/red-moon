@@ -2,9 +2,9 @@
 import {player} from "../player/player.js";
 import {dataEnemigos} from "../enemies/DataEnemies.js"
 import {dataBosses} from "../bosses/dataBosses.js"
-import { Enemie1 } from "../enemies/Enemie1.js";
-import { Enemie4 } from "../enemies/Enemie4.js";
-import { Enemie5 } from "../enemies/Enemie5.js";
+import { Enemie1 } from "../enemies/Enemie1/Enemie1.js";
+import { Enemie4 } from "../enemies/Enemie4/Enemie4.js";
+import { Enemie5 } from "../enemies/Enemie5/Enemie5.js";
 import { empujar } from "../funciones/empujar.js";
 import { crearItemsPunto } from "../funciones/crearItemsPuntos.js";
 import {cargarAssets} from "./cargar/cargarAssets.js"
@@ -16,9 +16,9 @@ import { cargarLucesEstaticas } from "../funciones/cargarLucesEstaticas.js";
 
 import { boss1 } from "../bosses/boss1.js";
 
-import {npc1} from '../npc/npc1.js'
-import {npc2} from '../npc/npc2.js'
-import { npc3 } from '../npc/Npc3.js'//agrego sneyder npc dialogos -nota- bug de la mayuscula de npc3 al crear el archivo, revisar eso para evitar errores de importacion es npc3 original
+import {npc1} from '../npc/Npc1/npc1.js'
+import {npc2} from '../npc/Npc2/npc2.js'
+import { npc3 } from '../npc/Npc3/npc3.js'//agrego sneyder npc dialogos -nota- bug de la mayuscula de npc3 al crear el archivo, revisar eso para evitar errores de importacion es npc3 original
 
 
 

@@ -1,5 +1,5 @@
-import { player } from "../player/player.js";
-import { Npc } from "./Npc.js";
+import { player } from "../../player/player.js";
+import { Npc } from "../Npc/Npc.js";
 
 export class npc2 extends Npc{
 

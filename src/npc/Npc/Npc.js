@@ -1,4 +1,4 @@
-import { Enemies } from "../enemies/Enemies.js";
+
 export class Npc extends Phaser.Physics.Arcade.Sprite{
 
     constructor(scene, data, x=0,y=0){
