@@ -9,6 +9,7 @@ export function crearItemsPunto(scene,n=1,items_punto,widthEscenario,heightEscen
 
     //Math.floor(Math.random() * (max - min + 1)) + min;
     //Crear objeto punto
+    console.log(items_punto);
      
 
     

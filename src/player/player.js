@@ -259,7 +259,7 @@ export class player {
         this.ultimo_tipo_procesado = n;
         this.tiempo_ultimo_cambio = ahora;
         
-        console.log(`Cambiando sonido de ${this.tipo_piso} a ${n}`);
+     
         
         // Actualizar tipo
         this.tipo_piso = n;
@@ -275,7 +275,7 @@ export class player {
                         loop: false,
                         volume: 2
                     });
-                    console.log(sonido_anterior + " sonido cambiado a " + this.pisadas.key);
+                  
                 }
                 break;
             case "concreto_azul":
@@ -286,7 +286,7 @@ export class player {
                         loop: false,
                         volume: 0.5
                     });
-                    console.log(sonido_anterior + " sonido cambiado a " + this.pisadas.key);
+                    
                 }
                 break;
             case "tierra":
@@ -297,7 +297,7 @@ export class player {
                         loop: false,
                         volume: 0.5
                     });
-                    console.log(sonido_anterior + " sonido cambiado a " + this.pisadas.key);
+                  
                 }
                 break;
             case "concreto":
@@ -308,7 +308,7 @@ export class player {
                         loop: false,
                         volume: 2
                     });
-                    console.log(sonido_anterior + " sonido cambiado a " + this.pisadas.key);
+                    
                 }
                 break;
         }
@@ -1828,7 +1828,7 @@ if (npcCercano) {
              if(enemigo.getVida()>0){
 
                        
-            empujar(this.spriteAtaque,enemigo.getContainer(),1,this.contacto,this.scene,this.arma.fuerza);
+            //empujar(this.spriteAtaque,enemigo.getContainer(),1,this.contacto,this.scene,this.arma.fuerza);
             
           
              }
@@ -1837,8 +1837,7 @@ if (npcCercano) {
             
 
               
-                crearItemsPunto(this.scene,enemigo.dataEnemie.items,this.listaItems,enemigo.getPositionX(),enemigo.getpositionY(),false,this.player,this.lights);
-             
+                
 
 
               //AQUI ESTO COLOCA EN POSICION ALEATORIA ERA PARA OPTIMIZAR AHORA COMO LOS ENEMIGOS SE REPOSICIONAN, ENTONCES SI SE ELIMINAN
@@ -1856,51 +1855,14 @@ if (npcCercano) {
               */
 
               //console.log(listaEnemigos);
-              enemigo.sonido.stop(0);
-
-              console.log(enemigo);
-              if(enemigo){
-                //enemigo.body.destroy();
-                //enemigo.setMuerteEnemigo();
-                enemigo.disableBody(true,true);
-
-                
-
-                this.scene.time.delayedCall(50, () => {
-                enemigo.hitbox.destroy();
-                enemigo.body.destroy();
-                enemigo.destroy();
-
-                
-
-                //console.log(this.scene);   
-                            
-                //listaEnemigos.remove(enemigo,true,true);
-
-            });
+             
 
 
-              
-            /*
-              this.pluginScene.pause();
-
-              setTimeout(()=>{
-                this.pluginScene.resume()
-              },300);*/
-
-              
-           
-
-              
-            
-            }
-              //enemigo.setMuerteEnemigo();
-              console.log("Enemigo eliminado");
 
 
               //enemigo
  
-                this.habilitarCollision=true;
+                //this.habilitarCollision=true;
         //console.log("Enemigo Eliminado - Cantidad: " + listaEnemigos.length);
 
           }
@@ -2104,8 +2066,7 @@ if (npcCercano) {
 
           console.log("X: "+this.player.x);
           console.log("Y: "+this.player.y);
-          console.log(this.pisadas);
-          console.log(this.inventario);
+
 
          
 

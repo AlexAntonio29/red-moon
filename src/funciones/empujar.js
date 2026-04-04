@@ -1,6 +1,12 @@
 export function empujar(sujetoEmpujador, sujetoEmpujado, contacto ,listaContacto, scene,force=300,movCamara=true) {
+ console.log("here");  
 
-if(!listaContacto[contacto]){
+
+ try{
+
+  if(!listaContacto[contacto]){
+
+
 
   const empujado = sujetoEmpujado;
   const empujador = sujetoEmpujador;
@@ -17,6 +23,7 @@ if(!listaContacto[contacto]){
   empujado.setBounce(0);
   cuerpo.setMaxVelocity(1200, 1200);
 
+  
   // Vector normalizado
   const dx = empujado.x - empujador.x;
   const dy = empujado.y - empujador.y;
@@ -44,20 +51,34 @@ if(!listaContacto[contacto]){
 
   // Frenado progresivo pero con checks para blocked
   scene.time.delayedCall(120, () => {
+
     if (cuerpo) cuerpo.setVelocity(cuerpo.velocity.x * 0.5, cuerpo.velocity.y * 0.5);
+    
+  
+
   });
 
   scene.time.delayedCall(300, () => {
     if (cuerpo) {
       cuerpo.setVelocity(0, 0);
       listaContacto[contacto] = false;
-      empujado.setBounce(0); // si quieres restaurarlo
+      
+      //empujado.setBounce(0); // si quieres restaurarlo
+
     }
+
+
   });
+
+
   if(movCamara)
   scene.cameras.main.shake(80, 0.01);
 }
+ }catch(e){
+  console.log(e);
+ }
 
 
- console.log("here");  
+
+
 }

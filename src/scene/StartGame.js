@@ -685,7 +685,8 @@ this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.
 movimientosPlayer(){
 
 
-     this.player.setMovimientoPlayer(this.contactoSprites[0]
+     this.player.setMovimientoPlayer(
+       this.contactoSprites[0]
       ,this.listaEnemigos
       ,this.contactoSprites
       ,this.items_punto
@@ -1580,7 +1581,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
        //hacer prueba para jefe
 
-       
+     
       this.crearEnemigo(1,6605,7972,0);  
       this.crearEnemigo(1,6290,8425,0);
       this.crearEnemigo(1,5971,8451,3);
@@ -1602,13 +1603,13 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       this.crearEnemigo(1,10197,7506,0);
       this.crearEnemigo(1,9596,7531,0);
       this.crearEnemigo(1,8999,7645,0);
-      this.crearEnemigo(1,7658,7628,0);
+     
       this.crearEnemigo(1,8009,6957,0);
 
       this.crearEnemigo(1,8187,8005,3);
       this.crearEnemigo(1,8686,8033,3);
-       
-
+        this.crearEnemigo(1,7658,7628,0);
+      
        
 
 
@@ -1943,6 +1944,7 @@ movimientoItemToPlayer(){
     if(item.moveToPlayer){
       let velocidad=Math.floor(Math.random() * (500 - 300 + 1)) + 300;
    // scene.time.delayedCall(1000, () => {
+   
 
     item.light.setPosition((item.x)+item.displayWidth/2,(item.y)+item.displayHeight/2)
     

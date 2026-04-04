@@ -14,11 +14,11 @@ export class evento_palanca1_1 extends Phaser.Physics.Arcade.Sprite{
         this.cargarAnimaciones();
 
 
-    console.log("Entrando a evento 1 palanca");
+
     if(palanca.esActivado){
 
         this.play("puerta_activada_p1");
-       console.log("activado");
+ 
 
     }else{
        this.play("puerta_desactivada_p1");

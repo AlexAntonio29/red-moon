@@ -1,5 +1,7 @@
 import {MaquinaEstados} from "../../funciones/automata/MaquinaEstados.js"
+import { GolpeadoEnemies } from "./EstadosEnemies/GolpeadoEnemies.js";
 import { IdleEnemies } from "./EstadosEnemies/IdleEnemies.js";
+import { MorirEnemies } from "./EstadosEnemies/MorirEnemies.js";
 import { SeguirEnemies } from "./EstadosEnemies/SeguirEnemies.js";
 
 
@@ -10,23 +12,16 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       
      // console.log(dataEnemie);
       super(scene,x,y,dataEnemie.diseno+"_idle");
-      
-
       scene.add.existing(this);
       scene.physics.add.existing(this);
 
-      this.scene=scene;
-
-        
-        
+        this.scene=scene;
         this.dataEnemie=dataEnemie;
-        
         this.velocidad=Math.floor(Math.random() * ((Number(this.dataEnemie.velocidad)) - (Number(this.dataEnemie.velocidad)-30) + 1)) + (Number(this.dataEnemie.velocidad)-30);
-
         this.vida=Number(dataEnemie.vida);
-        
 
-        this.golpeado=false;
+        this.tiempoAturdido=500;
+
 
         
 
@@ -53,19 +48,6 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         this.cargarAnimaciones();
         this.cargarSonidos();
 
-
-        
-
-        
-
-
-
-
-        //this.body.setCollideWorldBounds(true);
-
-       // this.play(this.dataEnemie.diseno+"_walk");
-        //this.play('enemigoCamina');
-
         this.state="walk";
         this.subState="walk_right";
 
@@ -90,7 +72,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
       this.maquina.agregarEstado('Idle', new IdleEnemies(this));
       this.maquina.agregarEstado('Seguir', new SeguirEnemies(this));
-
+      this.maquina.agregarEstado('Golpeado',new GolpeadoEnemies(this));
+      this.maquina.agregarEstado('Morir', new MorirEnemies(this));
 
       this.maquina.cambiarEstado('Idle');
 
@@ -165,24 +148,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
     setGolpeado(){
 
-      if (!this || !this.scene) return;
-      if (!this.scene.anims.exists(this.dataEnemie.diseno+"_golpeado")) {
-      this.scene.anims.create({
-        key: this.dataEnemie.diseno+"_golpeado",
-        frames: this.scene.anims.generateFrameNumbers(this.dataEnemie.diseno+"_idle", { start: 0, end:this.dataEnemie.end_frame_hurt }),
-        frameRate: this.dataEnemie.velocidad_frames_hurt,
-        repeat: -1
-          });}
-
-           
-
-      
-      this.play(this.dataEnemie.diseno+"_golpeado");
-      
-
       this.scene.time.delayedCall(500,()=>{ 
-         if (this && this.scene && !this.destroyed){
-          this.play(this.dataEnemie.diseno+"_idle");}
+
           this.golpeado=false;
       }
     );
@@ -213,50 +180,15 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
     }
 
     getDistanciaPlayer(){
-
-      return Phaser.Math.Distance.Between(this.x,this.y,this.scene.player.x,this.scene.player.y);
+      if(this)
+      return Phaser.Math.Distance.Between(this.x,this.y,this.scene.player.getContainer().x,this.scene.player.getContainer().y);
 
     }
 
 
-      setDistanciaVista(player){
 
 
-            let distancia_vista=this.dataEnemie.distancia_vista;
-
-      if(
-        (player.x-this.x)<-distancia_vista
-      ||(player.x-this.x)> distancia_vista
-      ||(player.y-this.y)<-distancia_vista
-      ||(player.y-this.y)>distancia_vista
-
-      ){
-   
-        this.setVelocity(0);
-        if(this.anims.currentAnim?.key!==this.dataEnemie.diseno+"_idle" 
-          &&this.state!=="attack"){
-
-          this.play(this.dataEnemie.diseno+"_idle");
-         // console.log(this.anims.currentAnim?.key);
-         
-
-        }
-
-
-
-      }else{
-        if(this.anims.currentAnim?.key!==this.dataEnemie.diseno+"_walk"
-          &&this.state!=="attack")
-        {
-          this.play(this.dataEnemie.diseno+"_walk");
-          this.state="walk";
-        }
-       
-      }
-
-      }
-
-      setDistanciaSonido(player){
+      setDistanciaSonido(){
 
             //console.log(player.x-this.x);
       //console.log(player.y -this.y);
@@ -264,7 +196,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
       let distancia_sonido=this.dataEnemie.distancia_sonido;
 
-      let raiz=Math.sqrt(Math.pow((player.x-this.x),2)+Math.pow((player.y-this.y),2));
+      let raiz=Math.sqrt(Math.pow((this.scene.player.getContainer().x-this.x),2)+Math.pow((this.scene.player.getContainer().y-this.y),2));
       let resultado_parcial=raiz/distancia_sonido;
 
       let resultado_final=1-resultado_parcial;
@@ -277,10 +209,10 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
      
       
       if(
-        (player.x-this.x)<-distancia_sonido
-      ||(player.x-this.x)> distancia_sonido
-      ||(player.y-this.y)<-distancia_sonido
-      ||(player.y-this.y)>distancia_sonido
+        (this.scene.player.getContainer().x-this.x)<-distancia_sonido
+      ||(this.scene.player.getContainer().x-this.x)> distancia_sonido
+      ||(this.scene.player.getContainer().y-this.y)<-distancia_sonido
+      ||(this.scene.player.getContainer().y-this.y)>distancia_sonido
 
       ){
         this.sonido.volume=0;
@@ -307,174 +239,13 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
       }
 
 
-    setCaminar(player,contacto,contactoAtaque,contactoEnemigo, isBoss=false){
-
-
-      
-      
-
-      //console.log(`!contacto:${!contacto}, !this.vida${!(this.vida<=0)}, !contractoAtaque:${!contactoAtaque} !contactoEnemigo:${!contactoEnemigo}`)
-      if(!contacto && !(this.vida<=0) && !contactoAtaque && !contactoEnemigo && this.state==="walk"){
-
-        
-
-        this.hitbox.setPosition(this.x,this.y);
-
-
-
-        //console.log('DENTRO');
-         
-        let vel=this.velocidad;
-
-
-
-        //console.log("Velocidad enemigo: "+vel);
-
-     //this.player.getContainer().setVelocity(0); BLOQUEADO POR EL MOMENTO
-
-        //se hace el llamado a la clase "player"
-     //movimientos diagonales
-
-    // const longitud = Math.hypot(velocidad, velocidad);
-    let rango_enemigo_movimiento=Number(this.dataEnemie.movimiento);//es el rango que tendra el enemigo con el player para cambio de movimiento
-
-    let playerX=(isBoss)?player.body.x:player.x;
-    let playerY=(isBoss)?player.body.y:player.y;
-
-    let enemigoX=(isBoss)?this.body.x:this.x;
-    let enemigoY=(isBoss)?this.body.y:this.y;
-
-     
-
-
-
-
-
-
-
-        //para generar la vista 
-    if(enemigoX>playerX){
-      this.flipX=true
-    }else this.flipX=false;
-
-    if(enemigoY>playerY){
-      this.setDepth(6);
-    }
-    else{
-      this.setDepth(4);
-    }
-
-    //console.log(`Posicion Player: x:${playerX} y:${playerY}`);
-    //console.log(`Posicion Enemigo: x:${enemigoX} y:${enemigoY}`);
-
-   
-      
-      let velocidadDiagonal=vel/Math.sqrt(2);
-  
-      
-      // console.log("velocidadparteDiagonal: "+velocidadDiagonal);
-
-      //player esta arriba y derecha
-
-      if(playerX===enemigoX&&playerY===enemigoY) this.setEnemiesVelocity(0);
-
-
-      
-//movimientos normales
- if(playerY<enemigoY && ((playerX-rango_enemigo_movimiento<=enemigoX&&(playerX+rango_enemigo_movimiento)>=enemigoX))){
-    console.log("UP");
-    //console.log("ESTOY EN MOV NORMAL -Y");
-
-    this.setVelocityY(-vel);
-   if(!(this.dataEnemie.ofzigzag))
-    this.setVelocityX(0);//para mayor dificultad deja la velocity de la dimension, ejemplo esta
- }else if(playerY>enemigoY && ((playerX-rango_enemigo_movimiento<=enemigoX&&(playerX+rango_enemigo_movimiento)>=enemigoX))){
-     //console.log("DOWN");
-    this.setVelocityY(vel);
-  if(!(this.dataEnemie.ofzigzag))
-    this.setVelocityX(0);//para mayor dificultad deja la velocity de la dimension, ejemplo esta
-     //console.log("ESTOY EN MOV NORMAL Y");
- }else if(((playerY-rango_enemigo_movimiento<=enemigoY&&(playerY+rango_enemigo_movimiento)>=enemigoY)) && playerX>enemigoX){
-   //  console.log("LEFT");
-  // console.log("ESTOY EN MOV NORMAL -X");
-    this.setVelocityX(vel);
-    if(!(this.dataEnemie.ofzigzag))
-    this.setVelocityY(0);//para mayor dificultad deja la velocity de la dimension, ejemplo esta
- }else if(((playerY-rango_enemigo_movimiento<=enemigoY&&(playerY+rango_enemigo_movimiento)>=enemigoY))&& playerX<enemigoX){
-    // console.log("RIGHT");
-    this.setVelocityX(-vel);
-  if(!(this.dataEnemie.ofzigzag))
-    this.setVelocityY(0);//para mayor dificultad deja la velocity de la dimension, ejemplo esta
-     //console.log("ESTOY EN MOV NORMAL X");
- }
-  else
-
-  if(playerY<enemigoY&& playerX>enemigoX){
-    // console.log("UP + RIGHT");
-
-    this.setVelocityY(-velocidadDiagonal);
-   this.setVelocityX(velocidadDiagonal);
-  }
-
-  
-//player esta arriba e izquierda
-  else if(playerY<enemigoY&& playerX<enemigoX){
-   // console.log("UP + LEFT");
-    this.setVelocityY(-velocidadDiagonal);
-    this.setVelocityX(-velocidadDiagonal);
-  }
-
-  //player esta debajo e izquierda
-  else if(playerY>enemigoY && playerX<enemigoX){
-   // console.log("DOWN + LEFT");
-    this.setVelocityY(velocidadDiagonal);
-    this.setVelocityX(-velocidadDiagonal);
-  }
-
-  //player esta debajo y derecha
-  else if(playerY>enemigoY && playerX>enemigoX){
-     //console.log("DOWN + RIGHT");
-     
-    this.setVelocityY(velocidadDiagonal);
-    this.setVelocityX(velocidadDiagonal);
-  }
- 
-    }
-
-    this.setDistanciaVista(player);
-
-    this.setDistanciaSonido(player);
-
-
-
-
-    }
-
-
-    getState(){
-
-      this.on("animationcomplete", (anim)=>{
-      if(
-        this.state==="attack"
-      ||this.state==="hurt"
-      ||this.state==="dash"
-      ||this.state==="healing"
-      ){
-
-        console.log("return idle")
-        
-        this.state="idle";
-      }
-
-    });
-
-    }
-
-    setMovimientoEnemigo(player,contacto,contactoAtaque,contactoEnemigo){
+    setMovimientoEnemigo(){
 
   
       //this.getState();
-      this.setCaminar(player,contacto,contactoAtaque,contactoEnemigo);
+      //this.setCaminar(player,contacto,contactoAtaque,contactoEnemigo);
+
+      this.maquina.actualizar();
 
 
     }
