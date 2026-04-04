@@ -5,6 +5,17 @@ import {dataEnemigos} from "../enemies/DataEnemies.js";
 import { DataComboEspada } from "./combo/DataCombo.js";
 import { GuardarEnStorage } from "../funciones/GuardarEnStorage.js";
 import { guardarPartida } from "../guardarPartida.js";
+import { MaquinaEstados } from "../funciones/automata/MaquinaEstados.js";
+
+import {IdlePlayer} from "./estados/IdlePlayer.js";
+import {WalkPlayer} from "./estados/WalkPlayer.js";
+import {AttackPlayer} from "./estados/AttackPlayer.js";
+import {DashPlayer} from "./estados/DashPlayer.js";
+import {HurtPlayer} from "./estados/HurtPlayer.js";
+import {DeadPlayer} from "./estados/DeadPlayer.js";
+import {HealingPlayer} from "./estados/HealingPlayer.js";
+import {InteractuarPlayer} from "./estados/InteractuarPlayer.js";
+
 export class player {
 
   constructor(scene, texture, x = 25, y = 25, joystick,controles, keys,listaEnemigos,lights,camera) {
@@ -151,6 +162,29 @@ export class player {
         }
     });
 
+
+    this.automata=new MaquinaEstados(this);
+
+    this.asignarEstados();
+
+
+}
+
+
+asignarEstados(){
+
+  
+
+  this.automata.agregarEstado('Idle',new IdlePlayer(this));
+  this.automata.agregarEstado('Walk',new WalkPlayer(this) );
+  this.automata.agregarEstado('Attack',new AttackPlayer(this));
+  this.automata.agregarEstado('Dash',new DashPlayer(this));
+  this.automata.agregarEstado('Hurt',new HurtPlayer(this));
+  this.automata.agregarEstado('Dead',new DeadPlayer(this));
+  this.automata.agregarEstado('Healing',new HealingPlayer(this));
+  this.automata.agregarEstado('Interactuar',new InteractuarPlayer(this));
+
+  this.automata.cambiarEstado('Idle');
 
 
 }
@@ -1545,13 +1579,15 @@ cargarDepth(){
 
   setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto,listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove,listaPalancas){
 
-    
+    /*
     //console.log(this.estaGuardando);
    // console.log(this.estaActivandoPalanca);
       this.cargarDepth();
        // console.log(this.player.x);
        // console.log(this.player.y);
        //console.log(this.vida);
+
+
         let subEstado_caminar="";
 
     //console.log("Estado Principal: "+this.state);
@@ -1604,9 +1640,9 @@ cargarDepth(){
       
       this.interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove,listaPalancas);
 
-
+      */
   
-      
+      this.automata.actualizar();
 
 
   
