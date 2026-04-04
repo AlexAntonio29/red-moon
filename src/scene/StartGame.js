@@ -788,7 +788,7 @@ colisionesEnemigo(){
 
         if(enemigo!==null){
           empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this,700);//
-        
+          
 
           this.player.setVida(enemigo.dataEnemie.ataque); //desactivar para el contacto player enemigo
 

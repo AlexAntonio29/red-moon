@@ -20,7 +20,7 @@ export class GolpeadoEnemies extends Estados{
 
         })
 
-        if(this.objeto){    
+       
         
         console.log(this.objeto.scene);
         empujar(
@@ -29,9 +29,9 @@ export class GolpeadoEnemies extends Estados{
             1,
             this.objeto.scene.player.contacto,
             this.objeto.scene,
-            this.objeto.scene.player.arma.fuerza);
+            this.objeto.fuerzaResistencia);
         
-        }
+        
 
          //empujar(this.spriteAtaque,enemigo.getContainer(),1,this.contacto,this.scene,this.arma.fuerza);
             

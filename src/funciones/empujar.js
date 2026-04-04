@@ -62,7 +62,6 @@ export function empujar(sujetoEmpujador, sujetoEmpujado, contacto ,listaContacto
     if (cuerpo) {
       cuerpo.setVelocity(0, 0);
       listaContacto[contacto] = false;
-      
       //empujado.setBounce(0); // si quieres restaurarlo
 
     }
@@ -70,11 +69,12 @@ export function empujar(sujetoEmpujador, sujetoEmpujado, contacto ,listaContacto
 
   });
 
-
+  
   if(movCamara)
   scene.cameras.main.shake(80, 0.01);
 }
  }catch(e){
+  console.log('ERRORR');
   console.log(e);
  }
 
