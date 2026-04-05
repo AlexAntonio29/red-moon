@@ -50,7 +50,12 @@ export class IdlePlayer extends Estados{
 
 
     verificarAtacar(){
-        if(Phaser.Input.Keyboard.JustUp(this.objeto.keys.J)){
+
+            if (this.objeto.keys.J.isDown && !this.objeto.estaAtacando) {
+            this.objeto.tiempocarga++; 
+          
+        }
+        if(Phaser.Input.Keyboard.JustUp(this.objeto.keys.J)&&this.objeto.stamina>0){
             this.objeto.automata.cambiarEstado('Attack');
             return true;
         }
@@ -59,7 +64,7 @@ export class IdlePlayer extends Estados{
 
     verificarHerir(){
 
-        
+
     }
 
     verificarDash(){

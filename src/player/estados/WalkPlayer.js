@@ -17,15 +17,76 @@ export class WalkPlayer extends Estados{
 
 
 
-        if(this.objeto.player.body.velocity.x===0&&this.objeto.player.body.velocity.y===0){
-            this.objeto.automata.cambiarEstado('Idle');
-        }
+        if(!this.verificarIdle());
+        if(!this.verficarCurar());
+        if(!this.verificarAtacar());
+        if(!this.verificarDash());
+        if(!this.verificarInteractuar());
     }
 
     exit(){
         console.log("Saliendo de Walk");
         this.objeto.player.setVelocity(0);
     }
+
+
+    verificarIdle(){
+        if(this.objeto.player.body.velocity.x===0&&this.objeto.player.body.velocity.y===0){
+            this.objeto.automata.cambiarEstado('Idle');
+            return true;
+        }
+            return false;
+    }
+
+    verficarCurar(){
+        if(Phaser.Input.Keyboard.JustDown(this.objeto.keys.V)){
+            this.objeto.automata.cambiarEstado('Healing');
+            return true
+        }
+
+        return false;
+    }
+
+    verificarAtacar(){
+
+            if (this.objeto.keys.J.isDown && !this.objeto.estaAtacando) {
+            this.objeto.tiempocarga++; 
+          
+        }
+
+        if(Phaser.Input.Keyboard.JustUp(this.objeto.keys.J)&&this.objeto.stamina>0){
+            this.objeto.automata.cambiarEstado('Attack');
+            return true;
+        }
+        return false;
+    }
+
+    verificarHerir(){
+
+        
+    }
+
+    verificarDash(){
+        if(Phaser.Input.Keyboard.JustDown
+            (this.objeto.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT)) 
+            && this.objeto.stamina > 0 ){
+            this.objeto.automata.cambiarEstado('Dash');
+            return true
+        }
+        return false;
+    }
+
+    verificarInteractuar(){
+        if(Phaser.Input.Keyboard.JustDown(this.objeto.keys.E)){
+            this.objeto.automata.cambiarEstado('Interactuar');
+            return true;
+        }
+
+        return false;
+    }
+
+
+
 
 
       caminarPlayer(contacto){
