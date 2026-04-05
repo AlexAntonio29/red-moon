@@ -15,6 +15,7 @@ import {HurtPlayer} from "./estados/HurtPlayer.js";
 import {DeadPlayer} from "./estados/DeadPlayer.js";
 import {HealingPlayer} from "./estados/HealingPlayer.js";
 import {InteractuarPlayer} from "./estados/InteractuarPlayer.js";
+import { GetUpPlayer } from "./estados/GetUpPlayer.js";
 
 export class player {
 
@@ -175,7 +176,7 @@ export class player {
 asignarEstados(){
 
   
-
+  this.automata.agregarEstado('getUp',new GetUpPlayer(this));
   this.automata.agregarEstado('Idle',new IdlePlayer(this));
   this.automata.agregarEstado('Walk',new WalkPlayer(this) );
   this.automata.agregarEstado('Attack',new AttackPlayer(this));
@@ -185,7 +186,7 @@ asignarEstados(){
   this.automata.agregarEstado('Healing',new HealingPlayer(this));
   this.automata.agregarEstado('Interactuar',new InteractuarPlayer(this));
 
-  this.automata.cambiarEstado('Idle');
+  this.automata.cambiarEstado('getUp');
 
 
 }
@@ -374,6 +375,7 @@ asignarEstados(){
 
   animaciones(){
 
+    if(!this.scene.anims.exists('player_estatico'))
     this.scene.anims.create({
         key: "player_estatico",
         frames: this.scene.anims.generateFrameNumbers('player_idle', { start: 0, end: 3 }),
@@ -381,13 +383,15 @@ asignarEstados(){
         repeat: -1
           });
     //this.sprite.play("player_estatico");
-
+    if(!this.scene.anims.exists('player_camina'))
     this.scene.anims.create({
         key: "player_camina",
         frames: this.scene.anims.generateFrameNumbers('player', { start: 0, end: 6 }),
         frameRate: 10,
         repeat: -1
           });
+
+          if(!this.scene.anims.exists('player_camina_inverso'))
           this.scene.anims.create({
         key: "player_camina_inverso",
         frames: this.scene.anims.generateFrameNumbers('player', { start: 0, end: 6 }),
@@ -395,6 +399,7 @@ asignarEstados(){
         repeat: -1
           });
 
+          if(!this.scene.anims.exists("player_camina_up"))
           this.scene.anims.create({
         key: "player_camina_up",
         frames: this.scene.anims.generateFrameNumbers('player_walk_up', { start: 0, end: 7 }),
@@ -402,12 +407,17 @@ asignarEstados(){
         repeat: -1
           });
 
-                    this.scene.anims.create({
+
+        if(!this.scene.anims.exists("player_camina_down"))
+        this.scene.anims.create({
         key: "player_camina_down",
         frames: this.scene.anims.generateFrameNumbers('player_walk_down', { start: 0, end: 7 }),
         frameRate: 10,
         repeat: -1
           });
+
+
+          if(!this.scene.anims.exists("player_estatico_inverso"))
           this.scene.anims.create({
         key: "player_estatico_inverso",
         frames: this.scene.anims.generateFrameNumbers('player_idle', { start: 0, end: 3 }),
@@ -415,6 +425,7 @@ asignarEstados(){
         repeat: -1
           });
 
+          if(!this.scene.anims.exists(this.combo[0].nombre))
             this.scene.anims.create({
             key: this.combo[0].nombre,
             frames: this.scene.anims.generateFrameNumbers(this.combo[0].sprite,{start:0, end:this.combo[1].frame_end }),
@@ -423,6 +434,7 @@ asignarEstados(){
           })
 
 
+          if(!this.scene.anims.exists(this.combo[1].nombre))
           this.scene.anims.create({
             key: this.combo[1].nombre,
             frames: this.scene.anims.generateFrameNumbers(this.combo[1].sprite,{start:0, end:this.combo[1].frame_end }),
@@ -430,6 +442,7 @@ asignarEstados(){
             repeat:0
           })
 
+          if(!this.scene.anims.exists(this.combo[2].nombre))
           this.scene.anims.create({
             key: this.combo[2].nombre,
             frames: this.scene.anims.generateFrameNumbers(this.combo[2].sprite,{start:0, end:this.combo[1].frame_end }),
@@ -438,7 +451,7 @@ asignarEstados(){
           })
 
 
-
+          if(!this.scene.anims.exists("hurt_sword"))
           this.scene.anims.create({
             key:"hurt_sword",
             frames:this.scene.anims.generateFrameNumbers("player_golpeado_espada",{start:0, end:1}),
@@ -446,13 +459,16 @@ asignarEstados(){
             repeat:0
           })
 
-this.scene.anims.create({
+          if(!this.scene.anims.exists("player_curar_anim"))
+      this.scene.anims.create({
     key: "player_curar_anim",
     frames: this.scene.anims.generateFrameNumbers('player_heal', { start: 0, end: 8 }), // Ajusta los frames según tu sprite
     frameRate: 10,
     repeat: 0 
 });
 
+
+if(!this.scene.anims.exists("dash-reverso"))
    this.scene.anims.create({
      key:"dash-reverso",
      frames: this.scene.anims.generateFrameNumbers("player_dash_reverso",{start:0,end:7}),
@@ -460,6 +476,8 @@ this.scene.anims.create({
      repeat:0
  });
 
+
+          if(!this.scene.anims.exists("dash-delantero"))
           this.scene.anims.create({
             key:"dash-delantero",
             frames: this.scene.anims.generateFrameNumbers("player_dash_adelante",{start:0,end:7}),
@@ -467,6 +485,23 @@ this.scene.anims.create({
             repeat:0
           });
 
+
+          if(!this.scene.anims.exists("dead-player"))
+          this.scene.anims.create({
+            key:"dead-player",
+            frames: this.scene.anims.generateFrameNumbers("player_dead",{start:0,end:5}),
+            frameRate:5,
+            repeat:0
+          });
+
+
+          if(!this.scene.anims.exists("getUp-player"))
+          this.scene.anims.create({
+            key:"getUp-player",
+            frames: this.scene.anims.generateFrameNumbers("player_levantarse",{start:0,end:6}),
+            frameRate:5,
+            repeat:0
+          });
 
 
 
@@ -726,7 +761,12 @@ cargarDepth(){
 
         if(enemigo!==null){
 
-          empujar(enemigo.getContainer(),this.player.getContainer(),0,this.scene.contactoSprites,this,200);//
+          empujar(enemigo.getContainer(),
+          this.player.getContainer(),
+          0,
+          this.scene.contactoSprites,
+          this,
+          200);//
           
 
                this.player.setVida(enemigo.dataEnemie.ataque); //desactivar para el contacto player enemigo
@@ -743,7 +783,6 @@ cargarDepth(){
             player.setVisible(true);
             this.collisionPlayerEnemigo();
             
-
           });
 
 

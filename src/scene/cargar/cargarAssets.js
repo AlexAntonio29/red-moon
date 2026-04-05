@@ -75,18 +75,18 @@ export class cargarAssets{
     //ataque 
     
     this.scene.load.spritesheet(DataComboEspada[0].sprite,"./assets/player/Animations/attack/attack1.png",{
-      frameWidth: 64,
-      frameHeight: 64
+      frameWidth: 86,
+      frameHeight: 86
     })
     
     this.scene.load.spritesheet(DataComboEspada[1].sprite,"./assets/player/Animations/attack/attack2.png",{
-      frameWidth: 64,
-      frameHeight: 64
+      frameWidth: 86,
+      frameHeight: 86
     })
     
     this.scene.load.spritesheet(DataComboEspada[2].sprite,"./assets/player/Animations/attack/attack3.png",{
-      frameWidth: 64,
-      frameHeight: 64
+      frameWidth: 86,
+      frameHeight: 86
     })
     
     
@@ -103,6 +103,16 @@ export class cargarAssets{
     this.scene.load.spritesheet("player_dash_adelante","./assets/player/Animations/Dash/adelante.png",{
       frameWidth: 64,
       frameHeight: 64
+    });
+
+      this.scene.load.spritesheet("player_dead","./assets/player/Animations/Death_Base/Dead.png",{
+      frameWidth: 80,
+      frameHeight: 86
+    });
+
+    this.scene.load.spritesheet("player_levantarse","./assets/player/Animations/getUp/levantarse.png",{
+      frameWidth: 80,
+      frameHeight: 86
     });
     
     

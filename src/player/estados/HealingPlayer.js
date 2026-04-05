@@ -60,6 +60,9 @@ export class HealingPlayer extends Estados{
         this.objeto.cantidadPociones-=1;
         
 
+      }else{
+        console.log("no tienes pociones");
+        this.objeto.automata.cambiarEstado('Idle');
       }
     }
 }

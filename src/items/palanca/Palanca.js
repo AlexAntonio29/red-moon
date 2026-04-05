@@ -71,6 +71,8 @@ export class Palanca extends Phaser.Physics.Arcade.Sprite{
     }
 
     cargarAnimaciones(){
+
+        if(!this.scene.anims.exists("palanca_activada"))
         this.scene.anims.create({
         key: "palanca_activada",
         frames: this.scene.anims.generateFrameNumbers('palanca', { start: 2, end: 2 }),
@@ -79,6 +81,7 @@ export class Palanca extends Phaser.Physics.Arcade.Sprite{
           
         });
 
+        if(!this.scene.anims.exists("palanca_desactivada"))
             this.scene.anims.create({
         key: "palanca_desactivada",
         frames: this.scene.anims.generateFrameNumbers('palanca', { start: 0, end: 0 }),
@@ -87,6 +90,7 @@ export class Palanca extends Phaser.Physics.Arcade.Sprite{
           
         });
 
+        if(!this.scene.anims.exists("palanca_move"))
         this.scene.anims.create({
         key: "palanca_move",
         frames: this.scene.anims.generateFrameNumbers('palanca', { start: 0, end: 2 }),

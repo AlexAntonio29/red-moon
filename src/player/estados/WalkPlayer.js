@@ -27,7 +27,7 @@ export class WalkPlayer extends Estados{
 
     exit(){
         console.log("Saliendo de Walk");
-        this.objeto.player.setVelocity(0);
+       
     }
 
 
