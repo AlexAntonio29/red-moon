@@ -13,3 +13,6 @@ export class DeadPlayer extends Estados{
         console.log("Saliendo de Dead");
     }
 }
+
+
+

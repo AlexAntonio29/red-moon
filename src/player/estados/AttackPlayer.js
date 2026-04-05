@@ -8,6 +8,7 @@ export class AttackPlayer extends Estados{
 
        // this.objeto.player.anims.play(this.objeto.combo[this.objeto.posicion_combo].nombre, true);
          this.getAtaque();
+         this.verificarIdle();
     }
 
     execute(){
@@ -19,7 +20,7 @@ export class AttackPlayer extends Estados{
         this.expandirAtaque();
 
 
-        this.verificarIdle();
+        
 
     }
 

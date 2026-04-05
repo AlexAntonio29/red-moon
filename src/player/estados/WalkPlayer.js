@@ -4,6 +4,7 @@ export class WalkPlayer extends Estados{
 
 
     enter(){
+        this.objeto.state='walk';
         console.log("Estoy en Walk");
     }
 
@@ -70,6 +71,7 @@ export class WalkPlayer extends Estados{
         if(Phaser.Input.Keyboard.JustDown
             (this.objeto.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT)) 
             && this.objeto.stamina > 0 ){
+              console.log("saliendo de walk dash");
             this.objeto.automata.cambiarEstado('Dash');
             return true
         }

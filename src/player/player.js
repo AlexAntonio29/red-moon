@@ -154,7 +154,7 @@ export class player {
         // Si la animación que terminó fue la del dash...
         if (this.state === "dash") {
             this.state = "idle";
-            this.verificarTrampaDash(); // <--- MANDAMOS A REVISAR EL PISO
+            //this.verificarTrampaDash(); // <--- MANDAMOS A REVISAR EL PISO
         } 
         // Para las demás animaciones normales...
         else if (this.state === "attack" || this.state === "hurt" || this.state === "healing") {
@@ -631,31 +631,6 @@ this.scene.anims.create({
 
   }
 
-
-  //EFECTOS******************************************************************************
-
-    getParpadeo(){
-
-      let n=10;
-      let time=1000;
-
-      
-
-        this.player.setVisible(false);
-
-        this.scene.time.delayedCall(time,()=>{
-          console.log("regreso visible")
-          this.player.setVisible(true);
-        })
-
-
-      
-    }
-
-  //******************************************************************************
-
-
-
   getCameraPosition(offsetX,offsetY,sub_estado="arriba",tiempoTraslado=1000,lerp=0.03){
 
     
@@ -700,83 +675,6 @@ this.scene.anims.create({
     
   }
 
-
-
-
-
-
-
-
-
-movimientoDash() {
-      // 1. Verificamos si presiona SHIFT, si tiene stamina y si NO está ya haciendo dash
-      if (Phaser.Input.Keyboard.JustDown(this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT)) && this.stamina > 0 && this.state !== "dash") {
-
-          let velocidadDash = 250;
-          let velDiag = velocidadDash * 0.7071; // Matemática exacta (500 / raíz de 2)
-          let costoStamina = 80;
-
-          // 2. Guardamos la posición segura por si cae en un foso (el Punto de Control)
-          this.xSeguro = this.player.x;
-          this.ySeguro = this.player.y;
-
-
-          this.slide.play();
-
-
-          // 3. ¿Es Dash hacia adelante o salto hacia atrás (Backstep)?
-          let dir = 1; 
-          if (this.state === "idle") {
-              this.player.play("dash-reverso");
-              dir = -1; // Invierte toda la física para saltar hacia atrás
-          } else {
-              this.player.play("dash-delantero");
-              dir = 1;  // Va hacia adelante
-          }
-
-          // 4. Aplicamos las velocidades correctas y normalizadas
-          switch (this.subEstado_posicionEstatico) {
-              case "derecha":
-                  this.player.flipX = false;
-                  this.player.setVelocity(velocidadDash * dir, 0);
-                  break;
-              case "izquierda":
-                  this.player.flipX = true;
-                  this.player.setVelocity(-velocidadDash * dir, 0);
-                  break;
-              case "arriba":
-                  this.player.setVelocity(0, -velocidadDash * dir);
-                  break;
-              case "abajo":
-                  this.player.setVelocity(0, velocidadDash * dir);
-                  break;
-              case "arriba-derecha":
-                  this.player.flipX = false;
-                  this.player.setVelocity(velDiag * dir, -velDiag * dir);
-                  break;
-              case "arriba-izquierda":
-                  this.player.flipX = true;
-                  this.player.setVelocity(-velDiag * dir, -velDiag * dir);
-                  break;
-              case "abajo-derecha":
-                  this.player.flipX = false;
-                  this.player.setVelocity(velDiag * dir, velDiag * dir);
-                  break;
-              case "abajo-izquierda":
-                  this.player.flipX = true;
-                  this.player.setVelocity(-velDiag * dir, velDiag * dir);
-                  break;
-          }
-
-          // 5. Consumimos stamina y cambiamos el estado
-          this.stamina -= costoStamina;
-          this.state = "dash";
-      }
-  }
-
-
-
-
   // --- AÑADE ESTOS DOS MÉTODOS JUSTO AQUÍ (Antes de cerrar la clase) ---
   congelarParaDialogo() {
     this.puedeMoverse = false;
@@ -787,50 +685,6 @@ movimientoDash() {
   descongelarParaDialogo() {
     this.puedeMoverse = true;
   }
-
-  Curar() {
-    // 1. Verificamos la tecla V y que el jugador no esté ya haciendo otra acción (ataque o cura)
-    if (Phaser.Input.Keyboard.JustDown(this.keys.V) && this.state !== "healing" && this.state !== "attack") {
-
-
-      if(this.cantidadPociones>0){
-
-        
-      let pocion=100;
-        
-  // Definimos el límite máximo
-
-
-        if (this.vida < this.vidaActualMax) {
-            // AUMENTO DE VIDA
-
-            this.vida=this.vida+pocion;
-            if (this.vida > this.vidaActualMax) {
-                this.vida = this.vidaActualMax;
-            }
-
-            // --- LÓGICA DE ANIMACIÓN ---
-            this.state = "healing";      // Cambiamos el estado para bloquear otras acciones
-            this.player.setVelocity(0);  // Frenamos al jugador para que no se mueva mientras se cura
-            this.player.play("player_curar_anim"); // Reproducimos la animación que creaste
-            this.health_sound.play();
-            console.log("Caballero curado. Vida actual: " + this.vida);
-            this.curando=true;
-
-        } else {
-            console.log("La vida ya está al máximo");
-        }
-
-        this.cantidadPociones-=1;
-        
-
-      }
-
-
-
-    }
-}
-
 
 cargarDepth(){
   this.scene.listaCheckpoints.children.iterate(checkpoint=>{
@@ -844,81 +698,9 @@ cargarDepth(){
 }
 
 
-
-
-
-
-
-  setMovimientoPlayer(contacto, listaEnemigos,contactoSprites,items_punto,listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove,listaPalancas){
-
-    /*
-    //console.log(this.estaGuardando);
-   // console.log(this.estaActivandoPalanca);
+  setMovimientoPlayer(){
       this.cargarDepth();
-       // console.log(this.player.x);
-       // console.log(this.player.y);
-       //console.log(this.vida);
-
-
-        let subEstado_caminar="";
-
-    //console.log("Estado Principal: "+this.state);
-
-
-
-    
-
-
-    //cuando termine la animacion
-    this.player.on("animationcomplete", (anim)=>{
-      if(
-        this.state==="attack"
-      ||this.state==="hurt"
-      ||this.state==="dash"
-      ||this.state === "healing"
-      ){
-        
-        this.state="idle";
-        
-      }
-    })
-
-    //aqui agregar input 
-
-
-
-
-
-    
-
-      this.caminarPlayer(contacto,subEstado_caminar);
-
-  if(this.isInputActive){
-      this.movimientoDash();
-
-      this.Curar();
-
-      this.getAtaque(listaEnemigos,contactoSprites,items_punto);
-
-    }
-
-
-
-
-
-      this.detenerMovimiento();
-
-      
-      
-      this.interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove,listaPalancas);
-
-      */
-  
       this.automata.actualizar();
-
-
-  
-
   }
 
 
@@ -970,131 +752,6 @@ cargarDepth(){
 
   }
 
-
-  interactuar(listaEventos,listaCheckpoints,listaLlaves,listaPuertasAbiertas,listaPuertasAbiertasAbove,listaPalancas) {
-    // 1. Verificamos si se presionó la tecla E
-    if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
-
-       if (!this.scene.blockLayer) return; 
-        // PRIORIDAD 1: ¿Ya estamos en un diálogo activo?
-       
-        if (this.scene.enDialogo) {
-            this.pisadas.stop();
-            this.scene.avanzarDialogo();
-            return; //  Detenemos la función para no interactuar con nada más
-        }
-
-        
-
-      
-// PRIORIDAD 2: NPCs (Ahora automático para todos)
-let npcCercano = this.scene.listaNpc.getChildren().find(npc => 
-    npc.estaCercaParaHablar && npc.estaCercaParaHablar(this.getContainer())
-);
-
-if (npcCercano) {
-    // Enviamos el objeto NPC completo para que la escena pueda marcarlo
-    this.scene.iniciarDialogo(npcCercano); 
-    return;
-
-    
-}
-      let tileObjetivo=this.detectarBloqueCercano(this.scene.blockLayer);
-      let tileObjetivoAbovePuerta=this.detectarBloqueCercano(this.scene.blockAbove);
-
-
-
-          // 5. Si despues de escanear todo encontramos un ganador... ¡Interactuamos!
-          if (tileObjetivo) {    
-            
-              
-
-        if(this.scene.procesarInteraccionE(this, tileObjetivo)&&tileObjetivoAbovePuerta){
-        
-        this.scene.abrirPuertaCompleta(tileObjetivoAbovePuerta,this.scene.blockAbove);
-        const datosPuerta={
-                      nameScene:this.scene.nameScene,
-                      x:tileObjetivoAbovePuerta.x,
-                      y:tileObjetivoAbovePuerta.y
-                    }
-
-      this.scene.listaPuertasAbiertasAbove.push(datosPuerta);
-      }
-          } else if(this.estaGuardando){
-
-
-              
-            guardarPartida(
-              this.scene.ranura,
-              this,
-              listaEventos,
-              listaCheckpoints,
-              listaLlaves,
-              listaPuertasAbiertas,
-              listaPuertasAbiertasAbove,
-              listaPalancas
-            );//se envia escene porque ahi se almacenan todos los objetos
-
-              
-          }else if(this.estaActivandoPalanca){
-
-
-
-        this.scene.listaPalancas.children.iterate(palanca=>{
-        
-           if(this.scene.physics.overlap(this.player, palanca) && !(this.esActivado)){
-            console.log("EN ACTIVACION");
-            palanca.activarSonido();
-            palanca.activarAnimacion();
-            palanca.activar(this.scene.blockLayer);
-            
-            palanca.eventoSecundario(this.scene.listaEventos);
-            
-           }
-
-          
-        }) 
-        
-
-      } else console.log("No hay nada cerca para interactuar.");
-
-
-
-
-
-
-
-      }
-  }
-
-    // ==========================================
-    // SISTEMA ANTITRAMPAS: EL PUNTO DE CONTROL
-    // ==========================================
-    verificarTrampaDash() {
-        if (!this.scene.blockLayer) return;
-
-        // 1. Calculamos dónde están parados los pies del jugador exactamente
-        let px = this.player.x + (this.player.displayWidth / 2);
-        let py = this.player.y + (this.player.displayHeight / 2);
-
-        // 2. Leemos el mapa en esas coordenadas
-        let tileActual = this.scene.blockLayer.getTileAtWorldXY(px, py);
-
-        // 3. ¿Ese bloque tiene la propiedad que le pusimos en Tiled?
-        if (tileActual && tileActual.properties && tileActual.properties.tipoBloqueo) {
-            
-            // Si caíste dentro de CUALQUIER bloque que se supone es un obstáculo...
-            console.log("¡Te quedaste atascado en un obstaculo! Regresando a zona segura...");
-            this.setVida(100);
-            this.scene.contactoPlayerEnemigo(this.player,null);
-             //this.setVida(100); //desactivar para el contacto player enemigo
-            
-            // 4. ¡Magia! Lo regresamos a la coordenada donde inició el salto ALEXIS ESTUVO AQUI Y VI QUE USASTE IA XD
-            this.player.setPosition(this.xSeguro, this.ySeguro);
-            
-            // Opcional: Aquí podrías reproducir un sonido de error o quitarle 10 de vida
-        }
-    }
 
   getArma(){
     //console.log("GetArma: ");

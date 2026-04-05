@@ -4,8 +4,14 @@ export class IdlePlayer extends Estados{
 
 
     enter(){
-
+        console.log(this.objeto.state);
+        if(this.objeto.state==='dash'){ 
+            console.log("verificar trampa dash");
+            this.verificarTrampaDash();
+        
+        }
         console.log('Entrando en Idle');
+        this.objeto.state='idle';
         this.objeto.player.setVelocity(0);
         this.objeto.player.play("player_estatico");
         
@@ -75,6 +81,32 @@ export class IdlePlayer extends Estados{
             return true
         }
         return false;
+    }
+
+    verificarTrampaDash() {
+        if (!this.objeto.scene.blockLayer) return;
+
+        // 1. Calculamos dónde están parados los pies del jugador exactamente
+        let px = this.objeto.player.x + (this.objeto.player.displayWidth / 2);
+        let py = this.objeto.player.y + (this.objeto.player.displayHeight / 2);
+
+        // 2. Leemos el mapa en esas coordenadas
+        let tileActual = this.objeto.scene.blockLayer.getTileAtWorldXY(px, py);
+
+        // 3. ¿Ese bloque tiene la propiedad que le pusimos en Tiled?
+        if (tileActual && tileActual.properties && tileActual.properties.tipoBloqueo) {
+            
+            // Si caíste dentro de CUALQUIER bloque que se supone es un obstáculo...
+            console.log("¡Te quedaste atascado en un obstaculo! Regresando a zona segura...");
+            this.objeto.setVida(100);
+            this.objeto.scene.contactoPlayerEnemigo(this.objeto.player,null);
+             //this.objeto.setVida(100); //desactivar para el contacto player enemigo
+            
+            // 4. ¡Magia! Lo regresamos a la coordenada donde inició el salto ALEXIS ESTUVO AQUI Y VI QUE USASTE IA XD
+            this.objeto.player.setPosition(this.objeto.xSeguro, this.objeto.ySeguro);
+            
+            // Opcional: Aquí podrías reproducir un sonido de error o quitarle 10 de vida
+        }
     }
 
 
