@@ -20,7 +20,7 @@ export class IdlePlayer extends Estados{
     execute(){
 
         
-        
+        if(!this.verificarHerir());
         if(!this.verificarCaminar());
         if(!this.verificarAtacar());
         if(!this.verificarDash());
@@ -69,7 +69,11 @@ export class IdlePlayer extends Estados{
     }
 
     verificarHerir(){
-
+        if(this.objeto.atacado){
+            this.objeto.automata.cambiarEstado('Hurt');
+            return true;
+        }
+        return false;
 
     }
 
@@ -99,7 +103,7 @@ export class IdlePlayer extends Estados{
             // Si caíste dentro de CUALQUIER bloque que se supone es un obstáculo...
             console.log("¡Te quedaste atascado en un obstaculo! Regresando a zona segura...");
             this.objeto.setVida(100);
-            this.objeto.scene.contactoPlayerEnemigo(this.objeto.player,null);
+            this.objeto.contactoPlayerEnemigo(this.objeto.player,null);
              //this.objeto.setVida(100); //desactivar para el contacto player enemigo
             
             // 4. ¡Magia! Lo regresamos a la coordenada donde inició el salto ALEXIS ESTUVO AQUI Y VI QUE USASTE IA XD

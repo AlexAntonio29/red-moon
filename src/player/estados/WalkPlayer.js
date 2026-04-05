@@ -17,7 +17,7 @@ export class WalkPlayer extends Estados{
 
 
 
-
+        if(!this.verificarHerir());
         if(!this.verificarIdle());
         if(!this.verficarCurar());
         if(!this.verificarAtacar());
@@ -64,7 +64,11 @@ export class WalkPlayer extends Estados{
 
     verificarHerir(){
 
-        
+                if(this.objeto.atacado){
+            this.objeto.automata.cambiarEstado('Hurt');
+            return true;
+        }
+        return false;
     }
 
     verificarDash(){

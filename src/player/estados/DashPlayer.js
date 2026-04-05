@@ -28,7 +28,7 @@ export class DashPlayer extends Estados{
 
         
 
-        
+        if(!this.verificarHerir());
 
         
 
@@ -47,6 +47,16 @@ export class DashPlayer extends Estados{
 
             this.objeto.automata.cambiarEstado('Idle');
         });
+
+    }
+
+
+        verificarHerir(){
+        if(this.objeto.atacado){
+            this.objeto.automata.cambiarEstado('Hurt');
+            return true;
+        }
+        return false;
 
     }
 

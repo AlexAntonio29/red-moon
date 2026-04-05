@@ -773,72 +773,10 @@ colisionesEnemigo(){
 
 //FUNCIONES DE LAS COLISIONES
 
-    contactoPlayerEnemigo(player,enemigo){
-
-      let tiempo_invisivilidad=1000;
-      let parpadeo=100;
-      let n=10;
-      
-
-
-       //console.log(this.golpeToPlayer);
-       this.golpeToPlayer.play();
-          
-       this.player.setGolpeado();
-
-        if(enemigo!==null){
-          empujar(enemigo.getContainer(),this.player.getContainer(),0,this.contactoSprites,this,700);//
-          
-
-          this.player.setVida(enemigo.dataEnemie.ataque); //desactivar para el contacto player enemigo
-
-
-                this.physics.world.removeCollider(this.colisionEnemigoPlayer);
-
-                }
-                
-          this.time.delayedCall(tiempo_invisivilidad,()=>{
-
-            console.log("regresa");
-            player.setAlpha(1);
-            player.setVisible(true);
-            this.collisionPlayerEnemigo();
-            
-
-          });
-
-
-        this.time.addEvent({
-        
-        delay: parpadeo, 
-        callback: () => {
-        player.setVisible(!player.visible); 
-                        },
-         repeat: n // número de parpadeos
-                          });
-
-
-          if(this.player.getVida()<=0)this.finalizarPartida("Partida Finalizada") ;
-
-          console.log("Contacto Player Enemigo: "+this.player.getVida());
-
-          this.getBarraVida();
-
-
-
-
-        player.setAlpha(0.5)
-        
-
-
-
-          
-
-    }
   //colision al contacto del player con el enemigo
       collisionPlayerEnemigo(){
         
-   this.colisionEnemigoPlayer=this.physics.add.collider(this.player.getContainer(),this.listaEnemigos,this.contactoPlayerEnemigo,null,this);
+   this.colisionEnemigoPlayer=this.physics.add.collider(this.player.getContainer(),this.listaEnemigos,this.player.contactoPlayerEnemigo,null,this);
 
 }
 

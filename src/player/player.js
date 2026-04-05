@@ -50,6 +50,7 @@ export class player {
     //Interaccion con objetos
     this.estaGuardando=false;
     this.estaActivandoPalanca=false;
+    this.atacado=false;
 
     
 
@@ -266,6 +267,12 @@ asignarEstados(){
         loop:false,
         volume:1
       });
+
+
+    this.golpeToPlayer=this.scene.sound.add("golpeToPlayer",{
+    loop:false,
+    volume:1
+  });
 
 
 
@@ -696,6 +703,81 @@ cargarDepth(){
         checkpoint.setDepth(6);}
   })
 }
+
+
+
+    contactoPlayerEnemigo(player,enemigo){
+
+
+      if(this.player.getVida()>0){
+
+        
+      let tiempo_invisivilidad=1000;
+      let parpadeo=100;
+      let n=10;
+      this.player.atacado=true;
+
+      
+
+
+       //console.log(this.golpeToPlayer);
+       this.golpeToPlayer.play();
+          
+
+        if(enemigo!==null){
+
+          empujar(enemigo.getContainer(),this.player.getContainer(),0,this.scene.contactoSprites,this,200);//
+          
+
+               this.player.setVida(enemigo.dataEnemie.ataque); //desactivar para el contacto player enemigo
+
+                this.physics.world.removeCollider(this.colisionEnemigoPlayer);
+
+                }
+
+                
+          this.time.delayedCall(tiempo_invisivilidad,()=>{
+
+            console.log("regresa");
+            player.setAlpha(1);
+            player.setVisible(true);
+            this.collisionPlayerEnemigo();
+            
+
+          });
+
+
+        this.time.addEvent({
+        
+        delay: parpadeo, 
+        callback: () => {
+        player.setVisible(!player.visible); 
+                        },
+         repeat: n // número de parpadeos
+                          });
+
+
+          
+
+          console.log("Contacto Player Enemigo: "+this.player.getVida());
+
+          this.getBarraVida();
+
+
+
+
+        player.setAlpha(0.5)
+        
+
+
+      }
+
+
+
+
+          
+
+    }
 
 
   setMovimientoPlayer(){

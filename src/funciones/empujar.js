@@ -1,19 +1,19 @@
 export function empujar(sujetoEmpujador, sujetoEmpujado, contacto ,listaContacto, scene,force=300,movCamara=true) {
- console.log("here");  
+
 
 
  try{
 
-  if(!listaContacto[contacto]){
-
-
-
   const empujado = sujetoEmpujado;
   const empujador = sujetoEmpujador;
+
   if (!empujado || !empujado.body) {
     console.warn("Jugador o body indefinido en empujarJugador");
     return;
   }
+
+
+
 
   // Asegurar propiedades físicas
   const cuerpo = empujado.body;
@@ -46,33 +46,9 @@ export function empujar(sujetoEmpujador, sujetoEmpujado, contacto ,listaContacto
   } else {
     cuerpo.setVelocity(nx * fuerza, ny * fuerza);
   }
-
-  listaContacto[contacto] = true;//
-
-  // Frenado progresivo pero con checks para blocked
-  scene.time.delayedCall(120, () => {
-
-    if (cuerpo) cuerpo.setVelocity(cuerpo.velocity.x * 0.5, cuerpo.velocity.y * 0.5);
-    
-  
-
-  });
-
-  scene.time.delayedCall(300, () => {
-    if (cuerpo) {
-      cuerpo.setVelocity(0, 0);
-      listaContacto[contacto] = false;
-      //empujado.setBounce(0); // si quieres restaurarlo
-
-    }
-
-
-  });
-
-  
   if(movCamara)
-  scene.cameras.main.shake(80, 0.01);
-}
+  scene.cameras.main.shake(80, 0.05);
+
  }catch(e){
   console.log('ERRORR');
   console.log(e);

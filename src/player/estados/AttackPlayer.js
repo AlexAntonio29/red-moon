@@ -19,6 +19,8 @@ export class AttackPlayer extends Estados{
 
         this.expandirAtaque();
 
+        if(!this.verificarHerir());
+
 
         
 
@@ -29,6 +31,15 @@ export class AttackPlayer extends Estados{
         console.log("Saliendo de attack");
     }
 
+
+        verificarHerir(){
+        if(this.objeto.atacado){
+            this.objeto.automata.cambiarEstado('Hurt');
+            return true;
+        }
+        return false;
+
+    }
 
     verificarIdle(){
         this.objeto.player.once("animationcomplete", (anim)=>{
