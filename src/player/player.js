@@ -122,7 +122,7 @@ export class player {
     this.player.setDisplaySize(x, y);
     this.player.setBounce(0);
     this.player.setCollideWorldBounds(true);
-    this.player.name="player";
+    this.player.nombre="player";
     this.player.setSize((x/5), (y/5));
     this.player.setOffset(x/3,y/1.6);
 
@@ -571,7 +571,7 @@ if(!this.scene.anims.exists("dash-reverso"))
   }
 
   setVida(n){
-
+    console.log(n);
       this.vida=this.vida-n;
   }
 

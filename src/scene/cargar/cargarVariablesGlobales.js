@@ -75,7 +75,7 @@ export class cargarVariablesGlobales{
 
        this.scene.listaNpc=this.scene.physics.add.group();
 
-       this.scene.listaLucesObjetos=this.scene.physics.add.group();
+       this.scene.listaLucesObjetos=[];
 
        this.scene.listaCheckpoints=this.scene.physics.add.group();
 

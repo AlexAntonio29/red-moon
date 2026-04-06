@@ -4,6 +4,8 @@ import { empujar } from "../../../funciones/empujar.js";
 export class GolpeadoEnemies extends Estados{
 
     enter(){
+
+        
         
         if(this.objeto.vida>0){
 
@@ -23,6 +25,7 @@ export class GolpeadoEnemies extends Estados{
        
         
         console.log(this.objeto.scene);
+        
         empujar(
             this.objeto.scene.player.spriteAtaque,
             this.objeto.getContainer(),
@@ -30,6 +33,7 @@ export class GolpeadoEnemies extends Estados{
             this.objeto.scene.player.contacto,
             this.objeto.scene,
             this.objeto.fuerzaResistencia);
+
         
         
 

@@ -281,6 +281,28 @@ export class cargarAssets{
             frameHeight:374
           });
 
+          this.scene.load.spritesheet('boss1_agotado','./assets/bosses/boss1/agotado.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
+          this.scene.load.spritesheet('boss1_run','./assets/bosses/boss1/run.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
+          this.scene.load.spritesheet('boss1_enojado','./assets/bosses/boss1/enojado.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
+          this.scene.load.spritesheet('boss1_aturdido','./assets/bosses/boss1/aturdido.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
+
+
         }
     
         cargarAnimacionesEnemigos(){

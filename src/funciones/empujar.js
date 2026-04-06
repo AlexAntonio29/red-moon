@@ -47,12 +47,15 @@ export function empujar(sujetoEmpujador, sujetoEmpujado, contacto ,listaContacto
     cuerpo.setVelocity(nx * fuerza, ny * fuerza);
   }
   if(movCamara)
-  scene.cameras.main.shake(80, 0.05);
+  scene.cameras.main.shake(80, 0.01);
+
+  
 
  }catch(e){
   console.log('ERRORR');
   console.log(e);
  }
+
 
 
 

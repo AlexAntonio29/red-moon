@@ -306,7 +306,9 @@ crearEscenario(){
       if(tile.index!==-1){
        const x=tile.getCenterX();
        const y=tile.getCenterY();
-        this.lights.addLight(x, y, 350) .setColor(0xffaa00) .setIntensity(1);
+       this.listaLucesObjetos.push
+       (this.lights.addLight(x, y, 350) .setColor(0xffaa00) .setIntensity(1));
+        
 
       }
     })
@@ -801,12 +803,7 @@ colisionesEnemigo(){
   eliminarRebote(objeto){
 
     
-/*
-    if(objeto.name==="player"){
-    //if(objeto.body.x===0&&objeto.body.y===0)
-    this.player.setCambiarEstado("idle");
-    //objeto.setVelocity(0);
-  }*/
+
 
 
    // player.this.state="idle";
@@ -819,6 +816,8 @@ colisionesEnemigo(){
 
 
       //dar collider a los graficos 
+
+
 
    
 
@@ -834,16 +833,34 @@ colisionesEnemigo(){
 }
 
         if(objeto && this.above_collider){
+
+
+
+
+         
   //objetos de la zona
         if(this.above_collider.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this.above_collider.setCollisionByExclusion([-1])
-        this.physics.add.collider(objeto,this.above_collider,this.eliminarRebote,null,this);}
+        
+        const nombreObjeto=objeto.nombre;
+        this.contactoAbove_collider=this.physics.add.collider(objeto,this.above_collider,(obj,tile)=>{
+
+          console.log(obj);
+          if(nombreObjeto==='boss1'){
+            objeto.tocandoMuro=true;
+          }
+  
+        });
+      }
 
          if(objeto && this._above_collider){
   //objetos de la zona
         if(this._above_collider.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this._above_collider.setCollisionByExclusion([-1])
-        this.physics.add.collider(objeto,this._above_collider,this.eliminarRebote,null,this);
+
+       this.contacto_Above_collider= this.physics.add.collider(objeto,this._above_collider,()=>{
+  
+        });
       }
         
 
@@ -959,7 +976,7 @@ if (objeto && this.blockLayer) {
 
 
 
-    if(objeto.name='player' && this._suelo){
+    if(objeto.nombre='player' && this._suelo){
 
       
 
@@ -1502,6 +1519,8 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       this.lights.setAmbientColor(0x222222); 
       cargarLucesEstaticas(this);
 
+
+
     }
 
 
@@ -1838,7 +1857,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-this.physics.world.createDebugGraphic();
+//this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
     //this.crearFiltro();
     //Generacion de escenario
@@ -1939,14 +1958,37 @@ salirAreasInteraccion(){
 
 
 
+lucesArea(){
+      let activationRadius = 700; 
 
+    // 2. Recorrer todas las luces
+    this.listaLucesObjetos.forEach(light => {
+        // Calcular distancia entre el jugador y la luz
+        let distance = Phaser.Math.Distance.Between(this.player.getContainer().x, this.player.getContainer().y, light.x, light.y);
+
+        // Si está dentro del radio -> Encender, si no -> Apagar
+        if (distance < activationRadius) {
+            if (!light.visible) { // Solo si estaba apagada para ahorrar operaciones
+                light.setVisible(true);
+                // Opcional: Efecto de encendido
+                light.setIntensity(1.5); 
+            }
+        } else {
+            if (light.visible) { // Solo si estaba encendida
+                light.setVisible(false);
+                // Opcional: Apagado inmediato
+                // light.setIntensity(0);
+            }
+        }
+    });
+}
 
 
 
 //el update es todo lo que se corre en tiempo real
 update(time, delta){
 
-   
+   this.lucesArea();
   //luz que sigue al player
     this.lightplayer();
     //movimientos Jugador

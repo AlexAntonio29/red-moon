@@ -4,7 +4,8 @@ export class DescansandoBoss1 extends Estados{
 
     enter(){
 
-        this.objeto.play(this.objeto.dataEnemie.diseno+"_idle");
+        console.log("ENTER DESCANSANDO")
+        this.objeto.play("boss1_agotado");
         
 
     }
@@ -12,6 +13,8 @@ export class DescansandoBoss1 extends Estados{
 
 
     execute(){
+
+        this.objeto.setVelocity(0);
 
         if(this.objeto.scene.physics.overlap(
             this.objeto,
@@ -28,6 +31,8 @@ export class DescansandoBoss1 extends Estados{
     }
 
 
-    exit(){}
+    exit(){
+        console.log("FINALIZAR DESCANSANDO")
+    }
 
 }

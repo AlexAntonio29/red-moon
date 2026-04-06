@@ -63,6 +63,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
 
         this.state="idle";
+        this.nombre='enemie';
         
 
 

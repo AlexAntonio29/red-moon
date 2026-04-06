@@ -5,22 +5,41 @@ export class IdleBoss1 extends IdleEnemies{
 
     enter(){
 
+         this.aleatorio = Math.floor(Math.random() *2)+1;
+
+
         super.enter();
 
         this.Hitbox=this.objeto.scene.physics.add.overlap(this.objeto.hitbox, this.objeto.scene.player.getContainer());
+
+        
 
     }
 
     execute(){
 
+
         
-        if(!super.execute())
-            if(this.objeto.scene.physics.overlap(this.objeto.hitbox, this.objeto.scene.player.getContainer())){
+
+       
+            this.objeto.setDistanciaSonido();
+
+            if(this.objeto.getDistanciaPlayer()<this.objeto.dataEnemie.distancia_vista){
+             if(this.aleatorio!==1){    
+            this.objeto.maquina.cambiarEstado('Seguir');
+        
+                }else this.objeto.maquina.cambiarEstado('Enojado');
+            }else
+            if(this.Hitbox&&this.objeto.scene.physics.overlap(this.objeto.hitbox, this.objeto.scene.player.getContainer())){
                  if(this.objeto.stamina>0){
                   
                 this.objeto.maquina.cambiarEstado('Attack');
             }
-            }
+            
+
+        }
+
+
 
 
 

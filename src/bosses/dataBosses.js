@@ -5,7 +5,7 @@ export const dataBosses=[
         'nombre':'La cuidadora de los impuros',
         'vida':400,
         'items':1,
-        'ataque':'60',
+        'ataque':35,
         'puntos':Math.floor(Math.random() * 10) + 5,
         'velocidad':200,
         'nivel':'1',
