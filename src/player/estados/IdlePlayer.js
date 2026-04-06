@@ -4,13 +4,13 @@ export class IdlePlayer extends Estados{
 
 
     enter(){
-        console.log(this.objeto.state);
+        //console.log(this.objeto.state);
         if(this.objeto.state==='dash'){ 
             console.log("verificar trampa dash");
             this.verificarTrampaDash();
         
         }
-        console.log('Entrando en Idle');
+       // console.log('Entrando en Idle');
         this.objeto.state='idle';
         this.objeto.player.setVelocity(0);
         this.objeto.player.play("player_estatico");
@@ -35,7 +35,7 @@ export class IdlePlayer extends Estados{
 
 
     exit(){
-        console.log("saliendo de idle");
+        //console.log("saliendo de idle");
     }
 
 

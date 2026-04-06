@@ -3,7 +3,7 @@ import { Estados } from "../../funciones/automata/Estados.js";
 export class DashPlayer extends Estados{
 
     enter(){
-        console.log("Estoy en Dash");
+       // console.log("Estoy en Dash");
         console.log(this.objeto.player.body.velocity);
 
           this.objeto.xSeguro = this.objeto.player.x;
@@ -36,7 +36,7 @@ export class DashPlayer extends Estados{
 
     exit(){
 
-        console.log("Estoy Saliendo de Dash");
+       // console.log("Estoy Saliendo de Dash");
         this.objeto.state = "dash";
      
     }

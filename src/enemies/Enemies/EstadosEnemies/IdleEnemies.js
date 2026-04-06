@@ -12,12 +12,15 @@ export class IdleEnemies extends Estados{
 
     execute(){
 
-    
+        this.objeto.setDistanciaSonido();
+
         if(this.objeto.getDistanciaPlayer()<this.objeto.dataEnemie.distancia_vista){
             this.objeto.maquina.cambiarEstado('Seguir');
         }
 
-        this.objeto.setDistanciaSonido();
+
+
+        
 
 
 

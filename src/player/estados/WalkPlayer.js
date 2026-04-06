@@ -5,7 +5,7 @@ export class WalkPlayer extends Estados{
 
     enter(){
         this.objeto.state='walk';
-        console.log("Estoy en Walk");
+        //console.log("Estoy en Walk");
     }
 
     execute(){
@@ -26,7 +26,7 @@ export class WalkPlayer extends Estados{
     }
 
     exit(){
-        console.log("Saliendo de Walk");
+       // console.log("Saliendo de Walk");
        
     }
 

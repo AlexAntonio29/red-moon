@@ -3,7 +3,7 @@ import { Estados } from "../../funciones/automata/Estados.js";
 export class HurtPlayer extends Estados{
 
     enter(){
-        console.log("Estoy En Hurt")
+        //console.log("Estoy En Hurt")
 
         this.objeto.player.play("hurt_sword");
         
@@ -27,7 +27,7 @@ export class HurtPlayer extends Estados{
 
 
 
-        console.log("Estoy Saliendo de Hurt")
+        //console.log("Estoy Saliendo de Hurt")
     }
 
         verificarIdle(){

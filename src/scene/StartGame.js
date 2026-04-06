@@ -14,7 +14,7 @@ import { ItemPocion } from "../items/extendsItems/ItemPocion.js";
 import { CamaraPersonalizada } from "../camera/CamaraPersonalizada.js";
 import { cargarLucesEstaticas } from "../funciones/cargarLucesEstaticas.js";
 
-import { boss1 } from "../bosses/boss1.js";
+import { boss1 } from "../bosses/boss1/boss1.js";
 
 import {npc1} from '../npc/Npc1/npc1.js'
 import {npc2} from '../npc/Npc2/npc2.js'

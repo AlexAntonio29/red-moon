@@ -4,7 +4,7 @@ export class AttackPlayer extends Estados{
 
 
     enter(){
-        console.log("Estoy en attack")
+        //console.log("Estoy en attack")
 
        // this.objeto.player.anims.play(this.objeto.combo[this.objeto.posicion_combo].nombre, true);
          this.getAtaque();
@@ -28,7 +28,7 @@ export class AttackPlayer extends Estados{
 
     exit(){
 
-        console.log("Saliendo de attack");
+        //console.log("Saliendo de attack");
     }
 
 

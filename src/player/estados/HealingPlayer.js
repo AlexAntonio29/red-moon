@@ -3,7 +3,7 @@ import { Estados } from "../../funciones/automata/Estados.js";
 export class HealingPlayer extends Estados{
 
     enter(){
-        console.log("Estoy En Healing");
+        //console.log("Estoy En Healing");
         this.curar();
 
         this.verificarIdle();
@@ -16,7 +16,7 @@ export class HealingPlayer extends Estados{
 
     exit(){
 
-        console.log("Saliendo de Healing");
+        //console.log("Saliendo de Healing");
     }
 
             verificarIdle(){

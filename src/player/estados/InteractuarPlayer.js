@@ -5,7 +5,7 @@ export class InteractuarPlayer extends Estados{
 
     enter(){
         //AQUI RECUERDA QUE DEBES DE AGREGAR MAS ESTADOS PARA LOS DIFERENTES ACTOS DE INTERACCION
-        console.log("Estoy en Interactuar");
+        //console.log("Estoy en Interactuar");
         this.interactuar();
         this.objeto.automata.cambiarEstado('Idle');
     }
@@ -13,7 +13,7 @@ export class InteractuarPlayer extends Estados{
     execute(){}
 
     exit(){
-        console.log("Saliendo Interactuar");
+       // console.log("Saliendo Interactuar");
     }
 
 
