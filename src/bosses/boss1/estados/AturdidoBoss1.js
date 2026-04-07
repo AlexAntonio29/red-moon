@@ -9,8 +9,6 @@ export class AturdidoBoss1 extends Estados{
         console.log("aturdido")
         this.objeto.play("boss1_aturdido");
         
-        
-
         this.objeto.scene.time.delayedCall(3000,()=>{
             this.verificarIdle();
         })

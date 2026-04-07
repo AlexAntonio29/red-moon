@@ -845,7 +845,7 @@ colisionesEnemigo(){
         const nombreObjeto=objeto.nombre;
         this.contactoAbove_collider=this.physics.add.collider(objeto,this.above_collider,(obj,tile)=>{
 
-          console.log(obj);
+          //console.log(obj);
           if(nombreObjeto==='boss1'){
             objeto.tocandoMuro=true;
           }
@@ -1530,7 +1530,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
       //this.crearEnemigo(1,3050,8600,1);
       //this.crearEnemigo(1,0,0,10);
-      this.crearEnemigo(1,8004,6400,10);
+      //this.crearEnemigo(1,8004,6400,10);
 
       //this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
 
@@ -1716,6 +1716,27 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo);
 
 
+      id++;
+      x=7926;
+      y=5777;
+      width=500;
+      height=200;
+      tiempo=1000;
+      tiempoTraslado=500;
+      xAdicional=0;
+      yAdicional=300;
+      zoom=1.2;
+      ocultarHUD=false;
+      accion=5;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
+      //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
+      movePlayer=false;
+      esActivo=true;
+
+      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo);
+
+
+
+
 }
 
 crearNpc(n,x,y){
@@ -1857,7 +1878,7 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
-//this.physics.world.createDebugGraphic();
+this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = false;
     //this.crearFiltro();
     //Generacion de escenario
