@@ -29,6 +29,10 @@ import { crearEscenario } from "./funcionesEscenario/seleccionarElementosEscenar
 import { colisiones } from "./funcionesEscenario/crearColisiones/Colisiones.js";
 import { hud } from "./funcionesEscenario/hud/hud.js";
 import { seleccionarEnemigos } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarEnemigos.js";
+import { seleccionarEventos } from "./funcionesEscenario/seleccionarElementosEscenario/SeleccionarEventos.js";
+import { seleccionarNpc } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarNpc.js";
+import { seleccionarCheckpoints } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarCheckpoints.js";
+import { seleccionarPalancas } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarPalancas.js";
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
@@ -61,6 +65,14 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
       this.hud= new hud(this);
 
       this.enemigos= seleccionarEnemigos(this);
+
+      this.eventos=seleccionarEventos(this);
+
+      this.npcs=seleccionarNpc(this);
+      
+      this.checkpoints=seleccionarCheckpoints(this);
+
+      this.palancas= seleccionarPalancas(this);
       
 
       
@@ -521,8 +533,6 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       this.lights.setAmbientColor(0x222222); 
       cargarLucesEstaticas(this);
 
-
-
     }
 
     //CONDICIONAL
@@ -533,301 +543,42 @@ this.joystickCursors = this.joyStick.createCursorKeys();
     }
 
     //GLOBAL
-    crearEvento(x,y,width,height,tiempoEvento,tiempoTraslado, xadd,yadd, zoom,ocultarHUD ,accion,movePlayer,id,esActivo){
-
-
-      /*
-      
-
-       let x=4400;
-       let y=8525;
-       
-       let width=400;
-       let height=250;
-      */
-
-
-
-        
-
-      
-      let evento = new this.Scenario1Eventos(this,x,y,width,height,this.player.getContainer(),this.camera,this.lights, this.player,id, esActivo);
-
-      this.physics.add.overlap(
-        this.player.getContainer(),
-        evento,
-        (player, evento)=>{
-
-          
-          let xMovCamera=x+(width/2); //-(this.widthPantalla/2)//
-          let yMovCamera=y+(height/2); //-(this.heightPantalla/2)//
-
-          if(!evento.esActivado&&evento.esActivo){
-                evento.setCollisionEvento(xMovCamera+xadd,yMovCamera+yadd,tiempoEvento,tiempoTraslado,zoom,ocultarHUD,accion,movePlayer);
-                
-              }
-              });
-      
-          
-      this.listaEventos.add(evento);
-
-
-      
-
-
-    }
+ 
 
     //CONDICIONAL
     cargarEvento(){
-      //datos de eventos estos para comodidad del programador en agregar eventos se agregaran en variables
-      let x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom, ocultarHUD,accion,movePlayer,esActivo;
-      let id=0;
-      x=4400;
-      y=8425;
-      width=400;
-      height=250;
-      tiempo=3000;
-      tiempoTraslado=500;
-      xAdicional=0;
-      yAdicional=0;
-      zoom=0.4;
-      ocultarHUD=false;
-      accion=1;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
-      //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
-      movePlayer=false;
-      esActivo=true;
 
-
-
-      //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo);
-
-      id++;
-      x=7110;
-      y=7710;
-      width=400;
-      height=250;
-      tiempo=2000;
-      tiempoTraslado=500;
-      xAdicional=0;
-      yAdicional=450;
-      zoom=2.0;
-      ocultarHUD=false;
-      accion=2;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
-      //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
-      movePlayer=false;
-      esActivo=true;
-
-
-      //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo);
-
-      id++;
-      x=9805;
-      y=7300;
-      width=200;
-      height=550;
-      tiempo=0;
-      tiempoTraslado=0;
-      xAdicional=0;
-      yAdicional=0;
-      zoom=1.0;
-      ocultarHUD=false;
-      accion=3;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
-      //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
-      movePlayer=false;
-      esActivo=true;
-
-
-      //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo);
-
-
-      //cuando se va a agregar un nuevo elemento entoces se establecen valores variables;
-
-
-
-      id++;
-      x=9890;
-      y=8296;
-      width=200;
-      height=550;
-      tiempo=0;
-      tiempoTraslado=0;
-      xAdicional=0;
-      yAdicional=0;
-      zoom=1.0;
-      ocultarHUD=false;
-      accion=4;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
-      //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
-      movePlayer=false;
-      esActivo=false;
-
-
-      //this.crearEvento(4400,8425,400,250,3000,500,0,0,0.8);//positionx,positiony,widthEvento,heightEvento, tiempoEjecucion, tiempoTrasladoCamara, xAdicional, yAdicional,zoom
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo);
-
-
-      id++;
-      x=7926;
-      y=5777;
-      width=500;
-      height=200;
-      tiempo=1000;
-      tiempoTraslado=500;
-      xAdicional=0;
-      yAdicional=300;
-      zoom=1.2;
-      ocultarHUD=false;
-      accion=5;//aqui se condicionan lo que va a suceder ejemplo que salga un dragon o pase una situacion
-      //esto llama a un switch que llama a la funcion o metodo que realice dicha accion
-      movePlayer=false;
-      esActivo=true;
-
-      this.crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo);
-
-
-
-
+      this.eventos.load();
+      
 }
 
 
-//GLOBAL
-crearNpc(n,x,y){
 
-  let npc;
-    if(this.dataNpc[n-1]){
-      switch(n){
-        case 1:
-
-        npc= new npc1(this,this.dataNpc[n-1],x,y);
-
-        break;
-
-        case 2:
-
-        npc= new npc2(this,this.dataNpc[n-1],x,y);
-        break;
-
-        case 3:
-
-        npc = new npc3(this, this.dataNpc[n-1], x, y);
-              
-                
-                break;
-        }
-
-        // Tus físicas y luces originales
-        this.physics.add.collider(this.player.getContainer(), npc, () => {
-           
-            
-        });
-
-        npc.setPipeline('Light2D');
-        this.listaNpc.add(npc);
-    }
-
-
-
-}
 
 
 //CONDICIONAL
 cargarNpc(){
  
-
-  this.crearNpc(2,8052,6161);
-//agrego sneyder npc dialogos
-this.crearNpc(3, 6008.03, 7466.2);
+this.npcs.load();
 
 }
    
-//GLOBAL
-crearCheckpoint(x,y,id){
 
-  let checkpoint=new Estatua(this,x,y,id);
-    checkpoint.setPipeline('Light2D');
- 
-
-  this.physics.add.collider(this.player.getContainer(),checkpoint,()=>{
-  
-   
-  });
-
-
-
-  this.physics.add.overlap(this.player.getContainer(),checkpoint.hitbox,()=>{
-    if(!this.player.estaGuardando) {
-      
-      this.player.estaGuardando=true;
-
-      checkpoint.esActivado();
-    }
-    
-
-  })
-
-   this.listaCheckpoints.add(checkpoint);
-
-}
 
 //CONDICIONAL
 cargarCheckpoints(){
 
-      let x=5816//8000;//x=2100;
-      let y=7826//6862;//y=8500;
-      let id=0
-
-  this.crearCheckpoint(x,y,id)
-
-  id++;
-  x=2400;
-  y=8500;
-
-  this.crearCheckpoint(x,y,id);
-
-    id++;
-  x=7602;
-  y=7255;
-
-   this.crearCheckpoint(x,y,id);
+  this.checkpoints.load();
 
 
 }
 
-//GLOBAL
-crearPalanca(x,y,id,idPuerta){
 
-  let palanca= new Palanca(this,x,y,id,idPuerta);
-
-
-
-  palanca.setPipeline('Light2D');
-
-  this.physics.add.collider(this.player.getContainer(),palanca.hitbox);
-  this.physics.add.overlap(this.player.getContainer(),palanca,()=>{
-    
-    this.player.estaActivandoPalanca=true;
-  });
-
- 
-  this.listaPalancas.add(palanca);
-
-
-  
-
-
-
-}
 
 //CONDICIONAL
 cargarPalancas(){
 
-let id=0,idPuerta='palanca_01',x=7935,y=7880;
-
-this.crearPalanca(x,y,id,idPuerta);
-
-
+  this.palancas.load();
 
   
 }

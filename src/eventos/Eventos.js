@@ -24,7 +24,7 @@ export class Eventos extends Phaser.Physics.Arcade.Image{
         this.width=width;
         this.height=height;
         this.player=player;
-        
+
 
         try{
 
