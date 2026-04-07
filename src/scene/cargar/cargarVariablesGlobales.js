@@ -109,7 +109,7 @@ export class cargarVariablesGlobales{
         this.scene.ranura=0;
         this.scene.dataGuardadoRanura=GuardarEnStorage(this.scene.ranura,null);
 
-        this.scene.tipoEscenario=0;//aqui es dependiendo de que escenario quiere cargar desde el menu
+        this.scene.tipoEscenario=1;//aqui es dependiendo de que escenario quiere cargar desde el menu
 
         
 

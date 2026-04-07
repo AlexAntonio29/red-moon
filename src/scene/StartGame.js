@@ -782,7 +782,7 @@ colisionesEnemigo(){
 
 }
 
-
+//GLOBAL
 //colision entre los enemigos para que no transpasen
       collisionEnemigoEnemigo(){
  // this.physics.collider();
@@ -795,7 +795,7 @@ colisionesEnemigo(){
 
 
 
-
+//GLOBAL
       collisionMurosObjetos(objeto){//el collider llegara por un parametro
 
       //objetos tierra da entender al abismo de la zona
@@ -982,18 +982,18 @@ if (objeto && this.blockLayer) {
 
       //colisiones Enemigos Tiles
 
-
+      //GLOBAL
       collisionEnemigosMuros(){
         
 
-                 this.physics.add.collider(this.listaEnemigos,this.muros);
+      this.physics.add.collider(this.listaEnemigos,this.muros);
                   
       }
 
 
 
 
-
+      //GLOBAL
         contactoPlayerItem(player,item){
 
           //console.log(item.puntos);
@@ -1053,7 +1053,7 @@ if (objeto && this.blockLayer) {
         
         }
 
-        
+      //GLOBAL  
 //colision para cuando el player recoge el itemBasura
       collisionRecogerItemPuntos(){
 
@@ -1079,7 +1079,7 @@ if (objeto && this.blockLayer) {
 
 
 
-
+//GLOBAL
 //solo sirve para testear
 depurarColisiones() {
   const debugGraphics = this.add.graphics().setAlpha(0.75);
@@ -1099,21 +1099,14 @@ depurarColisiones() {
 
 
 
-
+//GLOBAL
 //creacion de la camara
 crearCamera(){
-
-
     this.camera= new CamaraPersonalizada(this, this.player.getContainer(), this.hudContainer);
-
-  
-    
-
-
 }
 
 
-
+//GLOBAL
 //Crear HUD del juego
 
 getBarraStamina(){
@@ -1152,6 +1145,8 @@ getBarraStamina(){
   
 }
 
+
+//GLOBAL
 getBarraVida(){
 
   //datos de player
@@ -1188,6 +1183,7 @@ getBarraVida(){
   
 }
 
+//GLOBAL
 getCuraciones(){
   let pocionesMaximos=this.player.cantidadPocionesMaximo;
   let pocionesDisponibles=this.player.cantidadPociones;
@@ -1266,7 +1262,7 @@ crearHUD(){
 
 
 }
-
+//GLOBAL
 //donde muestra los puntos acumulados
     hudPuntos(){
 
@@ -1298,6 +1294,7 @@ crearHUD(){
 
 
 }
+//GLOBAL
 //donde muetra el cronometro
     hudCronometro(){
   
@@ -1340,7 +1337,7 @@ crearHUD(){
     this.cronometro.setPosition(this.puntaje.width+this.puntaje.x+20, 10);
 }
 
-
+//GLOBAL
 //IR al siguiente escenario
 finalizarPartida(n=""){
 
@@ -1355,6 +1352,8 @@ finalizarPartida(n=""){
   console.log("MENSAJE: "+n);
 
 }
+
+  //GLOBAL
   //carga de botones digitales
   cargarBotones(){
 
@@ -1401,6 +1400,7 @@ if(this.widthPantalla>=900){ this.botonesPlayer.ataque.setAlpha(0)}
     
     }
 
+    //GLOBAL
     cargarJoystick(){
       let division=2;
       let sizeBotones=(this.widthPantalla/20);
@@ -1430,6 +1430,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
     }
 
 
+    //GLOBAL
     cargarSonido(){
 
 
@@ -1475,7 +1476,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
  
     }
 
-
+    //GLOBAL
     crearFiltro(){
       const vignette = this.add.rectangle(0, 0, this.widthPantalla, this.heightPantalla, 0x072EA3, 0.3); 
       vignette.setOrigin(0); 
@@ -1490,7 +1491,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       */
     }
 
-
+    //GLOBAL
     crearLuces(){
       this.lights.enable();
       this.lights.setAmbientColor(0x222222); 
@@ -1500,7 +1501,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     }
 
-
+    //CONDICIONAL
     creacionEnemigosPosicionados(){
 
      // this.crearEnemigo(1,2950,8550,3);//cantidad Enemigos, x, y ,tipo de enemigo
@@ -1559,6 +1560,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     }
 
+    //GLOBAL
     crearEvento(x,y,width,height,tiempoEvento,tiempoTraslado, xadd,yadd, zoom,ocultarHUD ,accion,movePlayer,id,esActivo){
 
 
@@ -1603,6 +1605,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
     }
 
+    //CONDICIONAL
     cargarEvento(){
       //datos de eventos estos para comodidad del programador en agregar eventos se agregaran en variables
       let x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom, ocultarHUD,accion,movePlayer,esActivo;
@@ -1716,6 +1719,8 @@ this.joystickCursors = this.joyStick.createCursorKeys();
 
 }
 
+
+//GLOBAL
 crearNpc(n,x,y){
 
   let npc;
@@ -1754,6 +1759,8 @@ crearNpc(n,x,y){
 
 }
 
+
+//CONDICIONAL
 cargarNpc(){
  
 
@@ -1763,6 +1770,7 @@ this.crearNpc(3, 6008.03, 7466.2);
 
 }
    
+//GLOBAL
 crearCheckpoint(x,y,id){
 
   let checkpoint=new Estatua(this,x,y,id);
@@ -1790,6 +1798,8 @@ crearCheckpoint(x,y,id){
    this.listaCheckpoints.add(checkpoint);
 
 }
+
+//CONDICIONAL
 cargarCheckpoints(){
 
       let x=5816//8000;//x=2100;
@@ -1813,6 +1823,7 @@ cargarCheckpoints(){
 
 }
 
+//GLOBAL
 crearPalanca(x,y,id,idPuerta){
 
   let palanca= new Palanca(this,x,y,id,idPuerta);
@@ -1837,6 +1848,7 @@ crearPalanca(x,y,id,idPuerta){
 
 }
 
+//CONDICIONAL
 cargarPalancas(){
 
 let id=0,idPuerta='palanca_01',x=7935,y=7880;
@@ -1849,7 +1861,7 @@ this.crearPalanca(x,y,id,idPuerta);
 }
 
 
-
+//GLOBAL
 //El create es donde acomo las cosas para que tengan un orden
 create(){
 
@@ -1890,7 +1902,7 @@ this.game.renderer.antialias = false;
        
 }
 
-
+//GLOBAL
 movimientoItemToPlayer(){
 
 
@@ -1910,7 +1922,7 @@ movimientoItemToPlayer(){
   });
 }
 
-
+//GLOBAL
 lightplayer(){
 
      let xPlayer=this.player.getContainer().displayWidth/2;
@@ -1924,7 +1936,7 @@ lightplayer(){
 
 
 
-
+//GLOBAL
 salirAreasInteraccion(){
 
   this.listaCheckpoints.children.iterate(checkpoint=>{
@@ -1955,7 +1967,7 @@ salirAreasInteraccion(){
 
 
 
-
+//GLOBAL
 lucesArea(){
       let activationRadius = 700; 
 
@@ -1982,7 +1994,7 @@ lucesArea(){
 }
 
 
-
+//GLOBAL
 //el update es todo lo que se corre en tiempo real
 update(time, delta){
 
@@ -2017,6 +2029,7 @@ update(time, delta){
 
 }
 
+//GLOBAL
 /* NUEVO CODIGO*/
 checkCondicionBloque(objeto, tile) {
 
@@ -2088,7 +2101,7 @@ checkCondicionBloque(objeto, tile) {
 }
 
     // PROCESAR INTERACCIÓN CON LA TECLA "E"
-  
+  //GLOBAL
     procesarInteraccionE(playerInstance, tile) {
       
         console.log(" Escaner activado Propiedades del bloque:", tile.properties);
@@ -2214,6 +2227,8 @@ checkCondicionBloque(objeto, tile) {
     // ==========================================
     // DESTRUIR PUERTA COMPLETA (REACCION EN CADENA)
     // ==========================================
+
+    //GLOBAL
     abrirPuertaCompleta(tileInicial,capa) {
         let idRequerido = tileInicial.properties.idItem;
         let tilesPorRevisar = [tileInicial];
@@ -2252,7 +2267,7 @@ checkCondicionBloque(objeto, tile) {
         }
     }
 
-
+//GLOBAL
 //dialogos
 iniciarDialogo(npc) {
     // Seguridad: verificamos que el NPC tenga el método de diálogos
@@ -2289,6 +2304,8 @@ iniciarDialogo(npc) {
     }
 }
 
+
+//GLOBAL
 avanzarDialogo() {
     // ¿Llegamos a la última frase?
     if (this.indiceTexto >= this.listaTextos.length - 1) {
@@ -2326,6 +2343,8 @@ avanzarDialogo() {
     }
 }
 
+
+//GLOBAL
 crearCuadroDialogo() {
     if (!this.graphicsBox) {
         // Fondo y borde del cuadro
@@ -2348,6 +2367,8 @@ crearCuadroDialogo() {
     }
 }
 
+
+//GLOBAL
 mostrarCuadroDeTexto(textoCompleto) {
     this.crearCuadroDialogo();
 
@@ -2380,6 +2401,8 @@ mostrarCuadroDeTexto(textoCompleto) {
     });
 }
 
+
+//GLOBAL
 ocultarCuadroDeTexto() {
     if (this.typewriterTimer) this.typewriterTimer.remove();
 
