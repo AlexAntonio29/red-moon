@@ -75,7 +75,7 @@ export class Scenario1Eventos extends Eventos{
             case 5:
 
             
-            evento1_5(this.scene);
+            new evento1_5(this.scene);
 
 
             break;

@@ -95,6 +95,9 @@ export class cargarVariablesGlobales{
        this.scene.dataGuardadoRanura[this.scene.ranura].puertasAbiertasAbove
        :[]
 
+
+       this.scene.listaEventosCondicionales=this.scene.physics.add.group();
+
         }
 
 
@@ -105,6 +108,8 @@ export class cargarVariablesGlobales{
       //por el momento ocupare la ranuera 1 despues la cambio para que reciba segun la ranura que manda el menu principal
         this.scene.ranura=0;
         this.scene.dataGuardadoRanura=GuardarEnStorage(this.scene.ranura,null);
+
+        this.scene.tipoEscenario=0;//aqui es dependiendo de que escenario quiere cargar desde el menu
 
         
 

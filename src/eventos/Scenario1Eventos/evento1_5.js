@@ -1,10 +1,13 @@
 
 
-export const evento1_5=(scene)=>{
+export class evento1_5{
 
-   console.log("Ejecutando Evento1_5");
+constructor(scene){
+     console.log("Ejecutando Evento1_5");
 
-
+      this.scene=scene;
+      this.nombre='evento1_5';
+      this.camera=scene.camera;
 
       agregarObjeto(scene.bloqueoTemporal,8026,5777,480,48,scene);
       agregarObjeto(scene.bloqueoTemporal2,8026,6620,700,48,scene);
@@ -15,14 +18,17 @@ export const evento1_5=(scene)=>{
 
     //activar o desactivar input player
 
-    
-
-
-
-    
-
+}
 }
 
+
+const crearBoss1=()=>{
+
+  this.boss=this.scene.crearEnemigo(1,8004,6400,10);
+
+
+
+}
 
 
 

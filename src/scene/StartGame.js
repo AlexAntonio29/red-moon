@@ -60,7 +60,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
 
 //CREACION DE TILES (Son las texturas que no son sprites como tal sino que actua como escenario)
-
+//ESPECIFICO
 //metodo que crea y modifica el escenario
 crearEscenario(){
     
@@ -473,7 +473,7 @@ crearEscenario(){
 }
 
 
-
+//GLOBAL
 //Aqui se generaran los items
 crearItems(n){
     
@@ -486,15 +486,7 @@ crearItems(n){
 
 //METODOS DEL ENEMIGO
 
-crearEnemigoPorPuntos(){
-  let valor=0;
-
-valor=Math.random() < 0.5 ? 0 : 1;
-
-return valor;
-
-}
-
+//GLOBAL
 //Crear enemigo
 crearEnemigo(n=1, x,y,selector=0){
 
@@ -593,7 +585,7 @@ crearEnemigo(n=1, x,y,selector=0){
 
 }
 //Movimientos Enemigo
-
+//GLOBAL
 movimientosEnemigo(){
      
      this.listaEnemigos.children.iterate(enemigo=>{
@@ -608,6 +600,8 @@ movimientosEnemigo(){
 
 }
 
+
+//GLOBAL
 movimientosNpc(){
   this.listaNpc.children.iterate(npc=>{
 
@@ -618,7 +612,7 @@ movimientosNpc(){
 
 //METODOS DEL PLAYER
 
-
+//GLOBAL
 getPlayer(){
 
 
@@ -675,7 +669,7 @@ getPlayer(){
 }
 
 //Moviemientos Player
-
+//GLOBAL
 pausarEscena(){
 this.scene.pause();
 
@@ -684,6 +678,8 @@ this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.
 
 }
 
+
+//GLOBAL
 movimientosPlayer(){
 
 
@@ -756,6 +752,7 @@ movimientosPlayer(){
 
 }
 
+//GLOBAL
 //LLAMAR A TODAS LAS COLISIONES
 crearColisiones(){
   this.collisionRecogerItemPuntos();
@@ -767,6 +764,8 @@ crearColisiones(){
   
 }
 
+
+//GLOBAL
 colisionesEnemigo(){
 
 
@@ -775,24 +774,20 @@ colisionesEnemigo(){
 
 //FUNCIONES DE LAS COLISIONES
 
+//GLOBAL
   //colision al contacto del player con el enemigo
-      collisionPlayerEnemigo(){
+ collisionPlayerEnemigo(){
         
    this.colisionEnemigoPlayer=this.physics.add.collider(this.player.getContainer(),this.listaEnemigos,this.player.contactoPlayerEnemigo,null,this);
 
 }
 
-    contactoEnemigoEnemigo(a,b){
-      
-     // empujar(a,b,2,this.contactoSprites,this,10,false);
 
-
-    }
 //colision entre los enemigos para que no transpasen
       collisionEnemigoEnemigo(){
  // this.physics.collider();
 
-    this.physics.add.collider(this.listaEnemigos, this.listaEnemigos,this.contactoEnemigoEnemigo, null, this);
+    this.physics.add.collider(this.listaEnemigos, this.listaEnemigos);
 
 
 }
@@ -800,15 +795,6 @@ colisionesEnemigo(){
 
 
 
-  eliminarRebote(objeto){
-
-    
-
-
-
-   // player.this.state="idle";
-
-  }
 
       collisionMurosObjetos(objeto){//el collider llegara por un parametro
 
@@ -828,7 +814,7 @@ colisionesEnemigo(){
         if(this.fondo.layer.properties.find(p=>p.name==="collider"&&p.value===true))
           this.fondo.setCollisionByExclusion([-1]);
   
-        this.physics.add.collider(objeto,this.fondo,this.eliminarRebote,null,this);
+        this.physics.add.collider(objeto,this.fondo);
       
 }
 
@@ -865,21 +851,12 @@ colisionesEnemigo(){
         
 
 
-        /*
-
-        if(objeto && this.edificios){
-  //edificios
-
-        if(this.edificios.layer.properties.find(p=>p.name==="collider"&&p.value===true))
-          this.edificios.setCollisionByExclusion([-1])
-        this.physics.add.collider(objeto,this.edificios,this.eliminarRebote,null,this);
-      }*/
 
         if(objeto && this.above){
   //above para que este encima del player
           if(this.above.layer.properties.find(p=>p.name==="collider"&&p.value===false))
             this.above.setCollisionByExclusion([-1]);
-        this.physics.add.collider(objeto,this.above,this.eliminarRebote,null,this);
+        this.physics.add.collider(objeto,this.above);
 
         this.above.setDepth(10);
         objeto.setDepth(5);
@@ -893,7 +870,7 @@ colisionesEnemigo(){
   //above para que este encima del player
           if(this._above.layer.properties.find(p=>p.name==="collider"&&p.value===false))
             this._above.setCollisionByExclusion([-1]);
-        this.physics.add.collider(objeto,this._above,this.eliminarRebote,null,this);
+        this.physics.add.collider(objeto,this._above);
 
         this._above.setDepth(10);
         objeto.setDepth(5);
@@ -913,7 +890,7 @@ if (objeto && this.blockLayer) {
     this.physics.add.collider(
         objeto,               
         this.blockLayer,      
-        this.eliminarRebote,  
+        ()=>{},  
         this.checkCondicionBloque, 
         this                 
     );
@@ -927,7 +904,7 @@ if (objeto && this.blockLayer) {
   //above para que este encima del player
           if(this._above2.layer.properties.find(p=>p.name==="collider"&&p.value===false))
             this._above2.setCollisionByExclusion([-1]);
-        this.physics.add.collider(objeto,this._above2,this.eliminarRebote,null,this);
+        this.physics.add.collider(objeto,this._above2);
 
         this._above2.setDepth(10);
         objeto.setDepth(5);
