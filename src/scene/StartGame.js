@@ -352,11 +352,6 @@ crearColisiones(){
 
       }
 
-      //
-
-      
-
-
       //colisiones Enemigos Tiles
 
       //GLOBAL
@@ -368,70 +363,6 @@ crearColisiones(){
       }
 
 
-
-
-
-
-
-      //GLOBAL
-        contactoPlayerItem(player,item){
-
-          //console.log(item.puntos);
-
-          let numAleatorio=Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-
-          let recogerPuntos = this.sound.add('point'+numAleatorio, {
-    loop: false,
-    volume: 0.3   // volumen entre 0 y 1
-  });
-
-            recogerPuntos.play();
-
-          this.puntos=Number(this.puntaje.text);
-
-          
-
-          
-          
-          //organizar puntos en items
-
-
-            
-
-
-           this.puntos+=Number(item.puntos);
-           this.lights.removeLight(item.light);
-            this.items_punto.remove(item,true,true);
-
-            
-            /*
-            let puntosTemporales=0;
-
-            itemsOrganicos.map(item=>{
-              puntosTemporales=puntosTemporales+(parseInt(item.cantidad)*parseInt(item.puntos));
-            });
-            itemsInorganicos.map(item=>{
-                 puntosTemporales=puntosTemporales+(parseInt(item.cantidad)*parseInt(item.puntos));
-            });*/
-            
-            
-
-            //this.puntos=parseInt(this.puntos)+parseInt(item.puntos);
-            //console.log("puntos: "+this.puntos);
-            
-            this.puntaje.setText((this.puntos));
-            //Al superar cierta cantidad de puntos aparecera un nuevo enemigo
-             if(parseInt(this.puntos) >this.puntosCreacionEnemigo){
-               
-              this.puntosCreacionEnemigo=this.puntosCreacionEnemigo+200;
-              
-              if(this.topeCreacionEnemigos<1000)
-                this.topeCreacionEnemigos+=10;
-            }
-
-
-        
-        }
 
       //GLOBAL  
 //colision para cuando el player recoge el itemBasura
@@ -636,7 +567,7 @@ crearHUD(){
 }
 //GLOBAL
 //donde muestra los puntos acumulados
-    hudPuntos(){
+hudPuntos(){
 
        let textoPuntos= this.add.text(16,16,"Esencia de luna roja ",{
         fontSize: '15px',
@@ -709,8 +640,14 @@ crearHUD(){
     this.cronometro.setPosition(this.puntaje.width+this.puntaje.x+20, 10);
 }
 
+
+
+
+
+
+
 //GLOBAL
-//IR al siguiente escenario
+//terminar una partida
 finalizarPartida(n=""){
 
    // this.sound.stopAll();

@@ -28,7 +28,7 @@ crearColisiones(){
         
    this.scene.colisionEnemigoPlayer=this.scene.physics.add.collider(this.scene.player.getContainer(),this.scene.listaEnemigos,
    (player,enemigo)=>{
-    this.scene.player.contactoPlayerEnemigo(player, enemigo);
+    this.scene.player.contactoPlayerEnemigo(player, enemigo,this.scene);
    },null,this);
 
 }

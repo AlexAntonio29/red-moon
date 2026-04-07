@@ -17,15 +17,29 @@ import {HealingPlayer} from "./estados/HealingPlayer.js";
 import {InteractuarPlayer} from "./estados/InteractuarPlayer.js";
 import { GetUpPlayer } from "./estados/GetUpPlayer.js";
 
-export class player {
+export class player extends Phaser.Physics.Arcade.Sprite{
 
   constructor(scene, texture, x = 25, y = 25, joystick,controles, keys,listaEnemigos,lights,camera) {
 
     
-
+    //this.player=this;
 
     //CARGAR VALORES POR BD PARA OBTENER DATOS
-    
+    super(scene,x,y,texture);
+
+    scene.add.existing(this);
+    scene.physics.add.existing(this);
+
+    this.player = this;
+
+    this.player.setOrigin(0);
+    this.player.setDisplaySize(x, y);
+    this.player.setBounce(0);
+    this.player.setCollideWorldBounds(true);
+    this.player.nombre="player";
+    this.player.setSize((x/5), (y/5));
+    this.player.setOffset(x/3,y/1.6);
+
 
 
     this.pluginScene=scene.scene;
@@ -119,14 +133,7 @@ export class player {
      
 
     // Crear sprite físico directamente
-    this.player = scene.physics.add.sprite(0, 0, texture);
-    this.player.setOrigin(0);
-    this.player.setDisplaySize(x, y);
-    this.player.setBounce(0);
-    this.player.setCollideWorldBounds(true);
-    this.player.nombre="player";
-    this.player.setSize((x/5), (y/5));
-    this.player.setOffset(x/3,y/1.6);
+
 
 
     
@@ -569,7 +576,7 @@ if(!this.scene.anims.exists("dash-reverso"))
 
 
   getContainer() {
-    return this.player;
+    return this;
   }
 
   setVida(n){
@@ -743,54 +750,55 @@ cargarDepth(){
 
 
 
-    contactoPlayerEnemigo(player,enemigo){
+    contactoPlayerEnemigo(player,enemigo,scene){
 
       console.log(player);
       console.log(enemigo);
 
-      if(this.player.getVida()>0){
+      if(player.getVida()>0){
 
         
       let tiempo_invisivilidad=1000;
       let parpadeo=100;
       let n=10;
-      this.player.atacado=true;
+      player.atacado=true;
 
       
 
 
        //console.log(this.golpeToPlayer);
-       this.golpeToPlayer.play();
+       player.golpeToPlayer.play();
           
 
         if(enemigo!==null){
 
-          empujar(enemigo.getContainer(),
-          this.player.getContainer(),
+          empujar(
+          enemigo.getContainer(),
+          player.getContainer(),
           0,
-          this.scene.contactoSprites,
-          this,
+          null,
+          scene,
           200);//
           
 
-               this.player.setVida(enemigo.dataEnemie.ataque); //desactivar para el contacto player enemigo
+               player.setVida(enemigo.dataEnemie.ataque); //desactivar para el contacto player enemigo
 
-                this.physics.world.removeCollider(this.colisionEnemigoPlayer);
+                scene.physics.world.removeCollider(scene.colisionEnemigoPlayer);
 
                 }
 
                 
-          this.time.delayedCall(tiempo_invisivilidad,()=>{
+          scene.time.delayedCall(tiempo_invisivilidad,()=>{
 
             console.log("regresa");
             player.setAlpha(1);
             player.setVisible(true);
-            this.collisionPlayerEnemigo();
+            scene.collisionPlayerEnemigo();
             
           });
 
 
-        this.time.addEvent({
+        scene.time.addEvent({
         
         delay: parpadeo, 
         callback: () => {
@@ -802,9 +810,9 @@ cargarDepth(){
 
           
 
-          console.log("Contacto Player Enemigo: "+this.player.getVida());
+          console.log("Contacto Player Enemigo: "+player.getVida());
 
-          this.getBarraVida();
+          scene.getBarraVida();
 
 
 

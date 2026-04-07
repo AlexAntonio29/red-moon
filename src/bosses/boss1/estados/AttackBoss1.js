@@ -102,9 +102,12 @@ export class AttackBoss1 extends Estados{
 
             this.contactoAtaque=this.objeto.scene.physics.add.overlap(
             this.objeto.scene.player.getContainer(),this.colisionAtaque, 
-            ()=>{this.contactoPlayerEnemigo(
-                this.objeto.scene.player.getContainer(),
-                this.colisionAtaque) });
+            (player,ataque)=>{
+                
+                this.contactoPlayerEnemigo(
+                player,
+                ataque
+            ) });
 
 
                     console.log('Activar ataque Enemigo')
