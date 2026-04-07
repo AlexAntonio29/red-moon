@@ -74,11 +74,11 @@ export class InteractuarPlayer extends Estados{
               
           }else if(this.objeto.estaActivandoPalanca){
 
-
+        
 
         this.objeto.scene.listaPalancas.children.iterate(palanca=>{
         
-           if(this.objeto.scene.physics.overlap(this.objeto.player, palanca) && !(this.objeto.esActivado)){
+           if(this.objeto.scene.physics.overlap(this.objeto.player, palanca) && !(palanca.esActivado)){
             console.log("EN ACTIVACION");
             palanca.activarSonido();
             palanca.activarAnimacion();

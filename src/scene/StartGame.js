@@ -33,6 +33,7 @@ import { seleccionarEventos } from "./funcionesEscenario/seleccionarElementosEsc
 import { seleccionarNpc } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarNpc.js";
 import { seleccionarCheckpoints } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarCheckpoints.js";
 import { seleccionarPalancas } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarPalancas.js";
+import { seleccionarLucesEstaticas } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarLucesEstaticas.js";
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
@@ -73,6 +74,8 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
       this.checkpoints=seleccionarCheckpoints(this);
 
       this.palancas= seleccionarPalancas(this);
+
+      this.luces= seleccionarLucesEstaticas(this);
       
 
       
@@ -100,10 +103,6 @@ crearItems(n){
   
 }
 
-//METODOS DEL ENEMIGO
-
-//GLOBAL
-//Crear enemigo
 
 //Movimientos Enemigo
 //GLOBAL
@@ -117,7 +116,6 @@ movimientosEnemigo(){
 
 }
 
-
 //GLOBAL
 movimientosNpc(){
   this.listaNpc.children.iterate(npc=>{
@@ -125,7 +123,6 @@ movimientosNpc(){
     npc.setMovimientoNpc(this, this.player)
   })
 }
-
 
 //METODOS DEL PLAYER
 
@@ -141,15 +138,7 @@ getPlayer(){
 
     this.player.getContainer().setTint(0x555555);//para ver si se oscurece mas
     this.player.getContainer().setPipeline('Light2D');
-
-
     //curando
-
-  
-
-  
-
-  
 
     this.player.setPositionInitial(x,y);
 
@@ -168,7 +157,6 @@ pausarEscena(){
 this.scene.pause();
 
 this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.player,puntaje:this.puntaje,armas:this.armas, keys:this.keys});
-
 
 }
 
@@ -224,12 +212,6 @@ movimientosPlayer(){
 
 
     //Crear vista de player con item
-
-
-
-
-   
-
 
 
 }
@@ -531,7 +513,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
     crearLuces(){
       this.lights.enable();
       this.lights.setAmbientColor(0x222222); 
-      cargarLucesEstaticas(this);
+      this.luces.load();
 
     }
 
