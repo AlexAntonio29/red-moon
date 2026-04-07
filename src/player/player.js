@@ -25,6 +25,8 @@ export class player {
 
 
     //CARGAR VALORES POR BD PARA OBTENER DATOS
+    
+
 
     this.pluginScene=scene.scene;
     this.vida=250; //llamar datos player de BD
@@ -743,6 +745,8 @@ cargarDepth(){
 
     contactoPlayerEnemigo(player,enemigo){
 
+      console.log(player);
+      console.log(enemigo);
 
       if(this.player.getVida()>0){
 

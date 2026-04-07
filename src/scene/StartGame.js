@@ -30,6 +30,8 @@ import { BloqueoItem } from "./colisiones/BloqueoItem.js";
 import { RecogerItem } from "./colisiones/RecogerItem.js"; 
 import { Estatua } from "../items/estatua/Estatua.js";
 import { Palanca } from "../items/palanca/Palanca.js";
+import { crearEscenario } from "./funcionesEscenario/crearEscenario/crearEscenario.js";
+import { crearColisiones } from "./funcionesEscenario/crearColisiones/crearColisiones.js";
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
@@ -53,6 +55,11 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
       this.loadSounds=new cargarSonido(this);
           //aqui se cargan las variables globales desde preload()
       this.loadVariablesGlobales=new cargarVariablesGlobales(this);
+
+
+      this.mapa=crearEscenario(this);
+
+      this.colisiones= new crearColisiones(this);
       
 
       
@@ -64,411 +71,7 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 //metodo que crea y modifica el escenario
 crearEscenario(){
     
-    //this.escenario=scene.add.image(0,0,'croquis');
-    //this.escenario.setOrigin(0);
-    //this.scene.setDisplaySize(this.scale.width,this.scale.height);
-
-    //console.log(this.escenario);
-
-   //Dimensiones del mapa
-    this.map= this.make.tilemap({ key: "nexus_mapa" });
-    this.widthEscenario=this.map.widthInPixels;
-    this.heightEscenario=this.map.heightInPixels;
-
-    
-
-
-
-    //console.log(`width:${this.widthEscenario} height:${this.heightEscenario}`);
-
-    this.tileset1 = this.map.addTilesetImage('BaseMap', 'baseMap');
-    this.tileset2 = this.map.addTilesetImage('Fantasy_Outside_A5', 'fantasy_Outside_A5');//48
-    this.tileset3 = this.map.addTilesetImage('A2-TerrainAndMisc', 'a2-TerrainAndMisc');//48
-    this.tileset4 = this.map.addTilesetImage('Fantasy_Outside_A2', 'fantasy_Outside_A2');//48
-    this.tileset5 = this.map.addTilesetImage('Fantasy_Outside_D', 'fantasy_Outside_D');//48
-    this.tileset6 = this.map.addTilesetImage('Fantasy_Outside_A4', 'fantasy_Outside_A4');//Fantasy_Outside_A4
-    this.tileset7 = this.map.addTilesetImage('Fantasy_Outside_B', 'fantasy_Outside_B');
-    this.tileset8 = this.map.addTilesetImage('Big_Decoration', 'big_Decoration');//Big_Decoration
-    this.tileset9 = this.map.addTilesetImage('A4 - Walls', 'a4 - Walls');
-    this.tileset10 = this.map.addTilesetImage('A3 - Walls And Floors', 'a3 - Walls And Floors');//Big_Decoration
-    this.tileset11 = this.map.addTilesetImage('antorcha_sheet', 'antorcha_sheet');//Big_Decoration
-    this.tileset12 = this.map.addTilesetImage('portal_inactivo', 'portal_inactivo');//portal
-    this.tileset13 = this.map.addTilesetImage('objeto_llave_basica', 'objeto_llave_basica');//item_llave
-    this.tileset14 = this.map.addTilesetImage('bloqueo_puerta', 'bloqueo_puerta');//puerta bloqueo
-
-    this.tileset15 = this.map.addTilesetImage('Gate_Wood1', 'Gate_Wood1');
-    this.tileset16 = this.map.addTilesetImage('Fantasy_door1', 'Fantasy_door1');
-    this.tileset17 = this.map.addTilesetImage('Fantasy_door2', 'Fantasy_door2');
-    this.tileset18 = this.map.addTilesetImage("Fantasy_switches","Fantasy_switches");
-
-
-    
-       // this.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
-    //this.load.image("a3 - Walls And Floors","/assets/tiles_maps/Tiled/A3 - Walls And Floors.png");
-
-    
-
-
-
-    this.fondo=this.map.createLayer('FONDO',
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-
-          this.subSuelo=this.map.createLayer('SUBSUELO',
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-
-
-
-    this._subSuelo=this.map.createLayer('_SUBSUELO',
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-
-    this.suelo=this.map.createLayer('SUELO', 
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]  
-      ,0,0);
-
-          this._suelo=this.map.createLayer('_SUELO', 
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-
-      
-          this._suelo2=this.map.createLayer('_SUELO-2', 
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-
-
-          this._suelo3=this.map.createLayer('_SUELO-3', 
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-
-                this._suelo4=this.map.createLayer('_SUELO-4', 
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-    //this.detalles_piso=this.map.createLayer('DETAILS_PISO', this.tileset,0,0);SIN ADIGNAR ]
-
-
-
-
-
-              this.above_collider=this.map.createLayer('ABOVE-COLLIDER',
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-
-
-          this.blockLayer = this.map.createLayer('BLOCK', 
-              [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ], 
-              0, 0
-          );
-
-
-          this.blockAbove = this.map.createLayer('BLOCK-ABOVE', 
-              [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ], 
-              0, 0
-          );
-
-
-
-
-                this._above_collider=this.map.createLayer('_ABOVE-COLLIDER',
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-
-
-                
-
-
-
-
-                  this.above=this.map.createLayer('ABOVE',//TODO lo que esta encima del jugador pero sin collision
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-              
-            ]
-      ,0,0);
-
-
-                  this._above=this.map.createLayer('_ABOVE',//TODO lo que esta encima del jugador pero sin collision
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-              
-            ]
-      ,0,0);
-
-
-                         this._above2=this.map.createLayer('_ABOVE2',//TODO lo que esta encima del jugador pero sin collision
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-
-
-      
-                  this._above3_decoration=this.map.createLayer('_ABOVE3-DECORATION',//TODO lo que esta encima del jugador pero sin collision
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-
-
-      this._above4_antorcha=this.map.createLayer('_ABOVE4-ANTORCHA',//las antorchas
-            [this.tileset1,this.tileset2,this.tileset3,this.tileset4,this.tileset5, this.tileset6,this.tileset7
-              ,this.tileset8,this.tileset9,this.tileset10,this.tileset11,this.tileset12,this.tileset13,this.tileset14,this.tileset15,this.tileset16,this.tileset17
-              ,this.tileset18
-            
-            ]
-      ,0,0);
-
-
-
-
-
-
-
-
-
-      //_ABOVE4-ANTORCHA
-
-   
-
- 
-
-  
-      
-
-
-
-
-      //ANIMAR OBJETOS DE TILED
-      this.sys.animatedTiles.init(this.map);
-
-      //crear luces para cada antorcha
-
-  
-    this._above4_antorcha.forEachTile(tile=>{
-
-      if(tile.index!==-1){
-       const x=tile.getCenterX();
-       const y=tile.getCenterY();
-       this.listaLucesObjetos.push
-       (this.lights.addLight(x, y, 350) .setColor(0xffaa00) .setIntensity(1));
-        
-
-      }
-    })
-
-
-    //aqui se evalua el objeto para crear una llave y almacenarlo
-
-    let idLlave=0;
-   
-
-
-        this.blockLayer.forEachTile(tile=>{
-
-      if(tile.index!==-1&& 
-        (tile.properties.tipoBloqueo==="recoger_item")&&
-        (tile.properties.idItem==="llave_01")){
-        
-        console.log(tile.layer.id);
-        
-        
-       const x=tile.getCenterX();
-       const y=tile.getCenterY();
-       const luzLlave= this.lights.addLight(x, y, 50) .setColor(0xffffff) .setIntensity(1);
-
-        
-       
-        const recogido=(this.dataGuardadoRanura)?
-        this.dataGuardadoRanura[this.ranura].llaves[idLlave].recogido
-        :false;//evaluar con JSON
-
-        if(recogido){
-          this.map.removeTileAt(tile.x, tile.y, true, true, this.blockLayer);
-          this.lights.removeLight(luzLlave);
-        }
-
-        this.listaLlaves.push({
-        'id':idLlave,
-        'tile':tile,
-        'recogido':recogido,
-        'luz':luzLlave
-
-      });
-
-      idLlave++;
-
-      }
-
-
-       if(tile.index!==-1&& 
-        (tile.properties.tipoBloqueo==="puerta_item")&&
-        (tile.properties.idItem==="llave_01")){
-
-          if(this.listaPuertasAbiertas.find((t)=>(
-            t.x===tile.x&&
-            t.y===tile.y&&
-            t.nameScene===this.nameScene
-          
-          )))
-          this.abrirPuertaCompleta(tile,this.blockLayer);
-          console.log("abrir");
-          
-        }
-
-
-
-    });
-
-    this.blockAbove.forEachTile(tile=>{
-
-      if(tile.index!==-1){
-
-        if(this.listaPuertasAbiertasAbove.find((t)=>(
-            t.x===tile.x&&
-            t.y===tile.y&&
-            t.nameScene===this.nameScene
-        ))){
-          this.abrirPuertaCompleta(tile,this.blockAbove);
-        }
-
-      }
-    });
-
-
-
-
-
-
-
-
-
-    //crear contacto con collision
-    //this._above3_decoration.setCollisionByExclusion([-1]);
-
-
-
-
-
-    
-
-      
-
-
-
-
-
-
-
-
-// Mantenemos tu sistema de luces
-     this.blockLayer.setPipeline('Light2D');
-      //agregar luces los mapas
-
-
-      this.fondo.setPipeline('Light2D');
-      this.subSuelo.setPipeline('Light2D');
-      this._subSuelo.setPipeline('Light2D');
-      this.suelo.setPipeline('Light2D');
-      this._suelo.setPipeline('Light2D');
-      this._suelo2.setPipeline('Light2D');
-      this._suelo3.setPipeline('Light2D');
-      this._suelo4.setPipeline('Light2D');
-      this.above.setPipeline('Light2D');
-      this._above.setPipeline('Light2D');
-      this._above2.setPipeline('Light2D');
-      this._above3_decoration.setPipeline('Light2D');
-      this._above4_antorcha.setPipeline('Light2D');
-      this.above_collider.setPipeline('Light2D');
-
-      this.blockLayer.setPipeline('Light2D');
-      this.blockAbove.setPipeline('Light2D');
-
-      this._above_collider.setPipeline('Light2D');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-    this.cameras.main.setBounds(0,0,this.map.widthInPixels,this.map.heightInPixels);
-
-
-
-
-  // Este nombre debe coincidir con el nombre del tileset dentro de Tiled
-  //const tileset = map.addTilesetImage('[Base]BaseChip_pipo', 'tiles');
-
-  // Crear capa (usa el nombre de la capa en Tiled)
-  //const fondo = map.createLayer('Fondo', tileset, 0, 0);
-
-
+  this.mapa.crearEscenario();
 
 }
 
@@ -592,11 +195,7 @@ movimientosEnemigo(){
       
       enemigo.setMovimientoEnemigo(this.player.getContainer(),this.contactoSprites[0],this.contactoSprites[1],this.contactoSprites[2]);
      });
-
-
-     
-
-     
+   
 
 }
 
@@ -637,29 +236,6 @@ getPlayer(){
     this.player.setPositionInitial(x,y);
 
     this.lightToPlayer=this.lights.addLight(x, y, 150) .setColor(0xffaa00) .setIntensity(2);
-    //this.lightToPlayer.setDepth(6);
-    //this.lightToPlayer.setOrigin(1,1);
-    //this.player.getChangeSprite();
-
-/*
-    this.keys.W.on('down', () => {this.player.getCaminar()});
-    this.keys.W.on('up',   () => {this.player.getNoCaminar()});
-
-    this.keys.S.on('down', () => {this.player.getCaminar()});
-    this.keys.S.on('up',   () => {this.player.getNoCaminar()});
-
-    this.keys.A.on('down', () => {this.player.getCaminar()});
-    this.keys.A.on('up',   () => {this.player.getNoCaminar()});
-
-    this.keys.D.on('down', () => {this.player.getCaminar()});
-    this.keys.D.on('up',   () => {this.player.getNoCaminar()});*/
-
-
-
-   
-    //this.input.keyboard.on('keyup-W', () => {console.log("Suelto ") });
-
-     //movimientos de jugador
 
      this.cursor=this.input.keyboard.createCursorKeys();//flechas
 
@@ -678,23 +254,11 @@ this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.
 
 }
 
-
 //GLOBAL
 movimientosPlayer(){
 
 
-     this.player.setMovimientoPlayer(
-       this.contactoSprites[0]
-      ,this.listaEnemigos
-      ,this.contactoSprites
-      ,this.items_punto
-      ,this.listaEventos
-      ,this.listaCheckpoints
-      ,this.listaLlaves
-      ,this.listaPuertasAbiertas
-      ,this.listaPuertasAbiertasAbove
-      ,this.listaPalancas
-    );
+     this.player.setMovimientoPlayer();
     
      //this.player.getAtaque(this.listaEnemigos,this.contactoSprites,this.items_punto);
 
@@ -755,22 +319,11 @@ movimientosPlayer(){
 //GLOBAL
 //LLAMAR A TODAS LAS COLISIONES
 crearColisiones(){
-  this.collisionRecogerItemPuntos();
  
-  this.collisionMurosObjetos(this.player.getContainer());
- 
-
-  this.colisionesEnemigo();
+  this.colisiones.crearColisiones();
   
 }
 
-
-//GLOBAL
-colisionesEnemigo(){
-
-
-  this.collisionPlayerEnemigo();
-}
 
 //FUNCIONES DE LAS COLISIONES
 
@@ -778,8 +331,7 @@ colisionesEnemigo(){
   //colision al contacto del player con el enemigo
  collisionPlayerEnemigo(){
         
-   this.colisionEnemigoPlayer=this.physics.add.collider(this.player.getContainer(),this.listaEnemigos,this.player.contactoPlayerEnemigo,null,this);
-
+  this.colisiones.collisionPlayerEnemigo();
 }
 
 //GLOBAL
@@ -787,191 +339,16 @@ colisionesEnemigo(){
       collisionEnemigoEnemigo(){
  // this.physics.collider();
 
-    this.physics.add.collider(this.listaEnemigos, this.listaEnemigos);
-
+    this.colisiones.collisionEnemigoEnemigo();
 
 }
 //colision de arboles para que el player no las pase
 
 
-
 //GLOBAL
       collisionMurosObjetos(objeto){//el collider llegara por un parametro
 
-      //objetos tierra da entender al abismo de la zona
-
-
-      //dar collider a los graficos 
-
-
-
-   
-
-        
-        if(objeto && this.fondo)
-  //tierra  zona abismo
-{
-        if(this.fondo.layer.properties.find(p=>p.name==="collider"&&p.value===true))
-          this.fondo.setCollisionByExclusion([-1]);
-  
-        this.physics.add.collider(objeto,this.fondo);
-      
-}
-
-        if(objeto && this.above_collider){
-
-
-
-
-         
-  //objetos de la zona
-        if(this.above_collider.layer.properties.find(p=>p.name==="collider"&&p.value===true))
-          this.above_collider.setCollisionByExclusion([-1])
-        
-        const nombreObjeto=objeto.nombre;
-        this.contactoAbove_collider=this.physics.add.collider(objeto,this.above_collider,(obj,tile)=>{
-
-          //console.log(obj);
-          if(nombreObjeto==='boss1'){
-            objeto.tocandoMuro=true;
-          }
-  
-        });
-      }
-
-         if(objeto && this._above_collider){
-  //objetos de la zona
-        if(this._above_collider.layer.properties.find(p=>p.name==="collider"&&p.value===true))
-          this._above_collider.setCollisionByExclusion([-1])
-
-       this.contacto_Above_collider= this.physics.add.collider(objeto,this._above_collider,()=>{
-  
-        });
-      }
-        
-
-
-
-        if(objeto && this.above){
-  //above para que este encima del player
-          if(this.above.layer.properties.find(p=>p.name==="collider"&&p.value===false))
-            this.above.setCollisionByExclusion([-1]);
-        this.physics.add.collider(objeto,this.above);
-
-        this.above.setDepth(10);
-        objeto.setDepth(5);
-
-
-
-}
-
-
-       if(objeto && this._above){
-  //above para que este encima del player
-          if(this._above.layer.properties.find(p=>p.name==="collider"&&p.value===false))
-            this._above.setCollisionByExclusion([-1]);
-        this.physics.add.collider(objeto,this._above);
-
-        this._above.setDepth(10);
-        objeto.setDepth(5);
-
-
-
-}
-
-
-if (objeto && this.blockLayer) {
-   
-    if (this.blockLayer.layer.properties.find(p => p.name === "collider" && p.value === true)) {
-        this.blockLayer.setCollisionByExclusion([-1]);
-    }
-
-   
-    this.physics.add.collider(
-        objeto,               
-        this.blockLayer,      
-        ()=>{},  
-        this.checkCondicionBloque, 
-        this                 
-    );
-}
-
-
-
-
-
-       if(objeto && this._above2){
-  //above para que este encima del player
-          if(this._above2.layer.properties.find(p=>p.name==="collider"&&p.value===false))
-            this._above2.setCollisionByExclusion([-1]);
-        this.physics.add.collider(objeto,this._above2);
-
-        this._above2.setDepth(10);
-        objeto.setDepth(5);
-
-
-
-}
-
-
-  let ultimoEstado=null;
-    
-       if(objeto && this._above3_decoration){
-  //above para que este encima del player
-          if(this._above3_decoration.layer.properties.find(p=>p.name==="collider"&&p.value===false))
-            this._above3_decoration.setCollisionByExclusion([-1]);
-
-        this.physics.add.collider(objeto,this._above3_decoration);
-
-
-
-      objeto.setDepth(5);
-      this._above3_decoration.setDepth(10);
-
-}
-
-
-
-//generar depth a _suelo4
-
-
-       if(objeto && this._above4_antorcha){
-  //above para que este encima del player
-          if(this._above4_antorcha.layer.properties.find(p=>p.name==="collider"&&p.value===false))
-            this._above4_antorcha.setCollisionByExclusion([-1]);
-
-        this.physics.add.collider(objeto,this._above4_antorcha);
-
-
-
-      objeto.setDepth(5);
-      this._above4_antorcha.setDepth(10);
-
-}
-
-
-
-
-
-    if(objeto.nombre='player' && this._suelo){
-
-      
-
-        this.physics.add.overlap(this.player.getContainer(),this._suelo,(objeto, tile)=>{
-
-          if(tile.index!==-1&&tile.properties.tipo_piso!==undefined){
-            //console.log(tile.properties);
-            this.player.getSoundPiso(tile.properties.tipo_piso);
-          }
-          
-        })
-      
-
-
-    }
-
-
-
+        this.colisiones.collisionMurosObjetos(objeto);
 
       }
 
@@ -986,9 +363,12 @@ if (objeto && this.blockLayer) {
       collisionEnemigosMuros(){
         
 
-      this.physics.add.collider(this.listaEnemigos,this.muros);
+      this.colisiones.collisionEnemigosMuros();
                   
       }
+
+
+
 
 
 
@@ -1057,15 +437,7 @@ if (objeto && this.blockLayer) {
 //colision para cuando el player recoge el itemBasura
       collisionRecogerItemPuntos(){
 
-        this.physics.add.overlap(
-        this.player.getContainer(),
-        this.items_punto,
-        this.contactoPlayerItem,null,this
-    );
-
-    
-
-    
+       this.colisiones.collisionRecogerItemPuntos();
 }  
 
 
