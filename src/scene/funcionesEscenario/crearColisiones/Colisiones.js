@@ -1,4 +1,4 @@
-export class crearColisiones{
+export class colisiones{
 
     constructor(scene){
 

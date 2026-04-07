@@ -1,20 +1,15 @@
 
 import {player} from "../player/player.js";
-import {dataEnemigos} from "../enemies/DataEnemies.js"
-import {dataBosses} from "../bosses/dataBosses.js"
-import { Enemie1 } from "../enemies/Enemie1/Enemie1.js";
-import { Enemie4 } from "../enemies/Enemie4/Enemie4.js";
-import { Enemie5 } from "../enemies/Enemie5/Enemie5.js";
-import { empujar } from "../funciones/empujar.js";
+
 import { crearItemsPunto } from "../funciones/crearItemsPuntos.js";
 import {cargarAssets} from "./cargar/cargarAssets.js"
 import {cargarSonido} from "./cargar/cargarSonido.js"
 import { cargarVariablesGlobales } from "./cargar/cargarVariablesGlobales.js";
-import { ItemPocion } from "../items/extendsItems/ItemPocion.js";
+
 import { CamaraPersonalizada } from "../camera/CamaraPersonalizada.js";
 import { cargarLucesEstaticas } from "../funciones/cargarLucesEstaticas.js";
 
-import { boss1 } from "../bosses/boss1/boss1.js";
+
 
 import {npc1} from '../npc/Npc1/npc1.js'
 import {npc2} from '../npc/Npc2/npc2.js'
@@ -30,8 +25,10 @@ import { BloqueoItem } from "./colisiones/BloqueoItem.js";
 import { RecogerItem } from "./colisiones/RecogerItem.js"; 
 import { Estatua } from "../items/estatua/Estatua.js";
 import { Palanca } from "../items/palanca/Palanca.js";
-import { crearEscenario } from "./funcionesEscenario/crearEscenario/crearEscenario.js";
-import { crearColisiones } from "./funcionesEscenario/crearColisiones/crearColisiones.js";
+import { crearEscenario } from "./funcionesEscenario/seleccionarElementosEscenario/crearEscenario.js";
+import { colisiones } from "./funcionesEscenario/crearColisiones/Colisiones.js";
+import { hud } from "./funcionesEscenario/hud/hud.js";
+import { seleccionarEnemigos } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarEnemigos.js";
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
@@ -59,7 +56,11 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
       this.mapa=crearEscenario(this);
 
-      this.colisiones= new crearColisiones(this);
+      this.colisiones= new colisiones(this);
+
+      this.hud= new hud(this);
+
+      this.enemigos= seleccionarEnemigos(this);
       
 
       
@@ -91,102 +92,7 @@ crearItems(n){
 
 //GLOBAL
 //Crear enemigo
-crearEnemigo(n=1, x,y,selector=0){
 
- if(n!==0){
-    for(let i=0;i<n;i++){
-  let enemigo;
-  
-      if(x===undefined){
-        x=Math.floor(Math.random() * ((this.widthEscenario-30) - 0 + 1)) + 0;
-      }
-
-      if(y===undefined){
-            y=Math.floor(Math.random() * ((this.heightEscenario-30) - 0 + 1)) + 0;
-      }
-
-    
-
-  switch(selector){
-
-    case 0:
-
-    enemigo=new Enemie1(this,({...dataEnemigos[selector]}),x,y);
-
-    break;
-
-    case 3:
-
-  
-    enemigo=new Enemie4(this,({...dataEnemigos[selector]}),x,y);
-
-    break;
-
-
-    case 4:
-
-  
-    enemigo=new Enemie5(this,({...dataEnemigos[selector]}),x,y);
-
-    break;
-
-    case 10:
-
-    enemigo= new boss1(this,({...this.dataBosses[0]}),8004,6400);
-
-    break;
-
-    default:
-
-    enemigo=new Enemie1(this,({...dataEnemigos[0]}),x,y);
-    break;
-
-
-  }
-
-
- 
-
-      //let valor=Math.floor(Math.random() * 4) + 0;
-      //aqui va el valor del tipo de enemigo
-      //se debe de modificar con el paso del tiempo para la variacion de enemigo
-      //por el momento puse cero ya que es el valor del primero enemigo en el arreglo
-
-
-      
-   
-   
-
-      
-   
-
-
-
-
-    this.collisionMurosObjetos(enemigo);
-
-    enemigo.setPipeline('Light2D');
-    this.listaEnemigos.add(enemigo);
-
-   
-    
-    
-    
-
-  }
-
-  
-   
-
-    // this.collisionPlayerEnemigo();
-     this.collisionEnemigoEnemigo();
-     //this.colisionesEnemigo();
-  } else console.log("Tope al maximo no se crearan enemigo: "+this.listaEnemigos.countActive(true));
-  
-
-   
-
-}
 //Movimientos Enemigo
 //GLOBAL
 movimientosEnemigo(){
@@ -409,235 +315,44 @@ crearCamera(){
 }
 
 
+
+
+
+
+//=============================================
 //GLOBAL
 //Crear HUD del juego
 
 getBarraStamina(){
 
-  //datos de player
-  let stamina_player;
-  if(this.player.stamina>=0)
-    stamina_player=this.player.stamina;
-  else stamina_player=0;
-
-
-
-  if(this.contenedorStamina) this.contenedorStamina.destroy();
-  this.contenedorStamina=this.add.container(0,0).setScrollFactor(0);
-
-
-
-  if(this.backgroundStamina) this.backgroundStamina.destroy();
-  this.backgroundStamina=this.add.rectangle(10,10+this.backgroundVida.height+10,stamina_player,10,0x438E5B,1)//cambiar el tercer parametro por la vida del player
-  .setOrigin(0)
-
-    if(this.backgroundStaminaCompleta) this.backgroundStaminaCompleta.destroy();
-  this.backgroundStaminaCompleta=this.add.rectangle(10,10+this.backgroundVida.height+10,this.player.staminaMax,10,0x90CBA3,1)//cambiar el tercer parametro por la vida del player
-  .setOrigin(0)
-  
- 
-  //cambiar despues el valor por uno que tome de la BD
-
-  this.contenedorStamina.add(this.backgroundStaminaCompleta);
-  this.contenedorStamina.add(this.backgroundStamina);
-  this.contenedorStamina.setDepth(20);
-  this.hudContainer.add(this.contenedorStamina);
-
-
-
+  this.hud.getBarraStamina();
   
 }
 
 
 //GLOBAL
 getBarraVida(){
-
-  //datos de player
-  let vida_player
-  if(this.player)
-    vida_player=this.player.vida;
-  else vida_player=250;
-
-  if(this.contenedorVida) this.contenedorVida.destroy();
-  this.contenedorVida=this.add.container(0,0).setScrollFactor(0);
-
-
-
-  if(this.backgroundVida) this.backgroundVida.destroy();
-  this.backgroundVida=this.add.rectangle(10,10,vida_player,10,0xFF0000,1)//cambiar el tercer parametro por la vida del player
-  .setOrigin(0)
-
-    if(this.backgroundVidaCompleta) this.backgroundVidaCompleta.destroy();
-  this.backgroundVidaCompleta=this.add.rectangle(10,10,this.player.vidaActualMax,10,0x9C2007,1)//cambiar el tercer parametro por la vida del player
-  .setOrigin(0)
-  
-  //console.log(this.player.vidaActualMax);
-  //cambiar despues el valor por uno que tome de la BD
-
-  this.contenedorVida.add(this.backgroundVidaCompleta);
-  this.contenedorVida.add(this.backgroundVida);
-  this.contenedorVida.setDepth(20);
-  this.hudContainer.add(this.contenedorVida);
-  
-  
-
-
-
-  
+this.hud.getBarraVida();
 }
 
 //GLOBAL
 getCuraciones(){
-  let pocionesMaximos=this.player.cantidadPocionesMaximo;
-  let pocionesDisponibles=this.player.cantidadPociones;
-
-  if(this.contenedorPociones) this.contenedorPociones.destroy();
-    this.contenedorPociones=this.add.container(0,0).setScrollFactor(0);
-
-    let width_pocion_position=10;
-
-    
-  
-  for(let i=1;i<=pocionesMaximos;i++){
-
-      let item;
-      let height_pocion_position=this.backgroundStamina.y+this.backgroundStamina.height+10;
-
-      if(pocionesDisponibles>=i){
-        
-        item=new ItemPocion(this,null, null,25,25,0,0,"item_pocion",null);
-        item.setItemPosition(width_pocion_position,height_pocion_position);
-
-        width_pocion_position+=item.width+10;
-        this.contenedorPociones.add(item);
-
-      }else{
-        item=new ItemPocion(this,null, null,25,25,0,0,"item_pocion_vacio",null);
-        item.setItemPosition(width_pocion_position,height_pocion_position);
-        width_pocion_position+=item.width+10;
-        this.contenedorPociones.add(item);
-
-      }
-
-
-  }
-
-  this.contenedorPociones.setDepth(20);
-  this.hudContainer.add(this.contenedorPociones);
-
-
+ this.hud.getCuraciones();
 }
 crearHUD(){
-    //CREAR HUD de Puntos
-    this.puntos=0;
-
-    console.log("Dentro de HUD");
-
-//contenedor que sirve para acomodar todo en un solo item
-  this.hudContainer=this.add.container(0,0).setScrollFactor(0);
-//Fondo semitransparente que servira para una mejor visualizacion
-  this.hudBackground= this.add.rectangle(0,0,300,50,0x000000,0.5)
-    .setOrigin(0)
-    .setStrokeStyle(2,0xffffff);
-
-
-    this.getBarraVida();
-    this.getBarraStamina();
-    this.getCuraciones();
-
-    
-
-
-    this.hudPuntos();
-    this.hudCronometro();
-
-   
-    this.hudBackground.setPosition(this.widthPantalla-this.hudBackground.width,10);
-//union de los puntos y cronometro al background para que este todo junto
-    this.hudContainer.add(this.hudBackground);
-    this.hudContainer.add(this.contenedorPuntaje);
-    //this.hudContainer.add(this.puntaje);
-    this.hudContainer.add(this.cronometro);
-    
-
-    this.hudContainer.setDepth(20);
-
-
+  this.hud.crearHUD();
 
 }
 //GLOBAL
 //donde muestra los puntos acumulados
 hudPuntos(){
-
-       let textoPuntos= this.add.text(16,16,"Esencia de luna roja ",{
-        fontSize: '15px',
-        fontFamily:this.fontText,
-        fill: '#fff'
-
-    })
-    
-    
-    ;
-
-
-    textoPuntos.setPosition(this.widthPantalla-this.hudBackground.width,10);
-
-    this.contenedorPuntaje=this.add.container(0,0).setScrollFactor(0);
-  
-    this.puntaje= this.add.text(16,16,this.puntos,{
-        fontSize: '15px',
-        fontFamily:this.fontText,
-        fill: '#fff'
-
-    }).setPosition(textoPuntos.x+textoPuntos.width+10,textoPuntos.y);
-
-    this.contenedorPuntaje.add(textoPuntos);
-
-    this.contenedorPuntaje.add(this.puntaje);
-
+this.hud.hudPuntos();
 
 }
 //GLOBAL
 //donde muetra el cronometro
     hudCronometro(){
-  
-
-    //CREAR HUD de tiempo
-    this.cronometro= this.add.text(16,16,'Reloj: '+this.tiempo,{
-        fontSize: '15px',
-        fontFamily: this.fontText,
-        fill: '#fff'
-    });
-    
-
-    this.time.addEvent({
-  delay: 1000, // cada 1000 ms = 1 segundo
-  callback: () => {
-    this.tiempoProgresivo++;
-
-    if(this.tiempoProgresivo===this.tiempoParaCrearEnemigos){
-      this.tiempoParaCrearEnemigos+=10;
-      //this.crearEnemigo(this.topeCreacionEnemigos-this.listaEnemigos.countActive(true));
-
-      
-     // console.log("Creando enemigos segun el tope: ");
-
-    } 
-
-
-    
-   
-    
-
-    //if(this.tiempo<=0) this.finalizarPartida("Se agotó el tiempo");
-    //else{
-    this.tiempo++;
-    this.cronometro.setText('Reloj: ' + this.tiempo);//}
-  },
-  loop: true
-});
-
-    this.cronometro.setPosition(this.puntaje.width+this.puntaje.x+20, 10);
+  this.hud.hudCronometro();
 }
 
 
@@ -645,7 +360,7 @@ hudPuntos(){
 
 
 
-
+//=============================================
 //GLOBAL
 //terminar una partida
 finalizarPartida(n=""){
@@ -785,7 +500,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
  
     }
 
-    //GLOBAL
+    //Condicional
     crearFiltro(){
       const vignette = this.add.rectangle(0, 0, this.widthPantalla, this.heightPantalla, 0x072EA3, 0.3); 
       vignette.setOrigin(0); 
@@ -800,7 +515,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       */
     }
 
-    //GLOBAL
+    //Condicional
     crearLuces(){
       this.lights.enable();
       this.lights.setAmbientColor(0x222222); 
@@ -811,61 +526,9 @@ this.joystickCursors = this.joyStick.createCursorKeys();
     }
 
     //CONDICIONAL
-    creacionEnemigosPosicionados(){
+    cargarEnemigos(){
 
-     // this.crearEnemigo(1,2950,8550,3);//cantidad Enemigos, x, y ,tipo de enemigo
-
-      //this.crearEnemigo(1,3050,8600,1);
-      //this.crearEnemigo(1,0,0,10);
-      //this.crearEnemigo(1,8004,6400,10);
-
-      //this.crearEnemigo(1,2150,4400,4);//cantidad Enemigos, x, y ,tipo de enemigo
-
-
-
-       //hacer prueba para jefe
-
-     
-      this.crearEnemigo(1,6605,7972,0);  
-      this.crearEnemigo(1,6290,8425,0);
-      this.crearEnemigo(1,5971,8451,3);
-      this.crearEnemigo(1,6515,8532,0);
-      this.crearEnemigo(1,6752,7657,0);
-      this.crearEnemigo(1,6684,7251,3);
-      this.crearEnemigo(1,6930,8392,0);
-      this.crearEnemigo(1,7518,8470,0);
-      this.crearEnemigo(1,7581,7905,3);
-      this.crearEnemigo(1,7857,8482,0);
-      this.crearEnemigo(1,8483,8509,0);
-      this.crearEnemigo(1,9063,8449,0);
-      this.crearEnemigo(1,9809,8107,3);
-      this.crearEnemigo(1,10109,8370,0);
-      this.crearEnemigo(1,10522,8296,0);
-      this.crearEnemigo(1,10134,8190,0);
-      this.crearEnemigo(1,9976,7865,0);
-      this.crearEnemigo(1,10561,7862,3);
-      this.crearEnemigo(1,10197,7506,0);
-      this.crearEnemigo(1,9596,7531,0);
-      this.crearEnemigo(1,8999,7645,0);
-     
-      this.crearEnemigo(1,8009,6957,0);
-
-      this.crearEnemigo(1,8187,8005,3);
-      this.crearEnemigo(1,8686,8033,3);
-        this.crearEnemigo(1,7658,7628,0);
-      
-       
-
-
-
-
-
-
-
-
-     //  this.crearEnemigo(1,this.player.x+100,this.player.y)// enemigo
-
-
+    this.enemigos.load();
 
     }
 
@@ -1190,7 +853,7 @@ this.game.renderer.antialias = false;
     this.cargarBotones();
     this.cargarJoystick();
     this.getPlayer();
-    this.creacionEnemigosPosicionados()
+    this.cargarEnemigos()
 
     this.cargarNpc();
     //this.crearEnemigo(1,2050,4500,3);
