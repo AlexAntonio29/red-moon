@@ -34,6 +34,13 @@ import { seleccionarNpc } from "./funcionesEscenario/seleccionarElementosEscenar
 import { seleccionarCheckpoints } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarCheckpoints.js";
 import { seleccionarPalancas } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarPalancas.js";
 import { seleccionarLucesEstaticas } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarLucesEstaticas.js";
+import { lucesArea } from "./update/lucesArea.js";
+import { lightplayer } from "./update/lightplayer.js";
+import { movimientosPlayer } from "./update/movimientosPlayer.js";
+import { movimientosEnemigo } from "./update/movimientosEnemigo.js";
+import { movimientoItemToPlayer } from "./update/movimientoItemToPlayer.js";
+import { movimientosNpc } from "./update/movimientosNpc.js";
+import { salirAreasInteraccion } from "./update/salirAreasInteraccion.js";
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
@@ -104,26 +111,6 @@ crearItems(n){
 }
 
 
-//Movimientos Enemigo
-//GLOBAL
-movimientosEnemigo(){
-     
-     this.listaEnemigos.children.iterate(enemigo=>{
-      
-      enemigo.setMovimientoEnemigo(this.player.getContainer(),this.contactoSprites[0],this.contactoSprites[1],this.contactoSprites[2]);
-     });
-   
-
-}
-
-//GLOBAL
-movimientosNpc(){
-  this.listaNpc.children.iterate(npc=>{
-
-    npc.setMovimientoNpc(this, this.player)
-  })
-}
-
 //METODOS DEL PLAYER
 
 //GLOBAL
@@ -160,61 +147,6 @@ this.scene.launch('ScenePause',{scene:this.scene,puntos:this.puntos,player:this.
 
 }
 
-//GLOBAL
-movimientosPlayer(){
-
-
-     this.player.setMovimientoPlayer();
-    
-     //this.player.getAtaque(this.listaEnemigos,this.contactoSprites,this.items_punto);
-
-     //pausar juego
-
-     if(Phaser.Input.Keyboard.JustDown(this.keys.ESC))this.pausarEscena();
-
-
-     
-    if(this.player.getHabilitarCollision()){
-        //console.log("Habilitando Collsion ITEM NUEVO");
-        // this.collisionRecogerItemBasura(); 
-         this.player.setHabilitarCollision(false);
-        }
-
-
-
-   
-    if(this.player.curando) {
-      console.log("subiendo barra de salud");
-      this.getBarraVida();
-      this.getCuraciones();
-      this.player.curando=false;
-    
-    }
-
-    //estamina
-
-    
-    if(this.player.stamina<this.player.staminaMax){
-
-      //console.log("recuperando");
-
-      this.player.stamina+=this.player.velocidad_recuperacion;
-
-
-      this.getBarraStamina();
-      
-      if(this.player.stamina>=this.player.staminaMax){
-        this.player.stamina=this.player.staminaMax;
-        this.player.recuperando=false;
-      }
-    }
-
-
-
-    //Crear vista de player con item
-
-
-}
 
 //GLOBAL
 //LLAMAR A TODAS LAS COLISIONES
@@ -607,129 +539,31 @@ this.game.renderer.antialias = false;
        
 }
 
-//GLOBAL
-movimientoItemToPlayer(){
-
-
-
-  this.items_punto.children.iterate(item=>{
-    if(item.moveToPlayer){
-      let velocidad=Math.floor(Math.random() * (500 - 300 + 1)) + 300;
-   // scene.time.delayedCall(1000, () => {
-   
-
-    item.light.setPosition((item.x)+item.displayWidth/2,(item.y)+item.displayHeight/2)
-    
-    this.physics.moveToObject(item, this.player.getContainer().body, velocidad);
-    //});
-    }
-
-  });
-}
-
-//GLOBAL
-lightplayer(){
-
-     let xPlayer=this.player.getContainer().displayWidth/2;
-   let yPlayer=this.player.getContainer().displayHeight/2;
-
-  this.lightToPlayer.setPosition((this.player.getContainer().x)+xPlayer,(this.player.getContainer().y)+yPlayer);
-
- // console.log("player x: "+)
-
-}
-
-
-
-//GLOBAL
-salirAreasInteraccion(){
-
-  this.listaCheckpoints.children.iterate(checkpoint=>{
-                  
-              if(this.player.estaGuardando&& !this.physics.overlap(this.player.getContainer(),checkpoint))
-              {
-                this.player.estaGuardando=false;
-                
-                
-              }
-           
-            
-            });
-
-  this.listaPalancas.children.iterate(palanca=>{
-    if(this.player.estaActivandoPalanca&&!this.physics.overlap(this.player.getContainer(),palanca)){
-      {
-      this.player.estaActivandoPalanca=false;
-    }
-    }
-  })
-
-
-          
-
-
-}
-
-
-
-//GLOBAL
-lucesArea(){
-      let activationRadius = 700; 
-
-    // 2. Recorrer todas las luces
-    this.listaLucesObjetos.forEach(light => {
-        // Calcular distancia entre el jugador y la luz
-        let distance = Phaser.Math.Distance.Between(this.player.getContainer().x, this.player.getContainer().y, light.x, light.y);
-
-        // Si está dentro del radio -> Encender, si no -> Apagar
-        if (distance < activationRadius) {
-            if (!light.visible) { // Solo si estaba apagada para ahorrar operaciones
-                light.setVisible(true);
-                // Opcional: Efecto de encendido
-                light.setIntensity(1.5); 
-            }
-        } else {
-            if (light.visible) { // Solo si estaba encendida
-                light.setVisible(false);
-                // Opcional: Apagado inmediato
-                // light.setIntensity(0);
-            }
-        }
-    });
-}
 
 
 //GLOBAL
 //el update es todo lo que se corre en tiempo real
 update(time, delta){
 
-   this.lucesArea();
+   lucesArea(this);
   //luz que sigue al player
-    this.lightplayer();
+    lightplayer(this);
     //movimientos Jugador
-    this.movimientosPlayer();
+    movimientosPlayer(this);
    // console.log(`X:${this.player.getPositionX()} Y:${this.player.getPositionY()}`)
     //moviemientos del enemigo
-    this.movimientosEnemigo();
+    movimientosEnemigo(this);
    //this.physics.moveToObject(this.enemie.getContainer(), this.player.getContainer(),200);
 
-    this.movimientoItemToPlayer();
+    //this.movimientoItemToPlayer();
+    movimientoItemToPlayer(this);
 
     //Aqui establece si el player esta mas arriba de determinado objeto
-
-
-
     //movimientoNpc
-    this.movimientosNpc();
+    movimientosNpc(this);
 
    
-    this.salirAreasInteraccion();
-
-
-
-  
- 
-
+    salirAreasInteraccion(this);
 
 
 }
