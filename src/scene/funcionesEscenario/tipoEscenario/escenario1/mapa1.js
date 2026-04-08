@@ -1,3 +1,4 @@
+import { abrirPuertaCompleta } from "../../../../funciones/abrirPuertaCompleta.js";
 
 export class mapa1 {
 
@@ -312,7 +313,7 @@ export class mapa1 {
                 t.nameScene===this.scene.nameScene
               
               )))
-              this.scene.abrirPuertaCompleta(tile,this.scene.blockLayer);
+              abrirPuertaCompleta(tile,this.scene.blockLayer);
               console.log("abrir");
               
             }
@@ -330,7 +331,7 @@ export class mapa1 {
                 t.y===tile.y&&
                 t.nameScene===this.scene.nameScene
             ))){
-              this.scene.abrirPuertaCompleta(tile,this.scene.blockAbove);
+              abrirPuertaCompleta(tile,this.scene.blockAbove);
             }
     
           }

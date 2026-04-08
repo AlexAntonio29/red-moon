@@ -41,6 +41,7 @@ import { movimientosEnemigo } from "./update/movimientosEnemigo.js";
 import { movimientoItemToPlayer } from "./update/movimientoItemToPlayer.js";
 import { movimientosNpc } from "./update/movimientosNpc.js";
 import { salirAreasInteraccion } from "./update/salirAreasInteraccion.js";
+import { crearCuadroDialogo } from "../funciones/dialogo/crearCuadroDialogo.js";
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
@@ -50,11 +51,6 @@ export class StartGame extends Phaser.Scene{//cuando inicia la partida
        
     }
     
-
-  
-
-
-
 //aqui cargo todos los archivos y objetos necesarios antes de que inicie el escenario
     preload(){
 
@@ -204,16 +200,6 @@ crearColisiones(){
 }  
 
 
-
-
-
-
-
-
-
-
-
-
 //GLOBAL
 //solo sirve para testear
 depurarColisiones() {
@@ -240,13 +226,6 @@ crearCamera(){
     this.camera= new CamaraPersonalizada(this, this.player.getContainer(), this.hudContainer);
 }
 
-
-
-
-
-
-//=============================================
-//GLOBAL
 //Crear HUD del juego
 
 getBarraStamina(){
@@ -281,13 +260,6 @@ this.hud.hudPuntos();
   this.hud.hudCronometro();
 }
 
-
-
-
-
-
-//=============================================
-//GLOBAL
 //terminar una partida
 finalizarPartida(n=""){
 
@@ -466,28 +438,16 @@ this.joystickCursors = this.joyStick.createCursorKeys();
       
 }
 
-
-
-
-
 //CONDICIONAL
 cargarNpc(){
  
 this.npcs.load();
 
 }
-   
-
-
 //CONDICIONAL
 cargarCheckpoints(){
-
   this.checkpoints.load();
-
-
 }
-
-
 
 //CONDICIONAL
 cargarPalancas(){
@@ -540,9 +500,6 @@ this.game.renderer.antialias = false;
 }
 
 
-
-
-
 //GLOBAL
 //el update es todo lo que se corre en tiempo real
 update(time, delta){
@@ -567,326 +524,6 @@ update(time, delta){
    
     salirAreasInteraccion(this);
 
-
-
-  
- 
-
-
-
 }
 
-//GLOBAL
-/* NUEVO CODIGO*/
-
-
-    // PROCESAR INTERACCIÓN CON LA TECLA "E"
-  //GLOBAL
-    procesarInteraccionE(playerInstance, tile) {
-      
-        console.log(" Escaner activado Propiedades del bloque:", tile.properties);
-        // 1. Extraemos qué tipo de bloque es y qué ID de item necesita/da
-        let tipo = tile.properties.tipoBloqueo;
-        let idItem = tile.properties.idItem; // <-- ¡Esta es la magia dinamica!
-
-        switch (tipo) {
-            
-            // CASO A: EL JUGADOR ENCUENTRA UN ÍTEM TIRADO
-            case "recoger_item":
-                // Le avisamos a la consola si nos falta el ID
-                if (!idItem) {
-                    
-                    console.log(" ERROR: Es un item, pero no tiene 'idItem' en Tiled.");
-                }
-                  
-
-              
-              
-                const t=this.listaLlaves.find((t)=>((tile.x===t.tile.x)&&tile.y===t.tile.y));
-               
-
-                if (t) {
-                   
-                    playerInstance.agregarItem(idItem); //+"_"+t.id
-                    this.blockLayer.removeTileAt(tile.x, tile.y);
-                    //eliminar la luz de la llave
-                    this.lights.removeLight(t.luz)
-                    t.recogido=true;
-                    console.log(`¡Recogiste el ítem con ID: ${idItem}!`);
-                    this.sound.add("recoger_item",{
-                      loop:false,
-                      volume: 0.3
-                    }).play();
-                }
-
-                
-
-                break;
-
-           // CASO B: EL JUGADOR INTENTA ABRIR UNA PUERTA
-            case "puerta_item":
-                if (!idItem) break; 
-
-                // Revisamos si la mochila tiene ese ID exacto
-                if (playerInstance.tieneItem(idItem)) {
-                    
-                    // LO USAMOS Y LO CONSUMIMOS
-                    playerInstance.usarItem(idItem); 
-                    
-                    // ==========================================
-                    // CAMBIO: LLAMAMOS A LA REACCIÓN EN CADENA
-                    // ==========================================
-                    const datosPuerta={
-                      nameScene:this.nameScene,
-                      x:tile.x,
-                      y:tile.y
-                    }
-
-                    this.listaPuertasAbiertas.push(datosPuerta);
-                    this.abrirPuertaCompleta(tile,this.blockLayer);
-                    
-                    console.log(`¡Puerta abierta! El ítem ${idItem} se consumió y la reja gigante desapareció.`);
-                    
-                    this.cameras.main.fadeOut(1000, 0, 0, 0);
-                    this.cameras.main.fadeIn(1000, 0, 0, 0);
-
-                    this.sound.add('puerta_abriendose', {
-                     loop: false,
-                     volume: 1   // volumen entre 0 y 1
-                      }).play();
-                    return true;
-
-                } else {
-                    // Si no lo tiene, lo rebotamos (el tile sigue siendo sólido)
-                    console.log(`Está cerrado... Necesitas encontrar el ítem: ${idItem}`);
-                    return false;
-                    // Aquí podrías mostrar un texto flotante en pantalla
-                }
-                break;
-
-            // CASO C: LEER UN CARTEL (Ejemplo para el futuro)
-            case "leer_cartel":
-                console.log("El cartel dice: 'Peligro, monstruos adelante'.");
-                break;
-
-
-                // CASO C: ACTIVAR UNA PALANCA O INTERRUPTOR
-            case "palanca":
-                // Leemos cual es el ID del dibujo de la palanca activada
-                let tileActivado = tile.properties.idActivado; 
-
-                if (tileActivado||tileActivado===0) {
-                    // 1. Reemplazamos el dibujo actual por el de la palanca bajada
-                    this.blockLayer.putTileAt(tileActivado, tile.x, tile.y);
-                    
-                    // 2. Le cambiamos el tipo para que el jugador no pueda activarla 100 veces
-                    tile.properties.tipoBloqueo = "palanca_usada";
-                    
-                    console.log("La palanca ha sido activada.");
-                    
-                    // ==========================================
-                    // aqui se puede agregar la poder abrir una puerta secreta
-                    // Por ejemplo: this.abrirPuertaSecreta();
-                    // ==========================================
-                    
-                } else {
-                    console.log(" ERROR: A esta palanca le falta la propiedad 'idActivado' en Tiled.");
-                }
-                break;
-
-            // CASO D: SI LA PALANCA YA SE USO
-            case "palanca_usada":
-                console.log("La palanca ya está trabada en la posición de encendido.");
-                break;
-
-            default:
-                console.log("No se puede interactuar con este objeto de esa forma.");
-                break;
-        }
-    }
-    // ==========================================
-    // DESTRUIR PUERTA COMPLETA (REACCION EN CADENA)
-    // ==========================================
-
-    //GLOBAL
-    abrirPuertaCompleta(tileInicial,capa) {
-        let idRequerido = tileInicial.properties.idItem;
-        let tilesPorRevisar = [tileInicial];
-        let tilesVisitados = new Set(); // Para no revisar el mismo tile dos veces
-
-        // Mientras haya bloques de puerta por revisar...
-        while(tilesPorRevisar.length > 0) {
-          
-            let tileActual = tilesPorRevisar.pop();
-            let clave = `${tileActual.x},${tileActual.y}`;
-
-            if (!tilesVisitados.has(clave)) {
-                tilesVisitados.add(clave);
-
-                // 1. Destruimos este pedazo de la puerta
-                capa.removeTileAt(tileActual.x, tileActual.y);
-
-                // 2. Buscamos a sus 4 vecinos (Arriba, Abajo, Izquierda, Derecha)
-                let vecinos = [
-                    capa.getTileAt(tileActual.x + 1, tileActual.y),
-                    capa.getTileAt(tileActual.x - 1, tileActual.y),
-                    capa.getTileAt(tileActual.x, tileActual.y + 1),
-                    capa.getTileAt(tileActual.x, tileActual.y - 1)
-                ];
-
-                
-                
-                vecinos.forEach(vecino => {
-                    if (vecino!==null) {
-                        
-                        // Si es parte de la puerta, lo agregamos a la lista para destruirlo
-                        tilesPorRevisar.push(vecino);
-                    }
-                });
-            }
-        }
-    }
-
-//GLOBAL
-//dialogos
-iniciarDialogo(npc) {
-    // Seguridad: verificamos que el NPC tenga el método de diálogos
-    if (!npc || typeof npc.obtenerDialogos !== 'function') return;
-
-    this.enDialogo = true;
-    this.npcActual = npc; 
-    this.listaTextos = npc.obtenerDialogos();
-
-    // --- 1. REPRODUCIR MÚSICA DE AMBIENTACIÓN ---
-    // Verificamos si ya hay música sonando para no duplicarla
-    if (!this.sonidoNPC || !this.sonidoNPC.isPlaying) {
-        this.sonidoNPC = this.sound.add('musica_mago', { 
-            loop: true, 
-            volume: 0.8 
-        });
-        this.musicaFondo.volume=0.1;
-        this.sonidoNPC.play();
-        
-    }
-
-    // LÓGICA DE REPETICIÓN
-    if (npc.yaHabloTodo) {
-        this.indiceTexto = this.listaTextos.length - 1;
-    } else {
-        this.indiceTexto = 0;
-    }
-
-    this.mostrarCuadroDeTexto(this.listaTextos[this.indiceTexto]);
-    
-    // Detenemos al caballero
-    if (this.player && this.player.congelarParaDialogo) {
-        this.player.congelarParaDialogo();
-    }
-}
-
-
-//GLOBAL
-avanzarDialogo() {
-    // ¿Llegamos a la última frase?
-    if (this.indiceTexto >= this.listaTextos.length - 1) {
-        
-        if (this.npcActual) {
-            this.npcActual.yaHabloTodo = true;
-        }
-
-        // --- 2. DETENER MÚSICA AL CERRAR DIÁLOGO ---
-        // Aplicamos un "fade-out" para mantener la atmósfera melancólica y que no se corte de golpe
-        if (this.sonidoNPC) {
-            this.tweens.add({
-                targets: this.sonidoNPC,
-                volume: 0,
-                duration: 1000, // Tarda 1 segundo en desvanecerse
-                onComplete: () => { 
-                    this.sonidoNPC.stop(); 
-                    this.musicaFondo.volume=0.5;
-                }
-            });
-        }
-
-        this.enDialogo = false;
-        this.ocultarCuadroDeTexto();
-        
-        // Devolvemos el movimiento al caballero
-        if (this.player && this.player.descongelarParaDialogo) {
-            this.player.descongelarParaDialogo();
-        }
-        
-    } else {
-        // Si no es la última frase, avanzamos normal
-        this.indiceTexto++;
-        this.mostrarCuadroDeTexto(this.listaTextos[this.indiceTexto]);
-    }
-}
-
-
-//GLOBAL
-crearCuadroDialogo() {
-    if (!this.graphicsBox) {
-        // Fondo y borde del cuadro
-        this.graphicsBox = this.add.graphics();
-        this.graphicsBox.fillStyle(0x000000, 0.8); 
-        this.graphicsBox.lineStyle(2, 0xffffff, 1); 
-        this.graphicsBox.fillRect(100, 500, 600, 100); 
-        this.graphicsBox.strokeRect(100, 500, 600, 100);
-        this.graphicsBox.setScrollFactor(0); 
-        this.graphicsBox.setDepth(1000); 
-
-        // Texto
-        this.txtDialogo = this.add.text(120, 520, '', {
-            fontSize: '20px',
-            fill: '#ffffff',
-            wordWrap: { width: 560 } 
-        });
-        this.txtDialogo.setScrollFactor(0);
-        this.txtDialogo.setDepth(1001);
-    }
-}
-
-
-//GLOBAL
-mostrarCuadroDeTexto(textoCompleto) {
-    this.crearCuadroDialogo();
-
-    this.graphicsBox.setVisible(true);
-    this.txtDialogo.setVisible(true);
-
-    if (this.typewriterTimer) this.typewriterTimer.remove();
-
-    this.txtDialogo.setText(''); 
-    this.typewriterIndex = 0; 
-
-    this.typewriterTimer = this.time.addEvent({
-        delay: 70, 
-        callback: () => {
-            this.txtDialogo.setText(this.txtDialogo.text + textoCompleto[this.typewriterIndex]);
-            this.typewriterIndex++;
-
-            // --- 3. EFECTO DE MÁQUINA DE ESCRIBIR ---
-            // Reproducimos el "blip" bajito cada vez que sale una letra.
-            // Esto le da un toque RPG clásico y mucha vida al pixel art.
-            this.sound.play('sonido_habla_npc', { volume: 1.5 });
-
-            if (this.typewriterIndex >= textoCompleto.length) {
-                this.typewriterTimer.remove();
-                this.isTypewriterDone = true; 
-            }
-        },
-        callbackScope: this,
-        loop: true
-    });
-}
-
-
-//GLOBAL
-ocultarCuadroDeTexto() {
-    if (this.typewriterTimer) this.typewriterTimer.remove();
-
-    if (this.graphicsBox) this.graphicsBox.setVisible(false);
-    if (this.txtDialogo) this.txtDialogo.setVisible(false);
-}
 }

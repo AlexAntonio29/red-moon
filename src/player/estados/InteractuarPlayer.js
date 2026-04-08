@@ -1,4 +1,8 @@
+import { abrirPuertaCompleta } from "../../funciones/abrirPuertaCompleta.js";
 import { Estados } from "../../funciones/automata/Estados.js";
+import { avanzarDialogo } from "../../funciones/dialogo/avanzarDialogo.js";
+import { iniciarDialogo } from "../../funciones/dialogo/iniciarDialogo.js";
+import { procesarInteraccionE } from "../../funciones/procesarInteraccionE.js";
 import { guardarPartida } from "../../guardarPartida.js";
 
 export class InteractuarPlayer extends Estados{
@@ -25,7 +29,7 @@ export class InteractuarPlayer extends Estados{
        
         if (this.objeto.scene.enDialogo) {
             this.objeto.pisadas.stop();
-            this.objeto.scene.avanzarDialogo();
+            avanzarDialogo(this.objeto.scene);
             return; //  Detenemos la función para no interactuar con nada más
         }
 
@@ -34,7 +38,7 @@ export class InteractuarPlayer extends Estados{
 
         if (npcCercano) {
     // Enviamos el objeto NPC completo para que la escena pueda marcarlo
-    this.objeto.scene.iniciarDialogo(npcCercano); 
+    iniciarDialogo(npcCercano,this.objeto.scene); 
     return;
 
     
@@ -46,9 +50,9 @@ export class InteractuarPlayer extends Estados{
             
               
 
-        if(this.objeto.scene.procesarInteraccionE(this.objeto, tileObjetivo)&&tileObjetivoAbovePuerta){
+        if(procesarInteraccionE(this.objeto, tileObjetivo,this.objeto.scene)&&tileObjetivoAbovePuerta){
         
-        this.objeto.scene.abrirPuertaCompleta(tileObjetivoAbovePuerta,this.objeto.scene.blockAbove);
+        abrirPuertaCompleta(tileObjetivoAbovePuerta,this.objeto.scene.blockAbove);
         const datosPuerta={
                       nameScene:this.objeto.scene.nameScene,
                       x:tileObjetivoAbovePuerta.x,
