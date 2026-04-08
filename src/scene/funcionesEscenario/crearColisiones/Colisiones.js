@@ -1,3 +1,6 @@
+import { checkCondicionBloque } from "../../../funciones/checkCondicionBloque.js";
+
+
 export class colisiones{
 
     constructor(scene){
@@ -140,9 +143,7 @@ if (objeto && this.scene.blockLayer) {
     this.scene.physics.add.collider(
         objeto,               
         this.scene.blockLayer,      
-        ()=>{},  
-        this.scene.checkCondicionBloque, 
-        this                 
+        (objeto,tile)=>{checkCondicionBloque(objeto,tile,this.scene)}               
     );
 }
 

@@ -119,7 +119,7 @@ load(){
          movePlayer=false;
          esActivo=true;
    
-         crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo,this.scene,this.eventoScenario);
+         //crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo,this.scene,this.eventoScenario);
    
    
    

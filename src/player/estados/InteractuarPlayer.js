@@ -46,7 +46,7 @@ export class InteractuarPlayer extends Estados{
             
               
 
-        if(this.objeto.scene.procesarInteraccionE(this, tileObjetivo)&&tileObjetivoAbovePuerta){
+        if(this.objeto.scene.procesarInteraccionE(this.objeto, tileObjetivo)&&tileObjetivoAbovePuerta){
         
         this.objeto.scene.abrirPuertaCompleta(tileObjetivoAbovePuerta,this.objeto.scene.blockAbove);
         const datosPuerta={

@@ -1,4 +1,5 @@
 import { Estados } from "../../funciones/automata/Estados.js";
+import { checkCondicionBloque } from "../../funciones/checkCondicionBloque.js";
 
 export class AttackPlayer extends Estados{
 
@@ -323,7 +324,7 @@ export class AttackPlayer extends Estados{
   
             
             if (tile && tile.properties && tile.properties.tipoBloqueo) {
-                this.objeto.scene.checkCondicionBloque(this.objeto.getContainer(), tile);
+                checkCondicionBloque(this.objeto.getContainer(), tile,this.objeto.scene);
             }
         }, null, this);
     }
