@@ -103,7 +103,7 @@ export class IdlePlayer extends Estados{
             // Si caíste dentro de CUALQUIER bloque que se supone es un obstáculo...
             console.log("¡Te quedaste atascado en un obstaculo! Regresando a zona segura...");
             this.objeto.setVida(100);
-            this.objeto.contactoPlayerEnemigo(this.objeto.player,null);
+            this.objeto.contactoPlayerEnemigo(this.objeto.player,null,this.objeto.scene);
              //this.objeto.setVida(100); //desactivar para el contacto player enemigo
             
             // 4. ¡Magia! Lo regresamos a la coordenada donde inició el salto ALEXIS ESTUVO AQUI Y VI QUE USASTE IA XD
@@ -111,6 +111,8 @@ export class IdlePlayer extends Estados{
             
             // Opcional: Aquí podrías reproducir un sonido de error o quitarle 10 de vida
         }
+
+        
     }
 
 

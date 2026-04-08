@@ -1,3 +1,10 @@
+import { BloqueoAtaqueFuerte } from "../scene/colisiones/BloqueoAtaqueFuerte.js";
+import { BloqueoDash } from "../scene/colisiones/BloqueoDash.js";
+import { BloqueoItem } from "../scene/colisiones/BloqueoItem.js";
+import { RecogerItem } from "../scene/colisiones/RecogerItem.js";
+
+
+
 export const checkCondicionBloque =(objeto, tile,scene)=>{
 
   let idLlave=0;
@@ -15,6 +22,10 @@ export const checkCondicionBloque =(objeto, tile,scene)=>{
 
     let manejadorBloqueo = null;
     let tipo = tile.properties.tipoBloqueo;
+
+
+    console.log(tipo);
+
 
     // 3. EL SWITCH: Asignamos la clase hija correcta segun el tipo de tile en Tiled
    switch (tipo) {
@@ -44,6 +55,7 @@ export const checkCondicionBloque =(objeto, tile,scene)=>{
             break;
        
         default:
+            console.log('NO PASA');
             return true;
     }
 
@@ -58,10 +70,12 @@ export const checkCondicionBloque =(objeto, tile,scene)=>{
             
             // Aqui se puede agregar un sonido:
         }
-        
+        console.log('SI PASA');
         // Retornamos FALSE para decirle a Phaser: "IGNORA LA COLISIÓN, DÉJALO PASAR"
         return false; 
+        
     } else {
+        console.log('NO PASA');
         // Retornamos TRUE para decirle a Phaser: "APLICA FISICAS"
         return true; 
     }

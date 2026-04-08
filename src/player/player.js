@@ -752,9 +752,11 @@ cargarDepth(){
 
     contactoPlayerEnemigo(player,enemigo,scene){
 
+
+
       console.log(player);
       console.log(enemigo);
-
+      console.log(scene);
       if(player.getVida()>0){
 
         

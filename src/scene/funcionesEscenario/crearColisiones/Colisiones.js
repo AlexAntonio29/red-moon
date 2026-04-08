@@ -141,10 +141,14 @@ if (objeto && this.scene.blockLayer) {
 
    
     this.scene.physics.add.collider(
-        objeto,               
-        this.scene.blockLayer,      
-        (objeto,tile)=>{checkCondicionBloque(objeto,tile,this.scene)}               
-    );
+    objeto,               
+    this.scene.blockLayer, 
+    null, 
+    (objeto, tile) => {  
+        return checkCondicionBloque(objeto, tile, this.scene);
+    },    
+    this.scene               
+);
 }
 
 
