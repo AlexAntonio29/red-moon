@@ -1,30 +1,61 @@
+import { crearEnemigo } from "../../enemies/crearEnemigo.js";
 
 
 export class evento1_5{
 
-constructor(scene){
+constructor(scene,movePlayer){
+
+  //this.scene,this.player,movePlayer,this.lights
      console.log("Ejecutando Evento1_5");
 
       this.scene=scene;
       this.nombre='evento1_5';
       this.camera=scene.camera;
+      this.player=scene.player;
+      this.finalizado=false;
+
+
+      this.player.isInputActive=movePlayer;
 
       agregarObjeto(scene.bloqueoTemporal,8026,5777,480,48,scene);
       agregarObjeto(scene.bloqueoTemporal2,8026,6620,700,48,scene);
 
-
-
-   
-
     //activar o desactivar input player
 
+    //console.log(scene.listaNpc);
+
+
+    crearBoss1(scene);
+
+   
+    scene.time.delayedCall(12501,()=>{
+      aplicarCamara(scene);
+    })
+
 }
 }
 
 
-const crearBoss1=()=>{
+const aplicarCamara=(scene)=>{
 
-  this.boss=this.scene.crearEnemigo(1,8004,6400,10);
+ scene.cameras.main.setBounds(7600,5750,500,850);
+
+
+}
+
+const crearBoss1=(scene)=>{
+
+
+      scene.listaNpc.getChildren().forEach((npc)=>{
+
+        if(npc.dataNpc.nombre==='cuidadora'){
+            console.log(npc.dataNpc);
+
+            npc.getEliminarNpc();
+        }
+    })
+
+  crearEnemigo(1,7860,5900,10,scene);
 
 
 

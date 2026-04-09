@@ -21,7 +21,7 @@ export class cargarEnemigos1 {
 
       //crearEnemigo(1,3050,8600,1,this.scene);
       //crearEnemigo(1,0,0,10,this.scene);
-      crearEnemigo(1,8004,6400,10,this.scene);
+     // crearEnemigo(1,8004,6400,10,this.scene);
 
       //crearEnemigo(1,2150,4400,4,this.scene);//cantidad Enemigos, x, y ,tipo de enemigo
 

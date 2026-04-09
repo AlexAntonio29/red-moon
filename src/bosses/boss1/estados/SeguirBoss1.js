@@ -4,8 +4,11 @@ export class SeguirBoss1 extends SeguirEnemies{
 
         enter(){
 
+
         super.enter();
 
+
+        this.objeto.sound_walk.play();
         this.Hitbox=this.objeto.scene.physics.add.overlap(this.objeto.hitbox, this.objeto.scene.player.getContainer());
 
     }
@@ -28,6 +31,8 @@ export class SeguirBoss1 extends SeguirEnemies{
 
     exit(){
         super.exit();
+
+        this.objeto.sound_walk.stop();
         this.objeto.scene.physics.world.removeCollider(this.Hitbox);
 
     }

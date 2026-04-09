@@ -83,6 +83,25 @@ export class AttackBoss1 extends Estados{
             ){
                               if(frame.index===4||frame.index===11||frame.index===19){
 
+                                //seleccionar sonido de ejecucion
+
+                                switch(frame.index){
+                                    case 4:
+                                        this.objeto.sound_attack1.play();
+                                    break;
+
+                                    case 11:
+                                        this.objeto.sound_attack1.play();
+                                    break;
+
+
+                                    case 19:
+                                        this.objeto.sound_attack3.play();
+                                    break;
+                                }
+
+
+
             if(!this.colisionAtaque){
             this.colisionAtaque= this.objeto.scene.add.zone(
             this.objeto.x, 

@@ -49,7 +49,7 @@ export const crearEnemigo=(n=1, x,y,selector=0, scene)=>{
 
     case 10:
 
-    enemigo= new boss1(scene,({...dataBosses[0]}),8004,6400);
+    enemigo= new boss1(scene,({...dataBosses[0]}),x,y);
 
     break;
 
@@ -59,6 +59,7 @@ export const crearEnemigo=(n=1, x,y,selector=0, scene)=>{
     break;
 
 
+    
   }
 
 
@@ -87,7 +88,7 @@ export const crearEnemigo=(n=1, x,y,selector=0, scene)=>{
 
    
     
-    
+    return enemigo;
     
 
   }

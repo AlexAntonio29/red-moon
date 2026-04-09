@@ -6,8 +6,10 @@ export class RunBoss1 extends Estados{
 
     enter(){
 
+        this.temblando=false;
         console.log("Run")
         this.objeto.play("boss1_run");
+        this.objeto.sound_attack4.play();
 
         this.tarjet = this.objeto.scene.player.getContainer().body;
 
@@ -29,6 +31,13 @@ export class RunBoss1 extends Estados{
 
     execute(){
 
+      if(!this.temblando){
+      
+      this.objeto.scene.cameras.main.shake(80,0.01);
+        this.temblando=true;
+
+        this.objeto.scene.time.delayedCall(80,()=>{this.temblando=false;})
+    }
 
 
 
@@ -52,6 +61,7 @@ export class RunBoss1 extends Estados{
 
         
         if (this.objeto.tocandoMuro) {
+
            
                 console.log("ir a aturdido");
                 this.objeto.tocandoMuro = false;
@@ -66,6 +76,9 @@ export class RunBoss1 extends Estados{
 
 
     exit(){
+
+      this.objeto.sound_choque.play();
+      this.objeto.scene.cameras.main.shake(1000, 0.03);
         this.objeto.tocandoMuro = false;
         console.log("FINALIZAR RUN");
 

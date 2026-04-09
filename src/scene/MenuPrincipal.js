@@ -17,8 +17,8 @@ bStart(){
 
 document.fonts.load(`32px ${this.fontText}`).then(() => {
 
-  this.boton = this.add.text(70, this.heightPantalla/3.8, 'Historia', {
-  fontSize: '40px',
+  this.boton = this.add.text(30, this.heightPantalla/2-20, 'Historia', {
+  fontSize: '45px',
   fill: '#ff0000',
   
   padding: { x: 80, y: 80 },
@@ -68,11 +68,16 @@ this.tweens.add({
     this.load.image("tierra","./assets/menuPrincipal/tierra.png");
 
     this.load.spritesheet("antorcha","./assets/menuPrincipal/antorcha.png",{
-      frameWidth:300,
-      frameHeight:500
+      frameWidth:480,
+      frameHeight:480
     });
 
      this.load.spritesheet('nube','./assets/menuPrincipal/nubes.png',{
+      frameWidth:700,
+      frameHeight:500
+     });
+
+          this.load.spritesheet('nube2','./assets/menuPrincipal/nubes.png',{
       frameWidth:700,
       frameHeight:500
      });
@@ -104,7 +109,11 @@ cargarLuces(){
 
   //cargar luz sobre la luna
 
-  this.lights.addLight(this.widthPantalla/2, this.heightPantalla/4, 1000) .setColor(0xE60000) .setIntensity(5);
+    this.lights.addLight(this.widthPantalla/2, this.heightPantalla/4, 2000) .setColor(0xffffff) .setIntensity(1);
+  
+  this.lights.addLight(this.widthPantalla/2, this.heightPantalla/4, 2000) .setColor(0xFF0000) .setIntensity(3);
+   
+  this.lights.addLight(0, 0, 2000) .setColor(0xFF0000) .setIntensity(3);
 
 
   this.luzNube1=this.lights.addLight(this.nube1.x, this.nube1.y, 200) .setColor(0xFFFFFF) .setIntensity(0.5);
@@ -113,9 +122,13 @@ cargarLuces(){
    this.luzNube2=this.lights.addLight(this.nube2.x, this.nube2.y, 100) .setColor(0xFFFFFF) .setIntensity(0.5);
 
 
-   this.luzAntorcha=this.lights.addLight(this.antorcha.x, this.antorcha.y, 500) .setColor(0xffaa00) .setIntensity(5);
 
+   this.luzAntorcha=this.lights.addLight(this.antorcha.x,this.antorcha.y-100,550).setColor(0xffaa00) .setIntensity(5);
+   
+  this.luzCastillo=this.lights.addLight(this.widthPantalla+50 ,-50,1000).setColor(0xFF0000) .setIntensity(5);
 
+  this.luzAntorcha2=this.lights.addLight(this.widthPantalla-100 ,this.heightPantalla-50,500).setColor(0xffffff) .setIntensity(0.5);
+   
 
 
   this.lucesLuciernaga();
@@ -140,7 +153,7 @@ cargarSonidos(){
 cargarNubes(){
 
   
-    this.nube1=this.physics.add.sprite(this.widthPantalla/2, this.heightPantalla/2, 'nube');
+    this.nube1=this.physics.add.sprite(this.widthPantalla/2, this.heightPantalla/3, 'nube');
 
     this.nube1.setDepth(4).setPipeline('Light2D');
     
@@ -150,7 +163,7 @@ cargarNubes(){
     console.log(this.nube1)
 
 
-    this.nube2=this.physics.add.sprite(0, this.heightPantalla/2, 'nube');
+    this.nube2=this.physics.add.sprite(0, this.heightPantalla/3, 'nube2');
 
     this.nube2.setDepth(4).setPipeline('Light2D');
     
@@ -165,21 +178,24 @@ cargarNubes(){
 }
 
 cargarAntorcha(){
+  console.log(this.hud);
   
-  this.antorcha=this.physics.add.sprite((this.widthPantalla)-50,this.heightPantalla-30,'antorcha')
-  this.antorcha.setDepth(8).setPipeline('Light2D'); 
-    this.antorcha.body.setAllowGravity(false);
+  this.antorcha=this.physics.add.sprite(this.hud.x+80, this.heightPantalla+70, 'antorcha');
 
 
-        if(!this.anims.exists('antorcha_play'))
-        this.anims.create({
+  if(!this.anims.exists('antorcha_play'))
+
+    this.anims.create({
         key: 'antorcha_play',
         frames: this.anims.generateFrameNumbers('antorcha', { start: 0, end: 6 }),
-        frameRate: 10,
+        frameRate: 6,
         repeat: -1
           });
 
-          this.antorcha.play('antorcha_play');
+  this.antorcha.setDepth(9).setPipeline('Light2D');
+
+  this.antorcha.play('antorcha_play');
+
 
           
 }
@@ -190,8 +206,8 @@ cargarImagenes(){
       this.fondo = this.add.image(0, 0, 'imagenFondo').setOrigin(0,0)
     .setDisplaySize(this.widthPantalla*1.0,this.heightPantalla*1.0);
 
-          this.estrella = this.add.image(0, 0, 'estrellas').setOrigin(0,0)
-    .setDisplaySize(this.widthPantalla*1.0,this.heightPantalla*1.0);
+          //this.estrella = this.add.image(0, 0, 'estrellas').setOrigin(0,0)
+    //.setDisplaySize(this.widthPantalla*1.0,this.heightPantalla*1.0);
 
           this.tierra= this.add.image(0, 0, 'tierra').setOrigin(0,0)
     .setDisplaySize(this.widthPantalla*1.0,this.heightPantalla*1.0);
@@ -213,7 +229,7 @@ cargarImagenes(){
 
 
     this.fondo.setDepth(1).setPipeline('Light2D');
-    this.estrella.setDepth(2).setPipeline('Light2D');
+   // this.estrella.setDepth(2).setPipeline('Light2D');
     this.luna.setDepth(3).setPipeline('Light2D');
     this.castillo.setDepth(7).setPipeline('Light2D');
     this.tierra.setDepth(8).setPipeline('Light2D');

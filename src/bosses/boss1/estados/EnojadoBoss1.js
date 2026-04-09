@@ -8,6 +8,9 @@ export class EnojadoBoss1 extends Estados{
 
         console.log("Enojado")
         this.objeto.play("boss1_enojado");
+
+        this.objeto.scream.play();
+        this.objeto.scene.cameras.main.shake(3000, 0.02);
         
         let aleatorio = Math.floor(Math.random() *2)+1;
 

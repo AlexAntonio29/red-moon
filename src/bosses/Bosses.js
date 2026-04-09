@@ -16,5 +16,7 @@ export class Bosses extends Enemies{
         super.setCaminar(player,contacto,contactoAtaque,contactoEnemigo, true )
     }
 
+
+
     
 }

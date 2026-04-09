@@ -266,6 +266,11 @@ export class cargarAssets{
         */
         cargarAnimacionesBosses(){
 
+          this.scene.load.spritesheet('boss1_aparecer','./assets/bosses/boss1/aparecer.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
           this.scene.load.spritesheet('boss1_idle','./assets/bosses/boss1/idle.png',{
             frameWidth:374,
             frameHeight:374

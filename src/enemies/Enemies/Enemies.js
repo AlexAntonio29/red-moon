@@ -19,6 +19,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         this.dataEnemie=dataEnemie;
         this.velocidad=Math.floor(Math.random() * ((Number(this.dataEnemie.velocidad)) - (Number(this.dataEnemie.velocidad)-30) + 1)) + (Number(this.dataEnemie.velocidad)-30);
         this.vida=Number(dataEnemie.vida);
+        this.vidaCompleta=this.vida;
 
         this.tiempoAturdido=500;
         this.fuerzaResistencia=100;

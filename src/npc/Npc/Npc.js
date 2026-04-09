@@ -62,4 +62,13 @@ estaCercaParaHablar(player) {
     }
 
     setMovimientoNpc(scene){}
+
+
+    getEliminarNpc(){
+        if(this.sonido){
+            this.sonido.stop();
+        }
+
+        this.destroy();
+    }
 }

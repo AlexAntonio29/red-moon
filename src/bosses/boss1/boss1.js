@@ -9,17 +9,25 @@ import { DescansandoBoss1 } from "./estados/DescansandoBoss1.js";
 import { RunBoss1 } from "./estados/RunBoss1.js";
 import { AturdidoBoss1 } from "./estados/AturdidoBoss1.js";
 import { EnojadoBoss1 } from "./estados/EnojadoBoss1.js";
+import { AparecerBoss1 } from "./estados/AparecerBoss1.js";
 
 export class boss1 extends Bosses {
 
         constructor(scene, dataEnemie, x=0,y=0){
 
 
-            
+
+
+
+            console.log(x);
+            console.log(y);
 
         super(scene,dataEnemie,x,y);
         this.tiempoAturdido=100;
         this.fuerzaResistencia=10;
+
+        this.mostrarBarraVida=true;
+        this.activarBarraVida=false;
 
         //this.distanciaAtaque=scene.physics.add.sprite(0,0,null);
 
@@ -46,7 +54,7 @@ export class boss1 extends Bosses {
 
 
     asignarEstados(){
-
+        this.maquina.agregarEstado('Aparecer', new AparecerBoss1(this));
         this.maquina.agregarEstado('Attack', new AttackBoss1(this));
         this.maquina.agregarEstado('Idle', new IdleBoss1(this));
         this.maquina.agregarEstado('Seguir', new SeguirBoss1(this));
@@ -58,10 +66,13 @@ export class boss1 extends Bosses {
         this.maquina.agregarEstado('Enojado', new EnojadoBoss1(this));
         this.maquina.agregarEstado('Run', new RunBoss1(this));
         
-        this.maquina.cambiarEstado('Idle');
+        this.maquina.cambiarEstado('Aparecer');
 
         
     }
+
+
+
 
 
     cargarAnimaciones(){
@@ -155,19 +166,154 @@ export class boss1 extends Bosses {
             repeat:-1
           });
 
+
+          if(!this.scene.anims.exists("boss1_aparecer"))
+          this.scene.anims.create({
+            key:"boss1_aparecer",
+            frames: this.scene.anims.generateFrameNumbers('boss1_aparecer',{start:0,end:58}),
+            frameRate:5,
+            repeat:0 
+          });
+
+    }
+
+    cargarSonidos(){
+      super.cargarSonidos();
+
+       this.soundtrack=this.scene.sound.add('boss_soundtrack',{
+        loop:true,
+        volume:1
+      });
+
+
+      this.scream=this.scene.sound.add('boss_scream',{
+        loop:false,
+        volume:1
+      });
+
+        this.sound_attack1=this.scene.sound.add('boss_attack1',{
+        loop:false,
+        volume:1
+      });
+
+        this.sound_attack3=this.scene.sound.add('boss_attack3',{
+        loop:false,
+        volume:1
+      });
+
+        this.sound_attack4=this.scene.sound.add('boss_attack4',{
+        loop:false,
+        volume:1
+      });
+
+
+      this.sound_evento1=this.scene.sound.add('boss_evento1',{
+        loop:false,
+        volume:1
+      });
+
+      this.sound_evento2=this.scene.sound.add('boss_evento2',{
+        loop:false,
+        volume:1
+      });
+
+      this.sound_evento3=this.scene.sound.add('boss_evento3',{
+        loop:false,
+        volume:1
+      });
+
+      this.sound_gritoNpc1=this.scene.sound.add('boss_gritoNpc1',{
+        loop:false,
+        volume:1
+      });
+
+      this.sound_gritoNpc2=this.scene.sound.add('boss_gritoNpc2',{
+        loop:false,
+        volume:1
+      });
+
+//'boss_huesos_rompiendose'
+
+      this.sound_huesos1=this.scene.sound.add('boss_huesos_rompiendose',{
+        loop:false,
+        volume:1
+      });
+
+      this.sound_huesos2=this.scene.sound.add('boss_huesos_rompiendose2',{
+        loop:true,
+        volume:2
+      });
+
+      this.sound_choque=this.scene.sound.add('boss_choque',{
+        loop:false,
+        volume:2
+      });
+
+
+      this.sound_walk=this.scene.sound.add('boss_walk',{
+        loop:false,
+        volume:0.3
+      });
+
+
+
     }
 
     cargarDepth(){
+
+      
         if(this.body.y>this.scene.player.getContainer().y)
             this.setDepth(6);
             else this.setDepth(4);
     }
 
+
+    getBarraVida(){
+    
+      if(this.mostrarBarraVida){
+        console.log("generar barra vida");
+
+        const tamanoBarravida=(this.scene.widthPantalla/10)*8;
+
+        const xBarra=this.scene.widthPantalla/10;
+        const yBarra=this.scene.heightPantalla+100;
+
+        const vidaPorcentaje=(this.vida*100)/this.vidaCompleta;
+
+        const vidaActual=(tamanoBarravida*vidaPorcentaje)/100;
+
+    
+      if(this.contenedorVida) this.contenedorVida.destroy();
+      this.contenedorVida=this.scene.add.container(0,0).setScrollFactor(0);
+    
+    
+    
+      if(this.backgroundVida) this.backgroundVida.destroy();
+      this.backgroundVida=this.scene.add.rectangle(xBarra,yBarra,vidaActual,10,0xFF0000,1)//cambiar el tercer parametro por la vida del player
+      .setOrigin(0)
+    
+        if(this.backgroundVidaCompleta) this.backgroundVidaCompleta.destroy();
+      this.backgroundVidaCompleta=this.scene.add.rectangle(xBarra,yBarra,tamanoBarravida,10,0x9C2007,1)//cambiar el tercer parametro por la vida del player
+      .setOrigin(0)
+      
+      //console.log(this.scene.player.vidaActualMax);
+      //cambiar despues el valor por uno que tome de la BD
+    
+      this.contenedorVida.add(this.backgroundVidaCompleta);
+      this.contenedorVida.add(this.backgroundVida);
+      this.contenedorVida.setDepth(20);
+
+      }
+
+      
+      
+    }
     
 
     setMovimientoEnemigo(){
 
 
+      
        this.cargarDepth();
     
         if(this.stamina<=100)

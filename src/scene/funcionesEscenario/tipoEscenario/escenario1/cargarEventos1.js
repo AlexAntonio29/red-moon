@@ -108,7 +108,7 @@ load(){
          y=5777;
          width=500;
          height=200;
-         tiempo=1000;
+         tiempo=10000;
          tiempoTraslado=500;
          xAdicional=0;
          yAdicional=300;
@@ -119,7 +119,7 @@ load(){
          movePlayer=false;
          esActivo=true;
    
-         //crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo,this.scene,this.eventoScenario);
+         crearEvento(x,y,width,height,tiempo,tiempoTraslado,xAdicional,yAdicional,zoom,ocultarHUD,accion,movePlayer,id,esActivo,this.scene,this.eventoScenario);
    
    
    

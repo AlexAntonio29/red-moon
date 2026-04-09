@@ -24,6 +24,8 @@ export class Eventos extends Phaser.Physics.Arcade.Image{
         this.width=width;
         this.height=height;
         this.player=player;
+        this.lights=lights;
+        this.playerAtributos=playerAtributos;
 
 
         try{
@@ -45,13 +47,12 @@ export class Eventos extends Phaser.Physics.Arcade.Image{
         ?scene.dataGuardadoRanura[scene.ranura].eventos[id].esActivado
         :false; //esto es para que se ejecute una sola vez
 
-        this.lights=lights;
-        this.playerAtributos=playerAtributos;
-
        }
        catch(e){
         this.esActivado=false;
        }
+
+
 
 
                 

@@ -11,7 +11,35 @@ export class cargarSonido{
 
     
         cargarSonidoBosses(){
-          this.scene.load.audio('boss1_sonido','./sounds/bosses/boss1/boss1_sonido.mp3')
+          this.scene.load.audio('boss1_sonido','./sounds/bosses/boss1/boss1_sonido.mp3');
+          this.scene.load.audio('boss_soundtrack','./sounds/bosses/boss1/soundtrack.mp3');
+          this.scene.load.audio('boss_scream','./sounds/bosses/boss1/scream.mp3');
+
+          this.scene.load.audio('boss_attack1','./sounds/bosses/boss1/attack1.mp3');
+          this.scene.load.audio('boss_attack3','./sounds/bosses/boss1/attack3.mp3');
+          this.scene.load.audio('boss_attack4','./sounds/bosses/boss1/attack4.mp3');
+    
+
+          this.scene.load.audio('boss_evento1','./sounds/bosses/boss1/evento1_boss1.mp3');
+          this.scene.load.audio('boss_evento2','./sounds/bosses/boss1/evento2_boss1.mp3');
+          this.scene.load.audio('boss_evento3','./sounds/bosses/boss1/evento3_boss1.mp3');
+
+          this.scene.load.audio('boss_gritoNpc1','./sounds/bosses/boss1/gritoNpc.mp3');
+          this.scene.load.audio('boss_gritoNpc2','./sounds/bosses/boss1/gritoNpc2.mp3');
+
+          this.scene.load.audio('boss_huesos_rompiendose','./sounds/bosses/boss1/huesos_rompiendose.mp3');
+          this.scene.load.audio('boss_huesos_rompiendose2','./sounds/bosses/boss1/huesos_rompiendose2.mp3');
+
+          this.scene.load.audio('boss_choque','./sounds/bosses/boss1/choque.mp3');
+
+          this.scene.load.audio('boss_walk','./sounds/bosses/boss1/walk.mp3');
+
+
+
+
+
+
+
         }
     
         
