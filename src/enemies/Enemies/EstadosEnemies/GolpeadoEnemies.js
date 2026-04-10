@@ -5,27 +5,8 @@ export class GolpeadoEnemies extends Estados{
 
     enter(){
 
-        
-        
-        if(this.objeto.vida>0){
-
-            
-        this.objeto.scene.time.delayedCall(this.objeto.tiempoAturdido,()=>{
-         
-             if(this.objeto.scene)
-            if(this.objeto.getDistanciaPlayer()<this.objeto.dataEnemie.distancia_vista){
-            this.objeto.maquina.cambiarEstado('Seguir');
-            }else{
-            this.objeto.maquina.cambiarEstado('Idle');
-        }
-
-
-        })
-
-       
-        
-        console.log(this.objeto.scene);
-        
+         console.log(this.objeto.maquina);
+                
         empujar(
             this.objeto.scene.player.spriteAtaque,
             this.objeto.getContainer(),
@@ -36,10 +17,34 @@ export class GolpeadoEnemies extends Estados{
 
         
         
+        if(this.objeto.vida>0){
+
+            
+       // this.objeto.scene.time.delayedCall(this.objeto.tiempoAturdido,()=>{
+         
+             if(this.objeto.scene)
+            if(this.objeto.getDistanciaPlayer()<this.objeto.dataEnemie.distancia_vista){
+            this.objeto.maquina.cambiarEstado('Seguir');
+            }else{
+            this.objeto.maquina.cambiarEstado('Idle');
+        }
+
+
+       // })
+
+       
+        
+        console.log(this.objeto.scene);
+
+
+        
+        
 
          //empujar(this.spriteAtaque,enemigo.getContainer(),1,this.contacto,this.scene,this.arma.fuerza);
             
     
+    }else{
+    this.objeto.maquina.cambiarEstado('Morir');
     }
        
 
@@ -49,9 +54,6 @@ export class GolpeadoEnemies extends Estados{
 
     execute(){
 
-        if(this.objeto.vida<=0){
-           this.objeto.maquina.cambiarEstado('Morir');
-        }
 
 
 
@@ -59,6 +61,8 @@ export class GolpeadoEnemies extends Estados{
 
 
     exit(){
+
+        console.log(this.objeto.maquina);
 
     }
 }

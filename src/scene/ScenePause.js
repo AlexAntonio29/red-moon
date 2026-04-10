@@ -5,7 +5,7 @@ export class ScenePause extends Phaser.Scene{
 
 constructor(){
     super('ScenePause');
-    console.log("Estoy en Pause")
+  
 }
 
 init(data) {
@@ -71,9 +71,7 @@ crearPotenciador(){
       this.input.enabled = true;
       this.seleccionItem;
 
-      console.log(this.sceneStartGame);
-      console.log(this.puntos);
-      console.log(this.player);
+
      // this.setVisible(false);
      //this.scene.setVisible(false);
 }
@@ -90,14 +88,13 @@ create(){
   this.player.getSound(1).pause();
  // this.cargarSonidos();
     
-  console.log("Entrando en pause");
-  console.log(this.armas);
+
     this.crearPotenciador();
 }
 
 salirPausa(){
  if(Phaser.Input.Keyboard.JustDown(this.keys.ESC)){ 
-  console.log("Salir del pause")
+
   this.scene.stop();
   this.player.getSound(1).resume();
   this.scene.resume(this.sceneStartGame.key);

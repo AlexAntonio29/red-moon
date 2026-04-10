@@ -63,6 +63,8 @@ export const crearEnemigo=(n=1, x,y,selector=0, scene)=>{
   }
 
 
+
+
  
 
       //let valor=Math.floor(Math.random() * 4) + 0;
@@ -87,7 +89,7 @@ export const crearEnemigo=(n=1, x,y,selector=0, scene)=>{
     scene.listaEnemigos.add(enemigo);
 
    
-    
+  
     return enemigo;
     
 

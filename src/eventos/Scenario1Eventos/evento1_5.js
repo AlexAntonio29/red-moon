@@ -12,38 +12,39 @@ constructor(scene,movePlayer){
       this.nombre='evento1_5';
       this.camera=scene.camera;
       this.player=scene.player;
-      this.finalizado=false;
+      
+
+      
 
 
       this.player.isInputActive=movePlayer;
 
-      agregarObjeto(scene.bloqueoTemporal,8026,5777,480,48,scene);
-      agregarObjeto(scene.bloqueoTemporal2,8026,6620,700,48,scene);
+
+
+      this.bloqueoTemporal;
+      this.bloqueoTemporal2;
+
+
+      this.agregarObjeto(scene);
+
+      this.agregarCollision(scene.player,this.bloqueoTemporal,scene);
+      this.agregarCollision(scene.player,this.bloqueoTemporal2,scene);
+
+      this.crearBoss1(scene);
 
     //activar o desactivar input player
 
     //console.log(scene.listaNpc);
 
 
-    crearBoss1(scene);
-
+    
    
-    scene.time.delayedCall(12501,()=>{
-      aplicarCamara(scene);
-    })
-
-}
-}
-
-
-const aplicarCamara=(scene)=>{
-
- scene.cameras.main.setBounds(7600,5750,500,850);
 
 
 }
 
-const crearBoss1=(scene)=>{
+
+crearBoss1(scene){
 
 
       scene.listaNpc.getChildren().forEach((npc)=>{
@@ -53,17 +54,46 @@ const crearBoss1=(scene)=>{
 
             npc.getEliminarNpc();
         }
+    });
+
+
+  this.boss1=crearEnemigo(1,7860,5900,10,scene);
+
+    this.scene.physics.add.overlap(this.boss1,this.bloqueoTemporal,()=>{
+      this.boss1.setVelocity(0);
+      console.log('Boss1 tocando muro');
     })
 
-  crearEnemigo(1,7860,5900,10,scene);
+    this.scene.physics.add.overlap(this.boss1,this.bloqueoTemporal2,()=>{
+      this.boss1.setVelocity(0);
+      console.log('Boss1 tocando muro');
+    })
 
+
+
+  this.agregarCollision(this.boss1,this.bloqueoTemporal,scene);
+  this.agregarCollision(this.boss1,this.bloqueoTemporal2,scene);
+
+      scene.time.delayedCall(12501,()=>{
+      this.aplicarCamara(scene);
+    })
+
+}
+
+
+
+aplicarCamara(scene){
+
+ scene.cameras.main.setBounds(7600,5750,500,850);
 
 
 }
 
 
 
-const crearSonido=(scene)=>{
+
+
+crearSonido(scene){
 
     const sound_sky= scene.sound.add('skyF1', {
     loop: false,
@@ -83,26 +113,40 @@ const crearSonido=(scene)=>{
 }
 
 
-const agregarObjeto=(objeto,x,y,width,height,scene)=>{
+agregarObjeto(scene){
 
+        //this.agregarObjeto(this.bloqueoTemporal,8026,5777,480,48,scene);
+      //this.agregarObjeto(this.bloqueoTemporal2,8026,6620,700,48,scene);
 
    
-            objeto=scene.add.zone(
-            x, 
-            y, 
-            width, 
-            height);
 
-        scene.physics.add.existing(objeto);
-          
-        objeto.body.setAllowGravity(false);
+            this.bloqueoTemporal=scene.add.zone(
+            8026, 
+            5777, 
+            480, 
+            48);
 
-        quitarMovimiento(objeto);
-        agregarCollision(objeto,scene);
+            this.bloqueoTemporal2=scene.add.zone(
+            8026, 
+            6620, 
+            700, 
+            48);
+
+
+        this.quitarMovimiento(this.bloqueoTemporal);
+        this.quitarMovimiento(this.bloqueoTemporal2);
+
+
+        
 
 }
 
-const quitarMovimiento=(objeto)=>{
+quitarMovimiento(objeto){
+
+        this.scene.physics.add.existing(objeto);
+          
+        objeto.body.setAllowGravity(false);
+
         objeto.body.moves=false;
         objeto.body.setAllowGravity(false);
         objeto.body.setImmovable(true);
@@ -110,9 +154,25 @@ const quitarMovimiento=(objeto)=>{
         objeto.body.setMass(Number.MAX_VALUE);
     }
 
-const agregarCollision =(objeto ,scene)=>{
+agregarCollision(objeto1,objeto2 ,scene){
 
-        scene.collisionTemporal = scene.physics.add.collider(scene.player.getContainer(),objeto);
+      console.log("Boss1 "+objeto1);
+      console.log("bloqueo "+objeto2)
+
+        this.collisionTemporal = scene.physics.add.collider(objeto1,objeto2,()=>{
+         
+        });
 
 
 }
+
+
+update(){
+  //aqui se ejecuta un evento en tiempo real, esto sirve para eliminar las condiciones de una accion del evento
+  //por ejemplo en este activas al boss1 y cuando se muere aqui se ejecuta el update y se elimina las condiciones
+}
+
+
+}
+
+

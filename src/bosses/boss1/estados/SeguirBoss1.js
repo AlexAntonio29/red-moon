@@ -15,7 +15,9 @@ export class SeguirBoss1 extends SeguirEnemies{
 
     execute(){
 
-       if(!super.execute())
+
+       super.execute()
+
         if(this.objeto.scene.physics.overlap(this.objeto.hitbox, this.objeto.scene.player.getContainer())){
             
             if(this.objeto.stamina>0){

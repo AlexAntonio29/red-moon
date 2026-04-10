@@ -306,6 +306,10 @@ export class cargarAssets{
             frameHeight:374
           });
 
+          this.scene.load.spritesheet('boss1_muerto','./assets/bosses/boss1/muerto.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
 
 
         }

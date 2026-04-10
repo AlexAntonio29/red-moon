@@ -60,7 +60,7 @@ export class RunBoss1 extends Estados{
 
 
         
-        if (this.objeto.tocandoMuro) {
+        if (this.objeto.tocandoMuro||(this.objeto.body.velocity.x===0&&this.objeto.body.velocity.y===0)) {
 
            
                 console.log("ir a aturdido");
@@ -81,6 +81,8 @@ export class RunBoss1 extends Estados{
       this.objeto.scene.cameras.main.shake(1000, 0.03);
         this.objeto.tocandoMuro = false;
         console.log("FINALIZAR RUN");
+
+      
 
      
 

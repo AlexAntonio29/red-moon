@@ -6,6 +6,7 @@ export class MorirEnemies extends Estados{
     enter(){
 
         console.log("this.objeto derrotado");
+        
 
         crearItemsPunto(
             this.objeto.scene,
@@ -17,18 +18,6 @@ export class MorirEnemies extends Estados{
             this.objeto.scene.player.getContainer(),
             this.objeto.scene.lights);
 
-            /*
-            crearItemsPunto(
-            this.scene,
-            enemigo.dataEnemie.items,
-            this.listaItems,
-            enemigo.getPositionX(),
-            enemigo.getpositionY(),
-            false,
-            this.player,
-            this.lights);
-             
-            */
              
 
             console.log(this.objeto);

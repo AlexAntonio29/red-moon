@@ -3,7 +3,7 @@ export const dataBosses=[
     {
         'id':'1',
         'nombre':'La cuidadora de los impuros',
-        'vida':400,
+        'vida':30,
         'items':1,
         'ataque':35,
         'puntos':Math.floor(Math.random() * 10) + 5,

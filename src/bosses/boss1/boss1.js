@@ -25,9 +25,9 @@ export class boss1 extends Bosses {
         super(scene,dataEnemie,x,y);
         this.tiempoAturdido=100;
         this.fuerzaResistencia=10;
+        
 
-        this.mostrarBarraVida=true;
-        this.activarBarraVida=false;
+        
 
         //this.distanciaAtaque=scene.physics.add.sprite(0,0,null);
 
@@ -175,6 +175,14 @@ export class boss1 extends Bosses {
             repeat:0 
           });
 
+          if(!this.scene.anims.exists("boss1_muerto"))
+          this.scene.anims.create({
+            key:"boss1_muerto",
+            frames: this.scene.anims.generateFrameNumbers('boss1_muerto',{start:0,end:19}),
+            frameRate:5,
+            repeat:0 
+          });
+
     }
 
     cargarSonidos(){
@@ -251,7 +259,7 @@ export class boss1 extends Bosses {
 
 
       this.sound_walk=this.scene.sound.add('boss_walk',{
-        loop:false,
+        loop:true,
         volume:0.3
       });
 
@@ -270,13 +278,14 @@ export class boss1 extends Bosses {
 
     getBarraVida(){
     
-      if(this.mostrarBarraVida){
-        console.log("generar barra vida");
-
+      if(this.mostrarBarraVida&&this.activarBarraVida&&!this.estaMuerto){
+        
         const tamanoBarravida=(this.scene.widthPantalla/10)*8;
 
-        const xBarra=this.scene.widthPantalla/10;
-        const yBarra=this.scene.heightPantalla+100;
+        const xBarra=(this.scene.widthPantalla)/10;
+        const yBarra=(this.scene.heightPantalla)-30;
+
+ 
 
         const vidaPorcentaje=(this.vida*100)/this.vidaCompleta;
 
@@ -298,23 +307,37 @@ export class boss1 extends Bosses {
       
       //console.log(this.scene.player.vidaActualMax);
       //cambiar despues el valor por uno que tome de la BD
+      const nombreBoss= this.scene.add.text(this.backgroundVida.x,this.backgroundVida.y-20,this.dataEnemie.nombre,{
+            fontSize: '18px',
+            fontFamily:this.scene.fontText,
+            fill: '#fff'
+    
+        })
     
       this.contenedorVida.add(this.backgroundVidaCompleta);
       this.contenedorVida.add(this.backgroundVida);
+      this.contenedorVida.add(nombreBoss)
       this.contenedorVida.setDepth(20);
+
+      
 
       }
 
       
       
     }
+
     
 
     setMovimientoEnemigo(){
 
+      this.cargarDepth();
 
+     // if(this.estaMuerto) return
+
+      this.getBarraVida();
       
-       this.cargarDepth();
+       
     
         if(this.stamina<=100)
         this.stamina++;

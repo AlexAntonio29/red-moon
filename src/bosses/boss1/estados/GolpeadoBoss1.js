@@ -2,4 +2,6 @@ import { GolpeadoEnemies } from "../../../enemies/Enemies/EstadosEnemies/Golpead
 
 export class GolpeadoBoss1 extends GolpeadoEnemies{
 
+    
+
 }

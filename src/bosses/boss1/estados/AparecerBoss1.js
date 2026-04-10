@@ -42,7 +42,8 @@ export class AparecerBoss1 extends Estados{
     exit(){
         this.objeto.scene.musicaFondo.volume=0.1;
         this.objeto.soundtrack.play();
-        this.objeto.getBarraVida();
+        //this.objeto.getBarraVida();
+        this.objeto.activarBarraVida=true;
         
     }
 

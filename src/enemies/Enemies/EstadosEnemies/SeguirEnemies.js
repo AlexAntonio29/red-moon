@@ -15,16 +15,18 @@ export class SeguirEnemies extends Estados{
         
         this.setCaminar();
 
-        if(this.objeto.getDistanciaPlayer()>this.objeto.dataEnemie.distancia_vista){
-            this.objeto.maquina.cambiarEstado('Idle');
-        }else if(this.objeto.scene.physics.overlap(
+
+        if(this.objeto.scene.physics.overlap(
             this.objeto,
             this.objeto.scene.player.spriteAtaque
         )){
             console.log("contacto ataque con enemigo")
             this.objeto.maquina.cambiarEstado('Golpeado')
 
-        }
+        } 
+        else if(this.objeto.getDistanciaPlayer()>this.objeto.dataEnemie.distancia_vista){
+            this.objeto.maquina.cambiarEstado('Idle');
+        } 
 
        
 

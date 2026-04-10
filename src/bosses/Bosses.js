@@ -8,6 +8,10 @@ export class Bosses extends Enemies{
             
         super(scene,dataEnemie,x,y);
 
+        this.mostrarBarraVida=true;
+        this.activarBarraVida=false;
+        this.estaMuerto=false;
+
       
 
     }
