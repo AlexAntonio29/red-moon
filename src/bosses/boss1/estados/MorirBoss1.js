@@ -6,10 +6,10 @@ export class MorirBoss1 extends Estados{
 
     enter(){
 
-   
+        console.log(this.objeto.state);
 
         
-        this.objeto.state='dead';
+        this.objeto.state='morir';
 
  
         this.objeto.scene.musicaFondo.volume=0.5;

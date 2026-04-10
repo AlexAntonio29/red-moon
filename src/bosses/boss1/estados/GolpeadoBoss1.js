@@ -2,6 +2,11 @@ import { GolpeadoEnemies } from "../../../enemies/Enemies/EstadosEnemies/Golpead
 
 export class GolpeadoBoss1 extends GolpeadoEnemies{
 
-    
+    enter(){
+        console.log(this.objeto.state)
+
+        this.objeto.state='golpeado';
+        super.enter()
+    }
 
 }

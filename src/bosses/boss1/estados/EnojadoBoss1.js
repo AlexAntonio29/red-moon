@@ -6,6 +6,7 @@ export class EnojadoBoss1 extends Estados{
 
     enter(){
 
+        this.objeto.state='enojado';
         console.log("Enojado")
         this.objeto.play("boss1_enojado");
 
@@ -72,6 +73,7 @@ export class EnojadoBoss1 extends Estados{
                 this.objeto.off('animationcomplete');
 
         this.objeto.on("animationcomplete", (anim)=>{
+            if(this.objeto.state==='enojado')
 
             this.objeto.maquina.cambiarEstado('Idle');
         });
@@ -83,6 +85,8 @@ export class EnojadoBoss1 extends Estados{
                 this.objeto.off('animationcomplete');
 
         this.objeto.on("animationcomplete", (anim)=>{
+
+            if(this.objeto.state==='enojado')
 
             this.objeto.maquina.cambiarEstado('Run');
         });

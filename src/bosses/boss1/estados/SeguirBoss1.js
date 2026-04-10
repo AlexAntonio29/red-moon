@@ -5,6 +5,8 @@ export class SeguirBoss1 extends SeguirEnemies{
         enter(){
 
 
+            this.objeto.state='seguir';
+
         super.enter();
 
 
@@ -16,6 +18,7 @@ export class SeguirBoss1 extends SeguirEnemies{
     execute(){
 
 
+        
        super.execute()
 
         if(this.objeto.scene.physics.overlap(this.objeto.hitbox, this.objeto.scene.player.getContainer())){

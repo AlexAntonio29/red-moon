@@ -4,6 +4,8 @@ export class DescansandoBoss1 extends Estados{
 
     enter(){
 
+        this.objeto.state='descansando';
+
         console.log("ENTER DESCANSANDO")
         this.objeto.play("boss1_agotado");
         

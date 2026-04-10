@@ -4,6 +4,8 @@ export class AparecerBoss1 extends Estados{
 
     enter(){
 
+        console.log(this.objeto.maquina);
+        this.objeto.state='aparecer';
         this.objeto.play('boss1_aparecer');
 
         this.objeto.sound_evento1.play();
@@ -53,6 +55,9 @@ export class AparecerBoss1 extends Estados{
                 
         this.objeto.off('animationcomplete');
         this.objeto.on("animationcomplete", (anim)=>{
+
+            if(this.objeto.state==='aparecer')
+
              this.objeto.maquina.cambiarEstado('Idle');
         });
 

@@ -4,6 +4,9 @@ export class IdleBoss1 extends IdleEnemies{
 
 
     enter(){
+         console.log(this.objeto.maquina);
+
+
         this.objeto.state="idle";
         console.log('EN IDLE DDDDD');
          this.aleatorio = Math.floor(Math.random() *2)+1;
@@ -20,10 +23,14 @@ export class IdleBoss1 extends IdleEnemies{
     execute(){
 
 
-        
 
+
+        
+        
        
             this.objeto.setDistanciaSonido();
+
+
 
             //if(this.objeto.vida>=0){
 

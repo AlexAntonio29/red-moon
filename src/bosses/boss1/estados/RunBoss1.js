@@ -6,6 +6,8 @@ export class RunBoss1 extends Estados{
 
     enter(){
 
+      this.objeto.state='run';
+
         this.temblando=false;
         console.log("Run")
         this.objeto.play("boss1_run");
@@ -98,6 +100,7 @@ export class RunBoss1 extends Estados{
 
         this.objeto.on("animationcomplete", (anim)=>{
 
+          if(this.objeto.state==='run')
             this.objeto.maquina.cambiarEstado('Idle');
         });
 

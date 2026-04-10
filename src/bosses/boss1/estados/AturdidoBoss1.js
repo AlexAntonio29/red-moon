@@ -6,6 +6,8 @@ export class AturdidoBoss1 extends Estados{
 
     enter(){
 
+        this.objeto.state='aturdido';
+
         console.log("aturdido")
         this.objeto.play("boss1_aturdido");
         
