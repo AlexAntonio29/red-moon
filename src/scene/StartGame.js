@@ -42,6 +42,7 @@ import { movimientoItemToPlayer } from "./update/movimientoItemToPlayer.js";
 import { movimientosNpc } from "./update/movimientosNpc.js";
 import { salirAreasInteraccion } from "./update/salirAreasInteraccion.js";
 import { crearCuadroDialogo } from "../funciones/dialogo/crearCuadroDialogo.js";
+import { eventosTemporales } from "./update/eventosTemporales.js";
 
 export class StartGame extends Phaser.Scene{//cuando inicia la partida
 
@@ -523,6 +524,8 @@ update(time, delta){
 
    
     salirAreasInteraccion(this);
+
+    eventosTemporales(this);
 
 }
 

@@ -85,6 +85,8 @@ export class cargarVariablesGlobales{
 
        this.scene.listaEventos=this.scene.physics.add.group();
 
+       this.scene.listaEventosTemporales=[];
+
        this.scene.listaLlaves=[];
 
        this.scene.listaPuertasAbiertas=(this.scene.dataGuardadoRanura!==null)?

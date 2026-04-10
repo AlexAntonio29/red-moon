@@ -74,8 +74,8 @@ export class Scenario1Eventos extends Eventos{
 
             case 5:
 
-            
-           new evento1_5(this.scene,movePlayer);
+            this.scene.listaEventosTemporales.push
+            (new evento1_5(this.scene,movePlayer));
             
 
             break;

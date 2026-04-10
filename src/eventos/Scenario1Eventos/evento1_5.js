@@ -1,10 +1,13 @@
 import { crearEnemigo } from "../../enemies/crearEnemigo.js";
+import { eliminarEventoTemporal } from "../../scene/update/eventosTemporales.js";
 
 
 export class evento1_5{
 
 constructor(scene,movePlayer){
 
+  this.finalizarEvento=false;
+  this.activarLuz=false
   //this.scene,this.player,movePlayer,this.lights
      console.log("Ejecutando Evento1_5");
 
@@ -61,12 +64,12 @@ crearBoss1(scene){
 
   this.boss1=crearEnemigo(1,7860,5900,10,scene);
 
-    this.scene.physics.add.overlap(this.boss1,this.bloqueoTemporal,()=>{
+    this.overlap1=this.scene.physics.add.overlap(this.boss1,this.bloqueoTemporal,()=>{
       this.boss1.setVelocity(0);
       console.log('Boss1 tocando muro');
     })
 
-    this.scene.physics.add.overlap(this.boss1,this.bloqueoTemporal2,()=>{
+    this.overlap2=this.scene.physics.add.overlap(this.boss1,this.bloqueoTemporal2,()=>{
       this.boss1.setVelocity(0);
       console.log('Boss1 tocando muro');
     })
@@ -97,11 +100,16 @@ crearBoss1(scene){
       scene.time.delayedCall(500,()=>{
 
         scene.listaLucesObjetos.push(
-      scene.lights.addLight(8052, 6161, 1000) 
+
+      this.luzEnemigo=scene.lights.addLight(8052, 6161, 1000) 
     .setColor(0xFF0000) 
     .setIntensity(1.5)
       );
+
+      this.activarLuz=true;
       })
+
+      
 
       
    
@@ -187,17 +195,63 @@ agregarCollision(objeto1,objeto2 ,scene){
       console.log("Boss1 "+objeto1);
       console.log("bloqueo "+objeto2)
 
-        this.collisionTemporal = scene.physics.add.collider(objeto1,objeto2,()=>{
+       this.collider1= this.collisionTemporal = scene.physics.add.collider(objeto1,objeto2,()=>{
          
         });
 
 
 }
 
+FinCombate(){
+
+
+  if(this.boss1.estaMuerto){
+    console.log('Finalizar Evento 1_5');
+    if(this.bloqueoTemporal)
+    this.bloqueoTemporal.destroy();
+    if(this.bloqueoTemporal2)
+    this.bloqueoTemporal2.destroy();
+    this.scene.cameras.main.setBounds(0,0,this.scene.map.widthInPixels,this.scene.map.heightInPixels);
+    this.boss1=null;
+    this.scene.physics.world.removeCollider(this.overlap1);
+    this.scene.physics.world.removeCollider(this.overlap2);
+    this.scene.physics.world.removeCollider(this.collider1);
+
+    this.luzEnemigo=null;
+
+
+
+
+    this.finalizarEvento=true;
+
+
+
+    eliminarEventoTemporal(this.scene);
+
+    
+
+  }
+}
+
+luzSeguirEnemigo(){
+
+  if(this.activarLuz){
+
+    const boss1width= this.boss1.displayWidth/2;
+    const boss1Height=this.boss1.displayHeight/2;
+
+  console.log(this.luzEnemigo);
+  this.luzEnemigo.setPosition(this.boss1.x+boss1width,this.boss1.y+boss1Height);}
+}
+
 
 update(){
+
+  this.luzSeguirEnemigo();
   //aqui se ejecuta un evento en tiempo real, esto sirve para eliminar las condiciones de una accion del evento
   //por ejemplo en este activas al boss1 y cuando se muere aqui se ejecuta el update y se elimina las condiciones
+
+  this.FinCombate();
 }
 
 
