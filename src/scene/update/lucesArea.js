@@ -1,6 +1,6 @@
 
 export const lucesArea =(scene)=>{
-      let activationRadius = 700; 
+      let activationRadius = 3000; 
 
     // 2. Recorrer todas las luces
     scene.listaLucesObjetos.forEach(light => {

@@ -282,6 +282,7 @@ if (objeto && this.scene.blockLayer) {
             this.scene.items_punto.remove(item,true,true);
 
             
+            
             /*
             let puntosTemporales=0;
 

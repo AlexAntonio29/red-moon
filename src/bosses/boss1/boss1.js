@@ -265,7 +265,15 @@ export class boss1 extends Bosses {
         volume:0.3
       });
 
-
+      this.sound_vidrio=this.scene.sound.add('vidrio',{
+        loop:false,
+        volume:0.3
+      });
+//'boss_blood'
+      this.sound_blood=this.scene.sound.add('boss_blood',{
+        loop:false,
+        volume:1
+      });
 
     }
 
@@ -291,7 +299,7 @@ export class boss1 extends Bosses {
 
         const vidaPorcentaje=(this.vida*100)/this.vidaCompleta;
 
-        const vidaActual=(tamanoBarravida*vidaPorcentaje)/100;
+        const vidaActual=(this.vida<=0)?0:(tamanoBarravida*vidaPorcentaje)/100;
 
     
       if(this.contenedorVida) this.contenedorVida.destroy();
@@ -335,7 +343,7 @@ export class boss1 extends Bosses {
 
       this.cargarDepth();
 
-     // if(this.estaMuerto) return
+      if(this.estaMuerto) return
 
       this.getBarraVida();
       
@@ -343,6 +351,7 @@ export class boss1 extends Bosses {
     
         if(this.stamina<=100)
         this.stamina++;
+        
         
         super.setMovimientoEnemigo();
 

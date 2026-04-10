@@ -39,7 +39,9 @@ export class AttackBoss1 extends Estados{
     execute(){
 
 
-
+        if(this.objeto.vida<=0){
+            this.objeto.maquina.cambiarEstado('Morir')
+        }
 
 
 

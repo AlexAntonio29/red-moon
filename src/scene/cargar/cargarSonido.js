@@ -33,6 +33,8 @@ export class cargarSonido{
           this.scene.load.audio('boss_choque','./sounds/bosses/boss1/choque.mp3');
 
           this.scene.load.audio('boss_walk','./sounds/bosses/boss1/walk.mp3');
+          this.scene.load.audio('vidrio','./sounds/bosses/boss1/vidrio.mp3');
+          this.scene.load.audio('boss_blood','./sounds/bosses/boss1/blood.mp3');
 
 
 

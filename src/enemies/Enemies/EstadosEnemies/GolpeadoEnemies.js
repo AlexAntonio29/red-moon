@@ -44,6 +44,8 @@ export class GolpeadoEnemies extends Estados{
             
     
     }else{
+
+        console.log('Enemigo Muerto')
     this.objeto.maquina.cambiarEstado('Morir');
     }
        

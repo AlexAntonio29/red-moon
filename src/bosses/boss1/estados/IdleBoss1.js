@@ -34,6 +34,10 @@ export class IdleBoss1 extends IdleEnemies{
 
             //if(this.objeto.vida>=0){
 
+                    if(this.objeto.vida<=0){
+            this.objeto.maquina.cambiarEstado('Morir')
+        }else
+
             if(this.objeto.getDistanciaPlayer()<this.objeto.dataEnemie.distancia_vista){
              if(this.aleatorio!==1){    
             this.objeto.maquina.cambiarEstado('Seguir');

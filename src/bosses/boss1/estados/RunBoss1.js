@@ -42,6 +42,9 @@ export class RunBoss1 extends Estados{
     }
 
 
+            if(this.objeto.vida<=0){
+            this.objeto.maquina.cambiarEstado('Morir')
+        }else
 
         if(this.objeto.scene.physics.overlap(
             this.objeto,
@@ -60,9 +63,8 @@ export class RunBoss1 extends Estados{
 
         }
 
-
-        
-        if (this.objeto.tocandoMuro||(this.objeto.body.velocity.x===0&&this.objeto.body.velocity.y===0)) {
+    else
+    if (this.objeto.tocandoMuro||(this.objeto.body.velocity.x===0&&this.objeto.body.velocity.y===0)) {
 
            
                 console.log("ir a aturdido");

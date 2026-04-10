@@ -54,6 +54,8 @@ crearBoss1(scene){
 
             npc.getEliminarNpc();
         }
+
+
     });
 
 
@@ -75,8 +77,34 @@ crearBoss1(scene){
   this.agregarCollision(this.boss1,this.bloqueoTemporal2,scene);
 
       scene.time.delayedCall(12501,()=>{
+
+
+
       this.aplicarCamara(scene);
     })
+
+
+      for(let i=scene.listaLucesObjetos.length-1;i>=0;i--){
+          const luz=scene.listaLucesObjetos[i];
+
+          if(luz.x===8052&&luz.y===6161){
+            //luz.destroy();
+            scene.lights.removeLight(luz);
+            scene.listaLucesObjetos.splice(i,1);
+          }
+      }
+
+      scene.time.delayedCall(500,()=>{
+
+        scene.listaLucesObjetos.push(
+      scene.lights.addLight(8052, 6161, 1000) 
+    .setColor(0xFF0000) 
+    .setIntensity(1.5)
+      );
+      })
+
+      
+   
 
 }
 

@@ -8,6 +8,7 @@ export class AparecerBoss1 extends Estados{
         this.objeto.state='aparecer';
         this.objeto.play('boss1_aparecer');
 
+        this.objeto.sound_vidrio.play();
         this.objeto.sound_evento1.play();
         this.objeto.sound_evento2.play();
         this.objeto.sound_evento3.play();

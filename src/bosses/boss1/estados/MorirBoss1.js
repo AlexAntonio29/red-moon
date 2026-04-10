@@ -11,7 +11,7 @@ export class MorirBoss1 extends Estados{
         
         this.objeto.state='morir';
 
- 
+        this.objeto.sound_blood.play();
         this.objeto.scene.musicaFondo.volume=0.5;
         this.objeto.soundtrack.stop();
         this.objeto.estaMuerto=true;

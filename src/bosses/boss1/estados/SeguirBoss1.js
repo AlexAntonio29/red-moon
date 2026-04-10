@@ -21,6 +21,10 @@ export class SeguirBoss1 extends SeguirEnemies{
         
        super.execute()
 
+               if(this.objeto.vida<=0){
+            this.objeto.maquina.cambiarEstado('Morir')
+        }
+
         if(this.objeto.scene.physics.overlap(this.objeto.hitbox, this.objeto.scene.player.getContainer())){
             
             if(this.objeto.stamina>0){

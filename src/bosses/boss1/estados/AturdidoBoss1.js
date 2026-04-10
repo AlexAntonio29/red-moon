@@ -22,6 +22,13 @@ export class AturdidoBoss1 extends Estados{
 
         this.objeto.setVelocity(0);
 
+
+        if(this.objeto.vida<=0){
+            this.objeto.maquina.cambiarEstado('Morir')
+        }
+
+
+
         if(this.objeto.scene.physics.overlap(
             this.objeto,
             this.objeto.scene.player.spriteAtaque
@@ -50,7 +57,7 @@ export class AturdidoBoss1 extends Estados{
 
         verificarIdle(){
        
-
+            if(!this.objeto.estaMuerto)
             this.objeto.maquina.cambiarEstado('Idle');
        
 

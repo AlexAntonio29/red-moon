@@ -13,12 +13,12 @@ export class cargarLucesEstaticas1{
     
 
 
-    x=8102;
-    y=5965;
+    x=8052;
+    y=6161;
     this.scene.listaLucesObjetos.push
-    (this.scene.lights.addLight(x, y, 5000) 
+    (this.scene.lights.addLight(x, y, 1000) 
     .setColor(0xffaa00) 
-    .setIntensity(2.0));
+    .setIntensity(1.5));
     }
 
 

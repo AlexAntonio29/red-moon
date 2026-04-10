@@ -17,7 +17,7 @@ export class EnojadoBoss1 extends Estados{
 
 
         //generar un if
-
+    
         if(aleatorio==1){
             //ir a idel
             this.verificarIdle();
@@ -32,6 +32,11 @@ export class EnojadoBoss1 extends Estados{
 
 
     execute(){
+
+
+                if(this.objeto.vida<=0){
+            this.objeto.maquina.cambiarEstado('Morir')
+        }
                 if(this.objeto.scene.physics.overlap(
                     this.objeto,
                     this.objeto.scene.player.spriteAtaque
@@ -51,14 +56,6 @@ export class EnojadoBoss1 extends Estados{
 
         this.objeto.setVelocity(0);
 
-        if(this.objeto.scene.physics.overlap(
-            this.objeto,
-            this.objeto.scene.player.spriteAtaque
-        )){
-            console.log("golpeado")
-            //this.objeto.maquina.cambiarEstado('Golpeado')
-
-        }
 
 
     }
