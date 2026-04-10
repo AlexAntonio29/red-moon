@@ -25,6 +25,11 @@ export class MorirBoss1 extends Estados{
         this.objeto.play('boss1_muerto');
 
     
+        this.objeto.once('animationcomplete',()=>{
+            if(this.objeto.state==='morir'){
+                //this.objeto.anims.stop();
+            }
+        })
 
         
 
@@ -36,6 +41,7 @@ export class MorirBoss1 extends Estados{
     }
 
     exit(){
+        console.log('salir MORIR');
 
 
     }

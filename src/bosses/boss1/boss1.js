@@ -178,9 +178,11 @@ export class boss1 extends Bosses {
           if(!this.scene.anims.exists("boss1_muerto"))
           this.scene.anims.create({
             key:"boss1_muerto",
-            frames: this.scene.anims.generateFrameNumbers('boss1_muerto',{start:0,end:19}),
+            frames: this.scene.anims.generateFrameNumbers('boss1_muerto',{start:0,end:18}),
             frameRate:5,
-            repeat:0 
+            repeat:0,
+            //hideOnComplete:false
+            
           });
 
     }
