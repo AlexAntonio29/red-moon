@@ -21,7 +21,7 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         this.vida=Number(dataEnemie.vida);
         this.vidaCompleta=this.vida;
 
-        this.tiempoAturdido=500;
+        this.tiempoAturdido=150;
         this.fuerzaResistencia=100;
 
         this.stamina=50;
@@ -67,9 +67,20 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
         this.nombre='enemie';
         
 
+        this.spriteAtacado=this.scene.add.sprite(0,0,'golpear_enemigo1');
+        this.scene.physics.add.existing(this.spriteAtacado);
+        this.spriteAtacado.body.setCollideWorldBounds(true);
+
+       // this.spriteAtacado.setOrigin(0,0)
+        this.spriteAtacado.setDepth(20);
+
+        this.spriteAtacado.setVisible(false);
 
         this.maquina=new MaquinaEstados(this);
         this.asignarEstados();
+
+
+
 
     }
 
@@ -82,6 +93,103 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
       this.maquina.cambiarEstado('Idle');
 
+
+    }
+
+    cargarAnimacionesAtacado(){
+
+            if (!this.scene.anims.exists('golpear_enemigo1')) {
+        this.scene.anims.create({
+        key:'golpear_enemigo1',
+        frames: this.scene.anims.generateFrameNumbers('golpear_enemigo1', { start: 0, end: 3 }),
+        frameRate: 15,
+        repeat: 0
+          });
+        }
+
+
+        if (!this.scene.anims.exists('golpear_enemigo2')) {
+        this.scene.anims.create({
+        key:'golpear_enemigo2',
+        frames: this.scene.anims.generateFrameNumbers('golpear_enemigo2', { start: 0, end: 3 }),
+        frameRate: 15,
+        repeat: 0
+          });
+        }
+
+        if (!this.scene.anims.exists('golpear_enemigo3')) {
+        this.scene.anims.create({
+        key:'golpear_enemigo3',
+        frames: this.scene.anims.generateFrameNumbers('golpear_enemigo3', { start: 0, end: 3 }),
+        frameRate: 15,
+        repeat: 0
+          });
+        }
+
+    }
+
+
+    seleccionarAnimacionAtaque(){
+
+
+
+      console.log(this.scene.player.posicion_combo);
+
+       this.spriteAtacado.setVisible(true);
+
+        const x=this.x+this.displayWidth/2;
+        const y=this.y+this.displayHeight/2;
+
+        let xAdd=0;
+        let yAdd=0;
+
+        
+
+        if(this.x>this.scene.player.x){
+            this.spriteAtacado.flipX=false;
+           // xAdd=this.scene.player.displayWidth/2;
+
+        }
+        else {
+            this.spriteAtacado.flipX=true;
+            // xAdd=-(this.scene.player.displayWidth/2);
+
+        }
+
+
+        if(this.y>this.scene.player.y){
+
+            //yAdd=this.scene.player.displayHeight/2;
+        }
+        else{
+            //yAdd=-(this.scene.player.displayHeight/2);
+
+        }
+
+        switch(this.scene.player.posicion_combo){
+          case 0:
+
+          this.spriteAtacado.play('golpear_enemigo3');
+          break;
+          case 1:
+            this.spriteAtacado.play('golpear_enemigo1');
+
+          break;
+          case 2:
+            this.spriteAtacado.play('golpear_enemigo2');
+
+          break;
+
+          default:
+
+          this.spriteAtacado.play('golpear_enemigo1');
+          break
+        }
+
+        
+        this.spriteAtacado.setPosition(x+xAdd,y+yAdd);
+       
+        
 
     }
 
@@ -113,13 +221,23 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
           });
         }
 
+        this.cargarAnimacionesAtacado();
+
     }
+
+
 
 
     cargarSonidos(){
         this.sonido=this.scene.sound.add(this.dataEnemie.diseno+"_sonido",{
         loop:true,
         volume:0
+      });
+
+
+        this.sound_blood=this.scene.sound.add('boss_blood',{
+        loop:false,
+        volume:1
       });
 
 

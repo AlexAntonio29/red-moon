@@ -88,6 +88,26 @@ export class cargarAssets{
       frameWidth: 86,
       frameHeight: 86
     })
+
+
+    this.scene.load.spritesheet('golpear_enemigo1',"./assets/player/Animations/attack/golpeado/golpeado1.png",{
+      frameWidth: 100,
+      frameHeight: 100
+    })
+
+        this.scene.load.spritesheet('golpear_enemigo2',"./assets/player/Animations/attack/golpeado/golpeado2.png",{
+      frameWidth: 100,
+      frameHeight: 100
+    })
+
+
+        this.scene.load.spritesheet('golpear_enemigo3',"./assets/player/Animations/attack/golpeado/golpeado3.png",{
+      frameWidth: 100,
+      frameHeight: 100
+    })
+
+
+
     
     
     this.scene.load.spritesheet("player_golpeado_espada","./assets/player/Animations/golpeado/golpeado_espada.png",{

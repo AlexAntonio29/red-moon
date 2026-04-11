@@ -3,6 +3,8 @@ import { Estados } from "../../funciones/automata/Estados.js";
 export class HurtPlayer extends Estados{
 
     enter(){
+
+        this.objeto.setPipeline('MultiPipeline');
         //console.log("Estoy En Hurt")
 
         this.objeto.player.play("hurt_sword");
@@ -27,7 +29,7 @@ export class HurtPlayer extends Estados{
 
     exit(){
 
-
+        this.objeto.setPipeline('Light2D');
 
         //console.log("Estoy Saliendo de Hurt")
     }

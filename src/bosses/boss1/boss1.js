@@ -270,10 +270,7 @@ export class boss1 extends Bosses {
         volume:0.3
       });
 //'boss_blood'
-      this.sound_blood=this.scene.sound.add('boss_blood',{
-        loop:false,
-        volume:1
-      });
+
 
     }
 

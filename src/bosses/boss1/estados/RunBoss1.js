@@ -50,6 +50,8 @@ export class RunBoss1 extends Estados{
             this.objeto,
             this.objeto.scene.player.spriteAtaque
         )){
+
+          this.objeto.seleccionarAnimacionAtaque();
             console.log("golpeado")
                     empujar(
             this.objeto.scene.player.spriteAtaque,

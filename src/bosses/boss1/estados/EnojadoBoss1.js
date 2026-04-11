@@ -34,6 +34,9 @@ export class EnojadoBoss1 extends Estados{
     execute(){
 
 
+        this.objeto.scene.time.delayedCall(80,()=>{this.objeto.setPipeline('Light2D');})
+
+
                 if(this.objeto.vida<=0){
             this.objeto.maquina.cambiarEstado('Morir')
         }
@@ -49,6 +52,9 @@ export class EnojadoBoss1 extends Estados{
                     this.objeto.scene.player.contacto,
                     this.objeto.scene,
                     this.objeto.fuerzaResistencia);
+
+                    this.objeto.seleccionarAnimacionAtaque();
+                    this.objeto.setPipeline('MultiPipeline');
                     //this.objeto.maquina.cambiarEstado('Golpeado')
                     
         
@@ -63,6 +69,7 @@ export class EnojadoBoss1 extends Estados{
 
     exit(){
         console.log("FINALIZAR enojado")
+        this.objeto.setPipeline('Light2D');
     }
 
         verificarIdle(){

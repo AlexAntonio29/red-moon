@@ -85,7 +85,11 @@ export const crearEnemigo=(n=1, x,y,selector=0, scene)=>{
 
     scene.collisionMurosObjetos(enemigo);
 
+
+
     enemigo.setPipeline('Light2D');
+
+   
     scene.listaEnemigos.add(enemigo);
 
    

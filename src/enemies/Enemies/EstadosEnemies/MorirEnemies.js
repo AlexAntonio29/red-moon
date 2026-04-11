@@ -6,7 +6,7 @@ export class MorirEnemies extends Estados{
     enter(){
 
         console.log("this.objeto derrotado");
-        
+        this.objeto.sound_blood.play();
 
         crearItemsPunto(
             this.objeto.scene,

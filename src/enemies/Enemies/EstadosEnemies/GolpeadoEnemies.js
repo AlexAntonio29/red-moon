@@ -5,9 +5,18 @@ export class GolpeadoEnemies extends Estados{
 
     enter(){
 
-        console.log('EN GOLPEADO');
+       
 
-        //this.objeto.setTint(0xffffff);
+        this.objeto.seleccionarAnimacionAtaque();
+
+
+        
+        this.objeto.setPipeline('MultiPipeline');
+        this.objeto.setTint(0xffffff);
+
+
+
+        
 
          console.log(this.objeto.maquina);
                 
@@ -24,7 +33,9 @@ export class GolpeadoEnemies extends Estados{
         if(this.objeto.vida>0){
 
             
-       // this.objeto.scene.time.delayedCall(this.objeto.tiempoAturdido,()=>{
+        this.objeto.scene.time.delayedCall(this.objeto.tiempoAturdido,()=>{
+
+
          
              if(this.objeto.scene)
             if(this.objeto.getDistanciaPlayer()<this.objeto.dataEnemie.distancia_vista){
@@ -34,7 +45,7 @@ export class GolpeadoEnemies extends Estados{
         }
 
 
-       // })
+        })
 
        
         
@@ -48,7 +59,7 @@ export class GolpeadoEnemies extends Estados{
             
     
     }else{
-
+        //this.objeto.spriteAtacado.setVisible(false);
         console.log('Enemigo Muerto')
     this.objeto.maquina.cambiarEstado('Morir');
     }
@@ -68,7 +79,18 @@ export class GolpeadoEnemies extends Estados{
 
     exit(){
 
+        //this.objeto.spriteAtacado.setVisible(false);
+        console.log('SALIR GOLPEADO');
+        
+        this.objeto.clearTint();
+       this.objeto.setPipeline('Light2D');
+       // this.objeto.setPipeline(this.pipeline);
+        //this.objeto.clearTint();
+
         console.log(this.objeto.maquina);
 
     }
+
+
+    
 }

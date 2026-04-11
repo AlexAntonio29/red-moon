@@ -240,7 +240,7 @@ luzSeguirEnemigo(){
     const boss1width= this.boss1.displayWidth/2;
     const boss1Height=this.boss1.displayHeight/2;
 
-  console.log(this.luzEnemigo);
+  
   this.luzEnemigo.setPosition(this.boss1.x+boss1width,this.boss1.y+boss1Height);}
 }
 
