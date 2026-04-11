@@ -4,6 +4,9 @@ export class IdleEnemies extends Estados{
 
 
     enter(){
+     //aclarar color
+     
+     //this.objeto.clearTint();
 
     this.objeto.setVelocity(0);
     this.objeto.play(this.objeto.dataEnemie.diseno+"_idle");

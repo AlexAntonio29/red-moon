@@ -5,6 +5,10 @@ export class GolpeadoEnemies extends Estados{
 
     enter(){
 
+        console.log('EN GOLPEADO');
+
+        //this.objeto.setTint(0xffffff);
+
          console.log(this.objeto.maquina);
                 
         empujar(

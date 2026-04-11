@@ -5,6 +5,8 @@ export class SeguirEnemies extends Estados{
 
     enter(){
 
+       //this.objeto.clearTint();
+
        //aplica el sprite de movimiento
         this.objeto.play(this.objeto.dataEnemie.diseno+"_walk");
 
