@@ -2,6 +2,7 @@ import { mostrarCuadroDeTexto } from "./mostrarCuadroDeTexto.js";
 import { ocultarCuadroDeTexto } from "./ocultarCuadroDeTexto.js";
 
 export const avanzarDialogo=(scene)=>{
+   
     // ¿Llegamos a la última frase?
     if (scene.indiceTexto >= scene.listaTextos.length - 1) {
         

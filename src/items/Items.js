@@ -4,7 +4,7 @@
 export class Items extends Phaser.Physics.Arcade.Sprite{
 
 
-    constructor(scene,id,categoria,width=25,height=25,x=0,y=0,textura,dataItem){
+    constructor(scene,id,categoria,width=25,height=25,x=0,y=0,textura,dataItem,lights){
 
       
 

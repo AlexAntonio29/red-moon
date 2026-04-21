@@ -1,7 +1,13 @@
 export const crearCuadroDialogo=(scene)=>{
+   
     
-    if (!scene.graphicsBox) {
-        // Fondo y borde del cuadro
+    if (scene.graphicsBox)  {
+        
+        if(scene.txtDialogo)scene.txtDialogo.destroy();
+        scene.graphicsBox.destroy();
+
+
+    }
         scene.graphicsBox = scene.add.graphics();
         scene.graphicsBox.fillStyle(0x000000, 0.8); 
         scene.graphicsBox.lineStyle(2, 0xffffff, 1); 
@@ -11,6 +17,7 @@ export const crearCuadroDialogo=(scene)=>{
         scene.graphicsBox.setDepth(1000); 
 
         // Texto
+        
         scene.txtDialogo = scene.add.text(120, 520, '', {
             fontSize: '20px',
             fill: '#ffffff',
@@ -18,5 +25,6 @@ export const crearCuadroDialogo=(scene)=>{
         });
         scene.txtDialogo.setScrollFactor(0);
         scene.txtDialogo.setDepth(1001);
-    }
+
+        
 }

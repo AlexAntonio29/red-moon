@@ -29,7 +29,7 @@ export class MorirBoss1 extends Estados{
         this.objeto.once('animationcomplete',()=>{
             if(this.objeto.state==='morir'){
                 //this.objeto.anims.stop();
-                      crearItemsPunto(
+                   /*   crearItemsPunto(
             this.objeto.scene,
             this.objeto.dataEnemie.items,
             this.objeto.scene.items_punto,
@@ -38,6 +38,17 @@ export class MorirBoss1 extends Estados{
             false,
             this.objeto.scene.player.getContainer(),
             this.objeto.scene.lights);
+            */
+                   crearItemsPunto(
+            this.objeto.scene,
+            this.objeto.dataEnemie.items,
+            this.objeto.scene.items_punto,
+            this.objeto.x+this.objeto.displayWidth/2,
+            this.objeto.y+this.objeto.displayHeight/2,
+            false,
+            this.objeto.dataEnemie.puntos,
+            this.objeto.scene.lights
+          );
             }
         })
 

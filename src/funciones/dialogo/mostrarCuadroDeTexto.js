@@ -1,6 +1,7 @@
 import { crearCuadroDialogo } from "./crearCuadroDialogo.js";
 
 export const mostrarCuadroDeTexto=(textoCompleto,scene)=>{
+    
     crearCuadroDialogo(scene);
 
     scene.graphicsBox.setVisible(true);

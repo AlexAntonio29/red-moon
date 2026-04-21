@@ -15,7 +15,7 @@ import {HurtPlayer} from "./estados/HurtPlayer.js";
 import {DeadPlayer} from "./estados/DeadPlayer.js";
 import {HealingPlayer} from "./estados/HealingPlayer.js";
 import {InteractuarPlayer} from "./estados/InteractuarPlayer.js";
-import { GetUpPlayer } from "./estados/GetUpPlayer.js";
+import { GetUpPlayer } from "./estados/GetUpPlayer.js"; 
 
 export class player extends Phaser.Physics.Arcade.Sprite{
 

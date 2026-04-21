@@ -111,11 +111,17 @@ export class AttackBoss1 extends Estados{
             this.objeto.y, 
             this.objeto.displayWidth-100, 
             this.objeto.displayHeight-100);
+
+
           
         this.objeto.scene.physics.add.existing(this.colisionAtaque);
           
         this.colisionAtaque.body.setAllowGravity(false);
         this.colisionAtaque.setOrigin(0,0);
+
+        this.colisionAtaque.body.setCircle((this.objeto.displayWidth-100)/2);
+
+        this.colisionAtaque.body.setOffset(25,25);
     
     
                 }

@@ -65,6 +65,8 @@ export class Enemies extends Phaser.Physics.Arcade.Sprite{
 
         this.state="idle";
         this.nombre='enemie';
+
+        
         
 
         this.spriteAtacado=this.scene.add.sprite(0,0,'golpear_enemigo1');

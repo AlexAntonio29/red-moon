@@ -15,8 +15,9 @@ export class MorirEnemies extends Estados{
             this.objeto.getPositionX(),
             this.objeto.getpositionY(),
             false,
-            this.objeto.scene.player.getContainer(),
-            this.objeto.scene.lights);
+            this.objeto.dataEnemie.puntos,
+            this.objeto.scene.lights
+          );
 
              
 

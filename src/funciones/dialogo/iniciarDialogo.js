@@ -1,6 +1,10 @@
 import { mostrarCuadroDeTexto } from "./mostrarCuadroDeTexto.js";
 
 export const iniciarDialogo=(npc,scene)=>{
+
+    console.log(npc);
+    console.log(scene);
+
     
     // Seguridad: verificamos que el NPC tenga el método de diálogos
     if (!npc || typeof npc.obtenerDialogos !== 'function') return;

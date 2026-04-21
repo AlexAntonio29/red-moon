@@ -4,7 +4,9 @@ export class Estados{
         this.objeto=objeto;
     }
 
-    enter(){}
+    enter(){
+        
+    }
 
     execute(){}
 
