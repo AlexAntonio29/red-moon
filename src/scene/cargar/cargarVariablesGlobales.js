@@ -5,6 +5,7 @@ import { Scenario1Eventos } from "../../eventos/Scenario1Eventos.js";
 import { cargarLucesEstaticas } from "../../funciones/cargarLucesEstaticas.js";
 import { dataNpc } from "../../npc/dataNpc.js";
 import { dataBosses } from "../../bosses/dataBosses.js";
+import { GuardarEnStorage } from "../../funciones/GuardarEnStorage.js";
 
 
 
@@ -65,9 +66,54 @@ export class cargarVariablesGlobales{
           this.scene.dataBosses= dataBosses;
         }
 
+        cargarGruposObjetos(){
+
+              
+       this.scene.listaRelojes=this.scene.physics.add.group();
+    
+       this.scene.listaEnemigos=this.scene.physics.add.group();
+
+       this.scene.listaNpc=this.scene.physics.add.group();
+
+       this.scene.listaLucesObjetos=[];
+
+       this.scene.listaCheckpoints=this.scene.physics.add.group();
+
+       this.scene.listaPalancas=this.scene.physics.add.group();
+
+       this.scene.listaJefes=this.scene.physics.add.group();
+
+       this.scene.listaEventos=this.scene.physics.add.group();
+
+       this.scene.listaEventosTemporales=[];
+
+       this.scene.listaLlaves=[];
+
+       this.scene.listaPuertasAbiertas=(this.scene.dataGuardadoRanura!==null)?
+       this.scene.dataGuardadoRanura[this.scene.ranura].puertasAbiertas
+       :[];
+
+       this.scene.listaPuertasAbiertasAbove=(this.scene.dataGuardadoRanura!==null)?
+       this.scene.dataGuardadoRanura[this.scene.ranura].puertasAbiertasAbove
+       :[]
+
+
+       this.scene.listaEventosCondicionales=this.scene.physics.add.group();
+
+        }
+
 
     cargarVariablesGlobales(){
 
+
+      //AQUI ESTA LA VARIABLE GENERAL DE LA BD DONDE PODRAS OBTENER LOS DATOS GUARDADOS EN EL JSON
+      //por el momento ocupare la ranuera 1 despues la cambio para que reciba segun la ranura que manda el menu principal
+        this.scene.ranura=0;
+        this.scene.dataGuardadoRanura=GuardarEnStorage(this.scene.ranura,null);
+
+        this.scene.tipoEscenario=1;//aqui es dependiendo de que escenario quiere cargar desde el menu
+
+        
 
           //cargar scenario Eventos
 
@@ -116,14 +162,10 @@ export class cargarVariablesGlobales{
     
          this.scene.cantidadRelojes=0;
          //relojes
-    
-         this.scene.listaRelojes=this.scene.physics.add.group();
-    
-           //TODO REFEREIDO A ENEMIGOS
-    
-       this.scene.listaEnemigos=this.scene.physics.add.group();
 
-       this.scene.listaNpc=this.scene.physics.add.group();
+
+
+       
     
         
         this.scene.puntosCreacionEnemigo=0;
@@ -137,6 +179,7 @@ export class cargarVariablesGlobales{
 
 
         
+      this.cargarGruposObjetos();
 
       this.crearJoystick();
       this.cargarTeclar();

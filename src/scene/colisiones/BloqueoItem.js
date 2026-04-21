@@ -1,8 +1,10 @@
 import { CondicionBloqueo } from "./CondicionBloqueo.js";
 
 export class BloqueoItem extends CondicionBloqueo {
-    constructor(itemRequerido) {
+    constructor(itemRequerido,id) {
         super();
+        this.id=id;
+        this.objetoRecogido=false;
         this.itemRequerido = itemRequerido;
         // Si el jugador tiene el ítem, la puerta se destruye (se abre)
         this.destruirBloque = true; 

@@ -3,10 +3,10 @@ export const dataBosses=[
     {
         'id':'1',
         'nombre':'La cuidadora de los impuros',
-        'vida':400,
-        'items':1,
-        'ataque':'60',
-        'puntos':Math.floor(Math.random() * 10) + 5,
+        'vida':250,
+        'items':3,
+        'ataque':35,
+        'puntos':1000,
         'velocidad':200,
         'nivel':'1',
         'diseno':'boss1',
@@ -24,8 +24,8 @@ export const dataBosses=[
 
         'ofzigzag':false,
 
-        'end_frame_idle':3,
-        'end_frame_walk':7,
+        'end_frame_idle':7,
+        'end_frame_walk':11,
         'end_frame_hurt':4,
         'end_frame_dead':4,
 

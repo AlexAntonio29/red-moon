@@ -14,4 +14,14 @@ export const dataNpc=[
         '':'',
 
     },
+    
+     {
+        'id':i++,
+        'nombre':'Mago',
+        'diseno':'npc'+i,
+        '':'',
+
+    },
+    
+    
 ]

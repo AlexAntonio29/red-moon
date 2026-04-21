@@ -1,4 +1,4 @@
-import { Enemies } from "../enemies/Enemies.js";
+import { Enemies } from "../enemies/Enemies/Enemies.js";
 
 
 export class Bosses extends Enemies{
@@ -8,9 +8,19 @@ export class Bosses extends Enemies{
             
         super(scene,dataEnemie,x,y);
 
+        this.mostrarBarraVida=true;
+        this.activarBarraVida=false;
+        this.estaMuerto=false;
+
       
 
     }
+
+    setCaminar(player,contacto,contactoAtaque,contactoEnemigo){
+        super.setCaminar(player,contacto,contactoAtaque,contactoEnemigo, true )
+    }
+
+
 
     
 }

@@ -75,19 +75,39 @@ export class cargarAssets{
     //ataque 
     
     this.scene.load.spritesheet(DataComboEspada[0].sprite,"./assets/player/Animations/attack/attack1.png",{
-      frameWidth: 64,
-      frameHeight: 64
+      frameWidth: 86,
+      frameHeight: 86
     })
     
     this.scene.load.spritesheet(DataComboEspada[1].sprite,"./assets/player/Animations/attack/attack2.png",{
-      frameWidth: 64,
-      frameHeight: 64
+      frameWidth: 86,
+      frameHeight: 86
     })
     
     this.scene.load.spritesheet(DataComboEspada[2].sprite,"./assets/player/Animations/attack/attack3.png",{
-      frameWidth: 64,
-      frameHeight: 64
+      frameWidth: 86,
+      frameHeight: 86
     })
+
+
+    this.scene.load.spritesheet('golpear_enemigo1',"./assets/player/Animations/attack/golpeado/golpeado1.png",{
+      frameWidth: 100,
+      frameHeight: 100
+    })
+
+        this.scene.load.spritesheet('golpear_enemigo2',"./assets/player/Animations/attack/golpeado/golpeado2.png",{
+      frameWidth: 100,
+      frameHeight: 100
+    })
+
+
+        this.scene.load.spritesheet('golpear_enemigo3',"./assets/player/Animations/attack/golpeado/golpeado3.png",{
+      frameWidth: 100,
+      frameHeight: 100
+    })
+
+
+
     
     
     this.scene.load.spritesheet("player_golpeado_espada","./assets/player/Animations/golpeado/golpeado_espada.png",{
@@ -103,6 +123,16 @@ export class cargarAssets{
     this.scene.load.spritesheet("player_dash_adelante","./assets/player/Animations/Dash/adelante.png",{
       frameWidth: 64,
       frameHeight: 64
+    });
+
+      this.scene.load.spritesheet("player_dead","./assets/player/Animations/Death_Base/Dead.png",{
+      frameWidth: 80,
+      frameHeight: 86
+    });
+
+    this.scene.load.spritesheet("player_levantarse","./assets/player/Animations/getUp/levantarse.png",{
+      frameWidth: 80,
+      frameHeight: 86
     });
     
     
@@ -131,6 +161,36 @@ export class cargarAssets{
     
     
             }
+
+            cargarAnimacionesEstatua(){
+              this.scene.load.spritesheet('sprite_estatua','/assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua.png',{
+               frameWidth: 144,
+               frameHeight:144
+              })
+
+
+              this.scene.load.spritesheet('sprite_estatua_desactivado','/assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua_desactivado.png',{
+               frameWidth: 144,
+               frameHeight:144
+              })
+              
+            }
+
+
+            cargarAnimacionPalanca(){
+              this.scene.load.spritesheet("palanca","/assets/items/palanca/palanca.png",{
+                frameWidth:48,
+                frameHeight:96
+              })
+            }
+
+            cargarAnimacionOtros(){
+              this.scene.load.spritesheet("puerta_castillo_p1","/assets/tiles_maps/Tiled/items/puerta_castillo/puerta_castillo_p1.png",{
+                frameWidth:576,
+                frameHeight:864
+              })
+            }
+            
 
 
             cargarImagenesRecuerdos(){
@@ -182,14 +242,25 @@ export class cargarAssets{
         this.scene.load.image("fantasy_Outside_B","/assets/tiles_maps/Tiled/Fantasy_Outside_B.png");//Fantasy_Outside_B
         this.scene.load.image("big_Decoration","/assets/tiles_maps/Tiled/Big_Decoration.png");//Big_Decoration
         this.scene.load.image("antorcha_sheet","/assets/tiles_maps/Tiled/antorcha_sheet.png");//antorcha animada
-            
+       
+        this.scene.load.image("Gate_Wood1","/assets/tiles_maps/Tiled/Gate_Wood1.png");
+        this.scene.load.image("Fantasy_door1","/assets/tiles_maps/Tiled/Fantasy_door1.png");
+        this.scene.load.image("Fantasy_door2","/assets/tiles_maps/Tiled/Fantasy_door2.png"); 
+        this.scene.load.image("Fantasy_switches","/assets/tiles_maps/Tiled/Fantasy_switches.png");
+
         this.scene.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
         this.scene.load.image("a3 - Walls And Floors","/assets/tiles_maps/Tiled/A3 - Walls And Floors.png");//Big_Decoration
     
         this.scene.load.image("portal_inactivo","/assets/tiles_maps/Tiled/items/portal_inactivo.png");//portal
 
+        this.scene.load.image('objeto_llave_basica','/assets/tiles_maps/Tiled/items/objeto_llave_basica/objeto_llave_basica.png')
+
+        this.scene.load.image('bloqueo_puerta','/assets/tiles_maps/Tiled/items/bloqueoPuerta/bloqueo_puerta.png');
+
+        //this.scene.load.image('sprite_estatua','/assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua.png')
 
 
+          //sprite_estatua
         //cargar bacgrounds recuerdos
 
         this.cargarImagenesRecuerdos();
@@ -215,15 +286,51 @@ export class cargarAssets{
         */
         cargarAnimacionesBosses(){
 
+          this.scene.load.spritesheet('boss1_aparecer','./assets/bosses/boss1/aparecer.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
           this.scene.load.spritesheet('boss1_idle','./assets/bosses/boss1/idle.png',{
-            frameWidth:64,
-            frameHeight:64
+            frameWidth:374,
+            frameHeight:374
           });
 
           this.scene.load.spritesheet('boss1_walk','./assets/bosses/boss1/walk.png',{
-            frameWidth:64,
-            frameHeight:64
+            frameWidth:374,
+            frameHeight:374
           });
+
+          this.scene.load.spritesheet('boss1_attack','./assets/bosses/boss1/attack.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
+          this.scene.load.spritesheet('boss1_agotado','./assets/bosses/boss1/agotado.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
+          this.scene.load.spritesheet('boss1_run','./assets/bosses/boss1/run.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
+          this.scene.load.spritesheet('boss1_enojado','./assets/bosses/boss1/enojado.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
+          this.scene.load.spritesheet('boss1_aturdido','./assets/bosses/boss1/aturdido.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
+          this.scene.load.spritesheet('boss1_muerto','./assets/bosses/boss1/muerto.png',{
+            frameWidth:374,
+            frameHeight:374
+          });
+
 
         }
     
@@ -335,6 +442,17 @@ export class cargarAssets{
             });
 
 
+    // NUEVO: NPC 3 -Mago- Sneyder
+
+
+            this.scene.load.spritesheet('npc3_idle',"./assets/npc/npc3/Mago.png",{
+              frameWidth: 80,
+              frameHeight:80
+            })
+    
+  
+
+
             
         }
     
@@ -347,6 +465,9 @@ export class cargarAssets{
           this.cargarAnimacionesItems();
           this.cargarAnimacionesNpc();
           this.cargarAnimacionesBosses();
+          this.cargarAnimacionesEstatua();
+          this.cargarAnimacionPalanca();
+          this.cargarAnimacionOtros();
 
           
     

@@ -10,10 +10,12 @@ export class BloqueoDash extends CondicionBloqueo {
     puedePasar(playerInstance) {
         // En la función movimientoDash(), se puso this.state="dash"
         // Aquí leemos exactamente ese estado
+
         if (playerInstance.state === "dash") {
+            console.log('pasa')
             return true; // Ignora la colision, el jugador "vuela" sobre el foso
         }
-        
+        console.log('no pasa');
         return false; // Si está en "idle", "walk" o "attack", choca como pared
     }
 }
