@@ -38,18 +38,18 @@ export class cargarVariablesGlobales{
        
     
         }
-    
-        cargarTeclar(){
+    cargarTeclar() {
            this.scene.keys = this.scene.input.keyboard.addKeys({
-        W: Phaser.Input.Keyboard.KeyCodes.W,
-        A: Phaser.Input.Keyboard.KeyCodes.A,
-        S: Phaser.Input.Keyboard.KeyCodes.S,
-        D: Phaser.Input.Keyboard.KeyCodes.D,
-        ESC: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC),
-        J: Phaser.Input.Keyboard.KeyCodes.J,//golpear
-        V: Phaser.Input.Keyboard.KeyCodes.V,//vida
-        E: Phaser.Input.Keyboard.KeyCodes.E//interaccion
-    });
+                W: Phaser.Input.Keyboard.KeyCodes.W,
+                A: Phaser.Input.Keyboard.KeyCodes.A,
+                S: Phaser.Input.Keyboard.KeyCodes.S,
+                D: Phaser.Input.Keyboard.KeyCodes.D,
+                ESC: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC),
+                TAB: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB), // Agregada la tecla TAB
+                J: Phaser.Input.Keyboard.KeyCodes.J, //golpear
+                V: Phaser.Input.Keyboard.KeyCodes.V, //vida
+                E: Phaser.Input.Keyboard.KeyCodes.E  //interaccion
+            });
         }
 
  

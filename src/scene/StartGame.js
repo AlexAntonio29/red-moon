@@ -1686,10 +1686,21 @@ update(time, delta){
     //movimientoNpc
     this.movimientosNpc();
 
-
-
-  
- 
+    if (Phaser.Input.Keyboard.JustDown(this.keys.TAB)) {
+            console.log("Abriendo Menú de Inventario...");
+            
+            // Pausamos el nivel actual
+            this.scene.pause(); 
+            
+            // Lanzamos la escena del inventario enviándole los datos del jugador y armas
+            this.scene.launch('SceneInventario', {
+                scene: this,
+                puntos: this.puntos,
+                player: this.player,
+                puntaje: this.puntaje,
+                armas: this.armas
+            });
+        }
 
 
 
@@ -1940,7 +1951,7 @@ checkCondicionBloque(objeto, tile) {
         // Pequeño retraso para evitar que vuelva a interactuar instantáneamente
         this.time.delayedCall(100, () => {
             this.dialogoAbierto = false;
-            // this.player.getContainer().body.moves = true; // Despausar
+             this.player.getContainer().body.moves = true; // Despausar
         });
     }
 
