@@ -109,35 +109,62 @@ export class SceneInventario extends Phaser.Scene {
         let bgInv = this.add.rectangle(50, 80, this.widthPantalla - 100, this.heightPantalla - 120, 0x000000, 0.8)
             .setOrigin(0).setStrokeStyle(2, 0xffffff);
 
-        // Agregamos el fondo al contenedor principal
         this.contenedorInventario.add(bgInv);
 
         // ==========================================
-        // SECCIÓN IZQUIERDA: LA MOCHILA (CUADRÍCULA)
+        // SECCIÓN IZQUIERDA: LA MOCHILA
         // ==========================================
         let tituloMochila = this.add.text(80, 100, "MOCHILA", { 
             fontSize: '28px', fontFamily: this.fontText, color: '#ffffff' 
         });
         this.contenedorInventario.add(tituloMochila);
 
-        // Configuración de los cuadritos
+        // Variables declaradas UNA sola vez
         let tamañoSlot = 55;
         let margen = 10;
         let inicioX = 80;
         let inicioY = 150;
+        let indiceMochila = 0; 
 
-        // Hacemos un ciclo para dibujar 5 columnas y 4 filas de inventario
+        // Hacemos el ciclo para dibujar 5 columnas y 4 filas
         for (let fila = 0; fila < 4; fila++) {
             for (let col = 0; col < 5; col++) {
                 let x = inicioX + (col * (tamañoSlot + margen));
                 let y = inicioY + (fila * (tamañoSlot + margen));
                 
-                // Dibujamos cada casilla vacía
+                // Fondo de la casilla
                 let slot = this.add.rectangle(x, y, tamañoSlot, tamañoSlot, 0x222222, 1)
                     .setOrigin(0)
                     .setStrokeStyle(1, 0xaaaaaa);
                 
                 this.contenedorInventario.add(slot);
+
+                // LECTURA DEL INVENTARIO DE SETH
+                if (this.player && this.player.inventario && this.player.inventario[indiceMochila] !== undefined) {
+                    
+                    let idGuardado = this.player.inventario[indiceMochila];
+                    let texturaA_Dibujar = null;
+                    
+                    // Traductor de ID a imagen
+                    if (idGuardado === '1' || idGuardado === 1) { 
+                        texturaA_Dibujar = 'arma1'; 
+                    } 
+                    else if (idGuardado === 'pocion' || idGuardado === 0) {
+                        texturaA_Dibujar = 'item_pocion'; 
+                    }
+                    else if (typeof idGuardado === 'string' && idGuardado.includes("llave")) {
+                        texturaA_Dibujar = 'objeto_llave_basica';
+                    }
+
+                    // Pintamos el objeto si encontramos textura
+                    if (texturaA_Dibujar) {
+                        let spriteItem = this.add.image(x + (tamañoSlot/2), y + (tamañoSlot/2), texturaA_Dibujar);
+                        spriteItem.setDisplaySize(45, 45); 
+                        this.contenedorInventario.add(spriteItem);
+                    }
+                }
+                
+                indiceMochila++; // Avanzamos al siguiente espacio
             }
         }
 
@@ -148,23 +175,20 @@ export class SceneInventario extends Phaser.Scene {
             fontSize: '28px', fontFamily: this.fontText, color: '#ffff00' 
         });
         
-        // --- Ranura de Arma ---
         let slotArma = this.add.rectangle(this.widthPantalla - 350, 160, 70, 70, 0x222222, 1)
-            .setOrigin(0).setStrokeStyle(2, 0xcc3333); // Borde rojo para el arma
+            .setOrigin(0).setStrokeStyle(2, 0xcc3333); 
         let textoArma = this.add.text(this.widthPantalla - 260, 180, "ARMA\n(Vacío)", { 
             fontSize: '20px', fontFamily: this.fontText, color: '#aaaaaa' 
         });
 
-        // --- Ranura de Armadura / Túnica ---
         let slotArmadura = this.add.rectangle(this.widthPantalla - 350, 250, 70, 70, 0x222222, 1)
-            .setOrigin(0).setStrokeStyle(2, 0x3366ff); // Borde azul para la defensa
+            .setOrigin(0).setStrokeStyle(2, 0x3366ff); 
         let textoArmadura = this.add.text(this.widthPantalla - 260, 270, "TÚNICA\n(Vacío)", { 
             fontSize: '20px', fontFamily: this.fontText, color: '#aaaaaa' 
         });
 
-        // --- Ranura de Objeto Consumible (Poción) ---
         let slotConsumible = this.add.rectangle(this.widthPantalla - 350, 340, 70, 70, 0x222222, 1)
-            .setOrigin(0).setStrokeStyle(2, 0x00EB41); // Borde verde para consumibles
+            .setOrigin(0).setStrokeStyle(2, 0x00EB41); 
         let textoConsumible = this.add.text(this.widthPantalla - 260, 360, "OBJETO\n(Vacío)", { 
             fontSize: '20px', fontFamily: this.fontText, color: '#aaaaaa' 
         });
@@ -181,59 +205,87 @@ export class SceneInventario extends Phaser.Scene {
             .setOrigin(0).setStrokeStyle(2, 0xffffff);
         this.contenedorDocs.add(bgDocs);
 
-        // ==========================================
-        // SECCIÓN IZQUIERDA: LISTA DE ARCHIVOS
-        // ==========================================
         let tituloLista = this.add.text(80, 100, "ARCHIVOS ENCONTRADOS", { 
             fontSize: '24px', fontFamily: this.fontText, color: '#ffffff' 
         });
         this.contenedorDocs.add(tituloLista);
 
-        // Nombres de relleno para que veas cómo lucirá la lista
-        let nombresFalsos = [
-            "Pagina arrancada",
-            "Diario de la cuidadora",
-            "Nota",
-            "Textos "
-        ];
-
-        let inicioY = 150;
-        
-        // Dibujamos la lista de la izquierda
-        for (let i = 0; i < nombresFalsos.length; i++) {
-            // Fondo del botón de la lista
-            let btnDoc = this.add.rectangle(80, inicioY + (i * 50), 300, 40, 0x222222, 1)
-                .setOrigin(0).setStrokeStyle(1, 0x555555);
-            
-            // Texto del botón
-            let textoBtn = this.add.text(90, inicioY + 10 + (i * 50), nombresFalsos[i], { 
-                fontSize: '18px', fontFamily: this.fontText, color: '#aaaaaa' 
-            });
-
-            this.contenedorDocs.add([btnDoc, textoBtn]);
-        }
-
         // ==========================================
-        // SECCIÓN DERECHA: AREA DE LECTURA
+        // ÁREA DE LECTURA (DERECHA) - La creamos primero
         // ==========================================
-        // Una caja de texto grande simulando un pergamino oscuro
         let bgLectura = this.add.rectangle(400, 150, this.widthPantalla - 480, this.heightPantalla - 220, 0x111111, 1)
             .setOrigin(0).setStrokeStyle(1, 0xaaaaaa);
 
+        // Estas dos variables son las que van a cambiar cuando demos clic
         let tituloLectura = this.add.text(420, 170, "SELECCIONA UN DOCUMENTO", { 
             fontSize: '22px', fontFamily: this.fontText, color: '#ffff00' 
         });
 
-        // El texto de relleno simulando una lectura larga
         let cuerpoLectura = this.add.text(420, 220, 
-            "El contenido del documento aparecera aqui.\n\n" +
-            "Cuando el jugador haga clic en uno de los títulos de la izquierda, este texto se actualizará automaticamente con la historia o las pistas del nivel...", { 
+            "El contenido del documento aparecera aqui...", { 
             fontSize: '18px', fontFamily: this.fontText, color: '#dddddd', 
             wordWrap: { width: this.widthPantalla - 520 },
             lineSpacing: 8
         });
 
         this.contenedorDocs.add([bgLectura, tituloLectura, cuerpoLectura]);
+
+        // ==========================================
+        // LISTA DE ARCHIVOS (IZQUIERDA) Y CLICS
+        // ==========================================
+        
+        // Simulación de los documentos que ha recogido el player
+        let documentosDeSeth = [
+            { 
+                titulo: "Pagina arrancada", 
+                texto: "Dia 1: La cuidadora me miro extraño esta mañana. Creo que el Mago oculta algo en los niveles inferiores del castillo..." 
+            },
+            { 
+                titulo: "Diario de la cuidadora", 
+                texto: "No confío en ese Sacerdote. La luz de la luna roja lo altera. Debo mantener cerradas las puertas del ala norte." 
+            },
+            { 
+                titulo: "Nota del Mago", 
+                texto: "Los hechizos del primordial son poderosos, pero requieren un gran sacrificio."
+            }
+        ];
+
+        let inicioY = 150;
+        let botonesLista = []; // Guardaremos los botones aquí para hacer efectos visuales
+        
+        for (let i = 0; i < documentosDeSeth.length; i++) {
+            
+            // 1. Creamos el fondo del botón y LO HACEMOS INTERACTIVO
+            let btnDoc = this.add.rectangle(80, inicioY + (i * 50), 300, 40, 0x222222, 1)
+                .setOrigin(0)
+                .setStrokeStyle(1, 0x555555)
+                .setInteractive(); // <-- LA MAGIA EMPIEZA AQUÍ
+            
+            let textoBtn = this.add.text(90, inicioY + 10 + (i * 50), documentosDeSeth[i].titulo, { 
+                fontSize: '18px', fontFamily: this.fontText, color: '#aaaaaa' 
+            });
+
+            // 2. Efecto visual al pasar el mouse por encima (Hover)
+            btnDoc.on('pointerover', () => {
+                btnDoc.setFillStyle(0x444444); // Se ilumina un poco
+            });
+
+            btnDoc.on('pointerout', () => {
+                btnDoc.setFillStyle(0x222222); // Vuelve a su color normal
+            });
+
+            // 3. EL EVENTO DE CLIC
+            btnDoc.on('pointerdown', () => {
+                // Cambiamos el texto de la derecha por el texto de este documento
+                tituloLectura.setText(documentosDeSeth[i].titulo);
+                cuerpoLectura.setText(documentosDeSeth[i].texto);
+                
+                // (Opcional) Un sonidito de pasar página quedaría genial aquí
+                // this.sound.play('sonido_papel'); 
+            });
+
+            this.contenedorDocs.add([btnDoc, textoBtn]);
+        }
     }
 
     crearContenidoAtributos() {

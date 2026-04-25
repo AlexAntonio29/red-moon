@@ -200,14 +200,18 @@ asignarEstados(){
 
 }
 
-    // ==========================================
+  // ==========================================
     // SISTEMA DE INVENTARIO DINÁMICO
     // ==========================================
 
     agregarItem(idItem) {
+        // PARCHE DE SEGURIDAD: Si la mochila no existe (ej. cargaste una partida vieja), la creamos.
+        if (!this.inventario) {
+            this.inventario = [];
+        }
+
         this.inventario.push(idItem);
         console.log(`[Inventario] Agregaste: ${idItem}. Mochila:`, this.inventario);
-        // Aquí a futuro puedes reproducir un sonido de "Ítem obtenido"
     }
 
     tieneItem(idItem) {
