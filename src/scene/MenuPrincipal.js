@@ -2,6 +2,8 @@ export class MenuPrincipal extends Phaser.Scene{//cuando estamos en el menu Prin
 
 constructor(){
     super('MenuPrincipal');
+    
+
     //console.log("Estoy en MenuPrincipal");
 }
 

@@ -499,6 +499,17 @@ this.game.renderer.antialias = true;
    //CAJA DE DIALOGO 
     this.crearCajaDialogoUI();
     this.cargarPalancas();
+
+    // ==========================================
+    // HUD DE VIDA EN PANTALLA
+    // ==========================================
+    // 1. Dibuja el marco del HUD pegado a la pantalla
+    //this.imagenHud = this.add.image(20, 20, 'hud_vida')
+     //   .setOrigin(0)          
+      //  .setScrollFactor(0)    // Se pega a la cámara, no al mapa
+       // .setDepth(100);        // Lo pone por encima de todo
+
+    
        
 }
 
@@ -539,8 +550,6 @@ update(time, delta){
                 armas: this.armas
             });
         }
-
-
 
 }
 

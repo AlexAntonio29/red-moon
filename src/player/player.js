@@ -85,9 +85,9 @@ export class player extends Phaser.Physics.Arcade.Sprite{
     this.esAtaquefuerte = false; //se coloca para para saber que ataque se debera a hacer
 
   //INVENTARIO
-       this.inventario = (this.scene.dataGuardadoRanura!==null)?
-       this.scene.dataGuardadoRanura[this.scene.ranura].player.inventario
-       :[];
+     this.equipo = (this.scene.dataGuardadoRanura !== null) ?
+    this.scene.dataGuardadoRanura[this.scene.ranura].player.equipo :
+    { arma: null, armadura: null, consumible: null };
 
 
 

@@ -41,7 +41,7 @@ export class SceneInventario extends Phaser.Scene {
         this.heightPantalla = this.sys.game.config.height;
         this.fontText = 'FontArcade4';
         
-        // Un fondo un poco más oscuro para que resalte el menú
+        // Un fondo un poco más oscuro para que resalte el menu
         this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.9)'); 
         this.input.enabled = true;
         this.seleccionItem;
@@ -105,190 +105,202 @@ export class SceneInventario extends Phaser.Scene {
     }
 
     crearContenidoInventario() {
-        let hudContainerPotenciador = this.contenedorInventario; 
-        let division = 2;
-        let cantidadItemsWidth = 8;
-        let complementoAlturaMask = 0;
-        let j = 0, k = 0, l = 0;
-        let cantidadArmas = 0; // Recuerda ajustar esto si ya tienes armas en tu arreglo
-
-        let hudBackgroundPotenciador = this.add.rectangle(0, 70, this.widthPantalla - (this.widthPantalla / 10), this.heightPantalla - (this.heightPantalla / 10) - 70, 0x000000, 0.5)
+        // 1. Fondo oscuro de la pestaña
+        let bgInv = this.add.rectangle(50, 80, this.widthPantalla - 100, this.heightPantalla - 120, 0x000000, 0.8)
             .setOrigin(0).setStrokeStyle(2, 0xffffff);
 
-        let centrarHorizontal = (this.widthPantalla / 2) - (hudBackgroundPotenciador.width / 2);
-        let centrarVertical = 70; 
+        // Agregamos el fondo al contenedor principal
+        this.contenedorInventario.add(bgInv);
 
-        hudBackgroundPotenciador.setPosition(centrarHorizontal, centrarVertical);
+        // ==========================================
+        // SECCIÓN IZQUIERDA: LA MOCHILA (CUADRÍCULA)
+        // ==========================================
+        let tituloMochila = this.add.text(80, 100, "MOCHILA", { 
+            fontSize: '28px', fontFamily: this.fontText, color: '#ffffff' 
+        });
+        this.contenedorInventario.add(tituloMochila);
 
-        let textoSeleccionPotenciador = this.add.text(0, 0, "Inventario", {
-            wordWrap: { width: ((hudBackgroundPotenciador.width)) },
-            fontSize: '25px', color: '#ffffff', fontFamily: this.fontText
-        }).setPosition(centrarHorizontal + 10, centrarVertical + 10).setInteractive();
+        // Configuración de los cuadritos
+        let tamañoSlot = 55;
+        let margen = 10;
+        let inicioX = 80;
+        let inicioY = 150;
 
-        let btnActivar = this.add.text(0, 0, "  Equipar  ", {
-            wordWrap: { width: ((hudBackgroundPotenciador.width)) },
-            fontSize: '30px', color: '#000000', backgroundColor: '#C7C7C7', padding: { x: 20, y: 10 }, fontFamily: this.fontText
-        }).setVisible(false);
-
-        let textoPrecio = this.add.text(0, 0, "", { color: '#FFFF00', fontFamily: this.fontText });
-
-        if (this.widthPantalla < this.heightPantalla) {
-            cantidadItemsWidth = 3;
-            complementoAlturaMask = (hudBackgroundPotenciador.width / cantidadItemsWidth);
-            division = 1;
-        }
-
-        let medidaItems = hudBackgroundPotenciador.width / cantidadItemsWidth;
-
-        let descripcionItem = this.add.text(centrarHorizontal + 10, textoSeleccionPotenciador.y + textoSeleccionPotenciador.height + 10, "", {
-            wordWrap: { width: (hudBackgroundPotenciador.width / division) - 10 },
-            fontSize: '20px', color: '#ffffff', fontFamily: this.fontText
-        }).setInteractive();
-
-        let scrollContainer = this.add.container(0, 0).setScrollFactor(0);
-        let positionX = 0, positionY = textoSeleccionPotenciador.y + (textoSeleccionPotenciador.height);
-
-        let maskContainer = this.add.container(centrarHorizontal, centrarVertical + textoSeleccionPotenciador.height + medidaItems).setScrollFactor(0);
-        let maskWidth = hudBackgroundPotenciador.width;
-        let maskHeight = hudBackgroundPotenciador.height - (textoSeleccionPotenciador.height + medidaItems) - complementoAlturaMask;
-
-        let maskShape = this.add.graphics().setScrollFactor(0);
-        maskShape.lineStyle(2, 0xffffff);
-        maskShape.fillRect(maskContainer.x, maskContainer.y, maskWidth, maskHeight);
-        
-        let seleccionador = this.add.rectangle(0, 0, medidaItems, medidaItems, 0xFFFFFF, 0.5).setVisible(false);
-        this.sumaScroll = 0;
-
-        for (let i = 0; i < cantidadArmas; i++) {
-            if (j == k) {
-                j += cantidadItemsWidth;
-                positionX = centrarHorizontal;
-                positionY += medidaItems;
-                l++;
+        // Hacemos un ciclo para dibujar 5 columnas y 4 filas de inventario
+        for (let fila = 0; fila < 4; fila++) {
+            for (let col = 0; col < 5; col++) {
+                let x = inicioX + (col * (tamañoSlot + margen));
+                let y = inicioY + (fila * (tamañoSlot + margen));
+                
+                // Dibujamos cada casilla vacía
+                let slot = this.add.rectangle(x, y, tamañoSlot, tamañoSlot, 0x222222, 1)
+                    .setOrigin(0)
+                    .setStrokeStyle(1, 0xaaaaaa);
+                
+                this.contenedorInventario.add(slot);
             }
-
-            let colorFondo = this.agregarColorNivelArma(this.armas[i]);
-            let body = this.add.rectangle(positionX, positionY, medidaItems, medidaItems, colorFondo, 1)
-                .setOrigin(0).setStrokeStyle(2, 0xffffff).setInteractive({ useHandCursor: true });
-            body.input.alwaysEnabled = true;
-            let image = this.add.image(positionX, positionY, this.armas[i].diseno).setDisplaySize(medidaItems, medidaItems).setOrigin(0);
-
-            positionX += medidaItems;
-            let itemPotenciador = { 'body': body, 'image': image, 'atributos': this.armas[i] };
-
-            itemPotenciador.body.on('pointerdown', (pointer) => {
-                let sonidoAtaque = this.sound.add(itemPotenciador.atributos.sonido, { loop: false, volume: 1 });
-                sonidoAtaque.play();
-                
-                textoSeleccionPotenciador.setText(itemPotenciador.atributos.nombre);
-                descripcionItem.setText(itemPotenciador.atributos.descripcion);
-                seleccionador.setVisible(true).setPosition(itemPotenciador.body.x + (itemPotenciador.body.width / 2), itemPotenciador.body.y + (itemPotenciador.body.height / 2) + (this.sumaScroll));
-                textoPrecio.setText((itemPotenciador.atributos.puntos) * (itemPotenciador.atributos.nivel) + " ptos ").setPosition(descripcionItem.x + descripcionItem.width + 10, descripcionItem.y);
-                
-                this.seleccionItem = itemPotenciador;
-                
-                if (this.puntos >= (itemPotenciador.atributos.puntos) * (itemPotenciador.atributos.nivel)) {
-                    btnActivar.setActive(true); btnActivar.setBackgroundColor('#17D900'); btnActivar.setColor('#FFFF00');
-                } else {
-                    btnActivar.setActive(false); btnActivar.setBackgroundColor('#118C00'); btnActivar.setColor('#B5B500');
-                }
-
-                if (this.widthPantalla < this.heightPantalla) {
-                    textoPrecio.setPosition(hudBackgroundPotenciador.x + 10, hudBackgroundPotenciador.y + hudBackgroundPotenciador.height - medidaItems + 10);
-                }
-
-                btnActivar.setPosition(textoPrecio.x + textoPrecio.width + 10, textoPrecio.y).setInteractive().setVisible(true);
-            });
-
-            scrollContainer.add(itemPotenciador.body);
-            scrollContainer.add(itemPotenciador.image);
-            k++;
         }
 
-        btnActivar.on('pointerdown', () => {
-            if (!btnActivar.active) return;
-            this.player.setArma({ ...this.seleccionItem.atributos });
-            this.scene.stop();
-            this.puntos -= (this.seleccionItem.atributos.puntos) * (this.seleccionItem.atributos.nivel);
-            this.puntaje.setText((this.puntos));
-            this.touch.play();
-            this.scene.resume('StartGame');
-            this.armas[Number(this.seleccionItem.atributos.id) - 1].nivel++;
+        // ==========================================
+        // SECCIÓN DERECHA: EQUIPO ACTUAL
+        // ==========================================
+        let tituloEquip = this.add.text(this.widthPantalla - 400, 100, "EQUIPO", { 
+            fontSize: '28px', fontFamily: this.fontText, color: '#ffff00' 
+        });
+        
+        // --- Ranura de Arma ---
+        let slotArma = this.add.rectangle(this.widthPantalla - 350, 160, 70, 70, 0x222222, 1)
+            .setOrigin(0).setStrokeStyle(2, 0xcc3333); // Borde rojo para el arma
+        let textoArma = this.add.text(this.widthPantalla - 260, 180, "ARMA\n(Vacío)", { 
+            fontSize: '20px', fontFamily: this.fontText, color: '#aaaaaa' 
         });
 
-        let mask = maskShape.createGeometryMask();
-        scrollContainer.add(seleccionador);
-        scrollContainer.setMask(mask);
+        // --- Ranura de Armadura / Túnica ---
+        let slotArmadura = this.add.rectangle(this.widthPantalla - 350, 250, 70, 70, 0x222222, 1)
+            .setOrigin(0).setStrokeStyle(2, 0x3366ff); // Borde azul para la defensa
+        let textoArmadura = this.add.text(this.widthPantalla - 260, 270, "TÚNICA\n(Vacío)", { 
+            fontSize: '20px', fontFamily: this.fontText, color: '#aaaaaa' 
+        });
 
-        hudContainerPotenciador.add([hudBackgroundPotenciador, textoSeleccionPotenciador, descripcionItem, btnActivar, textoPrecio, scrollContainer]);
+        // --- Ranura de Objeto Consumible (Poción) ---
+        let slotConsumible = this.add.rectangle(this.widthPantalla - 350, 340, 70, 70, 0x222222, 1)
+            .setOrigin(0).setStrokeStyle(2, 0x00EB41); // Borde verde para consumibles
+        let textoConsumible = this.add.text(this.widthPantalla - 260, 360, "OBJETO\n(Vacío)", { 
+            fontSize: '20px', fontFamily: this.fontText, color: '#aaaaaa' 
+        });
 
-        if ((medidaItems * l) > maskHeight) {
-            this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY) => {
-                if(!this.contenedorInventario.visible) return; 
-                scrollContainer.y -= deltaY * 0.5;
-                const totalAlturaContenido = Math.ceil(cantidadArmas / cantidadItemsWidth) * medidaItems;
-                const minScroll = maskHeight - totalAlturaContenido;
-                if (scrollContainer.y > 0) scrollContainer.y = 0;
-                if (scrollContainer.y < minScroll) scrollContainer.y = minScroll;
-            });
-
-            let startY = 0, containerStartY = 0, isDragging = false;
-            this.input.on('pointerdown', (pointer) => {
-                if(!this.contenedorInventario.visible) return;
-                startY = pointer.y; containerStartY = scrollContainer.y; isDragging = true;
-            });
-            this.input.on('pointermove', (pointer) => {
-                if(!this.contenedorInventario.visible) return;
-                if (isDragging && pointer.isDown) {
-                    let deltaY = pointer.y - startY;
-                    scrollContainer.y = containerStartY + deltaY;
-                    const totalAlturaContenido = Math.ceil(cantidadArmas / cantidadItemsWidth) * medidaItems;
-                    const minScroll = maskHeight - totalAlturaContenido;
-                    if (scrollContainer.y > 0) scrollContainer.y = 0;
-                    if (scrollContainer.y < minScroll) scrollContainer.y = minScroll;
-                }
-            });
-            this.input.on('pointerup', () => { isDragging = false; });
-        }
+        this.contenedorInventario.add([
+            tituloEquip, slotArma, textoArma, 
+            slotArmadura, textoArmadura, slotConsumible, textoConsumible
+        ]);
     }
 
     crearContenidoDocumentos() {
+        // 1. Fondo oscuro de la pestaña
         let bgDocs = this.add.rectangle(50, 80, this.widthPantalla - 100, this.heightPantalla - 120, 0x000000, 0.8)
             .setOrigin(0).setStrokeStyle(2, 0xffffff);
+        this.contenedorDocs.add(bgDocs);
+
+        // ==========================================
+        // SECCIÓN IZQUIERDA: LISTA DE ARCHIVOS
+        // ==========================================
+        let tituloLista = this.add.text(80, 100, "ARCHIVOS ENCONTRADOS", { 
+            fontSize: '24px', fontFamily: this.fontText, color: '#ffffff' 
+        });
+        this.contenedorDocs.add(tituloLista);
+
+        // Nombres de relleno para que veas cómo lucirá la lista
+        let nombresFalsos = [
+            "Pagina arrancada",
+            "Diario de la cuidadora",
+            "Nota",
+            "Textos "
+        ];
+
+        let inicioY = 150;
         
-        let tituloDocs = this.add.text(this.widthPantalla/2, 120, "ARCHIVOS Y NOTAS", { 
-            fontSize: '30px', fontFamily: this.fontText, color: '#ffffff' 
-        }).setOrigin(0.5);
+        // Dibujamos la lista de la izquierda
+        for (let i = 0; i < nombresFalsos.length; i++) {
+            // Fondo del botón de la lista
+            let btnDoc = this.add.rectangle(80, inicioY + (i * 50), 300, 40, 0x222222, 1)
+                .setOrigin(0).setStrokeStyle(1, 0x555555);
+            
+            // Texto del botón
+            let textoBtn = this.add.text(90, inicioY + 10 + (i * 50), nombresFalsos[i], { 
+                fontSize: '18px', fontFamily: this.fontText, color: '#aaaaaa' 
+            });
 
-        let placeholderText = this.add.text(this.widthPantalla/2, 250, "por el momento se queda asi hasta hacer todo lo de documentos", { 
-            fontSize: '20px', fontFamily: this.fontText, color: '#aaaaaa' 
-        }).setOrigin(0.5);
+            this.contenedorDocs.add([btnDoc, textoBtn]);
+        }
 
-        this.contenedorDocs.add([bgDocs, tituloDocs, placeholderText]);
+        // ==========================================
+        // SECCIÓN DERECHA: AREA DE LECTURA
+        // ==========================================
+        // Una caja de texto grande simulando un pergamino oscuro
+        let bgLectura = this.add.rectangle(400, 150, this.widthPantalla - 480, this.heightPantalla - 220, 0x111111, 1)
+            .setOrigin(0).setStrokeStyle(1, 0xaaaaaa);
+
+        let tituloLectura = this.add.text(420, 170, "SELECCIONA UN DOCUMENTO", { 
+            fontSize: '22px', fontFamily: this.fontText, color: '#ffff00' 
+        });
+
+        // El texto de relleno simulando una lectura larga
+        let cuerpoLectura = this.add.text(420, 220, 
+            "El contenido del documento aparecera aqui.\n\n" +
+            "Cuando el jugador haga clic en uno de los títulos de la izquierda, este texto se actualizará automaticamente con la historia o las pistas del nivel...", { 
+            fontSize: '18px', fontFamily: this.fontText, color: '#dddddd', 
+            wordWrap: { width: this.widthPantalla - 520 },
+            lineSpacing: 8
+        });
+
+        this.contenedorDocs.add([bgLectura, tituloLectura, cuerpoLectura]);
     }
 
     crearContenidoAtributos() {
+        // 1. Fondo oscuro
         let bgAtr = this.add.rectangle(50, 80, this.widthPantalla - 100, this.heightPantalla - 120, 0x000000, 0.8)
             .setOrigin(0).setStrokeStyle(2, 0xffffff);
+        this.contenedorAtributos.add(bgAtr);
+
+        let tituloAtr = this.add.text(80, 100, "ESTADO del sin sangre", { 
+            fontSize: '28px', fontFamily: this.fontText, color: '#ffff00' 
+        });
+        this.contenedorAtributos.add(tituloAtr);
+
+        // ==========================================
+        // SECCIÓN IZQUIERDA: RETRATO DEL PERSONAJE
+        // ==========================================
+        // Un marco para encuadrar tu dibujo
+        let marcoBoceto = this.add.rectangle(80, 150, 250, 350, 0x111111, 1)
+            .setOrigin(0).setStrokeStyle(2, 0x555555);
         
-        let tituloAtr = this.add.text(100, 120, "ESTADO DEL PERSONAJE", { 
-            fontSize: '30px', fontFamily: this.fontText, color: '#ffffff' 
-        }).setOrigin(0);
+        // Carga de tu imagen (Asegúrate de haber puesto 'boceto_player' en tu cargarAssets.js)
+        // Ajusta las coordenadas (205, 325) y la escala (0.5) según el tamaño real de tu foto
+        let boceto = this.add.image(205, 325, 'boceto_player').setScale(0.5);
 
-        // Tu boceto (Asegúrate de cargarlo en Preload.js como 'boceto_player')
-        let boceto = this.add.image(this.widthPantalla - 300, 300, 'boceto_player').setScale(0.8);
+        // ==========================================
+        // SECCIÓN DERECHA: ESTADISTICAS Y LORE
+        // ==========================================
+        let inicioX = 360; // Dónde empieza el texto
+        
+        let textoClase = this.add.text(inicioX, 150, "CLASE?", { 
+            fontSize: '22px', fontFamily: this.fontText, color: '#aaaaaa' 
+        });
 
-        // Integrando la información del personaje
-        let statsText = this.add.text(100, 180, 
-            "NOMBRE: caballero\n\n" +
-            "VIDA ACTUAL: 100 / 100\n\n" +
-            "DAÑO BASE: 15\n\n" +
-            "DEFENSA: 5\n\n" +
-            "NIVEL: 1", { 
-            fontSize: '24px', fontFamily: this.fontText, color: '#00EB41', lineSpacing: 15 
-        }).setOrigin(0);
+        let textoNivel = this.add.text(inicioX, 190, "NIVEL: 1", { 
+            fontSize: '24px', fontFamily: this.fontText, color: '#ffffff' 
+        });
 
-        this.contenedorAtributos.add([bgAtr, tituloAtr, boceto, statsText]);
+        // --- Visualización de Vida ---
+        let textoVida = this.add.text(inicioX, 240, "PUNTOS DE VIDA (HP): 100 / 100", { 
+            fontSize: '20px', fontFamily: this.fontText, color: '#00EB41' 
+        });
+        // Dibujamos una barra roja de fondo y una verde encima para simular la vida
+        let barraVidaFondo = this.add.rectangle(inicioX, 270, 300, 20, 0x330000, 1).setOrigin(0);
+        let barraVidaLlena = this.add.rectangle(inicioX, 270, 300, 20, 0x00EB41, 1).setOrigin(0);
+
+        // --- Stats de Combate ---
+        let textoAtaque = this.add.text(inicioX, 320, "DAÑO BASE: 15", { 
+            fontSize: '20px', fontFamily: this.fontText, color: '#cc3333' 
+        });
+        
+        let textoDefensa = this.add.text(inicioX, 360, "DEFENSA: 5", { 
+            fontSize: '20px', fontFamily: this.fontText, color: '#3366ff' 
+        });
+
+        // --- Frase de Lore ---
+        let textoHistoria = this.add.text(inicioX, 420, 
+            "\"Todo es tan raro.\"", { 
+            fontSize: '18px', fontFamily: this.fontText, color: '#888888', fontStyle: 'italic',
+            wordWrap: { width: this.widthPantalla - 400 } // Evita que el texto se salga de la pantalla
+        });
+
+        this.contenedorAtributos.add([
+            marcoBoceto, boceto,
+            textoClase, textoNivel, 
+            textoVida, barraVidaFondo, barraVidaLlena, 
+            textoAtaque, textoDefensa, textoHistoria
+        ]);
     }
 
     salirInventario() {

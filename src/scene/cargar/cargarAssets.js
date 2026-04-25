@@ -1,9 +1,5 @@
 import { DataComboEspada } from "../../player/combo/DataCombo.js";
 
-
-
-
-
 export class cargarAssets{
 
   
@@ -199,6 +195,15 @@ export class cargarAssets{
             }
     
         cargarImagenes(){
+
+          // this.scene.load.image('hud_vida', './assets/logo_red_moon/HUD.png');
+
+            // =========================
+            // PARA VOLVER A APARACER LA IMAGEN DE HUD DE VIDA, DESCOMENTAR ESTA LINEA
+            // Y LA PARTE DE "HUD DE VIDA EN PANTALLA" EN EL ARCHIVO StartGame.js"
+            // =========================
+          
+        
           
           //Agregar efectos
     
@@ -485,6 +490,8 @@ export class cargarAssets{
        
     
         }
+
+        
     
 
 
