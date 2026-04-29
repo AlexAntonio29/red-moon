@@ -139,7 +139,7 @@ export class SceneInventario extends Phaser.Scene {
                 
                 this.contenedorInventario.add(slot);
 
-                // LECTURA DEL INVENTARIO DE SETH
+                // LECTURA DEL INVENTARIO DE PLAYER
                 if (this.player && this.player.inventario && this.player.inventario[indiceMochila] !== undefined) {
                     
                     let idGuardado = this.player.inventario[indiceMochila];
@@ -235,7 +235,7 @@ export class SceneInventario extends Phaser.Scene {
         // ==========================================
         
         // Simulación de los documentos que ha recogido el player
-        let documentosDeSeth = [
+        let documentosDePlayer = [
             { 
                 titulo: "Pagina arrancada", 
                 texto: "Dia 1: La cuidadora me miro extraño esta mañana. Creo que el Mago oculta algo en los niveles inferiores del castillo..." 
@@ -253,7 +253,7 @@ export class SceneInventario extends Phaser.Scene {
         let inicioY = 150;
         let botonesLista = []; // Guardaremos los botones aquí para hacer efectos visuales
         
-        for (let i = 0; i < documentosDeSeth.length; i++) {
+        for (let i = 0; i < documentosDePlayer.length; i++) {
             
             // 1. Creamos el fondo del botón y LO HACEMOS INTERACTIVO
             let btnDoc = this.add.rectangle(80, inicioY + (i * 50), 300, 40, 0x222222, 1)
@@ -261,7 +261,7 @@ export class SceneInventario extends Phaser.Scene {
                 .setStrokeStyle(1, 0x555555)
                 .setInteractive(); // <-- LA MAGIA EMPIEZA AQUÍ
             
-            let textoBtn = this.add.text(90, inicioY + 10 + (i * 50), documentosDeSeth[i].titulo, { 
+            let textoBtn = this.add.text(90, inicioY + 10 + (i * 50), documentosDePlayer[i].titulo, { 
                 fontSize: '18px', fontFamily: this.fontText, color: '#aaaaaa' 
             });
 
@@ -277,8 +277,8 @@ export class SceneInventario extends Phaser.Scene {
             // 3. EL EVENTO DE CLIC
             btnDoc.on('pointerdown', () => {
                 // Cambiamos el texto de la derecha por el texto de este documento
-                tituloLectura.setText(documentosDeSeth[i].titulo);
-                cuerpoLectura.setText(documentosDeSeth[i].texto);
+                tituloLectura.setText(documentosDePlayer[i].titulo);
+                cuerpoLectura.setText(documentosDePlayer[i].texto);
                 
                 // (Opcional) Un sonidito de pasar página quedaría genial aquí
                 // this.sound.play('sonido_papel'); 
