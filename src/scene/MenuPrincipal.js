@@ -62,32 +62,32 @@ this.tweens.add({
 
 
   preload(){
-    this.load.image("imagenFondo","./assets/menuPrincipal/fondo.png");
-    this.load.image("castillo","./assets/menuPrincipal/castillo.png");
-    this.load.image("estrellas","./assets/menuPrincipal/estrellas.png");
-    this.load.image("hud","./assets/menuPrincipal/hud.png");
-    this.load.image("luna","./assets/menuPrincipal/luna.png");
-    this.load.image("tierra","./assets/menuPrincipal/tierra.png");
+    this.load.image("imagenFondo","assets/menuPrincipal/fondo.png");
+    this.load.image("castillo","assets/menuPrincipal/castillo.png");
+    this.load.image("estrellas","assets/menuPrincipal/estrellas.png");
+    this.load.image("hud","assets/menuPrincipal/hud.png");
+    this.load.image("luna","assets/menuPrincipal/luna.png");
+    this.load.image("tierra","assets/menuPrincipal/tierra.png");
 
-    this.load.spritesheet("antorcha","./assets/menuPrincipal/antorcha.png",{
+    this.load.spritesheet("antorcha","assets/menuPrincipal/antorcha.png",{
       frameWidth:480,
       frameHeight:480
     });
 
-     this.load.spritesheet('nube','./assets/menuPrincipal/nubes.png',{
+     this.load.spritesheet('nube','assets/menuPrincipal/nubes.png',{
       frameWidth:700,
       frameHeight:500
      });
 
-          this.load.spritesheet('nube2','./assets/menuPrincipal/nubes.png',{
+          this.load.spritesheet('nube2','assets/menuPrincipal/nubes.png',{
       frameWidth:700,
       frameHeight:500
      });
 
 
-    this.load.image("titulo","./assets/tituloMain.png");
-    this.load.audio('musicaFondo','./sounds/menu.WAV');
-    this.load.audio("touch","./sounds/touch2.mp3");
+    this.load.image("titulo","assets/tituloMain.png");
+    this.load.audio('musicaFondo','sounds/menu.WAV');
+    this.load.audio("touch","sounds/touch2.mp3");
     this.fontText='FontArcade1'
     this.widthPantalla=this.sys.game.config.width;
     this.heightPantalla=this.sys.game.config.height;

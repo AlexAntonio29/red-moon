@@ -49,9 +49,6 @@ export class mapa1 {
     
     
         
-           // this.scene.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
-        //this.scene.load.image("a3 - Walls And Floors","/assets/tiles_maps/Tiled/A3 - Walls And Floors.png");
-    
         
     
     

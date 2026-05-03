@@ -79,10 +79,10 @@ export class cargarSonido{
               this.scene.load.audio('npc2_llorando','./sounds/npc/npc2/npc2_llorando.mp3');
               // 2. Mago (npc3) - Ruta exacta paso a paso
    // 2. Mago (npc3) - Usando EXACTAMENTE el nombre de tu carpeta y archivo en Windows
-    this.scene.load.audio('musica_mago', './assets/npc/npc3/Sonido/Ambientacion.mp3');
+    this.scene.load.audio('musica_mago', 'assets/npc/npc3/Sonido/Ambientacion.mp3');
     
     // 3. Sonido de habla general - Usando EXACTAMENTE el nombre de tu carpeta y archivo
-this.scene.load.audio('sonido_habla_npc', './assets/npc/npc3/Sonido/sonido_para_hablar.wav');}
+this.scene.load.audio('sonido_habla_npc', 'assets/npc/npc3/Sonido/sonido_para_hablar.wav');}
 
             crearSonidosRecuerdos(){
               this.scene.load.audio("flashback","./sounds/general/recuerdos/flashback.mp3");

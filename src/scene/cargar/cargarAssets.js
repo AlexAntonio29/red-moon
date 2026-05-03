@@ -16,27 +16,24 @@ export class cargarAssets{
 
     
         crearEfectos(){
-       // this.scene.load.image("ataqueLateralAbajo","./assets/effect/ataqueLateralAbajo.png");
-       // this.scene.load.image("ataqueLateralArriba","./assets/effect/ataqueLateralArriba.png");
-       // this.scene.load.image("ataqueLateralDerecha","./assets/effect/ataqueLateralDerecha.png");
-       // this.scene.load.image("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzquierda.png");
+  
     
-         this.scene.load.spritesheet("ataqueLateralAbajo", "./assets/effect/ataqueLateralAbajo.png", {
+         this.scene.load.spritesheet("ataqueLateralAbajo", "assets/effect/ataqueLateralAbajo.png", {
       frameWidth: 64,
       frameHeight: 64
     });
     
-    this.scene.load.spritesheet("ataqueLateralArriba", "./assets/effect/ataqueLateralArriba.png", {
+    this.scene.load.spritesheet("ataqueLateralArriba", "assets/effect/ataqueLateralArriba.png", {
       frameWidth: 64,
       frameHeight: 64
     });
     
-    this.scene.load.spritesheet("ataqueLateralDerecha", "./assets/effect/ataqueLateralDerecha.png", {
+    this.scene.load.spritesheet("ataqueLateralDerecha", "assets/effect/ataqueLateralDerecha.png", {
       frameWidth: 64,
       frameHeight: 64
     });
     
-    this.scene.load.spritesheet("ataqueLateralIzquierda","./assets/effect/ataqueLateralIzquierda.png", {
+    this.scene.load.spritesheet("ataqueLateralIzquierda","assets/effect/ataqueLateralIzquierda.png", {
       frameWidth: 64,
       frameHeight: 64
     });
@@ -47,86 +44,86 @@ export class cargarAssets{
       
         cargarAnimacionesPlayer(){
     
-      this.scene.load.spritesheet("player", "./assets/player/Animations/Carry_Run/Run-lefth-right.png", {
+      this.scene.load.spritesheet("player", "assets/player/Animations/Carry_Run/Run-lefth-right.png", {
      frameWidth: 64,
       frameHeight: 64
     });
     
     
-      this.scene.load.spritesheet("player_walk_up", "./assets/player/Animations/Carry_Run/Carry_Run_Up-Sheet-Rev.png", {
+      this.scene.load.spritesheet("player_walk_up", "assets/player/Animations/Carry_Run/Carry_Run_Up-Sheet-Rev.png", {
      frameWidth: 64,
       frameHeight: 64
     });
     
-      this.scene.load.spritesheet("player_walk_down", "./assets/player/Animations/Carry_Run/run_back.png", {
+      this.scene.load.spritesheet("player_walk_down", "assets/player/Animations/Carry_Run/run_back.png", {
      frameWidth: 64,
       frameHeight: 64
     });
     
-    this.scene.load.spritesheet("player_idle","./assets/player/Animations/Carry_Idle/Idle.png",{
+    this.scene.load.spritesheet("player_idle","assets/player/Animations/Carry_Idle/Idle.png",{
       frameWidth: 64,
       frameHeight: 64
     })
     
     //ataque 
     
-    this.scene.load.spritesheet(DataComboEspada[0].sprite,"./assets/player/Animations/attack/attack1.png",{
+    this.scene.load.spritesheet(DataComboEspada[0].sprite,"assets/player/Animations/attack/attack1.png",{
       frameWidth: 86,
       frameHeight: 86
     })
     
-    this.scene.load.spritesheet(DataComboEspada[1].sprite,"./assets/player/Animations/attack/attack2.png",{
+    this.scene.load.spritesheet(DataComboEspada[1].sprite,"assets/player/Animations/attack/attack2.png",{
       frameWidth: 86,
       frameHeight: 86
     })
     
-    this.scene.load.spritesheet(DataComboEspada[2].sprite,"./assets/player/Animations/attack/attack3.png",{
+    this.scene.load.spritesheet(DataComboEspada[2].sprite,"assets/player/Animations/attack/attack3.png",{
       frameWidth: 86,
       frameHeight: 86
     })
 
 
-    this.scene.load.spritesheet('golpear_enemigo1',"./assets/player/Animations/attack/golpeado/golpeado1.png",{
+    this.scene.load.spritesheet('golpear_enemigo1',"assets/player/Animations/attack/golpeado/golpeado1.png",{
       frameWidth: 100,
       frameHeight: 100
     })
 
-        this.scene.load.spritesheet('golpear_enemigo2',"./assets/player/Animations/attack/golpeado/golpeado2.png",{
-      frameWidth: 100,
-      frameHeight: 100
-    })
-
-
-        this.scene.load.spritesheet('golpear_enemigo3',"./assets/player/Animations/attack/golpeado/golpeado3.png",{
+        this.scene.load.spritesheet('golpear_enemigo2',"assets/player/Animations/attack/golpeado/golpeado2.png",{
       frameWidth: 100,
       frameHeight: 100
     })
 
 
+        this.scene.load.spritesheet('golpear_enemigo3',"assets/player/Animations/attack/golpeado/golpeado3.png",{
+      frameWidth: 100,
+      frameHeight: 100
+    })
+
+
 
     
     
-    this.scene.load.spritesheet("player_golpeado_espada","./assets/player/Animations/golpeado/golpeado_espada.png",{
+    this.scene.load.spritesheet("player_golpeado_espada","assets/player/Animations/golpeado/golpeado_espada.png",{
       frameWidth: 64,
       frameHeight: 64
     });
     
-    this.scene.load.spritesheet("player_dash_reverso","./assets/player/Animations/Dash/reverso.png",{
+    this.scene.load.spritesheet("player_dash_reverso","assets/player/Animations/Dash/reverso.png",{
       frameWidth: 64,
       frameHeight: 64
     });
     
-    this.scene.load.spritesheet("player_dash_adelante","./assets/player/Animations/Dash/adelante.png",{
+    this.scene.load.spritesheet("player_dash_adelante","assets/player/Animations/Dash/adelante.png",{
       frameWidth: 64,
       frameHeight: 64
     });
 
-      this.scene.load.spritesheet("player_dead","./assets/player/Animations/Death_Base/Dead.png",{
+      this.scene.load.spritesheet("player_dead","assets/player/Animations/Death_Base/Dead.png",{
       frameWidth: 80,
       frameHeight: 86
     });
 
-    this.scene.load.spritesheet("player_levantarse","./assets/player/Animations/getUp/levantarse.png",{
+    this.scene.load.spritesheet("player_levantarse","assets/player/Animations/getUp/levantarse.png",{
       frameWidth: 80,
       frameHeight: 86
     });
@@ -137,12 +134,8 @@ export class cargarAssets{
     
     
     
-    /*this.scene.load.spritesheet("player_golpeado_espada_arriba","./assets/player/Animations/golpeado/golpeado_espada_arriba.png",{
-      frameWidth: 64,   
-      frameHeight: 64
-    });*/
-    
-        this.scene.load.spritesheet("player_heal", "./assets/player/Animations/heal/heal_animation.png", {
+  
+        this.scene.load.spritesheet("player_heal", "assets/player/Animations/heal/heal_animation.png", {
             frameWidth: 64, // Asumo 64 porque tus otros sprites usan ese tamaño
             frameHeight: 64
         });
@@ -159,13 +152,13 @@ export class cargarAssets{
             }
 
             cargarAnimacionesEstatua(){
-              this.scene.load.spritesheet('sprite_estatua','/assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua.png',{
+              this.scene.load.spritesheet('sprite_estatua','assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua.png',{
                frameWidth: 144,
                frameHeight:144
               })
 
 
-              this.scene.load.spritesheet('sprite_estatua_desactivado','/assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua_desactivado.png',{
+              this.scene.load.spritesheet('sprite_estatua_desactivado','assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua_desactivado.png',{
                frameWidth: 144,
                frameHeight:144
               })
@@ -174,14 +167,14 @@ export class cargarAssets{
 
 
             cargarAnimacionPalanca(){
-              this.scene.load.spritesheet("palanca","/assets/items/palanca/palanca.png",{
+              this.scene.load.spritesheet("palanca","assets/items/palanca/palanca.png",{
                 frameWidth:48,
                 frameHeight:96
               })
             }
 
             cargarAnimacionOtros(){
-              this.scene.load.spritesheet("puerta_castillo_p1","/assets/tiles_maps/Tiled/items/puerta_castillo/puerta_castillo_p1.png",{
+              this.scene.load.spritesheet("puerta_castillo_p1","assets/tiles_maps/Tiled/items/puerta_castillo/puerta_castillo_p1.png",{
                 frameWidth:576,
                 frameHeight:864
               })
@@ -190,13 +183,13 @@ export class cargarAssets{
 
 
             cargarImagenesRecuerdos(){
-              this.scene.load.image("recuerdo_casa_quemada","/assets/background/casa_quemandose.png");//casa quemada
+              this.scene.load.image("recuerdo_casa_quemada","assets/background/casa_quemandose.png");//casa quemada
 
             }
     
         cargarImagenes(){
 
-          // this.scene.load.image('hud_vida', './assets/logo_red_moon/HUD.png');
+          // this.scene.load.image('hud_vida', 'assets/logo_red_moon/HUD.png');
 
             // =========================
             // PARA VOLVER A APARACER LA IMAGEN DE HUD DE VIDA, DESCOMENTAR ESTA LINEA
@@ -211,58 +204,58 @@ export class cargarAssets{
         
     
         //imagen mochila
-        this.scene.load.image('mochila','./assets/mochilaInventario.png');
-       // this.scene.load.image("croquis","./assets/croquis_escuela.png");
+        this.scene.load.image('mochila','assets/mochilaInventario.png');
+       // this.scene.load.image("croquis","assets/croquis_escuela.png");
     
     
-       //this.scene.load.image("player","./assets/player/Player.png");
+       //this.scene.load.image("player","assets/player/Player.png");
           
     
     
        
     
-       //this.scene.load.image('tiles', './assets/[Base]BaseChip_pipo.png');
+       //this.scene.load.image('tiles', 'assets/[Base]BaseChip_pipo.png');
        
-       this.scene.load.tilemapTiledJSON('mapa', './assets/mapa_scene.json');
+       this.scene.load.tilemapTiledJSON('mapa', 'assets/mapa_scene.json');
        
     
        //carga del mapa las coordenadas en archivo JSON
     
-        //this.scene.load.image('tiles_suelo_nexus','./assets/tiles_maps/nexus/asset_suelo_castillo.png');
-        //this.scene.load.tilemapTiledJSON('mapa_nexus','./assets/tiles_maps/nexus/base_nexus.json');
+        //this.scene.load.image('tiles_suelo_nexus','assets/tiles_maps/nexus/asset_suelo_castillo.png');
+        //this.scene.load.tilemapTiledJSON('mapa_nexus','assets/tiles_maps/nexus/base_nexus.json');
     
     
     
         //tiles de nexus personal cargar imagenes
-        this.scene.load.image("baseMap","/assets/tiles_maps/nexus/BaseMap.png");
-       // this.scene.load.image("build","/assets/tiles_maps/nexus/mainlevbuild.png");
-       // this.scene.load.image("wall_Tiles","/assets/tiles_maps/nexus/Wall_Tiles.png");
+        this.scene.load.image("baseMap","assets/tiles_maps/nexus/BaseMap.png");
+       // this.scene.load.image("build","assets/tiles_maps/nexus/mainlevbuild.png");
+       // this.scene.load.image("wall_Tiles","assets/tiles_maps/nexus/Wall_Tiles.png");
     
     
-        this.scene.load.image("a2-TerrainAndMisc","/assets/tiles_maps/Tiled/A2-TerrainAndMisc.png");
-        this.scene.load.image("fantasy_Outside_A2","/assets/tiles_maps/Tiled/Fantasy_Outside_A2.png");
-        this.scene.load.image("fantasy_Outside_A5","/assets/tiles_maps/Tiled/Fantasy_Outside_A5.png");
-        this.scene.load.image("fantasy_Outside_D","/assets/tiles_maps/Tiled/Fantasy_Outside_D.png");
-        this.scene.load.image("fantasy_Outside_A4","/assets/tiles_maps/Tiled/Fantasy_Outside_A4.png");
-        this.scene.load.image("fantasy_Outside_B","/assets/tiles_maps/Tiled/Fantasy_Outside_B.png");//Fantasy_Outside_B
-        this.scene.load.image("big_Decoration","/assets/tiles_maps/Tiled/Big_Decoration.png");//Big_Decoration
-        this.scene.load.image("antorcha_sheet","/assets/tiles_maps/Tiled/antorcha_sheet.png");//antorcha animada
+        this.scene.load.image("a2-TerrainAndMisc","assets/tiles_maps/Tiled/A2-TerrainAndMisc.png");
+        this.scene.load.image("fantasy_Outside_A2","assets/tiles_maps/Tiled/Fantasy_Outside_A2.png");
+        this.scene.load.image("fantasy_Outside_A5","assets/tiles_maps/Tiled/Fantasy_Outside_A5.png");
+        this.scene.load.image("fantasy_Outside_D","assets/tiles_maps/Tiled/Fantasy_Outside_D.png");
+        this.scene.load.image("fantasy_Outside_A4","assets/tiles_maps/Tiled/Fantasy_Outside_A4.png");
+        this.scene.load.image("fantasy_Outside_B","assets/tiles_maps/Tiled/Fantasy_Outside_B.png");//Fantasy_Outside_B
+        this.scene.load.image("big_Decoration","assets/tiles_maps/Tiled/Big_Decoration.png");//Big_Decoration
+        this.scene.load.image("antorcha_sheet","assets/tiles_maps/Tiled/antorcha_sheet.png");//antorcha animada
        
-        this.scene.load.image("Gate_Wood1","/assets/tiles_maps/Tiled/Gate_Wood1.png");
-        this.scene.load.image("Fantasy_door1","/assets/tiles_maps/Tiled/Fantasy_door1.png");
-        this.scene.load.image("Fantasy_door2","/assets/tiles_maps/Tiled/Fantasy_door2.png"); 
-        this.scene.load.image("Fantasy_switches","/assets/tiles_maps/Tiled/Fantasy_switches.png");
+        this.scene.load.image("Gate_Wood1","assets/tiles_maps/Tiled/Gate_Wood1.png");
+        this.scene.load.image("Fantasy_door1","assets/tiles_maps/Tiled/Fantasy_door1.png");
+        this.scene.load.image("Fantasy_door2","assets/tiles_maps/Tiled/Fantasy_door2.png"); 
+        this.scene.load.image("Fantasy_switches","assets/tiles_maps/Tiled/Fantasy_switches.png");
 
-        this.scene.load.image("a4 - Walls","/assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
-        this.scene.load.image("a3 - Walls And Floors","/assets/tiles_maps/Tiled/A3 - Walls And Floors.png");//Big_Decoration
+        this.scene.load.image("a4 - Walls","assets/tiles_maps/Tiled/A4 - Walls.png");//Big_Decoration
+        this.scene.load.image("a3 - Walls And Floors","assets/tiles_maps/Tiled/A3 - Walls And Floors.png");//Big_Decoration
     
-        this.scene.load.image("portal_inactivo","/assets/tiles_maps/Tiled/items/portal_inactivo.png");//portal
+        this.scene.load.image("portal_inactivo","assets/tiles_maps/Tiled/items/portal_inactivo.png");//portal
 
-        this.scene.load.image('objeto_llave_basica','/assets/tiles_maps/Tiled/items/objeto_llave_basica/objeto_llave_basica.png')
+        this.scene.load.image('objeto_llave_basica','assets/tiles_maps/Tiled/items/objeto_llave_basica/objeto_llave_basica.png')
 
-        this.scene.load.image('bloqueo_puerta','/assets/tiles_maps/Tiled/items/bloqueoPuerta/bloqueo_puerta.png');
+        this.scene.load.image('bloqueo_puerta','assets/tiles_maps/Tiled/items/bloqueoPuerta/bloqueo_puerta.png');
 
-        //this.scene.load.image('sprite_estatua','/assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua.png')
+        //this.scene.load.image('sprite_estatua','assets/tiles_maps/Tiled/items/checkpoint/sprite_estatua.png')
 
 
           //sprite_estatua
@@ -275,7 +268,7 @@ export class cargarAssets{
     
     
         //cargar el tiled
-        this.scene.load.tilemapTiledJSON("nexus_mapa","./assets/tiles_maps/nexus/MapaNeexo.json")
+        this.scene.load.tilemapTiledJSON("nexus_mapa","assets/tiles_maps/nexus/MapaNeexo.json")
         
     
     
@@ -291,47 +284,47 @@ export class cargarAssets{
         */
         cargarAnimacionesBosses(){
 
-          this.scene.load.spritesheet('boss1_aparecer','./assets/bosses/boss1/aparecer.png',{
+          this.scene.load.spritesheet('boss1_aparecer','assets/bosses/boss1/aparecer.png',{
             frameWidth:374,
             frameHeight:374
           });
 
-          this.scene.load.spritesheet('boss1_idle','./assets/bosses/boss1/idle.png',{
+          this.scene.load.spritesheet('boss1_idle','assets/bosses/boss1/idle.png',{
             frameWidth:374,
             frameHeight:374
           });
 
-          this.scene.load.spritesheet('boss1_walk','./assets/bosses/boss1/walk.png',{
+          this.scene.load.spritesheet('boss1_walk','assets/bosses/boss1/walk.png',{
             frameWidth:374,
             frameHeight:374
           });
 
-          this.scene.load.spritesheet('boss1_attack','./assets/bosses/boss1/attack.png',{
+          this.scene.load.spritesheet('boss1_attack','assets/bosses/boss1/attack.png',{
             frameWidth:374,
             frameHeight:374
           });
 
-          this.scene.load.spritesheet('boss1_agotado','./assets/bosses/boss1/agotado.png',{
+          this.scene.load.spritesheet('boss1_agotado','assets/bosses/boss1/agotado.png',{
             frameWidth:374,
             frameHeight:374
           });
 
-          this.scene.load.spritesheet('boss1_run','./assets/bosses/boss1/run.png',{
+          this.scene.load.spritesheet('boss1_run','assets/bosses/boss1/run.png',{
             frameWidth:374,
             frameHeight:374
           });
 
-          this.scene.load.spritesheet('boss1_enojado','./assets/bosses/boss1/enojado.png',{
+          this.scene.load.spritesheet('boss1_enojado','assets/bosses/boss1/enojado.png',{
             frameWidth:374,
             frameHeight:374
           });
 
-          this.scene.load.spritesheet('boss1_aturdido','./assets/bosses/boss1/aturdido.png',{
+          this.scene.load.spritesheet('boss1_aturdido','assets/bosses/boss1/aturdido.png',{
             frameWidth:374,
             frameHeight:374
           });
 
-          this.scene.load.spritesheet('boss1_muerto','./assets/bosses/boss1/muerto.png',{
+          this.scene.load.spritesheet('boss1_muerto','assets/bosses/boss1/muerto.png',{
             frameWidth:374,
             frameHeight:374
           });
@@ -343,42 +336,42 @@ export class cargarAssets{
     
     
           //Idle
-           this.scene.load.spritesheet('enemie1_idle', "./assets/enemies/enemie1/idle/idle.png", {
+           this.scene.load.spritesheet('enemie1_idle', "assets/enemies/enemie1/idle/idle.png", {
             frameWidth: 64,
             frameHeight: 64
             });
     
           //walk
-            this.scene.load.spritesheet('enemie1_walk', "./assets/enemies/enemie1/walk/walk.png", {
+            this.scene.load.spritesheet('enemie1_walk', "assets/enemies/enemie1/walk/walk.png", {
             frameWidth: 64,
             frameHeight: 64
             });
     
     
-            this.scene.load.spritesheet('enemie4_idle', "./assets/enemies/enemie4/idle/idle.png", {
-            frameWidth: 64,
-            frameHeight: 64
-            });
-    
-          //walk
-            this.scene.load.spritesheet('enemie4_walk', "./assets/enemies/enemie4/walk/walk.png", {
-            frameWidth: 64,
-            frameHeight: 64
-            });
-    
-    
-            this.scene.load.spritesheet('enemie5_idle', "./assets/enemies/enemie5/idle/idle.png", {
+            this.scene.load.spritesheet('enemie4_idle', "assets/enemies/enemie4/idle/idle.png", {
             frameWidth: 64,
             frameHeight: 64
             });
     
           //walk
-            this.scene.load.spritesheet('enemie5_walk', "./assets/enemies/enemie5/walk/walk.png", {
+            this.scene.load.spritesheet('enemie4_walk', "assets/enemies/enemie4/walk/walk.png", {
             frameWidth: 64,
             frameHeight: 64
             });
     
-            this.scene.load.spritesheet('enemie5_attack1', "./assets/enemies/enemie5/attack/attack1.png", {
+    
+            this.scene.load.spritesheet('enemie5_idle', "assets/enemies/enemie5/idle/idle.png", {
+            frameWidth: 64,
+            frameHeight: 64
+            });
+    
+          //walk
+            this.scene.load.spritesheet('enemie5_walk', "assets/enemies/enemie5/walk/walk.png", {
+            frameWidth: 64,
+            frameHeight: 64
+            });
+    
+            this.scene.load.spritesheet('enemie5_attack1', "assets/enemies/enemie5/attack/attack1.png", {
             frameWidth: 64,
             frameHeight: 64
             });
@@ -390,12 +383,12 @@ export class cargarAssets{
 
             //DRAGON
 
-            this.scene.load.spritesheet('enemieF1', "./assets/enemies/fondo/dragon_rojo.png", {
+            this.scene.load.spritesheet('enemieF1', "assets/enemies/fondo/dragon_rojo.png", {
             frameWidth: 768,
             frameHeight: 768
             });
 
-            this.scene.load.spritesheet('enemieF2', "./assets/enemies/fondo/lov1.png", {
+            this.scene.load.spritesheet('enemieF2', "assets/enemies/fondo/lov1.png", {
             frameWidth: 1536,
             frameHeight: 1536
             });
@@ -408,17 +401,17 @@ export class cargarAssets{
     
               
     
-          this.scene.load.spritesheet("item_punto","./assets/items/puntos/soul.png",{
+          this.scene.load.spritesheet("item_punto","assets/items/puntos/soul.png",{
             frameWidth: 32,
             frameHeight:32
           });
     
-          this.scene.load.spritesheet("item_pocion","./assets/items/pocion/pocion.png",{
+          this.scene.load.spritesheet("item_pocion","assets/items/pocion/pocion.png",{
             frameWidth: 32,
             frameHeight:32
           });
     
-            this.scene.load.spritesheet("item_pocion_vacio","./assets/items/pocion/pocion_vacio.png",{
+            this.scene.load.spritesheet("item_pocion_vacio","assets/items/pocion/pocion_vacio.png",{
             frameWidth: 32,
             frameHeight:32
           });
@@ -427,12 +420,12 @@ export class cargarAssets{
         cargarAnimacionesNpc(){
 
 
-            this.scene.load.spritesheet('npc1_idle', "./assets/npc/npc1/agnes_idle.png", {
+            this.scene.load.spritesheet('npc1_idle', "assets/npc/npc1/agnes_idle.png", {
             frameWidth: 60,
             frameHeight: 60
             });
 
-            this.scene.load.spritesheet('npc1_walk', "./assets/npc/npc1/agnes_walk.png", {
+            this.scene.load.spritesheet('npc1_walk', "assets/npc/npc1/agnes_walk.png", {
             frameWidth: 60,
             frameHeight: 60
             });
@@ -441,7 +434,7 @@ export class cargarAssets{
 
             // cuidadora
 
-            this.scene.load.spritesheet('npc2_idle', "./assets/npc/npc2/cuidadora_idle.png", {
+            this.scene.load.spritesheet('npc2_idle', "assets/npc/npc2/cuidadora_idle.png", {
             frameWidth: 80,
             frameHeight: 80
             });
@@ -450,7 +443,7 @@ export class cargarAssets{
     // NUEVO: NPC 3 -Mago- Sneyder
 
 
-            this.scene.load.spritesheet('npc3_idle',"./assets/npc/npc3/Mago.png",{
+            this.scene.load.spritesheet('npc3_idle',"assets/npc/npc3/Mago.png",{
               frameWidth: 80,
               frameHeight:80
             })

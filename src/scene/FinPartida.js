@@ -50,8 +50,8 @@ cargarTextos(){
     this.widthPantalla=this.sys.game.config.width;
     this.heightPantalla=this.sys.game.config.height;
     console.log("Preload "+this.scene.key);
-    this.load.image("imagenFondoEnd","./assets/fondoEnd.png");
-    this.load.audio('musicaFondoEnd','./sounds/pea-point.mp3');
+    this.load.image("imagenFondoEnd","assets/fondoEnd.png");
+    this.load.audio('musicaFondoEnd','sounds/pea-point.mp3');
     //fondoEceneEnd
 }
 
