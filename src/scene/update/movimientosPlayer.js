@@ -2,6 +2,12 @@ export const movimientosPlayer =(scene)=>{
 
 
      scene.player.setMovimientoPlayer();
+
+  //para movimeinto de colision
+
+   
+
+       
     
      //scene.player.getAtaque(scene.listaEnemigos,scene.contactoSprites,scene.items_punto);
 

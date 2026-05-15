@@ -40,6 +40,8 @@ export class player extends Phaser.Physics.Arcade.Sprite{
     this.player.setSize((x/5), (y/5));
     this.player.setOffset(x/3,y/1.6);
 
+    this.tocandoMuro=false;
+
 
 
     this.pluginScene=scene.scene;
