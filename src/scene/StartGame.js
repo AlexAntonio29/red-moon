@@ -417,7 +417,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
     //Condicional
     crearLuces(){
       this.lights.enable();
-      this.lights.setAmbientColor(0x222222); 
+      this.lights.setAmbientColor(0x141414); //222222 default
       this.luces.load();
 
     }
