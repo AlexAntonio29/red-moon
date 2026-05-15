@@ -3,10 +3,10 @@ export const dataBosses=[
     {
         'id':'1',
         'nombre':'La cuidadora de los impuros',
-        'vida':25,
+        'vida':250,
         'items':1,
         'ataque':35,
-        'puntos':1000,
+        'puntos':2000,
         'velocidad':200,
         'nivel':'1',
         'diseno':'boss1',

@@ -19,13 +19,16 @@ export class IdlePlayer extends Estados{
 
     execute(){
 
+        console.log(this.objeto.isInputActive);
+
         
+        if(this.objeto.isInputActive){
         if(!this.verificarHerir());
         if(!this.verificarCaminar());
         if(!this.verificarAtacar());
         if(!this.verificarDash());
         if(!this.verficarCurar());
-        if(!this.verificarInteractuar());
+        if(!this.verificarInteractuar());}
 
 
         
