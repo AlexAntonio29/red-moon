@@ -3,8 +3,8 @@ export const dataBosses=[
     {
         'id':'1',
         'nombre':'La cuidadora de los impuros',
-        'vida':250,
-        'items':3,
+        'vida':25,
+        'items':1,
         'ataque':35,
         'puntos':1000,
         'velocidad':200,

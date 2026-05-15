@@ -35,6 +35,8 @@ export const movimientosPlayer =(scene)=>{
 
       //console.log("recuperando");
 
+
+
       scene.player.stamina+=scene.player.velocidad_recuperacion;
 
 

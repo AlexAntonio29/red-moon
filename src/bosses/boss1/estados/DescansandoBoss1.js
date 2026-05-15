@@ -4,10 +4,15 @@ export class DescansandoBoss1 extends Estados{
 
     enter(){
 
-        this.objeto.state='descansando';
+
+
+
+                    this.objeto.state='descansando';
 
         console.log("ENTER DESCANSANDO")
         this.objeto.play("boss1_agotado");
+        
+
         
 
     }
@@ -16,7 +21,13 @@ export class DescansandoBoss1 extends Estados{
 
     execute(){
 
-        this.objeto.setVelocity(0);
+        if(this.objeto.vida<=0){
+            this.objeto.maquina.cambiarEstado('Morir')
+
+            
+        }else{
+
+                    this.objeto.setVelocity(0);
 
         if(this.objeto.scene.physics.overlap(
             this.objeto,
@@ -28,6 +39,10 @@ export class DescansandoBoss1 extends Estados{
         }else
         if(this.objeto.stamina>=50)
             this.objeto.maquina.cambiarEstado('Idle');
+
+        }
+
+
 
 
     }

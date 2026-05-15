@@ -5,7 +5,9 @@ export class SeguirBoss1 extends SeguirEnemies{
         enter(){
 
 
+
             this.objeto.state='seguir';
+            console.log(this.objeto.state);
 
         super.enter();
 

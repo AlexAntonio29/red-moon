@@ -8,6 +8,7 @@ export class IdleBoss1 extends IdleEnemies{
 
 
         this.objeto.state="idle";
+        console.log(this.objeto.state);
         console.log('EN IDLE DDDDD');
          this.aleatorio = Math.floor(Math.random() *2)+1;
 

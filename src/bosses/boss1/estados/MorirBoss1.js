@@ -11,19 +11,23 @@ export class MorirBoss1 extends Estados{
 
         
         this.objeto.state='morir';
+         this.objeto.play('boss1_muerto');
 
         this.objeto.sound_blood.play();
         this.objeto.scene.musicaFondo.volume=0.5;
         this.objeto.soundtrack.stop();
         this.objeto.estaMuerto=true;
+        this.objeto.body.setEnable(false);
         this.objeto.hitbox.destroy();
         this.objeto.body.enable=false;
-        this.objeto.body.setEnable(false);
+        
         this.objeto.sonido.stop();
 
         this.objeto.contenedorVida.destroy();
 
-        this.objeto.play('boss1_muerto');
+       
+
+        console.log('execute antes de terminar animacion')
 
     
         this.objeto.once('animationcomplete',()=>{
@@ -49,8 +53,11 @@ export class MorirBoss1 extends Estados{
             this.objeto.dataEnemie.puntos,
             this.objeto.scene.lights
           );
+          console.log('Animacion terminada');
             }
         })
+
+
 
         
 
@@ -63,6 +70,8 @@ export class MorirBoss1 extends Estados{
 
     exit(){
         console.log('salir MORIR');
+
+        console.log(this.objeto.state);
 
 
     }

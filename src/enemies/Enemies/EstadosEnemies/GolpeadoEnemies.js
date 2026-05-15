@@ -28,21 +28,31 @@ export class GolpeadoEnemies extends Estados{
             this.objeto.scene,
             this.objeto.fuerzaResistencia);
 
+            console.log("ENTRANDO A ENEMIGO GOLPEADO");
         
         
         if(this.objeto.vida>0){
 
+            console.log("VERIFICACION AL MORIR IF > 0");
             
         this.objeto.scene.time.delayedCall(this.objeto.tiempoAturdido,()=>{
 
+            console.log("Entrando en tiempo antes de que ejecute")
 
-         
-             if(this.objeto.scene)
+                if(this.objeto.vida>0){
+                                 if(this.objeto.scene)
             if(this.objeto.getDistanciaPlayer()<this.objeto.dataEnemie.distancia_vista){
             this.objeto.maquina.cambiarEstado('Seguir');
             }else{
             this.objeto.maquina.cambiarEstado('Idle');
         }
+
+                }else this.objeto.maquina.cambiarEstado('Morir')
+
+
+                
+         
+
 
 
         })
@@ -59,8 +69,11 @@ export class GolpeadoEnemies extends Estados{
             
     
     }else{
+
         //this.objeto.spriteAtacado.setVisible(false);
-        console.log('Enemigo Muerto')
+        console.log('Enemigo Muerto');
+
+
     this.objeto.maquina.cambiarEstado('Morir');
     }
        

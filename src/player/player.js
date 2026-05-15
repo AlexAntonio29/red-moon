@@ -54,7 +54,7 @@ export class player extends Phaser.Physics.Arcade.Sprite{
 
     this.stamina=250;//llamar datos player de Bd
     this.staminaMax=this.stamina;
-    this.velocidad_recuperacion=0.5;
+    this.velocidad_recuperacion=0.45;
 
 
     this.scene = scene;
