@@ -276,7 +276,7 @@ export class SceneInventario extends Phaser.Scene {
         }).setOrigin(0);
 
         // Tu boceto (Asegúrate de cargarlo en Preload.js como 'boceto_player')
-        let boceto = this.add.image(this.widthPantalla - 300, 300, 'boceto_player').setScale(0.8);
+        let boceto = this.add.image(this.widthPantalla - 300, 300, 'player_idle').setScale(0.8);
 
         // Integrando la información del personaje
         let statsText = this.add.text(100, 180, 
