@@ -7,7 +7,14 @@ export class AttackBoss1 extends Estados{
         console.log("estoy en ataque boss1");
         this.objeto.state='attack';
 
-        let aleatorio=Math.floor(Math.random() * 6) + 1;
+ 
+        
+
+        if(this.objeto.vida<=0){
+            this.objeto.maquina.cambiarEstado('Morir')
+        }else{
+
+                   let aleatorio=Math.floor(Math.random() * 6) + 1;
       
 
 
@@ -27,9 +34,10 @@ export class AttackBoss1 extends Estados{
 
 
         this.crearAtaque();
-        
-
         this.verificarIdle();
+
+        }   
+        
 
 
 
@@ -157,12 +165,16 @@ export class AttackBoss1 extends Estados{
 
     verificarIdle(){
 
+
+     
+
                 
                 this.objeto.off('animationcomplete');
 
 
 
 
+       
 
         this.objeto.on("animationcomplete", (anim)=>{
 

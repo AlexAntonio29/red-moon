@@ -416,7 +416,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
     //Condicional
     crearLuces(){
       this.lights.enable();
-      this.lights.setAmbientColor(0x222222); 
+      this.lights.setAmbientColor(0x000000); //222222 default
       this.luces.load();
 
     }
@@ -464,8 +464,10 @@ create(){
 
   
 //esto sirve para que se vean las colisiones de los sprites para testear (cuadro morado)
+
 //this.physics.world.createDebugGraphic();
 this.game.renderer.antialias = true;
+
     //this.crearFiltro();
     //Generacion de escenario
     this.crearEscenario();

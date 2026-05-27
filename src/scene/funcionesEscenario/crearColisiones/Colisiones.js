@@ -85,9 +85,11 @@ crearColisiones(){
         this.scene.contactoAbove_collider=this.scene.physics.add.collider(objeto,this.scene.above_collider,(obj,tile)=>{
 
           //console.log(obj);
-          if(nombreObjeto==='boss1'){
+          if(nombreObjeto && nombreObjeto==='boss1'){
             objeto.tocandoMuro=true;
           }
+
+
   
         });
       }
@@ -99,6 +101,7 @@ crearColisiones(){
 
        this.scene.contacto_Above_collider= this.scene.physics.add.collider(objeto,this.scene._above_collider,()=>{
   
+
         });
       }
         

@@ -2,6 +2,12 @@ export const movimientosPlayer =(scene)=>{
 
 
      scene.player.setMovimientoPlayer();
+
+  //para movimeinto de colision
+
+   
+
+       
     
      //scene.player.getAtaque(scene.listaEnemigos,scene.contactoSprites,scene.items_punto);
 
@@ -34,6 +40,8 @@ export const movimientosPlayer =(scene)=>{
     if(scene.player.stamina<scene.player.staminaMax){
 
       //console.log("recuperando");
+
+
 
       scene.player.stamina+=scene.player.velocidad_recuperacion;
 

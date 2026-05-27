@@ -40,6 +40,8 @@ export class player extends Phaser.Physics.Arcade.Sprite{
     this.player.setSize((x/5), (y/5));
     this.player.setOffset(x/3,y/1.6);
 
+    this.tocandoMuro=false;
+
 
 
     this.pluginScene=scene.scene;
@@ -54,7 +56,7 @@ export class player extends Phaser.Physics.Arcade.Sprite{
 
     this.stamina=250;//llamar datos player de Bd
     this.staminaMax=this.stamina;
-    this.velocidad_recuperacion=1;
+    this.velocidad_recuperacion=0.45;
 
 
     this.scene = scene;

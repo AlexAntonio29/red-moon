@@ -13,19 +13,31 @@ export class IdlePlayer extends Estados{
        // console.log('Entrando en Idle');
         this.objeto.state='idle';
         this.objeto.player.setVelocity(0);
+
+        if(this.objeto.player.anims.currentAnim?.key !== "player_estatico")
         this.objeto.player.play("player_estatico");
+
+ 
+       
         
     }
 
     execute(){
 
-        
+ 
+       
+
+       
+
+
+        if(this.objeto.isInputActive){
+
         if(!this.verificarHerir());
-        if(!this.verificarCaminar());
+        if(!this.verificarCaminar());   
         if(!this.verificarAtacar());
         if(!this.verificarDash());
         if(!this.verficarCurar());
-        if(!this.verificarInteractuar());
+        if(!this.verificarInteractuar());}
 
 
         
@@ -42,6 +54,7 @@ export class IdlePlayer extends Estados{
 
 
     verificarCaminar(){
+       
         if(
         (this.objeto.scene.cursor.up.isDown||this.objeto.keys.W.isDown||this.objeto.joystick.up.isDown) ||
         (this.objeto.keys.S.isDown||this.objeto.scene.cursor.down.isDown||this.objeto.joystick.down.isDown) ||

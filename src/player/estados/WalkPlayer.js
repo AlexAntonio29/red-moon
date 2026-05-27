@@ -6,12 +6,24 @@ export class WalkPlayer extends Estados{
     enter(){
         this.objeto.state='walk';
         //console.log("Estoy en Walk");
+
+   // if( this.objeto.scene.physics.overlap(this.objeto.player,this.objeto.scene._above_collider) ) this.objeto.tocandoMuro=false;
+   // if( this.objeto.scene.physics.overlap(this.objeto.player,this.objeto.scene.above_collider) ) this.objeto.tocandoMuro=false;
+       
+  
+
+
     }
 
     execute(){
 
         //movimientoCaminar
-        this.caminarPlayer(false);
+        console.log(this.objeto.player.body.velocity.x);
+        console.log(this.objeto.player.body.velocity.y);
+
+           this.caminarPlayer(false);
+            
+       
 
         this.detenerMovimiento();
 
@@ -27,12 +39,16 @@ export class WalkPlayer extends Estados{
 
     exit(){
        // console.log("Saliendo de Walk");
+       console.log('Saliendo de walk player')
+       this.objeto.pisadas.stop();
        
     }
 
 
     verificarIdle(){
         if(this.objeto.player.body.velocity.x===0&&this.objeto.player.body.velocity.y===0){
+           
+            
             this.objeto.automata.cambiarEstado('Idle');
             return true;
         }
@@ -166,7 +182,7 @@ export class WalkPlayer extends Estados{
     
     
         
-    if (!contacto && !(this.objeto.estaAtacando) && this.objeto.state !== "attack" && this.objeto.state !== "healing" && this.objeto.state!="dash" && this.objeto.isInputActive && this.objeto.puedeMoverse) {
+    if (!contacto && !(this.objeto.estaAtacando) && this.objeto.state !== "attack" && this.objeto.state !== "healing" && this.objeto.state!="dash"  && this.objeto.puedeMoverse) {
     
         //ASIGNAR ESTADOS DE ACUERDO AL MOVIMIENTO
         //Calcular velocidad de movimimiento
@@ -308,7 +324,7 @@ export class WalkPlayer extends Estados{
         */
     
     
-    
+    /*
       switch(this.objeto.subEstado_posicionEstatico){
         case "derecha":
     
@@ -339,7 +355,7 @@ export class WalkPlayer extends Estados{
         }
         break;
     
-      }
+      }*/
     
       
      }
@@ -397,11 +413,11 @@ export class WalkPlayer extends Estados{
     
         //console.log(this.objeto.player.body.velocity.y);
         //console.log(this.objeto.player.body.velocity.x);
-          if(this.objeto.player.body.velocity.y===-aceleracion) {
+        /*  if(this.objeto.player.body.velocity.y===-aceleracion) {
             this.objeto.player.anims.play('player_estatico',true);
             this.objeto.state="idle";
           }
-           else if (this.objeto.player.anims.currentAnim?.key !== 'player_camina_up') 
+           else*/ if (this.objeto.player.anims.currentAnim?.key !== 'player_camina_up') 
           this.objeto.player.anims.play('player_camina_up',true);
     
     
@@ -446,11 +462,11 @@ export class WalkPlayer extends Estados{
         //console.log(this.objeto.player.body.velocity.y);
         //console.log(this.objeto.player.body.velocity.x);
     
-        if(this.objeto.player.body.velocity.y===aceleracion) {
+       /* if(this.objeto.player.body.velocity.y===aceleracion) {
             this.objeto.player.anims.play('player_estatico',true);
           this.objeto.state="idle";
           }
-        else if (this.objeto.player.anims.currentAnim?.key !== 'player_camina_down') 
+        else */if (this.objeto.player.anims.currentAnim?.key !== 'player_camina_down') 
           this.objeto.player.play('player_camina_down');
     
       break;
@@ -497,12 +513,12 @@ export class WalkPlayer extends Estados{
            //console.log(this.objeto.player.body.velocity.y);
         //console.log(this.objeto.player.body.velocity.x);
     
-        if(this.objeto.player.body.velocity.x===aceleracion) {
+       /* if(this.objeto.player.body.velocity.x===aceleracion) {
             this.objeto.player.anims.play('player_estatico',true);
           this.objeto.state="idle";
           }
     
-        else if (this.objeto.player.anims.currentAnim?.key !== 'player_camina') {
+        else*/ if (this.objeto.player.anims.currentAnim?.key !== 'player_camina') {
         //  console.log("cambio derecha");
           this.objeto.player.flipX=false;
           this.objeto.player.play('player_camina');
@@ -547,11 +563,11 @@ export class WalkPlayer extends Estados{
           // console.log(this.objeto.sprite.body.velocity.y);
         //console.log(this.objeto.player.body.velocity.x);
     
-            if(this.objeto.player.body.velocity.x===-aceleracion) {
+            /*if(this.objeto.player.body.velocity.x===-aceleracion) {
             this.objeto.player.anims.play('player_estatico',true);
             this.objeto.state="idle";
           }
-          else  if (this.objeto.player.anims.currentAnim?.key !== 'player_camina_inverso') {
+          else*/  if (this.objeto.player.anims.currentAnim?.key !== 'player_camina_inverso') {
             //  console.log("cambio izquierda");
          
           this.objeto.player.play('player_camina_inverso');
@@ -585,13 +601,13 @@ export class WalkPlayer extends Estados{
     
     
     
-              if(this.objeto.player.body.velocity.y===-aceleracion&&this.objeto.player.body.velocity.x===aceleracion) 
+              /*if(this.objeto.player.body.velocity.y===-aceleracion&&this.objeto.player.body.velocity.x===aceleracion) 
             {
               //this.objeto.player.setVelocity(0);
               this.objeto.player.anims.play('player_estatico',true);
               this.objeto.state="idle";
             }
-            else if (this.objeto.player.anims.currentAnim?.key !== 'player_camina') {
+            else*/ if (this.objeto.player.anims.currentAnim?.key !== 'player_camina') {
          
           
           this.objeto.player.play('player_camina');
@@ -617,13 +633,13 @@ export class WalkPlayer extends Estados{
         else this.objeto.player.setVelocityX(-velocidadFinalDiagonal);
     
     
-            if(this.objeto.player.body.velocity.y===-aceleracion&&this.objeto.player.body.velocity.x===-aceleracion) 
+            /*if(this.objeto.player.body.velocity.y===-aceleracion&&this.objeto.player.body.velocity.x===-aceleracion) 
             {
               this.objeto.player.anims.play('player_estatico',true);
               this.objeto.state="idle";
               //this.objeto.player.setVelocity(0);
             }
-        else  if (this.objeto.player.anims.currentAnim?.key !== 'player_camina') {
+        else*/  if (this.objeto.player.anims.currentAnim?.key !== 'player_camina') {
          // console.log("cambio izquierda");
           
           this.objeto.player.play('player_camina');
@@ -646,13 +662,13 @@ export class WalkPlayer extends Estados{
          this.objeto.player.setVelocityX(velocidadDiagonal.xMd+aceleracion);
         else this.objeto.player.setVelocityX(velocidadFinalDiagonal);
     
-            if(this.objeto.player.body.velocity.y===aceleracion&&this.objeto.player.body.velocity.x===aceleracion) 
+           /* if(this.objeto.player.body.velocity.y===aceleracion&&this.objeto.player.body.velocity.x===aceleracion) 
             {
              // this.objeto.player.setVelocity(0);
               this.objeto.player.anims.play('player_estatico',true);
               this.objeto.state="idle";
             }
-            else if (this.objeto.player.anims.currentAnim?.key !== 'player_camina') {
+            else*/ if (this.objeto.player.anims.currentAnim?.key !== 'player_camina') {
           //console.log("cambio derecha");
           
           this.objeto.player.play('player_camina');
@@ -679,13 +695,13 @@ export class WalkPlayer extends Estados{
          this.objeto.player.setVelocityX(velocidadDiagonal.xmd-aceleracion);
         else this.objeto.player.setVelocityX(-velocidadFinalDiagonal);
     
-            if(this.objeto.player.body.velocity.y===aceleracion&&this.objeto.player.body.velocity.x===-aceleracion) 
+           /* if(this.objeto.player.body.velocity.y===aceleracion&&this.objeto.player.body.velocity.x===-aceleracion) 
            { 
            // this.objeto.player.setVelocity(0);
             this.objeto.player.anims.play('player_estatico',true);
             this.objeto.state="idle";
           }
-        else if (this.objeto.player.anims.currentAnim?.key !== 'player_camina') {
+        else*/ if (this.objeto.player.anims.currentAnim?.key !== 'player_camina') {
               //console.log("cambio izquierda");
           
           this.objeto.player.play('player_camina');
@@ -696,7 +712,9 @@ export class WalkPlayer extends Estados{
     
     
         this.objeto.getCameraPosition(0,0,subEstado_caminar);
-          switch(this.objeto.subEstado_posicionEstatico){
+         
+        /*
+        switch(this.objeto.subEstado_posicionEstatico){
         case "derecha":
     
         if (this.objeto.player.anims.currentAnim?.key !== 'player_estatico'&&(this.objeto.state==="idle"||this.objeto.state==="walk")) {
@@ -723,7 +741,7 @@ export class WalkPlayer extends Estados{
         }
         break;
     
-      }
+      }*/
     
         break;
     

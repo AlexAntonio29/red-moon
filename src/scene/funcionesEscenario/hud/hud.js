@@ -253,6 +253,8 @@ export class hud{
     });
     
         this.scene.cronometro.setPosition(this.scene.puntaje.width+this.scene.puntaje.x+20, 10);
+
+        this.scene.cronometro.setVisible(false);
     }
     
 
