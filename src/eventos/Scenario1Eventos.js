@@ -3,17 +3,18 @@ import {evento1_1} from './Scenario1Eventos/evento1_1.js'
 import {evento1_2} from './Scenario1Eventos/evento1_2.js';
 import {evento1_3} from './Scenario1Eventos/evento1_3.js';
 import { evento1_4 } from './Scenario1Eventos/evento1_4.js';
+import { evento1_5 } from './Scenario1Eventos/evento1_5.js';
 
 
 export class Scenario1Eventos extends Eventos{
 
     //eventos que solo sucede una sola vez en determinada parte de la hisotoria
 
-    constructor(scene,x=0,y=0,width=100,height=50,player,camera,lights,playerAtributos){
+    constructor(scene,x=0,y=0,width=100,height=50,player,camera,lights,playerAtributos,id, esActivo){
 
    
 
-        super(scene, x,y,width,height,player,camera,lights, playerAtributos);
+        super(scene, x,y,width,height,player,camera,lights, playerAtributos,id, esActivo);
 
     }
 
@@ -68,6 +69,14 @@ export class Scenario1Eventos extends Eventos{
             
             evento1_4(this.scene,this.player, this.lights, movePlayer, this.playerAtributos);
 
+
+            break;
+
+            case 5:
+
+            this.scene.listaEventosTemporales.push
+            (new evento1_5(this.scene,movePlayer));
+            
 
             break;
 

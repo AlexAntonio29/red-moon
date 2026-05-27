@@ -4,6 +4,7 @@ import { FinPartida } from './scene/FinPartida.js';
 import { ScenePotenciador } from './scene/ScenePotenciador.js';
 import {ScenePause} from './scene/ScenePause.js';
 import {scenePauseRapido} from './scene/SceneHelper/scenePauseRapido.js'
+import { SceneInventario } from './scene/SceneInventario.js'; // Verifica que la ruta sea correcta
 
 const config={ //configuracion del escenario
     width: document.documentElement.clientWidth,//tamaño de ancho
@@ -18,15 +19,13 @@ const config={ //configuracion del escenario
       debug: false
     }
   },
-   /* scene:[MenuPrincipal,StartGame,FinPartida] //escenas se ejecutan por orden*/
-
- /*   //EL APARTADO DE ARRIBA ES EL CORRECTO CORRERE ESTA SCENE PORQUE TRABAJARE CON StartGame*/
    
- scene:[MenuPrincipal,StartGame,FinPartida,ScenePotenciador,ScenePause,scenePauseRapido],
+ scene:[MenuPrincipal,StartGame,FinPartida,ScenePotenciador,ScenePause,scenePauseRapido,SceneInventario],
  plugins: {
     scene: [
       { key: 'animatedTiles', plugin: AnimatedTiles, mapping: 'animatedTiles' }
     ]
+    
   },
  input: {
     activePointers: 3 // permite hasta 3 dedos simultáneos
@@ -56,3 +55,4 @@ function create(){
 function update(time, delta){
     console.log(delta);
 }
+

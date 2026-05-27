@@ -3,52 +3,68 @@ import { ItemPuntos } from "../items/extendsItems/ItemPuntos.js";
 import {puntos} from "../items/DataItemsPuntos.js";
 
 
-export function crearItemsPunto(scene,n=1,items_punto,widthEscenario,heightEscenario,posicionAleatoria,player=null,lights){
+export function crearItemsPunto(scene,n=1,items_punto,widthEscenario,heightEscenario,posicionAleatoria,puntosTotal=1,lights){
 
 
 
     //Math.floor(Math.random() * (max - min + 1)) + min;
     //Crear objeto punto
+    console.log(items_punto);
      
 
-    
 
+   
+    const divisionPuntos=puntosTotal/n;
+    
 
     
      for(let i=0;i<n;i++){
 
         let x,y;
          //generar selecion de objeto
-    let seleccion=Math.floor(Math.random() * 6) + 0;//aqui se generaran valores aleatorios
-    let c=Math.random() < 0.5 ? 1 : 2;
-    let tipo;
+
+
+    let data;
     //console.log("categoria: "+c+" seleccion: "+seleccion);
 
  
-    tipo=puntos[seleccion];//igual, se generara aleatorio
+       const seleccion=Math.floor(Math.random() * 6) + 0;//aqui se generaran valores aleatorios
+    //let c=Math.random() < 0.5 ? 1 : 2;
+    const tipo=puntos[seleccion];//igual, se generara aleatorio
 
     
     if(posicionAleatoria){
     x=Math.floor(Math.random() * ((widthEscenario-30) - 0 + 1)) + 0;
     y=Math.floor(Math.random() * ((heightEscenario-30) - 0 + 1)) + 0;
+
+
+
+
+     data=(puntos[tipo.id-1]).puntos;
         }
         else{
+
+            data=divisionPuntos;
            
             x=widthEscenario;
             y=heightEscenario;
+
+
+            
              //console.log(`posicion APARICION EN CREATE ITEMS: X:${x}   Y:${y}`);
+             
 
 
         }
 
 
         let textura="item_punto";
-        let data=puntos[tipo.id-1];
+        
 
 
 
 
-   let item=new ItemPuntos(scene,tipo.id, tipo.categoria,25,25,x,y,textura,data.puntos,lights);
+   let item=new ItemPuntos(scene,tipo.id, tipo.categoria,25,25,x,y,textura,data,lights);
    item.setPipeline('Light2D');
    //item.lights.enable();
    //item.lights.setAmbientColor(0x222222);  

@@ -29,6 +29,7 @@ export class CamaraPersonalizada{
             this.hud.setVisible(ocultarHUD);
 
             // console.log(this.hud.visible);
+            console.log(playerAtributos);
 
 
             
