@@ -1,9 +1,16 @@
 # RED MOON 
 ## VIDEOJUEGO DE TERROR CON ENFOQUE AL DESAFÍO Y SUPERVIVENCIA
 [![fondo](https://raw.githubusercontent.com/AlexAntonio29/red-moon/refs/heads/main/assets/fondoMain.png)](https://www.youtube.com/watch?v=HoOLjEp4zqk)
-## Proyecto Final Semestre 6
 
-### [Trailer](https://www.youtube.com/watch?v=HoOLjEp4zqk)
+![YouTube Video Views](https://img.shields.io/youtube/views/HoOLjEp4zqk)
+
+
+
+
+
+
+
+## Proyecto Final Semestre 6
 
 
 
