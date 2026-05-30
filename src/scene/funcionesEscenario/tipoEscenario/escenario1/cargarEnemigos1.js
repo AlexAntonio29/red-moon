@@ -57,6 +57,7 @@ export class cargarEnemigos1 {
       crearEnemigo(1,8187,8005,3,this.scene);
       crearEnemigo(1,8686,8033,3,this.scene);
         crearEnemigo(1,7658,7628,0,this.scene);
+        crearEnemigo(1,6094,6718,4,this.scene);
       
        
 

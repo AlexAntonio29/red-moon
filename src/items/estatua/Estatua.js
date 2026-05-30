@@ -1,4 +1,9 @@
+import { MaquinaEstados } from "../../funciones/automata/MaquinaEstados.js";
+import { EstatuaActivo } from "./estados/EstatuaActivo.js";
+import { EstatuaInactivo } from "./estados/EstatuaInactivo.js";
+
 export class Estatua extends Phaser.Physics.Arcade.Sprite{
+
 
 
     constructor(scene, x,y,id){
@@ -16,6 +21,9 @@ export class Estatua extends Phaser.Physics.Arcade.Sprite{
         this.esEncendido=(scene.dataGuardadoRanura!==null)
         ?scene.dataGuardadoRanura[scene.ranura].checkpoints[id].esEncendido
         :false;
+
+
+        
 
 
         this.setOrigin(0,0);
@@ -62,7 +70,21 @@ export class Estatua extends Phaser.Physics.Arcade.Sprite{
         //this.scene.physics.overlap()
 
 
+        this.mensaje="E : Guardar";
 
+
+        this.automata= new MaquinaEstados(this);
+        this.asignarEstados();
+
+
+    }
+
+    asignarEstados(){
+
+        this.automata.agregarEstado("EstatuaActivo",new EstatuaActivo(this));
+        this.automata.agregarEstado("EstatuaInactivo", new EstatuaInactivo(this));
+
+        this.automata.cambiarEstado("EstatuaInactivo");
     }
 
     quitarMovimiento(){
@@ -72,6 +94,12 @@ export class Estatua extends Phaser.Physics.Arcade.Sprite{
         this.body.pushable = false;
         this.body.setMass(Number.MAX_VALUE);
 
+    }
+
+
+    update(){
+       
+        this.automata.actualizar();
     }
 
 

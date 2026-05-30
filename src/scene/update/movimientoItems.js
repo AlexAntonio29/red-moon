@@ -1,14 +1,10 @@
-export const salirAreasInteraccion=(scene)=>{
+export const movimientoItems=(scene)=>{
 
   scene.listaCheckpoints.children.iterate(checkpoint=>{
-                  
-              if(scene.player.estaGuardando&& !scene.physics.overlap(scene.player.getContainer(),checkpoint))
-              {
-                scene.player.estaGuardando=false;
-                
-                
-              }
+
            
+
+              checkpoint.update();
             
             });
 
@@ -16,6 +12,7 @@ export const salirAreasInteraccion=(scene)=>{
     if(scene.player.estaActivandoPalanca&&!scene.physics.overlap(scene.player.getContainer(),palanca)){
       {
       scene.player.estaActivandoPalanca=false;
+    
     }
     }
   })

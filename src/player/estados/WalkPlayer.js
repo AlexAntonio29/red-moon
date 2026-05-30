@@ -18,8 +18,7 @@ export class WalkPlayer extends Estados{
     execute(){
 
         //movimientoCaminar
-        console.log(this.objeto.player.body.velocity.x);
-        console.log(this.objeto.player.body.velocity.y);
+
 
            this.caminarPlayer(false);
             

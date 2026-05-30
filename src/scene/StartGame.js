@@ -40,7 +40,7 @@ import { movimientosPlayer } from "./update/movimientosPlayer.js";
 import { movimientosEnemigo } from "./update/movimientosEnemigo.js";
 import { movimientoItemToPlayer } from "./update/movimientoItemToPlayer.js";
 import { movimientosNpc } from "./update/movimientosNpc.js";
-import { salirAreasInteraccion } from "./update/salirAreasInteraccion.js";
+import { movimientoItems} from "./update/movimientoItems.js";
 import { crearCuadroDialogo } from "../funciones/dialogo/crearCuadroDialogo.js";
 import { eventosTemporales } from "./update/eventosTemporales.js";
 
@@ -116,8 +116,8 @@ getPlayer(){
 
   
     
-  let x=(this.dataGuardadoRanura!==null)?this.dataGuardadoRanura[this.ranura].player.x:2100//8000;//x=2100;
-  let y=(this.dataGuardadoRanura!==null)?this.dataGuardadoRanura[this.ranura].player.y:8500
+  let x=(this.dataGuardadoRanura!==null)?this.dataGuardadoRanura[this.ranura].player.x:2160//8000;//x=2100;
+  let y=(this.dataGuardadoRanura!==null)?this.dataGuardadoRanura[this.ranura].player.y:10096
     this.player=new player(this, 'player',80,80,this.joystickCursors, this.controles, this.keys,this.listaEnemigos,this.lights,this.cameras.main);
 
     this.player.getContainer().setTint(0x555555);//para ver si se oscurece mas
@@ -417,7 +417,7 @@ this.joystickCursors = this.joyStick.createCursorKeys();
     //Condicional
     crearLuces(){
       this.lights.enable();
-      this.lights.setAmbientColor(0x000000); //222222 default
+      this.lights.setAmbientColor(0x030303); //222222 default  141414 000000
       this.luces.load();
 
     }
@@ -523,7 +523,7 @@ update(time, delta){
     movimientosNpc(this);
 
    
-    salirAreasInteraccion(this);
+    movimientoItems(this);
 
     eventosTemporales(this);
 

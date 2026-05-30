@@ -13,6 +13,7 @@ export const crearPalanca=(x,y,id,idPuerta,scene)=>{
   scene.physics.add.overlap(scene.player.getContainer(),palanca,()=>{
     
     scene.player.estaActivandoPalanca=true;
+    scene.hudContainerInteraccion.visible=true;
   });
 
  

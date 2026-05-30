@@ -13,6 +13,8 @@ export class hud{
     }
 
 
+
+
     
     getBarraStamina(){
     
@@ -142,45 +144,9 @@ export class hud{
           } 
     
     }
-    crearHUD(){
-        //CREAR HUD de Puntos
-        this.scene.puntos=0;
-    
-        console.log("Dentro de HUD");
-    
-    //contenedor que sirve para acomodar todo en un solo item
-      this.scene.hudContainer=this.scene.add.container(0,0).setScrollFactor(0);
-    //Fondo semitransparente que servira para una mejor visualizacion
-      this.scene.hudBackground= this.scene.add.rectangle(0,0,300,50,0x000000,0.5)
-        .setOrigin(0)
-        .setStrokeStyle(2,0xffffff);
-    
-    
-        this.scene.getBarraVida();
-        this.scene.getBarraStamina();
-        this.scene.getCuraciones();
-    
-        
-    
-    
-        this.scene.hudPuntos();
-        this.scene.hudCronometro();
-    
-       
-        this.scene.hudBackground.setPosition(this.scene.widthPantalla-this.scene.hudBackground.width,10);
-    //union de los puntos y cronometro al background para que este todo junto
-        this.scene.hudContainer.add(this.scene.hudBackground);
-        this.scene.hudContainer.add(this.scene.contenedorPuntaje);
-        //this.scene.hudContainer.add(this.scene.puntaje);
-        this.scene.hudContainer.add(this.scene.cronometro);
-        
-    
-        this.scene.hudContainer.setDepth(20);
-    
-    
-    
-    }
-    //GLOBAL
+
+
+        //GLOBAL
     //donde muestra los puntos acumulados
     hudPuntos(){
     
@@ -193,6 +159,8 @@ export class hud{
         
         
         ;
+
+       
     
     
         textoPuntos.setPosition(this.scene.widthPantalla-this.scene.hudBackground.width,10);
@@ -256,7 +224,84 @@ export class hud{
 
         this.scene.cronometro.setVisible(false);
     }
+
+    hudInteraccionObjetos(){
+
+      this.scene.hudContainerInteraccion=this.scene.add.container(0,0).setScrollFactor(0);
+
+      this.scene.hudBackgroundInteraccion= this.scene.add.rectangle(0,0,500,50,0x000000,0.5)
+        .setOrigin(0)
+        .setStrokeStyle(2,0xffffff);
+
+        this.scene.hudBackgroundInteraccion.setPosition((this.scene.widthPantalla/2)-(this.scene.hudBackgroundInteraccion.width/2), 
+          this.scene.heightPantalla-this.scene.hudBackgroundInteraccion.height);
+        
+
+          
+
+          this.scene.hudTextoInteraccion = this.scene.add.text(16,16,"",{
+            fontSize: '15px',
+            fontFamily:this.scene.fontText,
+            fill: '#fff'
     
+        });
+
+        this.scene.hudTextoInteraccion.setPosition
+        ((this.scene.hudBackgroundInteraccion.x)+(this.scene.hudBackgroundInteraccion.width/2),
+        this.scene.hudBackgroundInteraccion.y+10);
+
+        //this.scene.hudBackgroundInteraccion.visible=false;
+
+        this.scene.hudContainerInteraccion.add(this.scene.hudBackgroundInteraccion);
+        this.scene.hudContainerInteraccion.add(this.scene.hudTextoInteraccion);
+
+        this.scene.hudContainerInteraccion.visible=false;
+
+    }
+    
+
+
+    //DONDE SE CREAN EL HUD PRINCIPAL DEL PLAYER
+    crearHUD(){
+        //CREAR HUD de Puntos
+        this.scene.puntos=0;
+    
+        console.log("Dentro de HUD");
+    
+    //contenedor que sirve para acomodar todo en un solo item
+      this.scene.hudContainer=this.scene.add.container(0,0).setScrollFactor(0);
+    //Fondo semitransparente que servira para una mejor visualizacion
+      this.scene.hudBackground= this.scene.add.rectangle(0,0,300,50,0x000000,0.5)
+        .setOrigin(0)
+        .setStrokeStyle(2,0xffffff);
+    
+    
+        this.scene.getBarraVida();
+        this.scene.getBarraStamina();
+        this.scene.getCuraciones();
+    
+        
+    
+    
+        this.scene.hudPuntos();
+        this.scene.hudCronometro();
+        this.hudInteraccionObjetos();
+    
+       
+        this.scene.hudBackground.setPosition(this.scene.widthPantalla-this.scene.hudBackground.width,10);
+    //union de los puntos y cronometro al background para que este todo junto
+        this.scene.hudContainer.add(this.scene.hudBackground);
+        this.scene.hudContainer.add(this.scene.contenedorPuntaje);
+        //this.scene.hudContainer.add(this.scene.puntaje);
+        this.scene.hudContainer.add(this.scene.cronometro);
+        this.scene.hudContainer.add(this.scene.hudContainerInteraccion);
+    
+        this.scene.hudContainer.setDepth(20);
+    
+    
+    
+    }
+
 
 
 }

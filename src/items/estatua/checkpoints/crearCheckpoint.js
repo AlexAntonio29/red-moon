@@ -16,14 +16,8 @@ export const crearCheckpoint =(x,y,id,scene)=>{
 
 
   scene.physics.add.overlap(scene.player.getContainer(),checkpoint.hitbox,()=>{
-    if(!scene.player.estaGuardando) {
-      
-      scene.player.estaGuardando=true;
-
-      checkpoint.esActivado();
-    }
-    
-
+    if(!scene.player.estaGuardando)
+  scene.player.estaGuardando=true;
   })
 
    scene.listaCheckpoints.add(checkpoint);

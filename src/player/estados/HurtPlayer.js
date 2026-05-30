@@ -8,6 +8,7 @@ export class HurtPlayer extends Estados{
         //console.log("Estoy En Hurt")
 
         this.objeto.player.play("hurt_sword");
+        console.log(this.objeto.vida);
         
 
         

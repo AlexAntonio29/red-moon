@@ -17,7 +17,7 @@ bStart(){
 
 document.fonts.load(`32px ${this.fontText}`).then(() => {
 
-  this.boton = this.add.text(30, this.heightPantalla/2-20, 'Historia', {
+  this.boton = this.add.text(40, this.heightPantalla/2, 'Historia', {
   fontSize: '45px',
   fill: '#ff0000',
   
@@ -104,7 +104,7 @@ lucesLuciernaga(){
 
 cargarLuces(){
   this.lights.enable();
-  this.lights.setAmbientColor(0x222222); 
+  this.lights.setAmbientColor(0x141414); 
 
 
   //cargar luz sobre la luna
@@ -178,7 +178,7 @@ cargarNubes(){
 }
 
 cargarAntorcha(){
-  console.log(this.hud);
+
   
   this.antorcha=this.physics.add.sprite(this.hud.x+80, this.heightPantalla+70, 'antorcha');
 
@@ -233,7 +233,7 @@ cargarImagenes(){
     this.luna.setDepth(3).setPipeline('Light2D');
     this.castillo.setDepth(7).setPipeline('Light2D');
     this.tierra.setDepth(8).setPipeline('Light2D');
-    this.hud.setDepth(9).setPipeline('Light2D');
+   this.hud.setDepth(9).setPipeline('Light2D');
 
 }
 
