@@ -27,7 +27,10 @@ export class IdlePlayer extends Estados{
  
        
 
-       
+       if(this.objeto.vida<0){
+            this.objeto.atacado=false;
+            this.objeto.automata.cambiarEstado('Dead');
+       }
 
 
         if(this.objeto.isInputActive){

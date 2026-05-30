@@ -37,6 +37,7 @@ export class DashPlayer extends Estados{
     exit(){
 
        // console.log("Estoy Saliendo de Dash");
+       console.log(this.objeto.vida)
         this.objeto.state = "dash";
      
     }
@@ -52,7 +53,9 @@ export class DashPlayer extends Estados{
 
 
         verificarHerir(){
+            
         if(this.objeto.atacado){
+            
             this.objeto.automata.cambiarEstado('Hurt');
             return true;
         }

@@ -11,7 +11,7 @@ export class HurtPlayer extends Estados{
         console.log(this.objeto.vida);
         
 
-        
+        console.log("En hurt")
 
 
     }
