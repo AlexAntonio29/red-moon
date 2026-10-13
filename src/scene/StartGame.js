@@ -29,7 +29,7 @@ import { crearEscenario } from "./funcionesEscenario/seleccionarElementosEscenar
 import { colisiones } from "./funcionesEscenario/crearColisiones/Colisiones.js";
 import { hud } from "./funcionesEscenario/hud/hud.js";
 import { seleccionarEnemigos } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarEnemigos.js";
-import { seleccionarEventos } from "./funcionesEscenario/seleccionarElementosEscenario/SeleccionarEventos.js";
+import { seleccionarEventos } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarEventos.js";
 import { seleccionarNpc } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarNpc.js";
 import { seleccionarCheckpoints } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarCheckpoints.js";
 import { seleccionarPalancas } from "./funcionesEscenario/seleccionarElementosEscenario/seleccionarPalancas.js";
