@@ -84,7 +84,7 @@ this.tweens.add({
 
 
     this.load.image("titulo","./assets/tituloMain.png");
-    this.load.audio('musicaFondo','./sounds/menu.WAV');
+    this.load.audio('musicaFondo','./sounds/menu.mp3');
     this.load.audio("touch","./sounds/touch2.mp3");
     this.fontText='FontArcade1'
     this.widthPantalla=this.sys.game.config.width;
